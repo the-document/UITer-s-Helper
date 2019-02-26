@@ -5,6 +5,9 @@
  */
 package uiters.helper;
 
+import BLL.MyFile;
+import java.io.IOException;
+
 /**
  *
  * @author Nguyen Hong Phuc
@@ -14,8 +17,12 @@ public class UITersHelper {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // TODO code application logic here
+        
+        MyFile myFile=new  MyFile("C:\\Users\\Nguyen Hong Phuc\\Downloads\\tkb_khdt_25-01-2019_1548381246_hk_2_nh2018.xlsx");
+        myFile.ReadAllDataFromSheet(0);
+        myFile.ExportConsole(myFile.GetListCourseTheoryOfEducationProgram("*"));
     }
     
 }
