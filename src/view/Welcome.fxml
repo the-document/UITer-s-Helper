@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.WelcomeController">
+   <children>
+      <ImageView disable="true" fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../images/background.jpg" />
+         </image>
+      </ImageView>
+      <Label layoutX="372.0" layoutY="256.0" prefHeight="53.0" prefWidth="217.0" text="UIT DESKTOP" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="351.0" AnchorPane.leftAnchor="372.0" AnchorPane.rightAnchor="371.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+      <Line endX="360.0" layoutX="300.0" layoutY="332.0" stroke="WHITE" AnchorPane.bottomAnchor="327.5" AnchorPane.leftAnchor="299.5" AnchorPane.rightAnchor="299.5" />
+      <JFXButton fx:id="btn_launch" layoutX="419.0" layoutY="369.0" onAction="#btn_launchClick" prefHeight="64.0" prefWidth="133.0" stylesheets="@../css/control.css" text="Launch" textFill="WHITE" AnchorPane.leftAnchor="419.0" AnchorPane.rightAnchor="419.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SelectDayOfController">
+    <children>
+      <ImageView fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/background.jpg" />
+         </image>
+      </ImageView>
+      <JFXButton fx:id="btn_Login" layoutX="513.0" layoutY="375.0" onAction="#btn_loginClick" prefHeight="41.0" prefWidth="115.0" stylesheets="@../css/control.css" text="Login" textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXTextField focusColor="#2a0fda" layoutX="322.0" layoutY="238.0" prefHeight="39.0" prefWidth="298.0" promptText="id" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXTextField focusColor="#2a0fda" layoutX="324.0" layoutY="302.0" prefHeight="39.0" prefWidth="302.0" promptText="password" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
+      <JFXCheckBox fx:id="cb_remember" checkedColor="#1f10c6" layoutX="325.0" layoutY="384.0" onAction="#cb_rememberCheck" text="Remember me?" textFill="WHITE" unCheckedColor="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXCheckBox>
+      <JFXButton fx:id="btn_setting" layoutX="430.0" layoutY="454.0" onAction="#btn_settingClick" styleClass="setting_button" stylesheets="@../css/control.css" text="Setting">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="btn_back" layoutX="31.0" layoutY="22.0" onAction="#btn_backClick" text="Back " textFill="WHITE">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>
