@@ -52,11 +52,16 @@ public class MyFile {
     //input: index of sheet need to read
     //output: true if can read all data and push to array of MyFile
     public boolean ReadAllDataFromSheet(int index ){
+        String hinhThuc="";
+        if(index==0)
+            hinhThuc="LT";
+        else
+            hinhThuc="TH";
         
         XSSFSheet sheet=worbook.getSheetAt(index);
             
             int row =sheet.getPhysicalNumberOfRows();
-            System.out.println(String.valueOf(row)+"\n");
+           // System.out.println(String.valueOf(row)+"\n");
             
             String maMon="*"; //1
             String maLop="*";//2
@@ -75,6 +80,9 @@ public class MyFile {
                 
                 try {maMon=r.getCell(1).toString();} 
                 catch (Exception e) {}
+                
+                if(maMon.isEmpty())
+                    return true;
                 
                 try {maLop=r.getCell(2).toString();} 
                 catch (Exception e) {}
@@ -104,7 +112,7 @@ public class MyFile {
                 catch (Exception e) {}
             
                 
-                LopHoc lopHoc=new LopHoc(maLop,maMon,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao);
+                LopHoc lopHoc=new LopHoc(maLop,maMon,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,hinhThuc);
 //                lopHoc.setMaLop(malopString);
 //                lopHoc.setTenMH(tenmonString);
 //                lopHoc.setNgayBD(ngbdString);
@@ -183,6 +191,7 @@ public class MyFile {
            System.out.print("Tiết: "+lopHoc.getTiet()+"\n");
            System.out.print("Tiết BĐ: "+String.valueOf(lopHoc.getTietBatDau())+"\n");
            System.out.print("Tiết KT: "+String.valueOf(lopHoc.getTietKetThuc())+"\n");
+           System.out.print("Hinh Thuc day: "+lopHoc.getHinhthucDay()+"\n");
            System.out.println("===============================================\n");
         }
    }

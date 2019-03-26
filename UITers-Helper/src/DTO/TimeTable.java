@@ -5,6 +5,10 @@
  */
 package DTO;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 /**
  *
  * @author Nguyen Hong Phuc
@@ -13,10 +17,17 @@ public class TimeTable {
     String key;
     String name;
     String studentID;
+    
+      ArrayList<LopHoc> listLopHocs=new ArrayList<>();
 
     public TimeTable() {
     }
 
+    public TimeTable(String key) {
+        this.key = key;
+        
+    }
+    
     public TimeTable(String key, String name, String studentID) {
         this.key = key;
         this.name = name;
@@ -47,5 +58,34 @@ public class TimeTable {
         this.studentID = studentID;
     }
     
+    public List<LopHoc> getListLopHocs() {
+        return listLopHocs;
+    }
+
+    public void setListLopHocs(ArrayList<LopHoc> listLopHocs) {
+        this.listLopHocs = listLopHocs;
+    }
     
+    public void AddCourse(LopHoc l){
+        listLopHocs.add(l);
+    }
+    
+    public void Sort(){
+        Collections.sort(listLopHocs);
+    }
+    
+    public void Export(){
+        for (LopHoc lopHoc : listLopHocs) {
+                System.out.println(lopHoc.getMaLop()+"\n");
+            }
+           
+    }
+    
+    public boolean Equals(TimeTable timeTable){
+        for (int i = 0; i < listLopHocs.size(); i++) {
+            if(!listLopHocs.get(i).equals(timeTable.getListLopHocs().get(i)))
+                return false;
+        }
+        return true;
+    }
 }

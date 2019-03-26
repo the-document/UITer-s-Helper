@@ -5,8 +5,6 @@
  */
 package DTO;
 
-import BLL.Global;
-
 /**
  *
  * @author Nguyen Hong Phuc
@@ -21,6 +19,15 @@ public class LopHoc implements Comparable<LopHoc>{
     private String thu;
     private String phong;
     private String heDaoTao;
+    private String hinhthucDay;
+
+    public String getHinhthucDay() {
+        return hinhthucDay;
+    }
+
+    public void setHinhthucDay(String hinhthucDay) {
+        this.hinhthucDay = hinhthucDay;
+    }
     
     //The property will be created automatically
     int tietBatDau;
@@ -81,7 +88,7 @@ public class LopHoc implements Comparable<LopHoc>{
     }
 
     public void setThu(String Thu) {
-        this.thu = thu;
+        this.thu = Thu;
     }
 
     public String getPhong() {
@@ -121,7 +128,7 @@ public class LopHoc implements Comparable<LopHoc>{
     
     public LopHoc(String maLop, String maMonHoc, String tenGiangVien,
             String ngayBatDau, String ngayKetThuc, String tiet, 
-            String Thu, String phong, String heDaoTao) {
+            String Thu, String phong, String HDT,String hinhThuc) {
         this.maLop = maLop;
         this.maMonHoc = maMonHoc;
         this.tenGiangVien = tenGiangVien;
@@ -130,7 +137,8 @@ public class LopHoc implements Comparable<LopHoc>{
         this.tiet = tiet;
         this.thu = Thu;
         this.phong = phong;
-        this.heDaoTao = heDaoTao;
+        this.heDaoTao = HDT;
+        this.hinhthucDay=hinhThuc;
         
         if("*".equals(this.tiet)||"NULL".equals(this.tiet)||this.tiet.isEmpty())
         {
