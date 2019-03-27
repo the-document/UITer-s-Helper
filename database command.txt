@@ -1,0 +1,14 @@
+CREATE TABLE LopHoc(
+    maLop varchar(20) ,
+    maMon varchar(15) ,
+    giangVien varchar(100), 
+    ngayBD varchar(20),
+    ngayKT varchar(20),
+    tiet varchar(20),
+    thu varchar(20),
+    phong varchar(10),
+    heDaoTao varchar(20),
+    tietBatDau int,
+    tietKetThuc int,
+    HinhThuc varchar(3)
+)
