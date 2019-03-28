@@ -41,7 +41,8 @@ public class WelcomeController implements Initializable {
     }    
     public void btn_launchClick (ActionEvent event) throws Exception
     {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));      
         Scene tableViewScene = new Scene(tableViewParent);
         
         //This line gets the Stage information

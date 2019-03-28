@@ -26,15 +26,15 @@ public class Main_1 extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/GUI.view/Welcome.fxml"));       
+
+        Parent root = FXMLLoader.load(getClass().getResource("view/Welcome.fxml"));       
         Scene scene = new Scene(root, 960, 660);    
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-        
-   
-        
-      
+            
+         // System.out.println("URL: "+getClass().getResource("view/Welcome.fxml"));
+
     }
 
     /**

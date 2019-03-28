@@ -31,7 +31,7 @@ public class SelectMethodCreateController implements Initializable {
     }  
     public void btn_backClick (ActionEvent event) throws Exception
     {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/SelectSubject.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/SelectSubject.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
         //This line gets the Stage information
@@ -54,7 +54,7 @@ public class SelectMethodCreateController implements Initializable {
     
     public void btn_createnowClick (ActionEvent event) throws Exception
     { 
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/CreateTimetableNow.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/CreateTimetableNow.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
         //This line gets the Stage information
@@ -66,7 +66,7 @@ public class SelectMethodCreateController implements Initializable {
     
     public void btn_selectadvancedClick (ActionEvent event) throws Exception
     { 
-          Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/SelectAdvanced.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/SelectAdvanced.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
         //This line gets the Stage information
@@ -78,7 +78,7 @@ public class SelectMethodCreateController implements Initializable {
     
     public void btn_selectdayoffClick (ActionEvent event) throws Exception
     { 
-          Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/SelectDayOf.fxml"));
+          Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/SelectDayOf.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
         //This line gets the Stage information
