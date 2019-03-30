@@ -24,21 +24,21 @@ public class LopHocAccess extends DatabaseAccess{
         super.ConnectToDatabase();
 
         String query ="insert into LopHoc (maLop,maMon,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
-                + " values (?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
+                + " values (?, ?, "+"N'"+lopHoc.getTenGiangVien()+"', ?, ?,?,?,?,?,?,?,?)";
         
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         preparedStmt.setString (1, lopHoc.getMaLop());
         preparedStmt.setString (2, lopHoc.getmaMonHoc());
-        preparedStmt.setString   (3, lopHoc.getTenGiangVien());
-        preparedStmt.setString(4, lopHoc.getNgayBatDau());
-        preparedStmt.setString  (5, lopHoc.getNgayKetThuc());
-        preparedStmt.setString  (6, lopHoc.getTiet());
-        preparedStmt.setString  (7, lopHoc.getThu());
-        preparedStmt.setString  (8, lopHoc.getPhong());
-        preparedStmt.setString  (9, lopHoc.getHeDaoTao());
-        preparedStmt.setInt(10, lopHoc.getTietBatDau());
-        preparedStmt.setInt(11, lopHoc.getTietKetThuc());
-        preparedStmt.setString  (12, lopHoc.getHinhthucDay());
+        //preparedStmt.setString   (3, lopHoc.getTenGiangVien());
+        preparedStmt.setString(3, lopHoc.getNgayBatDau());
+        preparedStmt.setString  (4, lopHoc.getNgayKetThuc());
+        preparedStmt.setString  (5, lopHoc.getTiet());
+        preparedStmt.setString  (6, lopHoc.getThu());
+        preparedStmt.setString  (7, lopHoc.getPhong());
+        preparedStmt.setString  (8, lopHoc.getHeDaoTao());
+        preparedStmt.setInt(9, lopHoc.getTietBatDau());
+        preparedStmt.setInt(10, lopHoc.getTietKetThuc());
+        preparedStmt.setString  (11, lopHoc.getHinhthucDay());
 
         // execute the preparedstatement
         preparedStmt.execute();

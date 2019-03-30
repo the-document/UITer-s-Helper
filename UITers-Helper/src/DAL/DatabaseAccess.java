@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.Properties;
 
 /**
  *
@@ -28,9 +29,10 @@ public class DatabaseAccess {
     public  DatabaseAccess(){
         //set default private part;
         //dbURL="jdbc:mysql://localhost/uiterhelper";
-        dbURL="jdbc:mysql://65.52.172.214/uiterhelper?autoReconnect=true&useSSL=false";
-        username="thinhnnd";
-        passWord="admin123";
+        dbURL="jdbc:mysql://65.52.172.214/uiterhelper?autoReconnect=true&useSSL=false&useUnicode=true&characterEncoding=utf8";
+        username="uiterhelper";
+        passWord="uiterhelper";
+        
     }
     
     public  DatabaseAccess(String _dbURL,String _username,String _passWord){
@@ -40,7 +42,7 @@ public class DatabaseAccess {
     }
     
     public boolean ConnectToDatabase(){
-        try {
+        try {           
             connection =DriverManager.getConnection(dbURL, username, passWord);
             
             if(connection!=null)
