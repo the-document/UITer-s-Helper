@@ -6,9 +6,15 @@ package GUI.controller;
  * and open the template in the editor.
  */
 
+import BLL.Global;
+import GUI.Main_1;
+import com.jfoenix.controls.JFXButton;
+import java.awt.Color;
+import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,41 +23,53 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.apache.poi.hslf.record.RecordTypes;
 
-/**
- * FXML Controller class
- *
- * @author Admin
- */
+
 public class WelcomeController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
-    
-     @FXML private Button btn_launch;
-    
-    
-    
+    Stage window;
+    @FXML
+    private AnchorPane AnchorPaneMain;
+    private JFXButton btn_minimize;
+    private JFXButton btn_exit;
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+    public void initialize(URL url, ResourceBundle rb) {}
+
     public void btn_launchClick (ActionEvent event) throws Exception
     {
-        
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));      
-        Scene tableViewScene = new Scene(tableViewParent);
-        
-        //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-        
+
+        Parent root = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));      
+        Scene tableViewScene = new Scene(root);
+        window = (Stage)((Node)event.getSource()).getScene().getWindow();    
+
         window.setScene(tableViewScene);
         window.show();
+        Global.SetStageDrag(root, window, event);
     }
+    public void btn_exitClick (ActionEvent event) throws Exception
+    {
+        System.exit(0);
+    }
+    public void btn_minimizeClick (ActionEvent event) throws Exception
+    {
+        Stage stage = (Stage)AnchorPaneMain.getScene().getWindow();
+        stage = (Stage)((JFXButton) event.getSource()).getScene().getWindow();
+        stage.setIconified(true);
+    }
+    public void btn_exitMouseMove (ActionEvent event) throws Exception
+    {
     
-    
-    
+    }
+    public void btn_minimizeMouseMove (ActionEvent event) throws Exception
+    {
+        
+    }
+          
 }
