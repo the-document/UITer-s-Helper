@@ -35,33 +35,32 @@ public class UITersHelper {
         //myFile.ExportConsole(myFile.GetListCourseTheoryOfEducationProgram("*"));
         
        
-        //LopHocBLL lhbll=new LopHocBLL();
+        LopHocBLL lhbll=new LopHocBLL();
         //lhbll.DeleteAllData();
         
         //lhbll.SaveAllLopHoc(myFile.GetListCourseTheoryOfEducationProgram("*"));
         //lhbll.SaveAllLopHoc(myFile.GetListCoursePracticeOfEducationProgram("*"));
-//        //lhbll.InsertLopHoc(new LopHoc("SE109.J21","CSDL","Nguyen Hong Phuc","12/04/2012","13/5/2018","12345","5","B114","CQUI","LT"));
+        lhbll.InsertLopHoc(new LopHoc("TEST.J00","CSDL","Nguyễn Hồng Phúc","12/04/2012","13/5/2018","12345","5","B114","CQUI","LT"));
 //        //lhbll.DeleteAllData();
 
-            List<String> dsMaLop=new ArrayList<>();
-            dsMaLop.add("SE214");
-            dsMaLop.add("SE106");
-            dsMaLop.add("IS201");
-            dsMaLop.add("SE109");
-            dsMaLop.add("SE330");
-            
-            ThuatToanTaoTKB.NapDanhSachMaMonHoc(dsMaLop);
-            ThuatToanTaoTKB.SetHeDaoTao("CQUI");
-
-            ThuatToanTaoTKB.init();
-            ThuatToanTaoTKB.Try(0);
-        
-            System.out.println("=========LIST TKB RECOMEND FOR YOU  ( "+ThuatToanTaoTKB.countCase+" ) ============\n");
-            for (TimeTable table   : ThuatToanTaoTKB.listTimeTables) {
-            table.Export();
-            System.out.println("===============================================\n");
-            System.out.println("===============================================\n");
-        }
+//            List<String> dsMaLop=new ArrayList<>();
+//            dsMaLop.add("SE214");
+//            dsMaLop.add("SE106");
+//            dsMaLop.add("IS201");
+//            dsMaLop.add("SE109");
+//            dsMaLop.add("SE330");
+//            
+//            ThuatToanTaoTKB.NapDanhSachMaMonHoc(dsMaLop);
+//            ThuatToanTaoTKB.SetHeDaoTao("CQUI");
+//
+//            ThuatToanTaoTKB.init();
+//            ThuatToanTaoTKB.Try(0);
+//        
+//            System.out.println("=========LIST TKB RECOMEND FOR YOU  ( "+ThuatToanTaoTKB.countCase+" ) ============\n");
+//            for (TimeTable table   : ThuatToanTaoTKB.listTimeTables) {
+//            table.Export();
+//            System.out.println("===============================================\n");
+//            System.out.println("===============================================\n");
+//        }
     }
-    
 }

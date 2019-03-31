@@ -31,7 +31,7 @@ public class SelectSemesterController implements Initializable {
     }    
     public void btn_backClick (ActionEvent event) throws Exception
     {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/Home.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/Home.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
         //This line gets the Stage information
@@ -45,7 +45,7 @@ public class SelectSemesterController implements Initializable {
     
     public void btn_nextClick (ActionEvent event) throws Exception
     {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/SelectSubject.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/SelectSubject.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
         
         //This line gets the Stage information
