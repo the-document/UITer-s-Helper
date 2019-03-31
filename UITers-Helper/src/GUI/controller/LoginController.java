@@ -37,17 +37,21 @@ public class LoginController implements Initializable {
     }    
     public void btn_loginClick (ActionEvent event) throws Exception
     {
+
         Parent root = FXMLLoader.load(getClass().getResource("../view/Home.fxml"));
         Scene tableViewScene = new Scene(root);
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();     
+
         window.setScene(tableViewScene);
         window.show();
         Global.SetStageDrag(root, window, event);
     }
     public void btn_backClick (ActionEvent event) throws Exception
     {
+
         Parent root = FXMLLoader.load(getClass().getResource("../view/Welcome.fxml"));
         Scene tableViewScene = new Scene(root);
+
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         window.show();    

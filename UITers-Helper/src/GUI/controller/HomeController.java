@@ -67,8 +67,10 @@ public class HomeController implements Initializable {
   
     public void btn_backClick (ActionEvent event) throws Exception
     {
+
         Parent root = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));
         Scene tableViewScene = new Scene(root);
+
         Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         window.show();    

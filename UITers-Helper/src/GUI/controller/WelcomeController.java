@@ -44,9 +44,11 @@ public class WelcomeController implements Initializable {
 
     public void btn_launchClick (ActionEvent event) throws Exception
     {
+
         Parent root = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));      
         Scene tableViewScene = new Scene(root);
         window = (Stage)((Node)event.getSource()).getScene().getWindow();    
+
         window.setScene(tableViewScene);
         window.show();
         Global.SetStageDrag(root, window, event);
