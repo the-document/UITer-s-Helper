@@ -5,6 +5,7 @@
  */
 
 package GUI;
+import BLL.Global;
 import com.sun.glass.ui.Window;
 import java.io.IOException;
 import javafx.application.Application;
@@ -32,7 +33,8 @@ public class Main_1 extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource("view/Welcome.fxml"));       
-        Scene scene = new Scene(root, 960, 660);    
+        Scene scene = new Scene(root, 960, 660);   
+       
         primaryStage.setScene(scene);
         root.setOnMousePressed(e -> {
            xOffSet = e.getSceneX();
@@ -47,7 +49,7 @@ public class Main_1 extends Application {
             primaryStage.setOpacity(1.0f);
         });
         
-  
+       
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setResizable(false);
         primaryStage.show();

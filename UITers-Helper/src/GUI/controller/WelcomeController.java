@@ -6,8 +6,11 @@ package GUI.controller;
  * and open the template in the editor.
  */
 
+import BLL.Global;
 import GUI.Main_1;
 import com.jfoenix.controls.JFXButton;
+import java.awt.Color;
+import java.awt.Insets;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,8 +24,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.apache.poi.hslf.record.RecordTypes;
 
 
 public class WelcomeController implements Initializable {
@@ -30,17 +38,18 @@ public class WelcomeController implements Initializable {
     @FXML
     private AnchorPane AnchorPaneMain;
     private JFXButton btn_minimize;
+    private JFXButton btn_exit;
     @Override
     public void initialize(URL url, ResourceBundle rb) {}
 
     public void btn_launchClick (ActionEvent event) throws Exception
     {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));      
-        Scene tableViewScene = new Scene(tableViewParent);
+        Parent root = FXMLLoader.load(getClass().getResource("../view/Login.fxml"));      
+        Scene tableViewScene = new Scene(root);
         window = (Stage)((Node)event.getSource()).getScene().getWindow();    
         window.setScene(tableViewScene);
         window.show();
-     
+        Global.SetStageDrag(root, window, event);
     }
     public void btn_exitClick (ActionEvent event) throws Exception
     {
@@ -54,30 +63,11 @@ public class WelcomeController implements Initializable {
     }
     public void btn_exitMouseMove (ActionEvent event) throws Exception
     {
-        
+    
     }
     public void btn_minimizeMouseMove (ActionEvent event) throws Exception
     {
-        window.setIconified(true);
+        
     }
-//    public void setOnMouseClick(MouseEvent e)
-//    {
-//         xOffSet = e.getSceneX();
-//         yOffSet = e.getSceneY();
-//    }
-//    public void setDragDone(DragEvent e) 
-//    {
-//        Main_1.primaryStage.setOpacity(1.0f);
-//    }
-//    public void setOnMouseReleased(MouseEvent e) 
-//    {
-//        Main_1.primaryStage.setOpacity(1.0f);
-//    }
-//    public void setOnMouseDragged(MouseEvent e) 
-//    {
-//        Main_1.primaryStage.setX(e.getScreenX() - xOffSet);
-//        Main_1.primaryStage.setY(e.getScreenY() - yOffSet);
-//        Main_1.primaryStage.setOpacity(0.8f);
-//    }
           
 }

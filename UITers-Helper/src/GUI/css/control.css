@@ -7,6 +7,10 @@ and open the template in the editor.
     Created on : Mar 22, 2019, 5:02:17 PM
     Author     : Admin
 */
+.anchor{
+    -fx-border-width: 1 1 1 1;
+    -fx-border-radius: 10;
+}
 
 .button{
     -fx-background-color: transparent;
@@ -37,7 +41,7 @@ and open the template in the editor.
 
 .textfiled{
     -fx-text-fill: white;
-    -fx-prompt-text-fill: gray;
+    -fx-prompt-text-fill: whitesmoke;
     -fx-border-width: 1 1 1 1;     
     
 }

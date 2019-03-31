@@ -3,9 +3,16 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" prefHeight="660.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
@@ -15,35 +22,59 @@
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btn_Login" layoutX="513.0" layoutY="375.0" onAction="#btn_loginClick" prefHeight="41.0" prefWidth="115.0" stylesheets="@../css/control.css" text="Login" textFill="WHITE">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="385.0" layoutX="264.0" layoutY="158.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="433.0" />
+      <JFXButton fx:id="btn_Login" layoutX="522.0" layoutY="360.0" onAction="#btn_loginClick" prefHeight="41.0" prefWidth="115.0" stylesheets="@../css/control.css" text="Đăng nhập" textFill="WHITE" AnchorPane.topAnchor="360.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
-      <JFXTextField focusColor="#2a0fda" layoutX="322.0" layoutY="238.0" prefHeight="39.0" prefWidth="298.0" promptText="id" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
+      <JFXTextField focusColor="#1e85c9" layoutX="375.0" layoutY="240.0" maxHeight="40.0" maxWidth="300.0" minHeight="40.0" minWidth="244.0" prefHeight="40.0" prefWidth="255.0" promptText="username" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="330.0" AnchorPane.topAnchor="240.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXTextField focusColor="#2a0fda" layoutX="324.0" layoutY="302.0" prefHeight="39.0" prefWidth="302.0" promptText="password" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
+      <JFXTextField focusColor="#1e85c9" layoutX="380.0" layoutY="300.0" maxHeight="40.0" maxWidth="300.0" minHeight="40.0" minWidth="251.0" prefHeight="40.0" prefWidth="251.0" promptText="password" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE" AnchorPane.leftAnchor="380.0" AnchorPane.rightAnchor="329.0" AnchorPane.topAnchor="300.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXCheckBox fx:id="cb_remember" checkedColor="#1f10c6" layoutX="325.0" layoutY="384.0" onAction="#cb_rememberCheck" text="Remember me?" textFill="WHITE" unCheckedColor="WHITE">
+      <JFXCheckBox fx:id="cb_remember" checkedColor="#1e85c9" layoutX="338.0" layoutY="367.0" onAction="#cb_rememberCheck" text="Nhớ mật khẩu" textFill="WHITE" unCheckedColor="WHITE" AnchorPane.topAnchor="367.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXCheckBox>
-      <JFXButton fx:id="btn_setting" layoutX="430.0" layoutY="454.0" onAction="#btn_settingClick" styleClass="setting_button" stylesheets="@../css/control.css" text="Setting">
+      <BorderPane layoutX="57.0" layoutY="-13.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <HBox prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btn_back" contentDisplay="CENTER" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_backClick" prefHeight="40.0" prefWidth="120.0" text="&lt;  Back " textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <Region prefHeight="100.0" prefWidth="855.0" />
+                  <JFXButton fx:id="btn_minimize" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" text="-" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_exit" layoutX="930.0" layoutY="10.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" text="X" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </JFXButton>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+      <Circle fill="WHITE" layoutX="480.0" layoutY="160.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" AnchorPane.leftAnchor="440.0" AnchorPane.rightAnchor="440.0" AnchorPane.topAnchor="120.0" />
+      <Hyperlink fx:id="btn_lose" layoutX="413.0" layoutY="420.0" onAction="#btn_loseClick" text="Quên mật khẩu" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="413.0" AnchorPane.rightAnchor="412.0" AnchorPane.topAnchor="420.0">
          <font>
             <Font size="18.0" />
          </font>
-      </JFXButton>
-      <JFXButton fx:id="btn_back" layoutX="31.0" layoutY="22.0" onAction="#btn_backClick" text="Back " textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXButton>
+      </Hyperlink>
+      <Button fx:id="btn_setting" layoutX="455.0" layoutY="470.0" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="50.0" prefWidth="50.0" styleClass="setting_button" stylesheets="@../css/background.css" AnchorPane.leftAnchor="455.0" AnchorPane.rightAnchor="455.0" AnchorPane.topAnchor="470.0" />
+      <Button fx:id="btn_setting1" layoutX="326.0" layoutY="240.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" styleClass="user_label2" stylesheets="@../css/background.css" AnchorPane.topAnchor="240.0" />
+      <Button fx:id="btn_setting11" layoutX="326.0" layoutY="300.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" styleClass="pass_label" stylesheets="@../css/background.css" AnchorPane.topAnchor="300.0" />
    </children>
 </AnchorPane>

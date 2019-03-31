@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 31, 2019, 2:26:10 PM
+    Author     : Admin
+*/
+
+.setting_button{   
+    -fx-background-image: url("../images/setting.png");
+    -fx-background-repeat: no-repeat;
+    -fx-back-ground-position: center center;
+    -fx-text-indent: 100%;
+    -fx-white-space: nowrap;
+    -fx-overflow: hidden;
+    -fx-background-color: transparent;
+}
+.user_label2{   
+    -fx-background-image: url("../images/user2.png");
+    -fx-background-repeat: no-repeat;
+    -fx-back-ground-position: center center;
+    -fx-text-indent: 100%;
+    -fx-white-space: nowrap;
+    -fx-overflow: hidden;
+    -fx-background-color: transparent;
+}
+.pass_label{   
+    -fx-background-image: url("../images/password.png");
+    -fx-background-repeat: no-repeat;
+    -fx-back-ground-position: center center;
+    -fx-text-indent: 100%;
+    -fx-white-space: nowrap;
+    -fx-overflow: hidden;
+    -fx-background-color: transparent;
+}
+.general{
+     -fx-background-color: transparent;
+}
