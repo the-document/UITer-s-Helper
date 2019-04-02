@@ -1,0 +1,45 @@
+.list-cell {
+    //-fx-background-color: transparent;
+}
+.list-view {
+    -fx-background-color: transparent;
+}
+
+.list-cell:empty {
+    -fx-background-color: #FCFCFC;
+    -fx-background-insets: 0 ;
+}
+
+.list-cell:selected .listCellColourStrip{
+
+    -fx-background-color: #CF000F;
+
+}
+
+.list-cell:selected {
+
+    -fx-background-color: RED;
+    
+}
+
+.list-view .scroll-bar:vertical .increment-arrow,
+.list-view .scroll-bar:vertical .decrement-arrow,
+.list-view .scroll-bar:vertical .increment-button,
+.list-view .scroll-bar:vertical .decrement-button {
+    -fx-padding: 0px;
+}
+
+.list-view .scroll-bar:vertical {
+     -fx-scale-x: 0;
+}
+
+.listCellImage {    
+    -fx-opacity: 0.4;    
+}
+
+.listCellText{    
+    -fx-font-size: 1.5em;
+    -fx-text-fill: #888;
+    -fx-font-family: "Roboco";  
+    -fx-font-color: white;
+}

@@ -6,6 +6,7 @@
 
 package GUI;
 import BLL.Global;
+import com.jfoenix.controls.JFXPopup;
 import com.sun.glass.ui.Window;
 import java.io.IOException;
 import javafx.application.Application;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -32,10 +34,8 @@ public class Main_1 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("view/Welcome.fxml"));       
-
-        Scene scene = new Scene(root, 960, 660);    
-
+        Parent root = FXMLLoader.load(getClass().getResource("view/Setting.fxml"));       
+        Scene scene = new Scene(root, 960, 660);   
         primaryStage.setScene(scene);
         root.setOnMousePressed(e -> {
            xOffSet = e.getSceneX();
@@ -50,7 +50,7 @@ public class Main_1 extends Application {
             primaryStage.setOpacity(1.0f);
         });
         
-       
+
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setResizable(false);
         primaryStage.show();
