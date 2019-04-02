@@ -11,7 +11,10 @@ and open the template in the editor.
     -fx-border-width: 1 1 1 1;
     -fx-border-radius: 10;
 }
-
+.back_ground{
+    -fx-border-width: 1 1 1 1;
+    -fx-border-radius: 10;
+}
 .button{
     -fx-background-color: transparent;
     -fx-border-color:white;
@@ -49,6 +52,7 @@ and open the template in the editor.
     -fx-font-size: 18;
     -fx-font-color: white;
     -fx-text-fill: white;
+   -fx-border-width: 0 0 0 0;
 }
 .setting_button{
     -fx-background-image: url('/images/setting.jpg');
@@ -59,5 +63,18 @@ and open the template in the editor.
     -fx-text-fill: white;
     -fx-font-size: 18;
     
+}
+.comboBox{
+  -fx-background-color:  PINK;
+}
+.comboBox{
+     -fx-background-color:  WHITE;
+    -fx-text-fill: RED;
+}
+.grid{
+   -fx-background-image: url('/images/background2.png');
+   -fx-border-radius: 10px;
+   -fx-border-width: 1 1 1 1;
+   -fx-border-color: white;
 }
 
