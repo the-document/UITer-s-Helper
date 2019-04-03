@@ -6,11 +6,13 @@
 package uiters.helper;
 
 import BLL.LopHocBLL;
+import BLL.MonHocBLL;
 import BLL.MyFile;
 import BLL.ThuatToanTaoTKB;
 import static BLL.ThuatToanTaoTKB.Try;
 import static BLL.ThuatToanTaoTKB.init;
 import DTO.LopHoc;
+import DTO.MonHoc;
 import DTO.TimeTable;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -35,12 +37,12 @@ public class UITersHelper {
         //myFile.ExportConsole(myFile.GetListCourseTheoryOfEducationProgram("*"));
         
        
-        LopHocBLL lhbll=new LopHocBLL();
+       // LopHocBLL lhbll=new LopHocBLL();
         //lhbll.DeleteAllData();
         
         //lhbll.SaveAllLopHoc(myFile.GetListCourseTheoryOfEducationProgram("*"));
         //lhbll.SaveAllLopHoc(myFile.GetListCoursePracticeOfEducationProgram("*"));
-        lhbll.InsertLopHoc(new LopHoc("TEST.J00","CSDL","Nguyễn Hồng Phúc","12/04/2012","13/5/2018","12345","5","B114","CQUI","LT"));
+        //lhbll.InsertLopHoc(new LopHoc("TEST.J00","CSDL","Nguyễn Hồng Phúc","12/04/2012","13/5/2018","12345","5","B114","CQUI","LT"));
 //        //lhbll.DeleteAllData();
 
 //            List<String> dsMaLop=new ArrayList<>();
@@ -62,5 +64,13 @@ public class UITersHelper {
 //            System.out.println("===============================================\n");
 //            System.out.println("===============================================\n");
 //        }
+
+        MonHocBLL mhbll=new MonHocBLL();
+        List<MonHoc> dsMonHocGoiY=new ArrayList<MonHoc>();
+        dsMonHocGoiY= mhbll.GetAllLopHoc("18520951", "KTPM", 1) ;
+        
+        for (MonHoc monHoc : dsMonHocGoiY) {
+            System.out.println(monHoc.toString());
+        }
     }
 }
