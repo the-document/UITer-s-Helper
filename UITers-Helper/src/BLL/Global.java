@@ -95,6 +95,7 @@ public class Global {
         fade_trands.setOnFinished( e -> {
             try {
                  System.exit(0);
+                
             } catch (Exception ex) {
                 Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -138,7 +139,18 @@ public class Global {
              btn.setStyle("-fx-background-color : transparent");
         });
     }
-
+    static public void AnimationMouseSelectedButton(JFXButton btn, String color)
+    {
+        
+        btn.setStyle("-fx-background-color : " + color);
     
+    }
+    static public void AnimationMouseDropButton(JFXButton btn1, JFXButton btn2)
+    {
+       
+       btn1.setStyle("-fx-background-color : transparent");
+       btn2.setStyle("-fx-background-color : transparent");
+            
+    }
 }
 

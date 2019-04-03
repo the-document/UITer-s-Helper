@@ -29,7 +29,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
@@ -83,13 +85,16 @@ public class LoginController implements Initializable {
         window.setScene(tableViewScene);
         Global.SetStageDrag(root, window, event);
         window.show();
+        
+        
+       
+        
     }
-    
-   
-  
+    @FXML
     public void btn_exitClick (ActionEvent event) throws Exception
     {
         Global.ExitEvent(AnchorPaneMain);
+        
     }
     public void btn_minimizeClick (ActionEvent event) throws Exception
     {

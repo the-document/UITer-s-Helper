@@ -27,7 +27,7 @@
          <left>
             <VBox maxWidth="290.0" minWidth="290.0" prefHeight="589.0" prefWidth="290.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" maxWidth="290.0" minWidth="290.0" prefHeight="40.0" prefWidth="290.0" text="Settings" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" maxWidth="290.0" minWidth="290.0" prefHeight="40.0" prefWidth="290.0" text="Cài đặt" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -46,12 +46,12 @@
                      </VBox.margin></ImageView>
                   <HBox maxHeight="40.0" maxWidth="290.0" minHeight="40.0" minWidth="290.0" prefHeight="40.0" prefWidth="290.0">
                      <children>
-                        <JFXButton maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Select" />
+                        <JFXButton fx:id="btn_select_images" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_select_imagesClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Chọn" />
                         <Region prefHeight="35.0" prefWidth="99.0" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets bottom="10.0" />
                            </HBox.margin></Region>
-                        <Label prefHeight="43.0" prefWidth="115.0" stylesheets="@../css/control.css" text="Name_picture" />
+                        <Label fx:id="lb_name_picture" prefHeight="43.0" prefWidth="115.0" stylesheets="@../css/control.css" text="Name_picture" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
@@ -62,7 +62,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Line>
-                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="270.0" minHeight="40.0" minWidth="270.0" prefHeight="40.0" prefWidth="270.0" text="Language" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="270.0" minHeight="40.0" minWidth="270.0" prefHeight="40.0" prefWidth="270.0" text="Ngôn ngữ" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -72,24 +72,19 @@
                   </Label>
                   <Region prefHeight="13.0" prefWidth="313.0" />
                   <HBox maxHeight="40.0" maxWidth="270.0" minHeight="40.0" minWidth="270.0" prefHeight="40.0" prefWidth="270.0">
-                     <children>
-                        <JFXButton maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="English" />
-                        <Region prefHeight="55.0" prefWidth="38.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin></Region>
-                        <JFXButton maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Tiếng việt" />
-                     </children>
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
+                     <children>
+                        <JFXToggleButton fx:id="tg_language" alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="200.0" minHeight="40.0" minWidth="200.0" prefHeight="40.0" prefWidth="200.0" selected="true" styleClass="toggle_button" stylesheets="@../css/control.css" text="Tiếng Việt" toggleColor="WHITE" toggleLineColor="#12d72f" unToggleLineColor="#b91a1a" />
+                     </children>
                   </HBox>
                   <Line endX="250.0" stroke="WHITE">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Line>
-                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="270.0" minHeight="40.0" minWidth="270.0" prefHeight="40.0" prefWidth="270.0" text="Language" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="270.0" minHeight="40.0" minWidth="270.0" prefHeight="40.0" prefWidth="270.0" text="Cài đặt khác" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -100,11 +95,11 @@
                   <Region prefHeight="13.0" prefWidth="313.0" />
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <JFXToggleButton alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="200.0" minHeight="40.0" minWidth="200.0" prefHeight="40.0" prefWidth="200.0" selected="true" styleClass="toggle_button" stylesheets="@../css/control.css" text="Start with OS" toggleColor="WHITE" toggleLineColor="#12d72f" unToggleLineColor="#b91a1a">
+                        <JFXToggleButton fx:id="tg_start_with_os" alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="200.0" minHeight="40.0" minWidth="200.0" prefHeight="40.0" prefWidth="200.0" selected="true" styleClass="toggle_button" stylesheets="@../css/control.css" text="Start with OS" toggleColor="WHITE" toggleLineColor="#12d72f" unToggleLineColor="#b91a1a">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin></JFXToggleButton>
-                        <JFXToggleButton alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="200.0" minHeight="40.0" minWidth="200.0" prefHeight="40.0" prefWidth="200.0" styleClass="toggle_button" stylesheets="@../css/control.css" text="Notification" toggleColor="WHITE" toggleLineColor="#12d72f" unToggleLineColor="#b91a1a">
+                        <JFXToggleButton fx:id="tg_turn_nofi" alignment="CENTER_LEFT" maxHeight="40.0" maxWidth="200.0" minHeight="40.0" minWidth="200.0" prefHeight="40.0" prefWidth="200.0" styleClass="toggle_button" stylesheets="@../css/control.css" text="Notification" toggleColor="WHITE" toggleLineColor="#12d72f" unToggleLineColor="#b91a1a">
                            <VBox.margin>
                               <Insets bottom="10.0" top="10.0" />
                            </VBox.margin></JFXToggleButton>
@@ -119,7 +114,7 @@
          <center>
             <VBox maxWidth="290.0" minWidth="290.0" prefHeight="605.0" prefWidth="290.0" BorderPane.alignment="TOP_LEFT">
                <children>
-                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="290.0" minHeight="40.0" minWidth="290.0" prefHeight="40.0" prefWidth="290.0" text="Rington" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="290.0" minHeight="40.0" minWidth="290.0" prefHeight="40.0" prefWidth="290.0" text="Nhạc chuông" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -132,7 +127,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </VBox.margin>
                   </Line>
-                  <JFXButton maxWidth="270.0" minWidth="270.0" prefHeight="100.0" prefWidth="270.0" styleClass="button2" stylesheets="@../css/control.css">
+                  <JFXButton maxWidth="270.0" minWidth="270.0" prefHeight="80.0" prefWidth="270.0" styleClass="button2" stylesheets="@../css/control.css">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin></JFXButton>
@@ -143,7 +138,7 @@
                               <Insets />
                            </HBox.margin>
                         </Region>
-                        <JFXButton maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css">
+                        <JFXButton fx:id="btn_select_rington" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_select_ringtonClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Chọn">
                            <HBox.margin>
                               <Insets bottom="10.0" />
                            </HBox.margin></JFXButton>
@@ -157,7 +152,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </Line>
-                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="270.0" minHeight="40.0" minWidth="270.0" prefHeight="40.0" prefWidth="270.0" text="Rington 's volume" textAlignment="CENTER" textFill="WHITE">
+                  <Label alignment="CENTER" maxHeight="40.0" maxWidth="270.0" minHeight="40.0" minWidth="270.0" prefHeight="40.0" prefWidth="270.0" text="Âm lượng" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -165,7 +160,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXSlider maxHeight="80.0" maxWidth="270.0" minHeight="80.0" minWidth="270.0" prefHeight="80.0" prefWidth="270.0" />
+                  <JFXSlider fx:id="sl_volume" maxHeight="80.0" maxWidth="270.0" minHeight="80.0" minWidth="270.0" onMouseClicked="#sl_volumeClick" prefHeight="80.0" prefWidth="270.0" />
                </children>
                <BorderPane.margin>
                   <Insets top="20.0" />

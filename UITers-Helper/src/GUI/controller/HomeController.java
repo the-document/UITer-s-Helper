@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -44,6 +45,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 
 /**
@@ -119,13 +121,13 @@ public class HomeController implements Initializable {
     public void btn_createClick(ActionEvent event) throws Exception {
         form = "../view/SelectSemester.fxml";
         madeFadeOut(event);
-   
+
     }
 
     public void btn_backClick(ActionEvent event) throws Exception {
         form = "../view/Login.fxml";
         madeFadeOut(event);
-       
+
     }
 
     public void btn_exitClick(ActionEvent event) throws Exception {
@@ -173,14 +175,14 @@ public class HomeController implements Initializable {
         btn_ok.setOnAction(e -> {
 
             dialog.close();
-             
+
         });
         content.setActions(btn_ok);
         dialog.setOnDialogClosed(e -> {
             stack_pane.setDisable(true);
-            
+
         });
-      
+
         dialog.show();
     }
 
@@ -191,9 +193,20 @@ public class HomeController implements Initializable {
             lv_news.getItems().addAll(lb);
         }
         lv_news.setOnMouseClicked(e -> {
-            Label arg_1 = lv_news.getSelectionModel().getSelectedItem();
-            // Xử lý các tham số đầu vào cho dialog tại đây
-            Dialog(arg_1);
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(getClass().getResource("../view/Subscribed.fxml"));
+            Scene scene = null;
+            try {
+                scene = new Scene(fxmlLoader.load(), 400, 500);
+            } catch (IOException ex) {
+                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            Stage stage = new Stage();
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setResizable(false);
+            stage.setScene(scene);
+            stage.show();
 
         });
     }
