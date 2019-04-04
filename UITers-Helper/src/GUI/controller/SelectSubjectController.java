@@ -6,6 +6,8 @@
 package GUI.controller;
 
 import BLL.Global;
+import BLL.MonHocBLL;
+import DTO.MonHoc;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
@@ -13,6 +15,9 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.java.swing.plaf.windows.resources.windows;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -132,17 +137,43 @@ public class SelectSubjectController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Global.AnimationShow(AnchorPaneMain);
         Global.AnimationMouseDragButton(btn_exit, "red");
-        lv_subjectClick();
-    }
-    public void lv_subjectClick() {
-        // Sự kiện thêm item
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("HIT00" + i);
-            lv_subject.getItems().addAll(lb);
+        
+        try {
+            lv_subjectClick();
+        } catch (SQLException ex) {
+            Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
         }
-         lv_subject.setOnMouseClicked(e -> {
-            
-        });
+    }
+    
+    public void lv_subjectClick() throws SQLException {
+        // Sự kiện thêm item
+
+        try
+        {
+            MonHocBLL mhbll = new MonHocBLL();
+            List<MonHoc> lsMonHocs;
+            lsMonHocs = mhbll.GetAllLopHoc(Global.MSSV, Global.NGANHHOC, Global.HOCKY);
+            if(lsMonHocs!=null)
+            for (MonHoc m : lsMonHocs) {
+                Label MonHocLabel = new Label(m.getMaMonHoc() + " - " + m.getTenMonHoc());
+                lv_subject.getItems().addAll(MonHocLabel);
+            }
+            else
+            {
+                Label MonHocLabel = new Label("No connect");
+                lv_subject.getItems().addAll(MonHocLabel);      
+            }
+        }
+        catch (SQLException e)
+        {
+            Label MonHocLabel = new Label("No connect");
+            lv_subject.getItems().addAll(MonHocLabel);         
+        }
+       
+        
+//        lv_subject.setOnMouseClicked(e -> {
+//
+//        });
     }
 
 }

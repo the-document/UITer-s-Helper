@@ -1,9 +1,14 @@
 package GUI.controller;
 
 import BLL.Global;
+import BLL.HocKyBLL;
+import DTO.HocKy;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,7 +61,12 @@ public class SelectSemesterController implements Initializable {
         
         Global.AnimationShow(AnchorPaneMain);
         Global.AnimationMouseDragButton(btn_exit, "red");
-        lv_semesterClick();
+        
+        try {
+            lv_semesterClick();
+        } catch (SQLException ex) {
+            Logger.getLogger(SelectSemesterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -96,14 +106,20 @@ public class SelectSemesterController implements Initializable {
         form = "../view/SelectSubject.fxml";
         madeFadeOut(event);
     }
-    public void lv_semesterClick() {
-        // Sự kiện thêm item
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("Học kì" + i);
+    public void lv_semesterClick() throws SQLException {
+        // Sự kiện thêm item   
+        HocKyBLL hkbll=new HocKyBLL();
+        List<HocKy> lsHocKy= hkbll.GetAllHocKy();
+        
+        for (HocKy hocKy : lsHocKy) {
+            Label lb = new Label(hocKy.getTenHK());
             lv_semester.getItems().addAll(lb);
         }
+        
         lv_semester.setOnMouseClicked(e -> {
-            
+          //==============================
+          // init hoc ky for Global here
+          //==============================
         });
     }
 }
