@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXChipView?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -16,14 +17,15 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectMethodCreateController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectAdvancedController">
     <children>
-      <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
       <ImageView fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
+      <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
+      <JFXButton fx:id="btn_nexxt" layoutX="855.0" layoutY="609.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="12.0" onAction="#btn_nexxtClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Tiếp tục" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <VBox prefHeight="180.0" prefWidth="960.0">
          <children>
             <HBox maxWidth="960.0" minWidth="960.0" prefHeight="40.0" prefWidth="960.0">
@@ -60,14 +62,16 @@
                   <Insets left="20.0" />
                </VBox.margin>
             </Line>
-            <JFXChipView fx:id="cv_subject" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="904.0" styleClass="button" stylesheets="@../css/control.css">
+            <JFXChipView fx:id="cv_subject" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="360.0" styleClass="chip-view" stylesheets="@../css/chipview.css">
                <VBox.margin>
-                  <Insets left="20.0" right="20.0" top="20.0" />
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </VBox.margin>
+               <cursor>
+                  <Cursor fx:constant="DEFAULT" />
+               </cursor>
             </JFXChipView>
          </children>
       </VBox>
-      <JFXButton fx:id="btn_next" layoutX="818.0" layoutY="598.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_nextClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Tiếp" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="200.0" layoutX="50.0" layoutY="180.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="136.6" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="180.0" layoutX="24.0" layoutY="401.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="136.6" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="400.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="200.0" layoutX="227.0" layoutY="183.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="136.6" AnchorPane.leftAnchor="176.6" AnchorPane.topAnchor="180.0" />
@@ -104,7 +108,7 @@
       <VBox layoutX="32.0" layoutY="190.0" prefHeight="200.0" prefWidth="136.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="180.0">
          <children>
             <Label alignment="CENTER" prefHeight="40.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Thứ 2" />
-            <Label fx:id="lb_t2_123" alignment="CENTER" maxWidth="136.6" minWidth="136.6" prefHeight="103.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Label" />
+            <Label fx:id="lb_t2_123" alignment="CENTER" maxWidth="136.6" minWidth="136.6" prefHeight="103.0" prefWidth="136.6" styleClass="label2" stylesheets="@../css/control.css" text="Label" />
             <Label fx:id="lb_t2_45" alignment="CENTER" maxHeight="60.0" maxWidth="136.6" minHeight="60.0" minWidth="136.6" prefHeight="60.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Label">
                <VBox.margin>
                   <Insets />
@@ -175,16 +179,6 @@
             </Label>
          </children>
       </VBox>
-      <VBox layoutX="342.0" layoutY="410.0" prefHeight="180.0" prefWidth="136.0" AnchorPane.leftAnchor="646.4" AnchorPane.topAnchor="400.0">
-         <children>
-            <Label fx:id="lb_t6_678" alignment="CENTER" maxWidth="136.6" minWidth="136.6" prefHeight="103.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Label" />
-            <Label fx:id="lb_t6_910" alignment="CENTER" maxHeight="60.0" maxWidth="136.6" minHeight="60.0" minWidth="136.6" prefHeight="60.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Label">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-         </children>
-      </VBox>
       <VBox layoutX="500.0" layoutY="190.0" prefHeight="200.0" prefWidth="136.0" AnchorPane.leftAnchor="803.0" AnchorPane.topAnchor="180.0">
          <children>
             <Label alignment="CENTER" prefHeight="40.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Thứ 7" />
@@ -194,6 +188,16 @@
                   <Insets />
                </VBox.margin>
             </Label>
+            <VBox prefHeight="180.0" prefWidth="136.0">
+               <children>
+                  <Label fx:id="lb_t6_678" alignment="CENTER" maxWidth="136.6" minWidth="136.6" prefHeight="103.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Label" />
+                  <Label fx:id="lb_t6_910" alignment="CENTER" maxHeight="60.0" maxWidth="136.6" minHeight="60.0" minWidth="136.6" prefHeight="60.0" prefWidth="136.6" stylesheets="@../css/control.css" text="Label">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </VBox>
       <VBox layoutX="500.0" layoutY="410.0" prefHeight="180.0" prefWidth="136.0" AnchorPane.leftAnchor="803.0" AnchorPane.topAnchor="400.0">
@@ -206,5 +210,6 @@
             </Label>
          </children>
       </VBox>
+      <JFXButton fx:id="btn_test" layoutX="496.0" layoutY="588.0" stylesheets="@../css/control.css" />
    </children>
 </AnchorPane>

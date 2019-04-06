@@ -8,6 +8,7 @@ package GUI.controller;
 import BLL.Global;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXChipView;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -48,10 +49,10 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_exit;
 
     @FXML
-    private JFXChipView<?> cv_subject;
+    private JFXChipView<JFXButton> cv_subject;
 
     @FXML
-    private JFXButton btn_next;
+    private JFXButton btn_nexxt;
 
     @FXML
     private Label lb_t3_123;
@@ -124,7 +125,18 @@ public class SelectAdvancedController implements Initializable {
 
     @FXML
     private Label lb_t7_910;
+    
+    @FXML
+    private JFXButton btn_test;
 
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        Global.AnimationShow(AnchorPaneMain);
+        Global.AnimationMouseDragButton(btn_exit, "red");
+        initChipvView();
+        initbtn_test();
+    }
+    
     @FXML
     void btn_backClick(ActionEvent event) {
         form = "../view/SelectMethodCreate.fxml";
@@ -135,18 +147,18 @@ public class SelectAdvancedController implements Initializable {
     @FXML
     void btn_exitClick(ActionEvent event) {
         Global.ExitEvent(AnchorPaneMain);
-
+        
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-
+        
         Global.MinimizeEvent(event, AnchorPaneMain);
     }
 
-    @FXML
-    void btn_nextClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+    public void btn_nexxtClick(ActionEvent event) throws IOException{
+        form = "../view/SelectDayOf.fxml";
+        madeFadeOut(event);
     }
 
     public void madeFadeOut(ActionEvent event) {
@@ -173,11 +185,40 @@ public class SelectAdvancedController implements Initializable {
         window.setScene(tableViewScene);
         Global.SetStageDrag(root, window, event);
         window.show();
+        
     }
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
-        Global.AnimationMouseDragButton(btn_exit, "red");
+  
+    public void initChipvView()
+    {
+        JFXButton btn = new JFXButton("hai");
+        
+        cv_subject.getChips().add(btn);
+        
+        btn.setOnAction( e -> {
+            lb_t2_45.setStyle("-fx-background-color : BLUE");
+        });
+        cv_subject.setOnMousePressed(e -> {
+            lb_t2_123.setStyle("-fx-background-color : RED");
+        });
+        cv_subject.setOnMouseReleased( e -> {
+            
+            lb_t2_123.setStyle("-fx-background-color : transperant");
+        });
+       
+        
+        
     }
-
+    public void initbtn_test()
+    {
+        btn_test.setOnMouseReleased(e -> {
+               lb_t2_123.setStyle("-fx-background-color : transperant");
+                 btn_test.setVisible(false);
+        });
+        btn_test.setOnMousePressed(e -> {
+            lb_t2_123.setStyle("-fx-background-color : RED");
+           
+        });
+       
+    }
+    
 }
