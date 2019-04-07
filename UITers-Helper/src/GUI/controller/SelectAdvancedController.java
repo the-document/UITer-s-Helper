@@ -21,23 +21,31 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class SelectAdvancedController implements Initializable {
-    String form;
+
     Stage window;
-    
-    
-    
+    String form;
+    String style = "-fx-border-color : white";
+    String style2 = "-fx-border-color : transparent";
     @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
     private StackPane stack_pane;
+
+    @FXML
+    private JFXButton btn_next;
 
     @FXML
     private JFXButton btn_back;
@@ -49,118 +57,110 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_exit;
 
     @FXML
-    private JFXChipView<JFXButton> cv_subject;
+    private JFXButton btn_t3_123;
 
     @FXML
-    private JFXButton btn_nexxt;
+    private JFXButton btn_t3_45;
 
     @FXML
-    private Label lb_t3_123;
+    private JFXButton btn_t2_678;
 
     @FXML
-    private Label lb_t3_45;
+    private JFXButton btn_t2_910;
 
     @FXML
-    private Label lb_t2_678;
+    private JFXButton btn_t2_123;
 
     @FXML
-    private Label lb_t2_910;
+    private JFXButton btn_t2_45;
 
     @FXML
-    private Label lb_t2_123;
+    private JFXButton btn_t3_678;
 
     @FXML
-    private Label lb_t2_45;
+    private JFXButton btn_t3_910;
 
     @FXML
-    private Label lb_t3_678;
+    private JFXButton btn_t4_123;
 
     @FXML
-    private Label lb_t3_910;
+    private JFXButton btn_t4_45;
 
     @FXML
-    private Label lb_t4_123;
+    private JFXButton btn_t4_678;
 
     @FXML
-    private Label lb_t4_45;
+    private JFXButton btn_t4_910;
 
     @FXML
-    private Label lb_t4_678;
+    private JFXButton btn_t5_123;
 
     @FXML
-    private Label lb_t4_910;
+    private JFXButton btn_t5_45;
 
     @FXML
-    private Label lb_t5_123;
+    private JFXButton btn_t5_678;
 
     @FXML
-    private Label lb_t5_45;
+    private JFXButton btn_t5_910;
 
     @FXML
-    private Label lb_t5_678;
+    private JFXButton btn_t6_678;
 
     @FXML
-    private Label lb_t5_910;
+    private JFXButton btn_t6_910;
 
     @FXML
-    private Label lb_t6_123;
+    private JFXButton btn_t6_123;
 
     @FXML
-    private Label lb_t6_45;
+    private JFXButton btn_t6_45;
 
     @FXML
-    private Label lb_t6_678;
+    private JFXButton btn_t7_123;
 
     @FXML
-    private Label lb_t6_910;
+    private JFXButton btn_t7_45;
 
     @FXML
-    private Label lb_t7_123;
+    private JFXButton btn_t7_678;
 
     @FXML
-    private Label lb_t7_45;
+    private JFXButton btn_t7_910;
 
     @FXML
-    private Label lb_t7_678;
+    private ScrollPane pane_subject;
 
-    @FXML
-    private Label lb_t7_910;
-    
-    @FXML
-    private JFXButton btn_test;
+   
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
-        Global.AnimationMouseDragButton(btn_exit, "red");
-        initChipvView();
-        initbtn_test();
-    }
-    
-    @FXML
-    void btn_backClick(ActionEvent event) {
-        form = "../view/SelectMethodCreate.fxml";
-        madeFadeOut(event);
-
-    }
-
-    @FXML
-    void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
-        
+        initArrButton();
+        pane_subject.setContent(null);
+        HBox root = new HBox();
+        for (int i = 0; i< 5; i++)
+        {
+            Button btn = new Button();
+            btn.setText("nuts thuws" + i);
+            btn.setMaxSize(40, 40);
+            btn.setMinSize(40, 40);
+            initButton(btn);
+            root.getChildren().add(btn);
+            
+        }
+        pane_subject.setContent(root);
+       
     }
 
-    @FXML
-    void btn_minimizeClick(ActionEvent event) {
-        
-        Global.MinimizeEvent(event, AnchorPaneMain);
+    public void initButton(Button btn)
+    {
+        btn.setOnMouseDragged(e -> btn_t2_123.setStyle(style));
+        btn.setOnMouseReleased( e -> {
+          
+            btn_t2_123.setStyle(style2);
+            btn.setStyle(style);
+        });
     }
-
-    public void btn_nexxtClick(ActionEvent event) throws IOException{
-        form = "../view/SelectDayOf.fxml";
-        madeFadeOut(event);
-    }
-
     public void madeFadeOut(ActionEvent event) {
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
@@ -185,40 +185,73 @@ public class SelectAdvancedController implements Initializable {
         window.setScene(tableViewScene);
         Global.SetStageDrag(root, window, event);
         window.show();
-        
+
     }
-  
-    public void initChipvView()
-    {
-        JFXButton btn = new JFXButton("hai");
-        
-        cv_subject.getChips().add(btn);
-        
-        btn.setOnAction( e -> {
-            lb_t2_45.setStyle("-fx-background-color : BLUE");
-        });
-        cv_subject.setOnMousePressed(e -> {
-            lb_t2_123.setStyle("-fx-background-color : RED");
-        });
-        cv_subject.setOnMouseReleased( e -> {
-            
-            lb_t2_123.setStyle("-fx-background-color : transperant");
-        });
-       
-        
-        
+
+    @FXML
+    void btn_backClick(ActionEvent event) {
+        form = "../view/SelectMethodCreate.fxml";
+        madeFadeOut(event);
     }
-    public void initbtn_test()
-    {
-        btn_test.setOnMouseReleased(e -> {
-               lb_t2_123.setStyle("-fx-background-color : transperant");
-                 btn_test.setVisible(false);
-        });
-        btn_test.setOnMousePressed(e -> {
-            lb_t2_123.setStyle("-fx-background-color : RED");
-           
-        });
-       
+
+    @FXML
+    void btn_exitClick(ActionEvent event) {
+        Global.ExitEvent(AnchorPaneMain);
     }
-    
+
+    @FXML
+    void btn_minimizeClick(ActionEvent event) {
+
+        Global.MinimizeEvent(event, AnchorPaneMain);
+    }
+
+    @FXML
+    void btn_nextClick(ActionEvent event) {
+        form = "../view/Home.fxml";
+        madeFadeOut(event);
+    }
+
+    public void initButtonClick(JFXButton btn) {
+
+        btn.setOnAction(e -> {
+            if (btn.getStyle().compareTo(style) == 0) {
+                btn.setStyle(style2);
+
+            } else {
+
+                btn.setStyle(style);
+
+            }
+
+        });
+
+    }
+
+    public void initArrButton() {
+        initButtonClick(btn_t2_123);
+        initButtonClick(btn_t2_45);
+        initButtonClick(btn_t2_678);
+        initButtonClick(btn_t2_910);
+        initButtonClick(btn_t3_123);
+        initButtonClick(btn_t3_45);
+        initButtonClick(btn_t3_678);
+        initButtonClick(btn_t3_910);
+        initButtonClick(btn_t4_123);
+        initButtonClick(btn_t4_45);
+        initButtonClick(btn_t4_678);
+        initButtonClick(btn_t4_910);
+        initButtonClick(btn_t5_123);
+        initButtonClick(btn_t5_45);
+        initButtonClick(btn_t5_678);
+        initButtonClick(btn_t5_910);
+        initButtonClick(btn_t6_123);
+        initButtonClick(btn_t6_45);
+        initButtonClick(btn_t6_678);
+        initButtonClick(btn_t6_910);
+        initButtonClick(btn_t7_123);
+        initButtonClick(btn_t7_45);
+        initButtonClick(btn_t7_678);
+        initButtonClick(btn_t7_910);
+    }
+
 }

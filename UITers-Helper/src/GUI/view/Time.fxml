@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxHeight="200.0" maxWidth="220.0" minHeight="200.0" minWidth="220.0" prefHeight="200.0" prefWidth="220.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="GUI.controller.TimeController">
+   <children>
+      <JFXDatePicker fx:id="pk_date" defaultColor="BLACK" layoutX="14.0" layoutY="14.0" maxHeight="40.0" maxWidth="180.0" minHeight="40.0" minWidth="180.0" prefHeight="40.0" prefWidth="180.0" promptText="Chọn ngày" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
+      <JFXTimePicker fx:id="pk_time" defaultColor="BLACK" layoutX="25.0" layoutY="81.0" maxHeight="40.0" maxWidth="180.0" minHeight="40.0" minWidth="180.0" prefHeight="40.0" prefWidth="180.0" promptText="Chọn thời gian" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0" />
+      <JFXButton fx:id="btn_ok" layoutX="131.0" layoutY="139.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_okClick" prefHeight="40.0" prefWidth="120.0" style="-fx-border-color: black;" text="Ok" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="140.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

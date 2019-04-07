@@ -5,7 +5,9 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ContextMenu?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -69,7 +71,14 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" />
                      </VBox.margin>
                   </Line>
-                  <ScrollPane fx:id="pane_lichtrinh" prefHeight="130.0" prefWidth="460.0" />
+                  <ScrollPane fx:id="pane_lichtrinh" prefHeight="130.0" prefWidth="460.0">
+                     <contextMenu>
+                        <ContextMenu fx:id="cm_menu">
+                          <items>
+                            <MenuItem mnemonicParsing="false" text="Unspecified Action" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu></ScrollPane>
                   <JFXButton layoutX="10.0" layoutY="10.0" maxHeight="40.0" maxWidth="450.0" minHeight="40.0" minWidth="450.0" prefHeight="40.0" prefWidth="450.0" text="Thêm lịch trình" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
@@ -91,7 +100,7 @@
                               <Font size="18.0" />
                            </font>
                         </JFXButton>
-                        <JFXTextField fx:id="txt_decription" maxHeight="80.0" maxWidth="193.0" minHeight="80.0" minWidth="120.0" prefHeight="80.0" prefWidth="193.0" promptText="Nhập thông tin" unFocusColor="WHITE">
+                        <JFXTextField fx:id="txt_decription" maxHeight="80.0" maxWidth="193.0" minHeight="80.0" minWidth="120.0" prefHeight="80.0" prefWidth="193.0" promptText="Nhập thông tin" stylesheets="@../css/textfield.css" unFocusColor="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -101,7 +110,7 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <JFXButton fx:id="btn_add" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Thêm">
+                  <JFXButton fx:id="btn_add" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_addClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Thêm">
                      <VBox.margin>
                         <Insets right="20.0" />
                      </VBox.margin>

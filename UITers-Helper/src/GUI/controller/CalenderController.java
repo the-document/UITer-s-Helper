@@ -25,6 +25,7 @@ import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,10 +35,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -243,6 +248,9 @@ public class CalenderController implements Initializable {
     private ScrollPane pane_lichtrinh;
 
     @FXML
+    private ContextMenu cm_menu;
+    
+    @FXML
     void btn_backClick(ActionEvent event) {
         form = "../view/Login.fxml";
         madeFadeOut(event);
@@ -266,18 +274,38 @@ public class CalenderController implements Initializable {
 
     @FXML
     void btn_timeClick(ActionEvent event) throws IOException {
-        AnchorPane pane = FXMLLoader.load(getClass().getResource("view/Login.fxml"));
-        AnchorPaneMain.getChildren().addAll(pane);
-//        Popup popup = new Popup();
-//       
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI.view/Login.fxml"));
-//        popup.getContent().add((Parent) loader.load());
-//        popup.show((Stage) AnchorPaneMain.getScene().getWindow());
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("../view/Time.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 200, 220);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
     void btn_locaClick(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("../view/Location.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 220, 230);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override
@@ -287,10 +315,42 @@ public class CalenderController implements Initializable {
         lv_locationClick();
         Global.AnimationMouseDragButton(btn_exit, "red");
         stack_pane.setDisable(true);
+       
         
+        // context menu
+        MenuItem lb_add = new MenuItem();
+        lb_add.setText("Thêm");
+        MenuItem lb_del = new MenuItem();
+        lb_del.setText("Xóa");
+        cm_menu.getItems().addAll(lb_add, lb_del);
+        
+        btn_add.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
 
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.SECONDARY)
+                {
+                    cm_menu.show(btn_add, event.getX(), event.getY());
+                }
+            }
+        
+        
+        });
+        btn_add.setContextMenu(cm_menu);
+        
+        
+        
+        
+        
     }
 
+    @FXML
+    void btn_addClick(ActionEvent event) {
+        
+    }
+    
+    
+    
     public void madeFadeOut(ActionEvent event) {
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
