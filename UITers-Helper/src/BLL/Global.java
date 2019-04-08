@@ -63,7 +63,7 @@ public class Global {
         root.setOnMouseDragged(e -> {
             window.setX(e.getScreenX() - xOffSet);
             window.setY(e.getScreenY() - yOffSet);
-            window.setOpacity(0.8f);
+            window.setOpacity(1.0f);
         });
         root.setOnMouseReleased(e -> {
             window.setOpacity(1.0f);

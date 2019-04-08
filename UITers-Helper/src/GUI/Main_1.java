@@ -34,7 +34,7 @@ public class Main_1 extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource("view/Calender.fxml"));       
+        Parent root = FXMLLoader.load(getClass().getResource("view/Welcome.fxml"));       
         Scene scene = new Scene(root, 960, 660);  
         primaryStage.setScene(scene);
         root.setOnMousePressed(e -> {
@@ -44,7 +44,7 @@ public class Main_1 extends Application {
         root.setOnMouseDragged(e -> {
             primaryStage.setX(e.getScreenX() - xOffSet);
             primaryStage.setY(e.getScreenY() - yOffSet);
-            primaryStage.setOpacity(0.8f);
+            primaryStage.setOpacity(1f);
         });
         root.setOnMouseReleased(e -> {
             primaryStage.setOpacity(1.0f);

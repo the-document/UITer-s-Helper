@@ -1,0 +1,27 @@
+.user{
+    -fx-background-image: url("../images/user2.png");
+    -fx-background-repeat: no-repeat;
+    -fx-back-ground-position: center center;
+    -fx-text-indent: 100%;
+    -fx-white-space: nowrap;
+    -fx-overflow: hidden;
+    -fx-background-color: transparent;
+}
+.pass{
+    -fx-background-image: url("../images/password.png");
+    -fx-background-repeat: no-repeat;
+    -fx-back-ground-position: center center;
+    -fx-text-indent: 100%;
+    -fx-white-space: nowrap;
+    -fx-overflow: hidden;
+    -fx-background-color: transparent;
+}
+.setting{
+    -fx-background-image: url("../images/setting.png");
+    -fx-background-repeat: no-repeat;
+    -fx-back-ground-position: center center;
+    -fx-text-indent: 100%;
+    -fx-white-space: nowrap;
+    -fx-overflow: hidden;
+    -fx-background-color: transparent;
+}
