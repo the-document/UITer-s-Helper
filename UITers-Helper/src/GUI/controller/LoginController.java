@@ -1,6 +1,6 @@
 package GUI.controller;
 
-/// import zone ///
+// <editor-fold desc="import zone">
 import BLL.Global;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,17 +28,17 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-/// import zone ///
+// </editor-fold>
 
 public class LoginController implements Initializable {
-    
-    /// static var zone ///
+
+    // <editor-fold desc="Static variables zone">
     String form;
     Stage window;
-    /// static var zone ///
-    
-    /// fxml var zone ///
-     @FXML
+    // </editor-fold>
+
+    // <editor-fold desc="FXML variables zone">
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -65,7 +66,7 @@ public class LoginController implements Initializable {
     private Hyperlink btn_lose;
 
     @FXML
-    private JFXButton btn_Login;
+    private JFXButton btn_login;
 
     @FXML
     private JFXCheckBox cb_remember;
@@ -73,9 +74,8 @@ public class LoginController implements Initializable {
     @FXML
     private Button btn_setting;
 
-    /// fxml var zone ///
-    
-    /// fxml function zone ///
+    // </editor-fold>
+    // <editor-fold desc="FXML functions zone">
     @FXML
     void btn_exitClick(ActionEvent event) {
         Global.ExitEvent(AnchorPaneMain);
@@ -85,28 +85,26 @@ public class LoginController implements Initializable {
     void btn_loginClick(ActionEvent event) {
         String user_name = txt_user.getText();
         String password = txt_password.getText();
-        /////////////////////////////
-        ///// Xử lý here ////////////
-        /////////////////////////////
-        
         stack_pane.setDisable(false);
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Thông báo"));
-        content.setBody(new Text("Đăng nhập thành công"));
-        JFXDialog dialog = new JFXDialog(stack_pane, content, JFXDialog.DialogTransition.CENTER);
-        JFXButton btn = new JFXButton("OK");
-        btn.setOnAction(e -> {
-           
-            dialog.close();
-            Parent root = null;
-            form = "../view/Home.fxml";
-            madeFadeOut(event);
-            Global.stack_link.push("../view/Home.fxml");
-           
-        });
-        content.setActions(btn);
-        dialog.setOnDialogClosed(e -> stack_pane.setDisable(true));
-        dialog.show();
+        if (user_name.compareTo("123") == 0) {
+            
+            JFXButton btn = new JFXButton("OK");
+            btn.setOnAction(e -> {
+                form = "../view/Home.fxml";
+                madeFadeOut(event);
+               
+            });
+            
+            JFXDialog dialog = new JFXDialog();
+            dialog = Global.getDialogChange(stack_pane, "Thông báo", "Đăng nhập thành công", btn);
+            dialog.show();
+        }
+        else
+        {
+     
+            JFXDialog dialog = Global.getDialog(stack_pane, "Thông báo", "Đăng nhập thất bại");
+            dialog.show();
+        }
     }
 
     @FXML
@@ -127,33 +125,46 @@ public class LoginController implements Initializable {
 
     @FXML
     void cb_rememberCheck(ActionEvent event) {
-         if (cb_remember.isSelected())
-        {
+        if (cb_remember.isSelected()) {
             cb_remember.setText("Đã ghi nhớ");
-        }
-        else
-        {
+        } else {
             cb_remember.setText("Nhớ mật khẩu");
         }
     }
-    
-    /// fxml function zone ///
-    
 
+    // </editor-fold>
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Global.AnimationShow(AnchorPaneMain);
-        stack_pane.setDisable(true);
-    }    
-    public void madeFadeOut(ActionEvent event) 
+        stack_pane.setDisable(true);Platform.runLater(AnchorPaneMain::requestFocus);
+        setKeyEvent();
+    }
+    
+    public void setKeyEvent()
     {
+        AnchorPaneMain.setOnKeyPressed( e -> {
+            switch (e.getCode()) {
+            case ENTER:
+                btn_login.fire();
+                break;
+            case ESCAPE:
+                btn_minimize.fire();
+                break;
+            default:
+                break;
+        }
+        });
+    }
+
+    public void madeFadeOut(ActionEvent event) {
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
         fade_trands.setFromValue(1);
         fade_trands.setToValue(0);
         fade_trands.play();
-        fade_trands.setOnFinished( e -> {
+        fade_trands.setOnFinished(e -> {
             try {
                 LoadNextScene(event);
             } catch (Exception ex) {
@@ -161,19 +172,12 @@ public class LoginController implements Initializable {
             }
         });
     }
-    public void LoadNextScene(ActionEvent event) throws Exception
-    {
-        Parent root = FXMLLoader.load(getClass().getResource(form));      
-        Scene tableViewScene = new Scene(root);     
-        window = (Stage)((Node)event.getSource()).getScene().getWindow();    
+    public void LoadNextScene(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Scene tableViewScene = new Scene(root);
+        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         Global.SetStageDrag(root, window, event);
         window.show();
-        
-        
-       
-        
     }
- 
-  
 }

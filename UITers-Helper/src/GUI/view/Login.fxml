@@ -42,11 +42,11 @@
             </HBox>
          </top>
       </BorderPane>
-      <VBox layoutX="324.0" layoutY="172.0" prefHeight="347.0" prefWidth="325.0">
+      <VBox layoutX="317.0" layoutY="172.0" prefHeight="347.0" prefWidth="325.0" AnchorPane.leftAnchor="317.0" AnchorPane.rightAnchor="318.0">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@../css/header.css">
                <children>
-                  <Label text="Đăng nhập" textFill="WHITE">
+                  <Label alignment="CENTER" text="Đăng nhập" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -95,7 +95,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Hyperlink>
-                  <JFXButton fx:id="btn_Login" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_loginClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Đăng nhập" textFill="WHITE">
+                  <JFXButton fx:id="btn_login" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_loginClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Đăng nhập" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>

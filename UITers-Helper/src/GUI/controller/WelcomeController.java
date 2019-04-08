@@ -1,5 +1,6 @@
 package GUI.controller;
-/// import zone ///
+// <editor-fold desc="import zone">
+
 import BLL.Global;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -8,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,16 +21,17 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-/// import zone ///
+// </editor-fold>
 
 public class WelcomeController implements Initializable {
-    /// static var zone ///
+
+    // <editor-fold defaultstate="collapsed" desc="Static zone">
     Stage window;
     String form;
-    /// static var zone ///
-    
-    /// fxml var zone ///
-     @FXML
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="FXML variables zone">
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -42,9 +45,9 @@ public class WelcomeController implements Initializable {
 
     @FXML
     private JFXButton btn_exit;
-    /// fxml var zone ///
-    
-    /// fxml function zone ///
+     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="FXML functions zone">
     @FXML
     void btn_exitClick(ActionEvent event) {
         Global.ExitEvent(AnchorPaneMain);
@@ -53,29 +56,49 @@ public class WelcomeController implements Initializable {
     @FXML
     void btn_launchClick(ActionEvent event) {
         form = "../view/Login.fxml";
-        madeFadeOut(event); 
+        madeFadeOut(event);
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-         Global.MinimizeEvent(event, AnchorPaneMain);
+        Global.MinimizeEvent(event, AnchorPaneMain);
+
     }
-    
+
+     // </editor-fold>
+
+    ActionEvent ac_ev;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       Global.AnimationShow(AnchorPaneMain);
+        Global.AnimationShow(AnchorPaneMain);
+        Platform.runLater(AnchorPaneMain::requestFocus);
+        setKeyEvent();
     }
-    /// fxml function zone ///
     
-    public void madeFadeOut(ActionEvent event) 
+    public void setKeyEvent()
     {
+        AnchorPaneMain.setOnKeyPressed( e -> {
+            switch (e.getCode()) {
+            case ENTER:
+                btn_launch.fire();
+                break;
+            case ESCAPE:
+                btn_minimize.fire();
+                break;
+            default:
+                break;
+        }
+        });
+    }
+   
+    public void madeFadeOut(ActionEvent event) {
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
         fade_trands.setFromValue(1);
         fade_trands.setToValue(0);
         fade_trands.play();
-        fade_trands.setOnFinished( e -> {
+        fade_trands.setOnFinished(e -> {
             try {
                 LoadNextScene(event);
             } catch (Exception ex) {
@@ -83,16 +106,13 @@ public class WelcomeController implements Initializable {
             }
         });
     }
-    
-    public void LoadNextScene(ActionEvent event) throws Exception 
-    {      
-        Parent root = FXMLLoader.load(getClass().getResource(form));      
-        Scene tableViewScene = new Scene(root);     
-        window = (Stage)((Node)event.getSource()).getScene().getWindow();    
+    public void LoadNextScene(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Scene tableViewScene = new Scene(root);
+        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
         Global.SetStageDrag(root, window, event);
         window.show();
     }
- 
-          
+
 }

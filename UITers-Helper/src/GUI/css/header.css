@@ -7,8 +7,7 @@
     -fx-font-size: 18;
     -fx-font-family: "Segoe UI";  
     -fx-font-color: white;
-    -fx-text-fill: white;
-    
+    -fx-text-fill: white;   
 }
 
 .label:hover{
