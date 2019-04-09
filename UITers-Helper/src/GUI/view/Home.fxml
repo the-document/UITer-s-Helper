@@ -17,35 +17,42 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxHeight="660.0" maxWidth="960.0" minHeight="660.0" minWidth="960.0" prefHeight="660.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.HomeController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxHeight="660.0" maxWidth="1174.0" minHeight="660.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.HomeController">
    <children>
-      <StackPane fx:id="stack_pane" maxHeight="660.0" maxWidth="960.0" minHeight="660.0" minWidth="960.0" prefHeight="660.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <ImageView fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="660.0" fitWidth="1174.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
       <BorderPane prefHeight="660.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox maxWidth="960.0" minWidth="960.0" prefHeight="40.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" maxWidth="1299.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="1299.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btn_back" alignment="CENTER" contentDisplay="CENTER" maxWidth="80.0" minWidth="80.0" onAction="#btn_backClick" prefHeight="40.0" prefWidth="80.0" stylesheets="@../css/button_back.css" text="Back" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXButton>
-                  <Region prefHeight="40.0" prefWidth="675.0" />
-                  <JFXComboBox fx:id="cbb_user" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/combobox.css" unFocusColor="WHITE" />
-                  <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXButton>
+                  <HBox prefHeight="40.0" prefWidth="80.0">
+                     <children>
+                        <JFXButton fx:id="btn_back" alignment="CENTER" contentDisplay="CENTER" maxWidth="120.0" minWidth="120.0" onAction="#btn_backClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_back.css" text="Back" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <Region />
+                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="180.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00" />
+                     </children>
+                  </HBox>
                </children>
                <BorderPane.margin>
                   <Insets />
@@ -53,44 +60,49 @@
             </HBox>
          </top>
          <right>
-            <VBox prefHeight="580.0" prefWidth="424.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="580.0" prefWidth="527.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/header.css" text="Tin tức">
+                  <HBox prefHeight="40.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/header.css" text="Tin tức" />
+                        <Region prefHeight="40.0" prefWidth="301.0" HBox.hgrow="ALWAYS" />
+                        <JFXButton fx:id="btn_setting" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_setting.css" text="." />
+                     </children>
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
-                  </Label>
-                  <JFXButton fx:id="btn_expandDeadline" onAction="#btn_expandDeadlineClick" prefHeight="40.0" stylesheets="@../css/button_no_border.css" text="Deadline">
+                  </HBox>
+                  <JFXButton fx:id="btn_expandDeadline" minWidth="150.0" onAction="#btn_expandDeadlineClick" prefHeight="40.0" prefWidth="150.0" stylesheets="@../css/button_up.css" text="Deadline">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </JFXButton>
-                  <JFXListView fx:id="lv_deadline" prefHeight="100.0" prefWidth="431.0" stylesheets="@../css/listview.css">
+                  <JFXListView fx:id="lv_deadline" prefHeight="120.0" prefWidth="431.0" stylesheets="@../css/listview.css">
                      <VBox.margin>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets />
                      </VBox.margin>
                   </JFXListView>
-                  <JFXButton fx:id="btn_expandChung" layoutX="10.0" layoutY="70.0" onAction="#btn_expandChungClick" prefHeight="40.0" stylesheets="@../css/button_no_border.css" text="Chung" />
-                  <JFXListView fx:id="lv_news" layoutX="20.0" layoutY="130.0" prefHeight="100.0" prefWidth="431.0" stylesheets="@../css/listview.css" />
-                  <JFXButton fx:id="btn_expandDangKy" layoutX="10.0" layoutY="230.0" onAction="#btn_expandDangKyClick" prefHeight="40.0" stylesheets="@../css/button_no_border.css" text="Đăng ký" />
-                  <JFXListView fx:id="lv_dangky" layoutX="10.0" layoutY="270.0" prefHeight="100.0" prefWidth="431.0" stylesheets="@../css/listview.css" />
+                  <JFXButton fx:id="btn_expandChung" layoutX="10.0" layoutY="70.0" minWidth="150.0" onAction="#btn_expandChungClick" prefHeight="40.0" prefWidth="150.0" stylesheets="@../css/button_up.css" text="Chung    " />
+                  <JFXListView fx:id="lv_news" layoutX="20.0" layoutY="130.0" prefHeight="120.0" prefWidth="431.0" stylesheets="@../css/listview.css" />
+                  <JFXButton fx:id="btn_expandDangKy" layoutX="10.0" layoutY="230.0" minWidth="150.0" onAction="#btn_expandDangKyClick" prefHeight="40.0" stylesheets="@../css/button_up.css" text="Đăng ký" />
+                  <JFXListView fx:id="lv_dangky" layoutX="10.0" layoutY="270.0" prefHeight="120.0" prefWidth="431.0" stylesheets="@../css/listview.css" />
                </children>
                <BorderPane.margin>
-                  <Insets bottom="20.0" left="20.0" right="40.0" top="20.0" />
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="20.0" />
                </BorderPane.margin>
             </VBox>
          </right>
          <left>
-            <VBox prefHeight="621.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="560.0" prefWidth="527.0" BorderPane.alignment="CENTER">
                <children>
                   <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/header.css" text="Lịch học ">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </Label>
-                  <VBox maxWidth="450.0" minWidth="450.0" prefHeight="222.0" prefWidth="450.0">
+                  <VBox maxWidth="527.0" minWidth="450.0" prefHeight="222.0" prefWidth="527.0">
                      <children>
-                        <HBox maxHeight="120.0" maxWidth="450.0" minHeight="120.0" minWidth="450.0" prefHeight="120.0" prefWidth="450.0">
+                        <HBox maxHeight="120.0" maxWidth="527.0" minHeight="120.0" minWidth="527.0" prefHeight="120.0" prefWidth="527.0">
                            <children>
                               <Pane maxHeight="120.0" maxWidth="120.0" minHeight="120.0" minWidth="120.0" prefHeight="120.0" prefWidth="120.0">
                                  <children>
@@ -98,17 +110,17 @@
                                     <JFXButton fx:id="btn_showdate" maxHeight="120.0" maxWidth="120.0" minHeight="120.0" minWidth="120.0" onAction="#btn_showdateClick" prefHeight="120.0" prefWidth="120.0" stylesheets="@../css/button_no_border.css" text="Show date" textFill="WHITE" />
                                  </children>
                               </Pane>
-                              <JFXListView fx:id="lv_location" prefHeight="120.0" prefWidth="295.0" stylesheets="@../css/listview.css">
+                              <JFXListView fx:id="lv_location" prefHeight="120.0" prefWidth="390.0" stylesheets="@../css/listview.css">
                                  <HBox.margin>
-                                    <Insets left="20.0" />
+                                    <Insets left="40.0" />
                                  </HBox.margin>
                               </JFXListView>
                            </children>
                         </HBox>
                         <Pane prefHeight="80.0" prefWidth="422.0">
                            <children>
-                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" opacity="0.3" stroke="WHITE" strokeType="INSIDE" width="433.0" />
-                              <JFXButton fx:id="btn_nofi" onAction="#btn_nofiClick" prefHeight="80.0" prefWidth="434.0" stylesheets="@../css/button_no_border.css" text="Thông báo: ..." textFill="WHITE">
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="80.0" opacity="0.3" stroke="WHITE" strokeType="INSIDE" width="526.0" />
+                              <JFXButton fx:id="btn_nofi" onAction="#btn_nofiClick" prefHeight="80.0" prefWidth="527.0" stylesheets="@../css/button_no_border.css" text="Thông báo: ..." textFill="WHITE">
                                  <font>
                                     <Font size="18.0" />
                                  </font>
@@ -128,17 +140,18 @@
                         <Insets top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXButton fx:id="btn_create" maxHeight="80.0" minHeight="80.0" onAction="#btn_createClick" prefHeight="80.0" prefWidth="434.0" stylesheets="@../css/button_large.css" text="Tạo thời khóa biểu theo yêu cầu" textFill="WHITE">
+                  <JFXButton fx:id="btn_create" maxHeight="80.0" minHeight="80.0" onAction="#btn_createClick" prefHeight="80.0" prefWidth="554.0" stylesheets="@../css/button_large.css" text="Tạo thời khóa biểu theo yêu cầu" textFill="WHITE">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </JFXButton>
                </children>
                <BorderPane.margin>
-                  <Insets bottom="20.0" left="40.0" top="20.0" />
+                  <Insets bottom="40.0" left="40.0" top="20.0" />
                </BorderPane.margin>
             </VBox>
          </left>
       </BorderPane>
+      <StackPane fx:id="stack_pane" maxHeight="660.0" maxWidth="960.0" minHeight="660.0" minWidth="960.0" prefHeight="660.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

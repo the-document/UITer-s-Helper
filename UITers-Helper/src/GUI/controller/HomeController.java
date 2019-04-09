@@ -5,8 +5,6 @@ import BLL.Global;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
@@ -26,9 +24,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
@@ -36,17 +32,19 @@ import javafx.util.Duration;
 
 public class HomeController implements Initializable {
 
-    // <editor-fold desc="import zone">
+    // <editor-fold desc="Static varriables zone">
     String form;
     Stage window;
     int isExpandChung = 1;
     int isExpandDeadline = 1;
     int isExpandDangKy = 1;
-
-    ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+    
     // </editor-fold>
 
     // <editor-fold desc="FXML variables zone">
+    @FXML
+    private JFXButton btn_setting;
+
     @FXML
     private JFXComboBox<String> cbb_user;
 
@@ -54,13 +52,13 @@ public class HomeController implements Initializable {
     private AnchorPane AnchorPaneMain;
 
     @FXML
+    private JFXButton btn_back;
+
+    @FXML
     private JFXButton btn_minimize;
 
     @FXML
     private JFXButton btn_exit;
-
-    @FXML
-    private JFXCheckBox cb_remember;
 
     @FXML
     private JFXButton btn_create;
@@ -90,72 +88,8 @@ public class HomeController implements Initializable {
     private StackPane stack_pane;
 
     // </editor-fold>
-    @Override
-
-    public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
-        //cbb_user.fireEvent(null);
-        lv_locationClick();
-        lv_newsClick();
-        Global.AnimationMouseDragButton(btn_exit, "red");
-        stack_pane.setDisable(true);
-        stack_pane.setDisable(true);
-        Platform.runLater(AnchorPaneMain::requestFocus);
-        setKeyEvent();
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
-            // Xử lý sự kiện tại đây
-            lv_dangky.getItems().addAll(lb);
-        }
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
-            // Xử lý sự kiện tại đây
-            lv_deadline.getItems().addAll(lb);
-        }
-
-    }
-
-    public void setKeyEvent() {
-        AnchorPaneMain.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ENTER:
-                    //btn_login.fire();
-                    break;
-                case ESCAPE:
-                    btn_minimize.fire();
-                    break;
-                default:
-                    break;
-            }
-        });
-    }
-
-    public void madeFadeOut(ActionEvent event) {
-        FadeTransition fade_trands = new FadeTransition();
-        fade_trands.setDuration(new Duration(500));
-        fade_trands.setNode(AnchorPaneMain);
-        fade_trands.setFromValue(1);
-        fade_trands.setToValue(0);
-        fade_trands.play();
-        fade_trands.setOnFinished(e -> {
-            try {
-                LoadNextScene(event);
-            } catch (Exception ex) {
-                Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        });
-    }
-
-    public void LoadNextScene(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource(form));
-        Scene tableViewScene = new Scene(root);
-        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
-        window.show();
-    }
-
+    
+    // <editor-fold desc="FXML functions zone">
     @FXML
     void btn_expandChungClick(ActionEvent event) {
         if (isExpandChung == 1) {
@@ -163,18 +97,23 @@ public class HomeController implements Initializable {
             lv_news.setMaxHeight(0f);
             lv_news.setMinHeight(0f);
             isExpandChung = 0;
+            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
+            btn_expandChung.getStylesheets().add(css);
         } else {
             lv_news.setVisible(true);
-            lv_news.setMinHeight(300 / (1 + (isExpandDangKy) + (isExpandDeadline)));
-            lv_news.setMaxHeight(300 / (1 + (isExpandDangKy) + (isExpandDeadline)));
+            lv_news.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandDeadline)));
+            lv_news.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandDeadline)));
+            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
+            btn_expandChung.getStylesheets().clear();
+            btn_expandChung.getStylesheets().add(css);
             isExpandChung = 1;
             if (isExpandDangKy == 1) {
-                lv_dangky.setMinHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
-                lv_dangky.setMaxHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
+                lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
+                lv_dangky.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
             }
             if (isExpandDeadline == 1) {
-                lv_deadline.setMinHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
-                lv_deadline.setMaxHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
+                lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
+                lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
             }
 
         }
@@ -188,18 +127,23 @@ public class HomeController implements Initializable {
             lv_dangky.setMaxHeight(0f);
             lv_dangky.setMinHeight(0f);
             isExpandDangKy = 0;
+            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
+            btn_expandDangKy.getStylesheets().add(css);
         } else {
             lv_dangky.setVisible(true);
-            lv_dangky.setMinHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
-            lv_dangky.setMaxHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
+            lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
+            lv_dangky.setMaxHeight(3060 / (1 + (isExpandChung) + (isExpandDeadline)));
+            btn_expandDangKy.getStylesheets().clear();
+            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
+            btn_expandDangKy.getStylesheets().add(css);
             isExpandDangKy = 1;
             if (isExpandChung == 1) {
-                lv_news.setMinHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
-                lv_news.setMaxHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
+                lv_news.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
+                lv_news.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
             }
             if (isExpandDeadline == 1) {
-                lv_deadline.setMinHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
-                lv_deadline.setMaxHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
+                lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
+                lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
             }
 
         }
@@ -212,54 +156,26 @@ public class HomeController implements Initializable {
             lv_deadline.setMinHeight(0f);
             lv_deadline.setMaxHeight(0f);
             isExpandDeadline = 0;
+            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
+            btn_expandDeadline.getStylesheets().add(css);
         } else {
             lv_deadline.setVisible(true);
-            lv_deadline.setMinHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
-            lv_deadline.setMaxHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
+            lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
+            lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
+            btn_expandDeadline.getStylesheets().clear();
             isExpandDeadline = 1;
+            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
+            btn_expandDeadline.getStylesheets().add(css);
             if (isExpandDangKy == 1) {
-                lv_dangky.setMinHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
-                lv_dangky.setMaxHeight(300 / (1 + (isExpandChung) + (isExpandDeadline)));
+                lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
+                lv_dangky.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
             }
             if (isExpandChung == 1) {
-                lv_news.setMinHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
-                lv_news.setMaxHeight(300 / (1 + (isExpandDangKy) + (isExpandChung)));
+                lv_news.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
+                lv_news.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
             }
 
         }
-    }
-
-    public void lv_locationClick() {
-        // Sự kiện thêm item
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
-            lv_location.getItems().addAll(lb);
-        }
-    }
-
-    public void lv_newsClick() {
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
-            // Xử lý sự kiện tại đây
-            lv_news.getItems().addAll(lb);
-        }
-        lv_news.setOnMouseClicked(e -> {
-            FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(getClass().getResource("../view/Subscribed.fxml"));
-            Scene scene = null;
-            try {
-                scene = new Scene(fxmlLoader.load(), 400, 500);
-            } catch (IOException ex) {
-                Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            Stage stage = new Stage();
-            stage.initStyle(StageStyle.UNDECORATED);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-
-        });
     }
 
     @FXML
@@ -297,13 +213,176 @@ public class HomeController implements Initializable {
 
     @FXML
     void cbb_userClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("../view/Subscribed.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 400, 500);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    // </editor-fold>
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        Global.AnimationShow(AnchorPaneMain);
+        stack_pane.setDisable(true);
+        Platform.runLater(AnchorPaneMain::requestFocus);
+        setKeyEvent();
+        String name = "Xin chào, 17520433";
+        init_cbb_user(name);
+        init_lv_dangky();
+        init_lv_deadline();
+        init_lv_location();
+        init_lv_news();
+
+    }
+
+    public void setKeyEvent() {
+        AnchorPaneMain.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ENTER:
+                    btn_create.fire();
+                    break;
+                case ESCAPE:
+                    btn_minimize.fire();
+                    break;
+                case LEFT:
+                    btn_back.fire();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+        btn_create.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ENTER:
+                    btn_create.fire();
+                    break;
+               
+            }
+        });
+    }
+
+    public void madeFadeOut(ActionEvent event) {
+        FadeTransition fade_trands = new FadeTransition();
+        fade_trands.setDuration(new Duration(500));
+        fade_trands.setNode(AnchorPaneMain);
+        fade_trands.setFromValue(1);
+        fade_trands.setToValue(0);
+        fade_trands.play();
+        fade_trands.setOnFinished(e -> {
+            try {
+                LoadNextScene(event);
+            } catch (Exception ex) {
+                Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    public void LoadNextScene(ActionEvent event) throws Exception {
+
+        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Scene tableViewScene = new Scene(root);
+        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        Global.SetStageDrag(root, window, event);
+        window.show();
+    }
+
+    public void init_lv_location() {
+
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("C10" + i);
+            lv_location.getItems().addAll(lb);
+        }
+        lv_location.setOnMouseClicked(e -> {
+            String id = lv_location.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
+    }
+
+    public void init_lv_news() {
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("C10" + i);
+            // Xử lý sự kiện tại đây
+            lv_news.getItems().addAll(lb);
+        }
+        lv_news.setOnMouseClicked(e -> {
+            String id = lv_news.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
+    }
+
+    public void init_lv_dangky() {
+
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("C10" + i);
+            lv_dangky.getItems().addAll(lb);
+        }
+        lv_dangky.setOnMouseClicked(e -> {
+            String id = lv_dangky.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
+    }
+
+    public void init_lv_deadline() {
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("C10" + i);
+            // Xử lý sự kiện tại đây
+            lv_deadline.getItems().addAll(lb);
+        }
+        lv_deadline.setOnMouseClicked(e -> {
+            String id = lv_deadline.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
+    }
+
+    public void init_cbb_user(String text) {
+        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
-        //cbb_user.getItems().addAll(list);
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            btn_create.setText(cbb_user.getValue());
+            switch (cbb_user.getValue()) {
+                case "Thời khóa biểu":
+                    btn_create.fire();
+                    break;
+                case "Cài đặt":
+                    form = "../view/Setting.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Đăng xuất":
+                    form = "../view/Login.fxml";
+                    madeFadeOut(e);
+                    break;
+                default:
+                    break;
+            }
 
         });
     }

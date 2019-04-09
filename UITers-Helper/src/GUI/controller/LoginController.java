@@ -73,6 +73,9 @@ public class LoginController implements Initializable {
 
     @FXML
     private Button btn_setting;
+    
+    @FXML
+    private JFXButton btn_more;
 
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
@@ -80,7 +83,11 @@ public class LoginController implements Initializable {
     void btn_exitClick(ActionEvent event) {
         Global.ExitEvent(AnchorPaneMain);
     }
+    
+    @FXML
+    void btn_moreClick(ActionEvent event) {
 
+    }
     @FXML
     void btn_loginClick(ActionEvent event) {
         String user_name = txt_user.getText();
@@ -95,8 +102,7 @@ public class LoginController implements Initializable {
                
             });
             
-            JFXDialog dialog = new JFXDialog();
-            dialog = Global.getDialogChange(stack_pane, "Thông báo", "Đăng nhập thành công", btn);
+            JFXDialog dialog = Global.getDialogChange(stack_pane, "Thông báo", "Đăng nhập thành công", btn);
             dialog.show();
         }
         else

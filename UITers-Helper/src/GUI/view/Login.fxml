@@ -15,16 +15,18 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
    <children>
-      <ImageView fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="660.0" fitWidth="1174.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
-      <BorderPane layoutX="57.0" layoutY="-13.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="416.0" layoutX="666.0" layoutY="129.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="407.0" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="120.0" />
+      <BorderPane layoutX="57.0" layoutY="-13.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="40.0" BorderPane.alignment="CENTER">
                <children>
@@ -42,7 +44,7 @@
             </HBox>
          </top>
       </BorderPane>
-      <VBox layoutX="317.0" layoutY="172.0" prefHeight="347.0" prefWidth="325.0" AnchorPane.leftAnchor="317.0" AnchorPane.rightAnchor="318.0">
+      <VBox layoutX="725.0" layoutY="154.0" prefHeight="347.0" prefWidth="325.0" AnchorPane.leftAnchor="725.0" AnchorPane.rightAnchor="124.0">
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@../css/header.css">
                <children>
@@ -115,11 +117,22 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btn_setting" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="50.0" prefWidth="50.0" styleClass="setting" stylesheets="@../css/imageview.css" />
+                  <Button fx:id="btn_setting" alignment="CENTER" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="50.0" prefWidth="50.0" styleClass="setting" stylesheets="@../css/button_setting.css" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" prefHeight="660.0" prefWidth="960.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label layoutX="80.0" layoutY="232.0" prefHeight="80.0" prefWidth="493.0" text="Chào mừng đến với UIT Helper" textFill="WHITE" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="232.0">
+         <font>
+            <Font name="Segoe UI" size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="80.0" layoutY="312.0" prefHeight="40.0" prefWidth="520.0" text="Phần mềm quản lý, tạo lập thời khóa biểu cho bạn" textFill="WHITE" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="312.0">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btn_more" layoutX="80.0" layoutY="372.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_moreClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_special.css" text="Tìm hiểu thêm" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="372.0" />
+      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" stylesheets="@../css/label.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

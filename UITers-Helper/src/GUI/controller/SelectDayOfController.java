@@ -7,11 +7,14 @@ package GUI.controller;
 
 import BLL.Global;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,12 +42,16 @@ public class SelectDayOfController implements Initializable {
 
     Stage window;
     String form;
+    String style = "-fx-border-color : white";
+    String style2 = "-fx-border-color : transparent";
     @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
     private StackPane stack_pane;
 
+    @FXML
+    private JFXComboBox<String> cbb_user;
     @FXML
     private JFXButton btn_next;
 
@@ -129,9 +136,48 @@ public class SelectDayOfController implements Initializable {
     @FXML
     private JFXButton btn_t7_910;
 
+    @FXML
+    private Label lb_t2;
+
+    @FXML
+    private Label lb_t3;
+
+    @FXML
+    private Label lb_t4;
+
+    @FXML
+    private Label lb_t5;
+
+    @FXML
+    private Label lb_t6;
+
+    @FXML
+    private Label lb_t7;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         initArrButton();
+        setKeyEvent();
+        String text = "Xin chào, 17520433";
+        init_cbb_user(text);
+        init_label();
+    }
+
+    public void setKeyEvent() {
+        AnchorPaneMain.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ESCAPE:
+                    btn_minimize.fire();
+                    break;
+                case LEFT:
+                    btn_back.fire();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
     }
 
     public void madeFadeOut(ActionEvent event) {
@@ -163,8 +209,7 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     void btn_backClick(ActionEvent event) {
-        form = "../view/SelectMethodCreate.fxml";
-        madeFadeOut(event);
+
     }
 
     @FXML
@@ -185,8 +230,6 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void initButtonClick(JFXButton btn) {
-        String style = "-fx-border-color : white";
-        String style2 = "-fx-border-color : transparent";
 
         btn.setOnAction(e -> {
             if (btn.getStyle().compareTo(style) == 0) {
@@ -198,6 +241,49 @@ public class SelectDayOfController implements Initializable {
 
             }
 
+        });
+
+    }
+
+   
+
+    public void init_label() {
+        lb_t2.setOnMouseClicked(e -> {
+            btn_t2_123.setStyle(style2);
+            btn_t2_45.setStyle(style2);
+            btn_t2_678.setStyle(style2);
+            btn_t2_910.setStyle(style2);
+        });
+
+        lb_t3.setOnMouseClicked(e -> {
+            btn_t3_123.setStyle(style2);
+            btn_t3_45.setStyle(style2);
+            btn_t3_678.setStyle(style2);
+            btn_t3_910.setStyle(style2);
+        });
+        lb_t4.setOnMouseClicked(e -> {
+            btn_t4_123.setStyle(style2);
+            btn_t4_45.setStyle(style2);
+            btn_t4_678.setStyle(style2);
+            btn_t4_910.setStyle(style2);
+        });
+        lb_t5.setOnMouseClicked(e -> {
+            btn_t5_123.setStyle(style2);
+            btn_t5_45.setStyle(style2);
+            btn_t5_678.setStyle(style2);
+            btn_t5_910.setStyle(style2);
+        });
+        lb_t6.setOnMouseClicked(e -> {
+            btn_t6_123.setStyle(style2);
+            btn_t6_45.setStyle(style2);
+            btn_t6_678.setStyle(style2);
+            btn_t6_910.setStyle(style2);
+        });
+        lb_t7.setOnMouseClicked(e -> {
+            btn_t7_123.setStyle(style2);
+            btn_t7_45.setStyle(style2);
+            btn_t7_678.setStyle(style2);
+            btn_t7_910.setStyle(style2);
         });
 
     }
@@ -228,6 +314,33 @@ public class SelectDayOfController implements Initializable {
         initButtonClick(btn_t7_678);
         initButtonClick(btn_t7_910);
     }
-    
+
+    public void init_cbb_user(String text) {
+        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        cbb_user.setPromptText(text);
+        cbb_user.getSelectionModel().select(1);
+        cbb_user.getItems().clear();
+        cbb_user.setItems(list);
+
+        cbb_user.setOnAction(e -> {
+            switch (cbb_user.getValue()) {
+                case "Thời khóa biểu":
+                    form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Cài đặt":
+                    form = "../view/Setting.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Đăng xuất":
+                    form = "../view/Login.fxml";
+                    madeFadeOut(e);
+                    break;
+                default:
+                    break;
+            }
+
+        });
+    }
 
 }

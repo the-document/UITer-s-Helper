@@ -7,6 +7,7 @@ package BLL;
 
 import GUI.controller.WelcomeController;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import java.util.logging.Level;
@@ -26,6 +27,8 @@ import javafx.util.Duration;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import java.util.Stack;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -50,7 +53,7 @@ public class Global {
     public static final String CNTN = "CNTN";
     public static final String KSTN = "KSTN";
     public static Stack<String> stack_link;
-
+    
     private String URL_form;
 
     public Global(String URL_form) {
@@ -177,4 +180,5 @@ public class Global {
         dialog.setOnDialogClosed(e -> stack_pane.setDisable(true));
         return dialog;
     }
+  
 }

@@ -6,11 +6,9 @@
 }
 .label:hover{
     -fx-font-size: 18;
-    -fx-border-color: #18A0FB;
-    -fx-border-width: 2 2 2 2;
+    -fx-opacity: 0.8;
     -fx-font-family: "Segoe UI";  
     -fx-text-fill: white;
     -fx-text-align: CENTER CENTER;
 }
-
 

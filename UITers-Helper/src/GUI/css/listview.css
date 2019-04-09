@@ -27,6 +27,9 @@
     -fx-border-width: 0 0 1 2;
     -fx-border-color: white;
 }
+.list-cell:hover {
+    -fx-text-fill: #18A0FB;
+}
 .list-cell:selected .listCellColourStrip{
 
     -fx-background-color: white;

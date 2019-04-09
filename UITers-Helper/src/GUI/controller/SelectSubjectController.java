@@ -11,12 +11,13 @@ import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.java.swing.plaf.windows.resources.windows;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,31 +44,34 @@ public class SelectSubjectController implements Initializable {
     private AnchorPane AnchorPaneMain;
 
     @FXML
-    private JFXButton btn_back;
-
-    @FXML
-    private JFXButton btn_minimize;
-
-    @FXML
-    private JFXButton btn_exit;
-
-    @FXML
     private JFXListView<Label> lv_subject;
 
     @FXML
     private JFXTextField txt_subject;
 
     @FXML
-    private JFXComboBox<?> cbb_subject;
+    private JFXComboBox<String> cbb_subject;
 
     @FXML
     private JFXButton btn_add;
 
     @FXML
+    private JFXChipView<String> cv_subject;
+
+    @FXML
     private JFXButton btn_next;
 
     @FXML
-    private JFXChipView<String> cv_subject;
+    private JFXButton btn_back;
+
+    @FXML
+    private JFXButton btn_exit;
+
+    @FXML
+    private JFXButton btn_minimize;
+
+    @FXML
+    private JFXComboBox<String> cbb_user;
 
     @FXML
     void btn_addClick(ActionEvent event) {
@@ -76,29 +80,35 @@ public class SelectSubjectController implements Initializable {
         String list_item[] = new String[100]; // Danh sách các item để add vô chipview
         String hint_item[] = new String[100]; // Danh sách các item được hint trong quá trình gõ
         cv_subject.getChips().add(key);
+
     }
 
     @FXML
     void btn_backClick(ActionEvent event) {
-        form = "../view/SelectSemester.fxml";
-        madeFadeOut(event);
 
     }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
         Global.ExitEvent(AnchorPaneMain);
+
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
         Global.MinimizeEvent(event, AnchorPaneMain);
+
     }
 
     @FXML
     void btn_nextClick(ActionEvent event) {
         form = "../view/SelectMethodCreate.fxml";
         madeFadeOut(event);
+
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
 
     }
 
@@ -132,17 +142,113 @@ public class SelectSubjectController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Global.AnimationShow(AnchorPaneMain);
         Global.AnimationMouseDragButton(btn_exit, "red");
-        lv_subjectClick();
+        String text = "Xin chào, 17520433";
+        init_cbb_user(text);
+        init_cbb_subjecT();
+        init_lv_subject();
+        
+        setKeyEvent();
+        
     }
-    public void lv_subjectClick() {
-        // Sự kiện thêm item
+
+    public void setKeyEvent() {
+        AnchorPaneMain.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                
+                case ESCAPE:
+                    btn_minimize.fire();
+                    break;
+                case LEFT:
+                    btn_back.fire();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+        btn_next.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ENTER:
+                    btn_next.fire();
+                    break;
+               
+            }
+        });
+        txt_subject.setOnKeyPressed( e -> {
+             switch (e.getCode()) {
+                case ENTER:
+                    btn_add.fire();
+                    break;
+               
+            }
+        });
+    }
+
+
+    
+    public void init_lv_subject() {
         for (int i = 0; i < 4; i++) {
             Label lb = new Label("HIT00" + i);
             lv_subject.getItems().addAll(lb);
         }
-         lv_subject.setOnMouseClicked(e -> {
-            
+        lv_subject.setOnMouseClicked(e -> {
+            String id = lv_subject.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
         });
     }
 
+    public void init_cbb_user(String text) {
+        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        cbb_user.setPromptText(text);
+        cbb_user.getSelectionModel().select(1);
+        cbb_user.getItems().clear();
+        cbb_user.setItems(list);
+
+        cbb_user.setOnAction(e -> {
+            switch (cbb_user.getValue()) {
+                case "Thời khóa biểu":
+                    form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Cài đặt":
+                    form = "../view/Setting.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Đăng xuất":
+                    form = "../view/Login.fxml";
+                    madeFadeOut(e);
+                    break;
+                default:
+                    break;
+            }
+
+        });
+    }
+    
+    public void init_cbb_subjecT() {
+        ObservableList<String> list = FXCollections.observableArrayList("CNPM", "KTMT", "KHMT");
+        cbb_subject.setPromptText("Chọn khoa");
+        cbb_subject.getSelectionModel().select(1);
+        cbb_subject.getItems().clear();
+        cbb_subject.setItems(list);
+        
+        cbb_subject.setOnAction(e -> {
+            switch (cbb_subject.getValue()) {
+                case "CNPM":                    
+                    break;
+                case "KTMT":
+                   
+                    break;
+                case "KHMT":
+                   
+                    break;
+                default:
+                    break;
+            }
+
+        });
+    }
+    
 }

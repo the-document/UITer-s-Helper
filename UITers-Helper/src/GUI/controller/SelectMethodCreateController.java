@@ -7,6 +7,7 @@ package GUI.controller;
 
 import BLL.Global;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import java.net.URL;
@@ -14,6 +15,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,13 +44,20 @@ public class SelectMethodCreateController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        Global.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
-        Global.AnimationMouseDragButton(btn_exit, "red");
-        
+        Platform.runLater(btn_select_advanced::requestFocus);
+        setKeyEvent();
+        String text = "Xin chào, 17520433"; 
+        init_cbb_user(text);
     }
 
+    
     @FXML
     private AnchorPane AnchorPaneMain;
+
+    @FXML
+    private StackPane stack_pane;
 
     @FXML
     private JFXButton btn_select_advanced;
@@ -58,24 +69,23 @@ public class SelectMethodCreateController implements Initializable {
     private JFXButton btn_select_random;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton btn_next;
 
     @FXML
-    private JFXButton btn_minimize;
+    private JFXButton btn_back;
 
     @FXML
     private JFXButton btn_exit;
 
     @FXML
-    private JFXButton btn_next;
+    private JFXButton btn_minimize;
 
     @FXML
-    private StackPane stack_pane;
-    
+    private JFXComboBox<String> cbb_user;
+
     @FXML
     void btn_backClick(ActionEvent event) {
-        form = "../view/SelectSubject.fxml";
-        madeFadeOut(event);
+        
     }
 
     @FXML
@@ -85,14 +95,13 @@ public class SelectMethodCreateController implements Initializable {
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-        Global.MinimizeEvent(event, AnchorPaneMain);
 
+        Global.MinimizeEvent(event, AnchorPaneMain);
     }
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-
-        switch (state) {
+         switch (state) {
             case "select_advanced":
                 form = "../view/SelectAdvanced.fxml";
                 madeFadeOut(event);
@@ -128,24 +137,65 @@ public class SelectMethodCreateController implements Initializable {
 
     @FXML
     void btn_select_advancedClick(ActionEvent event) {
-        Global.AnimationMouseSelectedButton(btn_select_advanced, "red");
-        Global.AnimationMouseDropButton(btn_select_day_off, btn_select_random);
-        
         state = "select_advanced";
+        form = "../view/SelectAdvanced.fxml";
+        madeFadeOut(event);
     }
 
     @FXML
     void btn_select_day_offClick(ActionEvent event) {
-         Global.AnimationMouseSelectedButton(btn_select_day_off, "red");
-        Global.AnimationMouseDropButton(btn_select_advanced, btn_select_random);
         state = "select_day_off";
+        form = "../view/SelectDayOf.fxml";
+        madeFadeOut(event);
     }
 
     @FXML
     void btn_select_randomClick(ActionEvent event) {
-         Global.AnimationMouseSelectedButton(btn_select_random, "red");
-        Global.AnimationMouseDropButton(btn_select_day_off, btn_select_advanced);
         state = "select_random";
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+    public void setKeyEvent() {
+        AnchorPaneMain.setOnKeyPressed(e -> {
+            switch (e.getCode()) {                
+                case ESCAPE:
+                    btn_minimize.fire();
+                    break;
+                case LEFT:
+                    btn_back.fire();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+        btn_select_advanced.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ENTER:
+                    btn_select_advanced.fire();
+                    break;
+               
+            }
+        });
+        btn_select_day_off.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ENTER:
+                    btn_select_day_off.fire();
+                    break;
+               
+            }
+        });
+        btn_select_random.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ENTER:
+                    btn_select_random.fire();
+                    break;
+               
+            }
+        });
     }
 
     public void madeFadeOut(ActionEvent event) {
@@ -163,7 +213,6 @@ public class SelectMethodCreateController implements Initializable {
             }
         });
     }
-
     public void LoadNextScene(ActionEvent event) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource(form));
@@ -173,4 +222,33 @@ public class SelectMethodCreateController implements Initializable {
         Global.SetStageDrag(root, window, event);
         window.show();
     }
+    
+    public void init_cbb_user(String text) {
+        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        cbb_user.setPromptText(text);
+        cbb_user.getSelectionModel().select(1);
+        cbb_user.getItems().clear();
+        cbb_user.setItems(list);
+
+        cbb_user.setOnAction(e -> {
+            switch (cbb_user.getValue()) {
+                case "Thời khóa biểu":
+                    form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Cài đặt":
+                    form = "../view/Setting.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Đăng xuất":
+                    form = "../view/Login.fxml";
+                    madeFadeOut(e);
+                    break;
+                default:
+                    break;
+            }
+
+        });
+    }
+
 }
