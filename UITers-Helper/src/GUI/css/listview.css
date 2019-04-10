@@ -1,36 +1,66 @@
-.list-cell {
-    //-fx-background-color: transparent;
+
+.list-cell{
+    -fx-control-inner-background: blue ;
+    -fx-background-color: transparent;
+    -fx-font-size: 12;
+    -fx-text-fill: red;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: red;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
+    -fx-pref-height: 40;
 }
 .list-view {
     -fx-background-color: transparent;
+    -fx-font-size: 12;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI";  
 }
-
+.list-cell:filled:selected {
+    -fx-text-fill: red;
+}
 .list-cell:empty {
-    -fx-background-color: #FCFCFC;
+    -fx-background-color: transparent; 
     -fx-background-insets: 0 ;
 }
-
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-border-width: 0 0 1 2;
+    -fx-border-color: white;
+}
+.list-cell:hover {
+    -fx-text-fill: #18A0FB;
+}
 .list-cell:selected .listCellColourStrip{
 
-    -fx-background-color: #CF000F;
+    -fx-background-color: white;
 
 }
 
-.list-cell:selected {
-
-    -fx-background-color: RED;
+/*.list-cell:selected {
+    -fx-border-width: 2 2 2 2;
+    -fx-border-color: #18A0FB;
+    */
     
+/*}.list-view .list-cell:even {
+-fx-background-color: blue;
+-fx-text-fill: white;
 }
+.list-view .list-cell:odd {
+-fx-background-color: blue;
+-fx-text-fill: white;
+}*/
 
 .list-view .scroll-bar:vertical .increment-arrow,
 .list-view .scroll-bar:vertical .decrement-arrow,
 .list-view .scroll-bar:vertical .increment-button,
 .list-view .scroll-bar:vertical .decrement-button {
     -fx-padding: 0px;
+    -fx-opacity: 0.3;
 }
 
-.list-view .scroll-bar:vertical {
+/*.list-view .scroll-bar:vertical {
      -fx-scale-x: 0;
+     -fx-opacity: 0.3;
 }
 
 .listCellImage {    
@@ -38,8 +68,8 @@
 }
 
 .listCellText{    
-    -fx-font-size: 1.5em;
-    -fx-text-fill: #888;
-    -fx-font-family: "Roboco";  
+    -fx-font-size: 12;
+    -fx-text-fill: red;
+    -fx-font-family: "Segoe UI";  
     -fx-font-color: white;
-}
+}*/

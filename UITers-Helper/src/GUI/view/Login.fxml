@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXCheckBox?>
+<?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -17,24 +18,24 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
    <children>
-      <ImageView fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="660.0" fitWidth="1174.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="385.0" layoutX="264.0" layoutY="158.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="433.0" />
-      <BorderPane layoutX="57.0" layoutY="-13.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="416.0" layoutX="666.0" layoutY="129.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="407.0" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="120.0" />
+      <BorderPane layoutX="57.0" layoutY="-13.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <HBox alignment="CENTER_RIGHT" prefHeight="40.0" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btn_minimize" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" text="-" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="btn_minimize" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </JFXButton>
-                  <JFXButton fx:id="btn_exit" layoutX="930.0" layoutY="10.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" text="X" textAlignment="CENTER" textFill="WHITE">
+                  <JFXButton fx:id="btn_exit" layoutX="930.0" layoutY="10.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -43,47 +44,44 @@
             </HBox>
          </top>
       </BorderPane>
-      <VBox layoutX="288.0" layoutY="172.0" prefHeight="347.0" prefWidth="382.0">
+      <VBox layoutX="725.0" layoutY="154.0" prefHeight="347.0" prefWidth="325.0" AnchorPane.leftAnchor="725.0" AnchorPane.rightAnchor="124.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@../css/header.css">
                <children>
-                  <Label text="Đăng nhập" textFill="WHITE">
+                  <Label alignment="CENTER" text="Đăng nhập" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
                      <HBox.margin>
-                        <Insets bottom="10.0" />
+                        <Insets bottom="20.0" />
                      </HBox.margin>
                   </Label>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="BOTTOM_LEFT" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="369.0">
                <children>
-                  <Button fx:id="btn_setting1" maxHeight="40.0" maxWidth="30.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="30.0" prefWidth="30.0" styleClass="user_label2" stylesheets="@../css/background.css" />
-                  <JFXTextField fx:id="txt_user" focusColor="#1e85c9" maxHeight="40.0" maxWidth="351.0" minHeight="40.0" minWidth="244.0" prefHeight="40.0" prefWidth="351.0" promptText="username" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
+                  <Button fx:id="btn_setting1" alignment="CENTER" contentDisplay="CENTER" maxHeight="40.0" maxWidth="30.0" minHeight="30.0" minWidth="40.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="30.0" prefWidth="30.0" styleClass="user" stylesheets="@../css/imageview.css" textAlignment="CENTER" />
+                  <JFXTextField fx:id="txt_user" focusColor="#1e85c9" labelFloat="true" maxHeight="30.0" maxWidth="351.0" minHeight="30.0" minWidth="244.0" prefHeight="30.0" prefWidth="256.0" promptText="Tài khoản" stylesheets="@../css/textfield.css" unFocusColor="WHITE">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Segoe UI" size="12.0" />
+                     </font>
                   </JFXTextField>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="20.0" />
                </VBox.margin>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="40.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btn_setting11" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" styleClass="pass_label" stylesheets="@../css/background.css" />
-                  <JFXTextField fx:id="txt_password" focusColor="#1e85c9" maxHeight="40.0" maxWidth="343.0" minHeight="40.0" minWidth="251.0" prefHeight="40.0" prefWidth="343.0" promptText="password" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
+                  <Button fx:id="btn_setting11" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" styleClass="pass" stylesheets="@../css/imageview.css" />
+                  <JFXPasswordField fx:id="txt_password" alignment="BOTTOM_LEFT" focusColor="#1e85c9" labelFloat="true" prefHeight="30.0" prefWidth="259.0" promptText="Mật khẩu" stylesheets="@../css/textfield.css" unFocusColor="WHITE">
                      <HBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="20.0" />
                      </HBox.margin>
-                  </JFXTextField>
+                  </JFXPasswordField>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -91,7 +89,7 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Hyperlink fx:id="btn_lose" onAction="#btn_loseClick" prefHeight="35.0" prefWidth="147.0" text="Quên mật khẩu?" textAlignment="CENTER" textFill="WHITE">
+                  <Hyperlink fx:id="btn_lose" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#btn_loseClick" prefHeight="35.0" prefWidth="103.0" stylesheets="@../css/linklabel.css" text="Quên mật khẩu?" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -99,7 +97,7 @@
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Hyperlink>
-                  <JFXButton fx:id="btn_Login" onAction="#btn_loginClick" prefHeight="41.0" prefWidth="115.0" stylesheets="@../css/control.css" text="Đăng nhập" textFill="WHITE">
+                  <JFXButton fx:id="btn_login" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_loginClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Đăng nhập" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -111,11 +109,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <JFXCheckBox fx:id="cb_remember" checkedColor="#1e85c9" onAction="#cb_rememberCheck" text="Nhớ mật khẩu" textFill="WHITE" unCheckedColor="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXCheckBox>
+                  <JFXCheckBox fx:id="cb_remember" checkedColor="#18a0fb" onAction="#cb_rememberCheck" text="Nhớ mật khẩu" textFill="WHITE" unCheckedColor="WHITE" />
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
@@ -123,11 +117,22 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btn_setting" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="50.0" prefWidth="50.0" styleClass="setting_button" stylesheets="@../css/background.css" />
+                  <Button fx:id="btn_setting" alignment="CENTER" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="50.0" prefWidth="50.0" styleClass="setting" stylesheets="@../css/button_setting.css" />
                </children>
             </HBox>
          </children>
       </VBox>
-      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" prefHeight="660.0" prefWidth="960.0" AnchorPane.leftAnchor="-0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <Label layoutX="80.0" layoutY="232.0" prefHeight="80.0" prefWidth="493.0" text="Chào mừng đến với UIT Helper" textFill="WHITE" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="232.0">
+         <font>
+            <Font name="Segoe UI" size="35.0" />
+         </font>
+      </Label>
+      <Label layoutX="80.0" layoutY="312.0" prefHeight="40.0" prefWidth="520.0" text="Phần mềm quản lý, tạo lập thời khóa biểu cho bạn" textFill="WHITE" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="312.0">
+         <font>
+            <Font name="Segoe UI" size="12.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="btn_more" layoutX="80.0" layoutY="372.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_moreClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_special.css" text="Tìm hiểu thêm" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="372.0" />
+      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" stylesheets="@../css/label.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

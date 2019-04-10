@@ -1,18 +1,9 @@
 package GUI.controller;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// <editor-fold desc="import zone">
 
-import BLL.Global;
-import GUI.Main_1;
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import java.awt.Color;
-import java.awt.Insets;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -26,44 +17,90 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.StackPane;
-
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Duration;
-import org.apache.poi.hslf.record.RecordTypes;
 
+// </editor-fold>
 
 public class WelcomeController implements Initializable {
+
+    // <editor-fold defaultstate="collapsed" desc="Static zone">
     Stage window;
     String form;
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="FXML variables zone">
     @FXML
     private AnchorPane AnchorPaneMain;
+
+    @FXML
+    private JFXButton btn_launch;
+
+    @FXML
+    private HBox toolbox;
+
     @FXML
     private JFXButton btn_minimize;
+
     @FXML
     private JFXButton btn_exit;
+     // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="FXML functions zone">
+    
     @FXML
-    private JFXCheckBox cb_remember;
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-       Global.AnimationShow(AnchorPaneMain);
+    void btn_exitClick(ActionEvent event) {
+       StaticFunctions.ExitEvent(AnchorPaneMain);
     }
-    ///////// Khối lệnh cho 1 event show cửa sổ ///////////////
-    public void madeFadeOut(ActionEvent event) 
+
+    @FXML
+    void btn_launchClick(ActionEvent event) {
+        form = "../view/Login.fxml";
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_minimizeClick(ActionEvent event) {
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
+
+    }
+
+    // </editor-fold>
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {        
+        StaticFunctions.AnimationShow(AnchorPaneMain);
+        Platform.runLater(AnchorPaneMain::requestFocus);
+        setKeyEvent();
+    }
+    
+    public void setKeyEvent()
     {
+        AnchorPaneMain.setOnKeyPressed( e -> {
+            switch (e.getCode()) {
+            case ENTER:
+                btn_launch.fire();
+                break;
+            case ESCAPE:
+                btn_minimize.fire();
+                break;
+            default:
+                break;
+        }
+        });
+    }
+   
+    public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/Subscribed.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
         fade_trands.setFromValue(1);
         fade_trands.setToValue(0);
         fade_trands.play();
-        fade_trands.setOnFinished( e -> {
+        fade_trands.setOnFinished(e -> {
             try {
                 LoadNextScene(event);
             } catch (Exception ex) {
@@ -71,39 +108,13 @@ public class WelcomeController implements Initializable {
             }
         });
     }
-    public void LoadNextScene(ActionEvent event) throws Exception 
-    {
-        form = "../view/Login.fxml";
-        Parent root = FXMLLoader.load(getClass().getResource(form));      
-        Scene tableViewScene = new Scene(root);     
-        window = (Stage)((Node)event.getSource()).getScene().getWindow();    
+    public void LoadNextScene(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Scene tableViewScene = new Scene(root);
+        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
-    public void btn_launchClick (ActionEvent event) throws Exception
-    {
-        madeFadeOut(event);    
-        Global.stack_link.push("../view/Login.fxml");
-    }
-     ///////// Khối lệnh cho 1 event show cửa sổ ///////////////
-    
-    public void btn_exitClick (ActionEvent event) throws Exception
-    {
-       Global.ExitEvent(AnchorPaneMain);
-       
-    }
-    public void btn_minimizeClick (ActionEvent event) throws Exception
-    {
-       Global.MinimizeEvent(event, AnchorPaneMain);
-    }
-    public void btn_exitMouseMove (ActionEvent event) throws Exception
-    {
-    
-    }
-    public void btn_minimizeMouseMove (ActionEvent event) throws Exception
-    {
-        
-    }
-          
+
 }

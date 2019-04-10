@@ -1,27 +1,349 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.controller;
 
+// <editor-fold desc="import zone">
+import GUI.StaticFunctions;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.FadeTransition;
+import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+// </editor-fold>
 
-/**
- * FXML Controller class
- *
- * @author Admin
- */
 public class SelectAdvancedController implements Initializable {
 
-    /**
-     * Initializes the controller class.
-     */
+    // <editor-fold desc="Static variables zone">
+    Stage window;
+    String form;
+    String style = "-fx-border-color : white";
+    String style2 = "-fx-border-color : transparent";
+
+    // </editor-fold>
+    // <editor-fold desc="FXML variables zone">
+    @FXML
+    private AnchorPane AnchorPaneMain;
+
+    @FXML
+    private JFXComboBox<String> cbb_user;
+
+    @FXML
+    private StackPane stack_pane;
+
+    @FXML
+    private JFXButton btn_next;
+
+    @FXML
+    private JFXButton btn_back;
+
+    @FXML
+    private JFXButton btn_exit;
+
+    @FXML
+    private JFXButton btn_minimize;
+
+    @FXML
+    private ScrollPane pane_subject;
+
+    @FXML
+    private JFXButton btn_t3_123;
+
+    @FXML
+    private JFXButton btn_t3_45;
+
+    @FXML
+    private JFXButton btn_t2_678;
+
+    @FXML
+    private JFXButton btn_t2_910;
+
+    @FXML
+    private JFXButton btn_t2_123;
+
+    @FXML
+    private JFXButton btn_t2_45;
+
+    @FXML
+    private JFXButton btn_t3_678;
+
+    @FXML
+    private JFXButton btn_t3_910;
+
+    @FXML
+    private JFXButton btn_t4_123;
+
+    @FXML
+    private JFXButton btn_t4_45;
+
+    @FXML
+    private JFXButton btn_t4_678;
+
+    @FXML
+    private JFXButton btn_t4_910;
+
+    @FXML
+    private JFXButton btn_t5_123;
+
+    @FXML
+    private JFXButton btn_t5_45;
+
+    @FXML
+    private JFXButton btn_t5_678;
+
+    @FXML
+    private JFXButton btn_t5_910;
+
+    @FXML
+    private JFXButton btn_t6_678;
+
+    @FXML
+    private JFXButton btn_t6_910;
+
+    @FXML
+    private JFXButton btn_t6_123;
+
+    @FXML
+    private JFXButton btn_t6_45;
+
+    @FXML
+    private JFXButton btn_t7_123;
+
+    @FXML
+    private JFXButton btn_t7_45;
+
+    @FXML
+    private JFXButton btn_t7_678;
+
+    @FXML
+    private JFXButton btn_t7_910;
+
+    // </editor-fold>
+    // <editor-fold desc="FXML functions zone">
+    @FXML
+    void btn_backClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_exitClick(ActionEvent event) {
+        StaticFunctions.ExitEvent(AnchorPaneMain);
+    }
+
+    @FXML
+    void btn_minimizeClick(ActionEvent event) {
+
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
+    }
+
+    @FXML
+    void btn_nextClick(ActionEvent event) {
+        form = "../view/CreateTimetableNow.fxml";
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+
+    // </editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        StaticFunctions.AnimationShow(AnchorPaneMain);
+        stack_pane.setDisable(true);
+        Platform.runLater(AnchorPaneMain::requestFocus);
+
+        init_pane_subject();
+        setKeyEvent();
+        String text = "Xin chào, 17520433";
+        init_cbb_user(text);
+        init_arrButton();
+
+    }
+
+    public void setKeyEvent() {
+        AnchorPaneMain.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ESCAPE:
+                    btn_minimize.fire();
+                    break;
+                case LEFT:
+                    btn_back.fire();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+
+    }
+
+    public void init_pane_subject() {
+        pane_subject.setContent(null);
+        HBox root = new HBox();
+        root.setSpacing(20);
+        for (int i = 0; i < 50; i++) {
+            Button btn = new Button();
+            btn.setText("nuts thuws" + i);
+            btn.setMaxSize(120, 40);
+            btn.setMinSize(120, 40);
+            initButton(btn);
+            root.getChildren().add(btn);
+
+        }
+
+        pane_subject.setContent(root);
+    }
+
+    public void initButton(Button btn) {
+        String css = this.getClass().getResource("../css/button_chipitem.css").toExternalForm();
+        btn.getStylesheets().clear();
+        btn.getStylesheets().add(css);
+        btn.setOnMouseDragged(e -> {
+
+        });
+        btn.setOnMouseReleased(e -> {
+
+            btn_t2_123.setStyle(style2);
+            btn.setStyle(style);
+            System.out.println(e.getX());
+            System.out.println(e.getX());
+            System.out.println(btn_t2_123.getLayoutX());
+            System.out.println(btn_t2_123.getLayoutX());
+            System.out.println(btn_t2_45.getLayoutX());
+            System.out.println(btn_t2_45.getLayoutX());
+
+        });
+    }
+
+    public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
+        FadeTransition fade_trands = new FadeTransition();
+        fade_trands.setDuration(new Duration(500));
+        fade_trands.setNode(AnchorPaneMain);
+        fade_trands.setFromValue(1);
+        fade_trands.setToValue(0);
+        fade_trands.play();
+        fade_trands.setOnFinished(e -> {
+            try {
+                LoadNextScene(event);
+            } catch (Exception ex) {
+                Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+    }
+
+    public void LoadNextScene(ActionEvent event) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Scene tableViewScene = new Scene(root);
+        window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(tableViewScene);
+        StaticFunctions.SetStageDrag(root, window, event);
+        window.show();
+
+    }
+
+    public void init_cbb_user(String text) {
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        cbb_user.setPromptText(text);
+        cbb_user.getSelectionModel().select(1);
+        cbb_user.getItems().clear();
+        cbb_user.setItems(list);
+
+        cbb_user.setOnAction(e -> {
+            switch (cbb_user.getValue()) {
+                case "Trang chủ":
+                    form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Thời khóa biểu":
+                    form = "../view/CreateTimetableNow.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Cài đặt":
+                    form = "../view/Setting.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Đăng xuất":
+                    form = "../view/Login.fxml";
+                    madeFadeOut(e);
+                    break;
+                default:
+                    break;
+            }
+
+        });
+    }
+
+    public void init_context_menu(JFXButton btn, String id) {
+        ContextMenu ct = new ContextMenu();
+
+        MenuItem item_info = new MenuItem("Chi tiết");
+        item_info.setStyle("-fx-text-fill: white;");
+        item_info.setOnAction(e -> {
+            System.out.println("info");
+        });
+
+        MenuItem item_switch = new MenuItem("Đổi lớp");
+        item_switch.setStyle("-fx-text-fill: white;");
+        item_switch.setOnAction(e -> {
+            System.out.println("switch");
+        });
+
+        ct.getItems().addAll(item_info, item_switch);
+        ct.setStyle("-fx-background-color: transparent;");
+        btn.setContextMenu(ct);
+    }
+
+    public void init_arrButton() {
+        init_context_menu(btn_t2_123, btn_t2_123.getText());
+        init_context_menu(btn_t2_45, btn_t2_45.getText());
+        init_context_menu(btn_t2_678, btn_t2_678.getText());
+        init_context_menu(btn_t2_910, btn_t2_910.getText());
+
+        init_context_menu(btn_t3_123, btn_t3_123.getText());
+        init_context_menu(btn_t3_45, btn_t3_45.getText());
+        init_context_menu(btn_t3_678, btn_t3_678.getText());
+        init_context_menu(btn_t3_910, btn_t3_910.getText());
+
+        init_context_menu(btn_t5_123, btn_t5_123.getText());
+        init_context_menu(btn_t5_45, btn_t5_45.getText());
+        init_context_menu(btn_t5_678, btn_t5_678.getText());
+        init_context_menu(btn_t5_910, btn_t5_910.getText());
+
+        init_context_menu(btn_t6_123, btn_t6_123.getText());
+        init_context_menu(btn_t6_45, btn_t6_45.getText());
+        init_context_menu(btn_t6_678, btn_t6_678.getText());
+        init_context_menu(btn_t6_910, btn_t6_910.getText());
+
+        init_context_menu(btn_t7_123, btn_t7_123.getText());
+        init_context_menu(btn_t7_45, btn_t7_45.getText());
+        init_context_menu(btn_t7_678, btn_t7_678.getText());
+        init_context_menu(btn_t7_910, btn_t7_910.getText());
+
+        init_context_menu(btn_t4_123, btn_t4_123.getText());
+        init_context_menu(btn_t4_45, btn_t4_45.getText());
+        init_context_menu(btn_t4_678, btn_t4_678.getText());
+        init_context_menu(btn_t4_910, btn_t4_910.getText());
+    }
 }

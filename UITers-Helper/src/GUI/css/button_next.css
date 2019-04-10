@@ -1,0 +1,22 @@
+.button {
+    -fx-background-image: url("../images/next2.png");
+    -fx-background-size: 12px 12px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 10% 50%;
+    -fx-font-size: 12;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+    -fx-text-fill: white;
+}
+
+.button:hover{
+    -fx-background-color: #5E6467;  
+    -fx-background-image: url("../images/next2.png");
+    -fx-background-size: 12px 12px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: 10% 50%;
+    -fx-font-size: 12;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+    -fx-text-fill: white;
+}

@@ -4,83 +4,86 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXChipView?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxHeight="500.0" maxWidth="400.0" minHeight="500.0" minWidth="400.0" prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SubscribedController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxHeight="500.0" maxWidth="781.0" minHeight="229.0" minWidth="306.0" prefHeight="292.0" prefWidth="530.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SubscribedController">
    <children>
-      <BorderPane layoutX="6.0" layoutY="112.0" prefHeight="500.0" prefWidth="400.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <ImageView fitHeight="292.0" fitWidth="530.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/white_background.png" />
+         </image>
+      </ImageView>
+      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="470.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton fx:id="btn_exit" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" styleClass="button-exit" stylesheets="@../css/control.css" text="X" />
+         </children>
+      </HBox>
+      <VBox prefHeight="242.0" prefWidth="154.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label prefHeight="40.0" prefWidth="134.0" stylesheets="@../css/control.css" text="Kênh đăng ký">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <JFXCheckBox fx:id="cb_daa" checkedColor="#18a0fb" onAction="#cb_daaClick" prefHeight="40.0" stylesheets="@../css/control.css" text="daa.uit.edu.vn" unCheckedColor="BLACK">
+               <font>
+                  <Font name="Segoe UI" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="cb_gm" checkedColor="#18a0fb" onAction="#cb_gmClick" prefHeight="40.0" stylesheets="@../css/control.css" text="gm.uit.edu.vn" unCheckedColor="BLACK">
+               <font>
+                  <Font name="Segoe UI" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXCheckBox>
+            <JFXCheckBox fx:id="cb_courses" checkedColor="#18a0fb" onAction="#cb_coursesClick" prefHeight="40.0" stylesheets="@../css/control.css" text="courses.uit.edu.vn" unCheckedColor="BLACK">
+               <font>
+                  <Font name="Segoe UI" size="12.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </JFXCheckBox>
+         </children>
+      </VBox>
+      <VBox layoutX="259.0" layoutY="149.0" prefHeight="219.0" prefWidth="284.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/control.css" text="Từ khóa">
+               <font>
+                  <Font name="Segoe UI Bold" size="18.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="40.0" prefWidth="297.0">
                <children>
-                  <JFXButton prefHeight="39.0" prefWidth="145.0" text="Kênh đăng ký">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXCheckBox fx:id="cb_daa" onAction="#cb_daaClick" text="daa.uit.edu.vn">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" top="10.0" />
-                     </VBox.margin>
-                  </JFXCheckBox>
-                  <JFXCheckBox fx:id="cb_gm" onAction="#cb_gmClick" text="gm.uit.edu.vn">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" top="10.0" />
-                     </VBox.margin>
-                  </JFXCheckBox>
-                  <JFXCheckBox fx:id="cb_courses" onAction="#cb_coursesClick" text="courses.uit.edu.vn">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="20.0" top="10.0" />
-                     </VBox.margin>
-                  </JFXCheckBox>
-                  <JFXButton prefHeight="39.0" prefWidth="101.0" text="Từ khóa">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" />
-                     </VBox.margin>
-                  </JFXButton>
-                  <HBox prefHeight="40.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="txt_keyword" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="197.0" promptText="Điền mã lớp">
-                           <HBox.margin>
-                              <Insets left="20.0" right="10.0" />
-                           </HBox.margin>
-                        </TextField>
-                        <JFXButton fx:id="btn_add" maxHeight="40.0" maxWidth="80.0" minHeight="40.0" minWidth="80.0" onAction="#btn_addClick" prefHeight="40.0" prefWidth="80.0" text="Thêm" />
-                     </children>
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <JFXChipView fx:id="cv_keyword" prefHeight="203.0" prefWidth="360.0">
-                     <VBox.margin>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="10.0" />
-                     </VBox.margin>
-                  </JFXChipView>
+                  <TextField fx:id="txt_keyword" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" prefWidth="197.0" promptText="Điền mã lớp">
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </TextField>
+                  <JFXButton fx:id="btn_add" maxHeight="40.0" maxWidth="80.0" minHeight="40.0" minWidth="80.0" onAction="#btn_addClick" prefHeight="40.0" prefWidth="80.0" stylesheets="@../css/control.css" text="Thêm" />
                </children>
-            </VBox>
-         </center>
-         <top>
-            <JFXButton fx:id="btn_exit" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" text="X" BorderPane.alignment="CENTER_RIGHT" />
-         </top>
-      </BorderPane>
+            </HBox>
+            <JFXChipView fx:id="cv_keyword" prefHeight="119.0" prefWidth="284.0">
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXChipView>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

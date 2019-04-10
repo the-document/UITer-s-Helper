@@ -1,80 +1,19 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Mar 22, 2019, 5:02:17 PM
-    Author     : Admin
-*/
-.anchor{
-    -fx-border-width: 1 1 1 1;
-    -fx-border-radius: 10;
+.button:hover{
+    -fx-border-width: 2 2 2 2;
+    -fx-border-color: #18A0FB;
+    
 }
-.back_ground{
-    -fx-border-width: 1 1 1 1;
-    -fx-border-radius: 10;
+.label:hover{
+    -fx-opacity: 0.8
+        
 }
-.button{
-    -fx-background-color: transparent;
-    -fx-border-color:white;
-    -fx-border-width: 1 1 1 1;
-    -fx-border-radius: 10;
-    -fx-pref-tile-width: 162;
-    -fx-pref-tile-height: 45;
+.check-box:hover{
     -fx-font-size: 18;
+}
+.button-exit:hover{
+    -fx-background-color: red; 
+    -fx-border-width: 0 0 0 0;
     -fx-font-color: white;
-    -fx-text-fill: white;
+    
     
 }
-.button2{
-    -fx-background-color: #C4C4C4;
-    -fx-opacity: 1;
-    -fx-border-width: 0 0 0 0;
-    -fx-border-radius: 10;
-}
-.day{
-    -fx-width: 184px;
-    -fx-height: 237px;
-    -fx-background-color: rgba(196, 196, 196, 0.1);
-    -fx-border-radius: 10px;
-    -fx-border-width: 0 0 0 0;
-   
-}
-
-.textfiled{
-    -fx-text-fill: white;
-    -fx-prompt-text-fill: whitesmoke;
-    -fx-border-width: 1 1 1 1;     
-    
-}
-.label{
-    -fx-font-size: 18;
-    -fx-font-color: white;
-    -fx-text-fill: white;
-   -fx-border-width: 0 0 0 0;
-}
-.setting_button{
-    -fx-background-image: url('/images/setting.jpg');
-    -fx-border-width: 0 0 0 0;
-}
-
-.toggle_button{
-    -fx-text-fill: white;
-    -fx-font-size: 18;
-    
-}
-.comboBox{
-  -fx-background-color:  PINK;
-}
-.comboBox{
-     -fx-background-color:  WHITE;
-    -fx-text-fill: RED;
-}
-.grid{
-   -fx-background-image: url('/images/background2.png');
-   -fx-border-radius: 10px;
-   -fx-border-width: 1 1 1 1;
-   -fx-border-color: white;
-}
-

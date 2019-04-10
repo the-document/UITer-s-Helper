@@ -1,0 +1,25 @@
+.label{
+    -fx-align: CENTER;
+    -fx-font-weight:bold;
+    -fx-background-color: transparent; 
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+    -fx-text-fill: white;   
+}
+
+.label:hover{
+    -fx-align: CENTER;
+    -fx-font-weight:bold;
+    -fx-background-color: transparent;  
+    -fx-opacity: 0.8;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: white;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+    -fx-text-fill: white;
+    
+}

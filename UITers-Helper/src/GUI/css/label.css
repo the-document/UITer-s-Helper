@@ -1,0 +1,14 @@
+.label{
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-text-fill: white;
+    -fx-text-align: CENTER CENTER;
+}
+.label:hover{
+    -fx-font-size: 18;
+    -fx-opacity: 0.8;
+    -fx-font-family: "Segoe UI";  
+    -fx-text-fill: white;
+    -fx-text-align: CENTER CENTER;
+}
+

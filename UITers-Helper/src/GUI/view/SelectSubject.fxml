@@ -13,132 +13,135 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectSubjectController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectSubjectController">
     <children>
-      <ImageView fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
+      <ImageView fitHeight="660.0" fitWidth="1174.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
-      <BorderPane prefHeight="660.0" prefWidth="960.0">
-         <top>
-            <HBox maxWidth="960.0" minWidth="960.0" prefHeight="40.0" prefWidth="960.0" BorderPane.alignment="CENTER">
-               <children>
-                  <JFXButton fx:id="btn_back" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_backClick" prefHeight="40.0" prefWidth="120.0" text="&lt; Back " textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXButton>
-                  <Region prefHeight="40.0" prefWidth="708.0" />
-                  <JFXComboBox prefHeight="40.0" />
-                  <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" text="-" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXButton>
-                  <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" text="X" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXButton>
-               </children>
-            </HBox>
-         </top>
+      <BorderPane prefHeight="660.0" prefWidth="1174.0">
          <left>
-            <VBox maxWidth="450.0" minWidth="450.0" prefHeight="560.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <VBox maxWidth="420.0" minWidth="420.0" prefHeight="520.0" prefWidth="420.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="450.0" text="Chọn môn học" textAlignment="CENTER" textFill="WHITE">
+                  <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/header.css" text="Chọn môn học" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
                   </Label>
-                  <Line endX="430.0" stroke="WHITE">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </Line>
                   <JFXListView fx:id="lv_subject" stylesheets="@../css/listview.css">
                      <VBox.margin>
-                        <Insets left="20.0" right="20.0" top="10.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
                   </JFXListView>
+                  <JFXComboBox fx:id="cbb_subject" focusColor="#1e85c9" prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/combobox.css" />
                </children>
                <BorderPane.margin>
-                  <Insets left="20.0" top="20.0" />
+                  <Insets left="40.0" right="40.0" top="20.0" />
                </BorderPane.margin>
             </VBox>
          </left>
          <right>
-            <VBox maxWidth="450.0" minWidth="450.0" prefHeight="613.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+            <VBox maxWidth="669.0" minWidth="450.0" prefHeight="520.0" prefWidth="620.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="451.0" text="Tìm kiếm" textAlignment="CENTER" textFill="WHITE">
+                  <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/header.css" text="Tìm kiếm" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                      <VBox.margin>
-                        <Insets />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
                   </Label>
-                  <Line endX="430.0" stroke="WHITE">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </Line>
-                  <HBox prefHeight="80.0" prefWidth="450.0">
+                  <HBox alignment="BOTTOM_LEFT" prefHeight="80.0" prefWidth="450.0">
                      <children>
-                        <JFXTextField fx:id="txt_subject" opacity="0.3" prefHeight="80.0" prefWidth="270.0" promptText="fsfssfds" style="-fx-background-color: white;" unFocusColor="WHITE">
+                        <JFXTextField fx:id="txt_subject" focusColor="#1e85c9" labelFloat="true" maxHeight="60.0" maxWidth="548.0" minHeight="40.0" minWidth="244.0" prefHeight="60.0" prefWidth="476.0" promptText="Nhập mã môn hoặc tên môn" stylesheets="@../css/textfield.css" unFocusColor="WHITE">
                            <font>
-                              <Font size="18.0" />
-                           </font></JFXTextField>
-                        <JFXComboBox fx:id="cbb_subject" prefHeight="80.0" prefWidth="180.0">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin></JFXComboBox>
+                              <Font name="Segoe UI" size="18.0" />
+                           </font>
+                        </JFXTextField>
                      </children>
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets bottom="20.0" />
                      </VBox.margin>
                   </HBox>
-                  <HBox alignment="BOTTOM_RIGHT" maxWidth="450.0" minWidth="450.0" prefHeight="40.0" prefWidth="450.0">
+                  <HBox alignment="BOTTOM_RIGHT" maxWidth="697.0" minWidth="450.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="41.0" prefWidth="697.0">
                      <children>
-                        <JFXButton fx:id="btn_add" onAction="#btn_addClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Thêm" textAlignment="RIGHT" textFill="WHITE" />
+                        <JFXButton fx:id="btn_add" onAction="#btn_addClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Thêm" textAlignment="RIGHT" textFill="WHITE" />
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </HBox>
-                  <Label alignment="CENTER" prefHeight="40.0" prefWidth="450.0" text="Danh sách" textAlignment="CENTER" textFill="WHITE">
+                  <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/header.css" text="Danh sách" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Line endX="430.0" endY="8.404254913330078E-6" stroke="WHITE">
+                  <JFXChipView fx:id="cv_subject" prefHeight="200.0" prefWidth="669.0" stylesheets="@../css/chipview.css">
                      <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                     </VBox.margin></Line>
-                  <JFXChipView fx:id="cv_subject" maxWidth="450.0" minWidth="450.0" prefHeight="211.0" prefWidth="450.0">
-                     <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets top="20.0" />
                      </VBox.margin></JFXChipView>
                </children>
                <BorderPane.margin>
-                  <Insets right="20.0" top="20.0" />
+                  <Insets right="40.0" top="20.0" />
                </BorderPane.margin>
             </VBox>
          </right>
+         <top>
+            <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="3711.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="80.0">
+                     <children>
+                        <JFXButton fx:id="btn_back" alignment="CENTER" contentDisplay="CENTER" maxWidth="120.0" minWidth="120.0" onAction="#btn_backClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_back.css" text="Back" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <Region />
+                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="3705.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <Region prefHeight="40.0" prefWidth="10.0" />
+                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="180.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </top>
          <bottom>
-            <JFXButton fx:id="btn_next" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_nextClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Tiếp" BorderPane.alignment="BOTTOM_RIGHT">
-               <BorderPane.margin>
-                  <Insets bottom="20.0" right="20.0" />
-               </BorderPane.margin>
-            </JFXButton>
+            <HBox alignment="CENTER_RIGHT" prefHeight="80.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT">
+               <children>
+                  <JFXButton fx:id="btn_delete" layoutX="1024.0" layoutY="10.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_deleteClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Xóa">
+                     <HBox.margin>
+                        <Insets bottom="40.0" right="40.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_next" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_nextClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Tiếp">
+                     <HBox.margin>
+                        <Insets bottom="40.0" right="40.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
          </bottom>
       </BorderPane>
    </children>
