@@ -67,5 +67,8 @@ public class MonHoc {
         this.soChiThucHanh = soChiThucHanh;
     }
     
-    
+    @Override public String toString()
+    {
+        return this.maMonHoc+" - "+this.tenMonHoc+" - "+this.donViQL+" - "+this.soChiLyThuyet+" - "+this.soChiThucHanh;
+    }
 }

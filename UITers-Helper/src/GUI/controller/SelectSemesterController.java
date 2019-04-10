@@ -3,10 +3,16 @@ package GUI.controller;
 // <editor-fold desc="import zone">
 
 import GUI.StaticFunctions;
+import BLL.Global;
+import BLL.HocKyBLL;
+import DTO.HocKy;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -103,7 +109,7 @@ public class SelectSemesterController implements Initializable {
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
-        
+
         init_lv_semester();
         String text = "Xin chào, 17520433";
         init_cbb_user(form);
@@ -162,12 +168,16 @@ public class SelectSemesterController implements Initializable {
         StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
-   
+
     public void init_lv_semester() {
-        for (int i = 0; i < 40; i++) {
-            Label lb = new Label("Học kì" + i);
+        HocKyBLL hkbll=new HocKyBLL();
+        List<HocKy> lsHocKy= hkbll.GetAllHocKy();
+
+        for (HocKy hocKy : lsHocKy) {
+            Label lb = new Label(hocKy.getTenHK());
             lv_semester.getItems().addAll(lb);
         }
+        
         lv_semester.setOnMouseClicked(e -> {
             String id = lv_semester.getSelectionModel().getSelectedItem().getText();
             switch (id) {
@@ -205,6 +215,10 @@ public class SelectSemesterController implements Initializable {
                     break;
             }
 
+
+          //==============================
+          // init hoc ky for Global here
+          //==============================
         });
     }
 

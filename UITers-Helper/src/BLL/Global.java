@@ -47,11 +47,12 @@ public class Global {
 
     private static double xOffSet = 0;
     private static double yOffSet = 0;
-    public static final String CQUI = "CQUI";
-    public static final String CTTT = "CTTT";
-    public static final String CLC = "CLC";
-    public static final String CNTN = "CNTN";
-    public static final String KSTN = "KSTN";
+      
+    //==========USER INFOR===================
+    public static final String MSSV="18520951";
+    public static final String NGANHHOC="KTPM";
+    public static final int HOCKY=1;
+    
     public static Stack<String> stack_link;
     
     private String URL_form;

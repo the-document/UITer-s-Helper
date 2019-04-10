@@ -3,12 +3,17 @@ package GUI.controller;
 // <editor-fold desc="import zone">
 import BLL.Global;
 import GUI.StaticFunctions;
+import BLL.MonHocBLL;
+import DTO.MonHoc;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -201,10 +206,28 @@ public class SelectSubjectController implements Initializable {
     }
 
     public void init_lv_subject() {
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("HIT00" + i);
-            lv_subject.getItems().addAll(lb);
+        try
+        {
+            MonHocBLL mhbll = new MonHocBLL();
+            List<MonHoc> lsMonHocs;
+            lsMonHocs = mhbll.GetAllLopHoc(Global.MSSV, Global.NGANHHOC, Global.HOCKY);
+            if(lsMonHocs!=null)
+            for (MonHoc m : lsMonHocs) {
+                Label MonHocLabel = new Label(m.getMaMonHoc() + " - " + m.getTenMonHoc());
+                lv_subject.getItems().addAll(MonHocLabel);
+            }
+            else
+            {
+                Label MonHocLabel = new Label("No connect");
+                lv_subject.getItems().addAll(MonHocLabel);      
+            }
         }
+        catch (SQLException e)
+        {
+            Label MonHocLabel = new Label("No connect");
+            lv_subject.getItems().addAll(MonHocLabel);         
+        }
+       
         lv_subject.setOnMouseClicked(e -> {
             String id = lv_subject.getSelectionModel().getSelectedItem().getText();
             cv_subject.getChips().add(id);
@@ -269,6 +292,8 @@ public class SelectSubjectController implements Initializable {
             }
 
         });
+    
+
     }
 
 }
