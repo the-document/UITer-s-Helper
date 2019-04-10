@@ -1,6 +1,8 @@
 package GUI.controller;
 
-import BLL.Global;
+// <editor-fold desc="import zone">
+
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
@@ -25,10 +27,18 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+//</editor-fold>
+
 public class SelectSemesterController implements Initializable {
 
+    // <editor-fold desc="Static variables zone">
+    
     String form;
     Stage window;
+    
+    // </editor-fold>
+    
+    // <editor-fold desc="FXML variables zone">
      @FXML
     private AnchorPane AnchorPaneMain;
 
@@ -53,25 +63,30 @@ public class SelectSemesterController implements Initializable {
     @FXML 
     private StackPane stack_pane;
     
+    // </editor-fold>
+    
+    //<editor-fold desc="FXML functions zone">
+        
     @FXML
     void btn_backClick(ActionEvent event) {
-
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
     }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+        StaticFunctions.ExitEvent(AnchorPaneMain);
 
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-        Global.MinimizeEvent(event, AnchorPaneMain);
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
     }
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-         form = "../view/SelectSubject.fxml";
+        form = "../view/SelectSubject.fxml";
         madeFadeOut(event);
     }
 
@@ -80,12 +95,15 @@ public class SelectSemesterController implements Initializable {
 
     }
 
-    public void initialize(URL url, ResourceBundle rb) {
-        
-        Global.AnimationShow(AnchorPaneMain);
+    // </editor-fold>
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {      
+        StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
+        
         init_lv_semester();
         String text = "Xin chào, 17520433";
         init_cbb_user(form);
@@ -120,6 +138,7 @@ public class SelectSemesterController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/SelectSemester.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -140,10 +159,9 @@ public class SelectSemesterController implements Initializable {
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
-
    
     public void init_lv_semester() {
         for (int i = 0; i < 40; i++) {
@@ -159,7 +177,7 @@ public class SelectSemesterController implements Initializable {
     }
     
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
@@ -167,8 +185,12 @@ public class SelectSemesterController implements Initializable {
 
         cbb_user.setOnAction(e -> {
             switch (cbb_user.getValue()) {
-                case "Thời khóa biểu":
+                case "Trang chủ":
                     form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Thời khóa biểu":
+                    form = "../view/CreateTimetableNow.fxml";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":

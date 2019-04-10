@@ -16,7 +16,6 @@
 
 <AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectMethodCreateController">
     <children>
-      <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
       <ImageView fitHeight="660.0" fitWidth="1174.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/background.jpg" />
@@ -55,13 +54,6 @@
                </BorderPane.margin>
             </VBox>
          </left>
-         <bottom>
-            <JFXButton fx:id="btn_next" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_nextClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/control.css" text="Tiếp" BorderPane.alignment="BOTTOM_RIGHT">
-               <BorderPane.margin>
-                  <Insets bottom="40.0" right="40.0" />
-               </BorderPane.margin>
-            </JFXButton>
-         </bottom>
          <top>
             <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="3711.0" BorderPane.alignment="CENTER">
                <children>
@@ -87,6 +79,7 @@
                               <Font size="18.0" />
                            </font>
                         </JFXButton>
+                        <Region prefHeight="40.0" prefWidth="10.0" />
                         <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="180.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00" />
                      </children>
                   </HBox>
@@ -94,5 +87,6 @@
             </HBox>
          </top>
       </BorderPane>
+      <StackPane fx:id="stack_pane" prefHeight="461.0" prefWidth="593.0" />
    </children>
 </AnchorPane>

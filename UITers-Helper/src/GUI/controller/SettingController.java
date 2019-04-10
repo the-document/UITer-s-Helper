@@ -1,7 +1,7 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
-import BLL.Global;
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
@@ -33,12 +33,14 @@ import javafx.util.Duration;
 public class SettingController implements Initializable {
 
     // <editor-fold desc="Static variables zone">
+    
     String form;
     Stage window;
     int isExpandTerm = 1;
     int isExpandCachSuDung = 1;
     
     // </editor-fold>
+    
     // <editor-fold desc="import zone">
     @FXML
     private AnchorPane AnchorPaneMain;
@@ -103,19 +105,24 @@ public class SettingController implements Initializable {
     @FXML
     private JFXComboBox<String> cbb_user;
 
+    //</editor-fold>
+    
+    //<editor-fold desc="FXML functions zone">
+    
     @FXML
     void btn_backClick(ActionEvent event) {
-
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
     }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+        StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-        Global.MinimizeEvent(event, AnchorPaneMain);
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
 
     }
 
@@ -215,10 +222,12 @@ public class SettingController implements Initializable {
         }
     }
 
-    // <editor-fold desc="import zone">
+    //</editor-fold>
+    
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
+        StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
@@ -244,6 +253,7 @@ public class SettingController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/Setting.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -265,21 +275,25 @@ public class SettingController implements Initializable {
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list;
-        list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
+
         cbb_user.setOnAction(e -> {
             switch (cbb_user.getValue()) {
-                case "Thời khóa biểu":
+                case "Trang chủ":
                     form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Thời khóa biểu":
+                    form = "../view/CreateTimetableNow.fxml";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":

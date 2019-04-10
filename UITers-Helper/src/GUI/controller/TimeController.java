@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.controller;
 
-import BLL.Global;
+// <editor-fold desc="import zone">
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTimePicker;
@@ -14,18 +9,21 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+// </editor-fold>
 
 public class TimeController implements Initializable {
-
+    
+    // <editor-fold desc="Static variables zone">
     LocalDate date;
     LocalTime time;
+    // </editor-fold>
 
+    // <editor-fold desc="FXML variables zone">
+    
     @FXML
     private AnchorPane AnchorPaneMain;
 
@@ -37,7 +35,11 @@ public class TimeController implements Initializable {
 
     @FXML
     private JFXButton btn_ok;
+    
+    // </editor-fold>
 
+    // <editor-fold desc="FXML functions zone">
+    
     @FXML
     void btn_okClick(ActionEvent event) { 
         date = pk_date.getValue();
@@ -47,9 +49,12 @@ public class TimeController implements Initializable {
                 
     }
 
+    // </editor-fold>
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        
     }
+    
 
 }

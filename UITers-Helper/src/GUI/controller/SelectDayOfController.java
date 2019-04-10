@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.controller;
-
-import BLL.Global;
+// <editor-fold desc="import zone">
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
@@ -13,6 +8,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,26 +20,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-/**
- * FXML Controller class
- *
- * @author Admin
- */
+//</editor-fold>
 public class SelectDayOfController implements Initializable {
 
+    // <editor-fold desc="Static variables zone">
     Stage window;
     String form;
     String style = "-fx-border-color : white";
     String style2 = "-fx-border-color : transparent";
+
+    // </editor-fold>
+    // <editor-fold desc="FXML variables zone">
     @FXML
     private AnchorPane AnchorPaneMain;
 
@@ -52,6 +43,7 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     private JFXComboBox<String> cbb_user;
+
     @FXML
     private JFXButton btn_next;
 
@@ -154,8 +146,38 @@ public class SelectDayOfController implements Initializable {
     @FXML
     private Label lb_t7;
 
+    // </editor-fold>
+    // <editor-fold desc="FXML functions zone">
+    @FXML
+    void btn_backClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_exitClick(ActionEvent event) {
+        StaticFunctions.ExitEvent(AnchorPaneMain);
+    }
+
+    @FXML
+    void btn_minimizeClick(ActionEvent event) {
+
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
+    }
+
+    @FXML
+    void btn_nextClick(ActionEvent event) {
+        form = "../view/CreateTimetableNow.fxml";
+        madeFadeOut(event);
+    }
+
+    // </editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        StaticFunctions.AnimationShow(AnchorPaneMain);
+        stack_pane.setDisable(true);
+        Platform.runLater(AnchorPaneMain::requestFocus);
+
         initArrButton();
         setKeyEvent();
         String text = "Xin chào, 17520433";
@@ -181,6 +203,7 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/SelectDayOf.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -197,36 +220,13 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-
         Parent root = FXMLLoader.load(getClass().getResource(form));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
 
-    }
-
-    @FXML
-    void btn_backClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
-    }
-
-    @FXML
-    void btn_minimizeClick(ActionEvent event) {
-
-        Global.MinimizeEvent(event, AnchorPaneMain);
-    }
-
-    @FXML
-    void btn_nextClick(ActionEvent event) {
-        form = "../view/Home.fxml";
-        madeFadeOut(event);
     }
 
     public void initButtonClick(JFXButton btn) {
@@ -244,8 +244,6 @@ public class SelectDayOfController implements Initializable {
         });
 
     }
-
-   
 
     public void init_label() {
         lb_t2.setOnMouseClicked(e -> {
@@ -316,7 +314,7 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
@@ -324,8 +322,12 @@ public class SelectDayOfController implements Initializable {
 
         cbb_user.setOnAction(e -> {
             switch (cbb_user.getValue()) {
-                case "Thời khóa biểu":
+                case "Trang chủ":
                     form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Thời khóa biểu":
+                    form = "../view/CreateTimetableNow.fxml";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":

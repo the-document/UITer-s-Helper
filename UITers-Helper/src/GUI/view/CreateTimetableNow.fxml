@@ -1,49 +1,256 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXCheckBox?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.CreateTimetableNowController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.CreateTimetableNowController">
     <children>
-      <ImageView fitHeight="660.0" fitWidth="960.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView disable="true" fitHeight="660.0" fitWidth="1174.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <image>
             <Image url="@../images/background.jpg" />
          </image>
       </ImageView>
-      <JFXButton fx:id="btn_Login" layoutX="513.0" layoutY="375.0"  prefHeight="41.0" prefWidth="115.0" stylesheets="@../css/control.css" text="Login" textFill="WHITE">
+      <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
+      <BorderPane prefHeight="40.0" prefWidth="1174.0">
+         <top>
+            <HBox alignment="CENTER_LEFT" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="1174.0" BorderPane.alignment="CENTER">
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="80.0">
+                     <children>
+                        <JFXButton fx:id="btn_back" alignment="CENTER" contentDisplay="CENTER" maxWidth="120.0" minWidth="120.0" onAction="#btn_backClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_back.css" text="Back" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <Region />
+                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="3705.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </JFXButton>
+                        <Region prefHeight="40.0" prefWidth="10.0" />
+                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" prefHeight="40.0" prefWidth="180.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+      <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/header.css" text="Thời khóa biểu" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="18.0" />
          </font>
-      </JFXButton>
-      <JFXTextField focusColor="#2a0fda" layoutX="322.0" layoutY="238.0" prefHeight="39.0" prefWidth="298.0" promptText="id" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXTextField>
-      <JFXTextField focusColor="#2a0fda" layoutX="324.0" layoutY="302.0" prefHeight="39.0" prefWidth="302.0" promptText="password" styleClass="textfiled" stylesheets="@../css/control.css" unFocusColor="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXTextField>
-      <JFXCheckBox fx:id="cb_remember" checkedColor="#1f10c6" layoutX="325.0" layoutY="384.0"  text="Remember me?" textFill="WHITE" unCheckedColor="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXCheckBox>
-      <JFXButton fx:id="btn_setting" layoutX="430.0" layoutY="454.0"  styleClass="setting_button" stylesheets="@../css/control.css" text="Setting">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXButton>
-      <JFXButton fx:id="btn_back" layoutX="31.0" layoutY="22.0"  text="Back " textFill="WHITE">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXButton>
+      </Label>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="50.0" layoutY="180.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="24.0" layoutY="401.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="227.0" layoutY="183.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.rightAnchor="784.0" AnchorPane.topAnchor="180.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="201.0" layoutY="403.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="784.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="383.0" layoutY="164.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.rightAnchor="598.0" AnchorPane.topAnchor="180.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="357.0" layoutY="384.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="598.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="560.0" layoutY="167.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.rightAnchor="412.0" AnchorPane.topAnchor="180.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="534.0" layoutY="387.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="412.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="688.0" layoutY="171.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="180.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="662.0" layoutY="391.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="226.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="805.0" layoutY="169.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="779.0" layoutY="451.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="40.0" />
+      <VBox layoutX="22.0" layoutY="220.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="784.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Label fx:id="lb_t3" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 3" />
+            <JFXButton fx:id="btn_t3_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t3_45" layoutX="10.0" layoutY="50.0" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="32.0" layoutY="190.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0">
+         <children>
+            <JFXButton fx:id="btn_t2_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t2_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="32.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" nodeOrientation="LEFT_TO_RIGHT" prefHeight="190.0" prefWidth="165.6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Label fx:id="lb_t2" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 2" />
+            <JFXButton fx:id="btn_t2_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="btn_t2_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="30.0" layoutY="410.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="784.0">
+         <children>
+            <JFXButton fx:id="btn_t3_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t3_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="187.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="598.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Label fx:id="lb_t4" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 4" />
+            <JFXButton fx:id="btn_t4_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t4_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="30.0" layoutY="410.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="598.0">
+         <children>
+            <JFXButton fx:id="btn_t4_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t4_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="30.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="163.0" prefHeight="190.0" prefWidth="163.0" AnchorPane.rightAnchor="412.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Label fx:id="lb_t5" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 5" />
+            <JFXButton fx:id="btn_t5_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t5_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="187.0" layoutY="410.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="412.0">
+         <children>
+            <JFXButton fx:id="btn_t5_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t5_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox maxWidth="165.6" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="226.0">
+         <children>
+            <JFXButton fx:id="btn_t6_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t6_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="342.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Label fx:id="lb_t6" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 6" />
+            <JFXButton fx:id="btn_t6_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t6_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="998.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Label fx:id="lb_t7" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 7" />
+            <JFXButton fx:id="btn_t7_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t7_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <VBox layoutX="500.0" layoutY="410.0" maxWidth="165.6" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="40.0">
+         <children>
+            <JFXButton fx:id="btn_t7_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btn_t7_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </VBox>
+      <Label layoutX="45.0" layoutY="130.0" prefHeight="23.0" prefWidth="340.0" stylesheets="@../css/label.css" text="Tạo vào ngày ..." />
    </children>
 </AnchorPane>

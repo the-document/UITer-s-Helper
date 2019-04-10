@@ -50,7 +50,11 @@
                               <Font size="18.0" />
                            </font>
                         </JFXButton>
-                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" prefHeight="40.0" prefWidth="180.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00" />
+                        <Region prefHeight="40.0" prefWidth="10.0" />
+                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" prefHeight="40.0" prefWidth="180.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin></JFXComboBox>
                      </children>
                   </HBox>
                </children>

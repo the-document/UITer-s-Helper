@@ -1,47 +1,45 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.controller;
 
-import BLL.Global;
+// <editor-fold desc="import zone">
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+// </editor-fold>
 
 public class SelectAdvancedController implements Initializable {
 
+    // <editor-fold desc="Static variables zone">
     Stage window;
     String form;
     String style = "-fx-border-color : white";
     String style2 = "-fx-border-color : transparent";
+
+    // </editor-fold>
+    // <editor-fold desc="FXML variables zone">
     @FXML
     private AnchorPane AnchorPaneMain;
 
@@ -63,7 +61,6 @@ public class SelectAdvancedController implements Initializable {
     @FXML
     private JFXButton btn_minimize;
 
-   
     @FXML
     private ScrollPane pane_subject;
 
@@ -139,25 +136,29 @@ public class SelectAdvancedController implements Initializable {
     @FXML
     private JFXButton btn_t7_910;
 
+    // </editor-fold>
+    // <editor-fold desc="FXML functions zone">
     @FXML
     void btn_backClick(ActionEvent event) {
-
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
     }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+        StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
 
-        Global.MinimizeEvent(event, AnchorPaneMain);
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
     }
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-
+        form = "../view/CreateTimetableNow.fxml";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -165,12 +166,19 @@ public class SelectAdvancedController implements Initializable {
 
     }
 
+    // </editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        StaticFunctions.AnimationShow(AnchorPaneMain);
+        stack_pane.setDisable(true);
+        Platform.runLater(AnchorPaneMain::requestFocus);
+
         init_pane_subject();
         setKeyEvent();
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
+        init_arrButton();
+
     }
 
     public void setKeyEvent() {
@@ -229,6 +237,7 @@ public class SelectAdvancedController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -245,18 +254,17 @@ public class SelectAdvancedController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-
         Parent root = FXMLLoader.load(getClass().getResource(form));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
 
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
@@ -264,8 +272,12 @@ public class SelectAdvancedController implements Initializable {
 
         cbb_user.setOnAction(e -> {
             switch (cbb_user.getValue()) {
-                case "Thời khóa biểu":
+                case "Trang chủ":
                     form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Thời khóa biểu":
+                    form = "../view/CreateTimetableNow.fxml";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
@@ -283,4 +295,55 @@ public class SelectAdvancedController implements Initializable {
         });
     }
 
+    public void init_context_menu(JFXButton btn, String id) {
+        ContextMenu ct = new ContextMenu();
+
+        MenuItem item_info = new MenuItem("Chi tiết");
+        item_info.setStyle("-fx-text-fill: white;");
+        item_info.setOnAction(e -> {
+            System.out.println("info");
+        });
+
+        MenuItem item_switch = new MenuItem("Đổi lớp");
+        item_switch.setStyle("-fx-text-fill: white;");
+        item_switch.setOnAction(e -> {
+            System.out.println("switch");
+        });
+
+        ct.getItems().addAll(item_info, item_switch);
+        ct.setStyle("-fx-background-color: transparent;");
+        btn.setContextMenu(ct);
+    }
+
+    public void init_arrButton() {
+        init_context_menu(btn_t2_123, btn_t2_123.getText());
+        init_context_menu(btn_t2_45, btn_t2_45.getText());
+        init_context_menu(btn_t2_678, btn_t2_678.getText());
+        init_context_menu(btn_t2_910, btn_t2_910.getText());
+
+        init_context_menu(btn_t3_123, btn_t3_123.getText());
+        init_context_menu(btn_t3_45, btn_t3_45.getText());
+        init_context_menu(btn_t3_678, btn_t3_678.getText());
+        init_context_menu(btn_t3_910, btn_t3_910.getText());
+
+        init_context_menu(btn_t5_123, btn_t5_123.getText());
+        init_context_menu(btn_t5_45, btn_t5_45.getText());
+        init_context_menu(btn_t5_678, btn_t5_678.getText());
+        init_context_menu(btn_t5_910, btn_t5_910.getText());
+
+        init_context_menu(btn_t6_123, btn_t6_123.getText());
+        init_context_menu(btn_t6_45, btn_t6_45.getText());
+        init_context_menu(btn_t6_678, btn_t6_678.getText());
+        init_context_menu(btn_t6_910, btn_t6_910.getText());
+
+        init_context_menu(btn_t7_123, btn_t7_123.getText());
+        init_context_menu(btn_t7_45, btn_t7_45.getText());
+        init_context_menu(btn_t7_678, btn_t7_678.getText());
+        init_context_menu(btn_t7_910, btn_t7_910.getText());
+
+        init_context_menu(btn_t4_123, btn_t4_123.getText());
+        init_context_menu(btn_t4_45, btn_t4_45.getText());
+        init_context_menu(btn_t4_678, btn_t4_678.getText());
+        init_context_menu(btn_t4_910, btn_t4_910.getText());
+    }
 }

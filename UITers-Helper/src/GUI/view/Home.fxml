@@ -50,6 +50,7 @@
                               <Font size="18.0" />
                            </font>
                         </JFXButton>
+                        <Region prefHeight="40.0" prefWidth="10.0" />
                         <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="180.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00" />
                      </children>
                   </HBox>
@@ -107,7 +108,7 @@
                               <Pane maxHeight="120.0" maxWidth="120.0" minHeight="120.0" minWidth="120.0" prefHeight="120.0" prefWidth="120.0">
                                  <children>
                                     <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="120.0" opacity="0.3" stroke="WHITE" strokeType="INSIDE" width="120.0" />
-                                    <JFXButton fx:id="btn_showdate" maxHeight="120.0" maxWidth="120.0" minHeight="120.0" minWidth="120.0" onAction="#btn_showdateClick" prefHeight="120.0" prefWidth="120.0" stylesheets="@../css/button_no_border.css" text="Show date" textFill="WHITE" />
+                                    <JFXButton fx:id="btn_showdate" maxHeight="120.0" maxWidth="120.0" minHeight="120.0" minWidth="120.0" onAction="#btn_showdateClick" prefHeight="120.0" prefWidth="120.0" stylesheets="@../css/button_no_border.css" textFill="WHITE" />
                                  </children>
                               </Pane>
                               <JFXListView fx:id="lv_location" prefHeight="120.0" prefWidth="390.0" stylesheets="@../css/listview.css">
@@ -152,6 +153,6 @@
             </VBox>
          </left>
       </BorderPane>
-      <StackPane fx:id="stack_pane" maxHeight="660.0" maxWidth="960.0" minHeight="660.0" minWidth="960.0" prefHeight="660.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <StackPane fx:id="stack_pane" maxHeight="660.0" maxWidth="1223.0" minHeight="660.0" minWidth="960.0" prefHeight="660.0" prefWidth="1178.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

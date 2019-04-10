@@ -1,9 +1,8 @@
 package GUI.controller;
-// <editor-fold desc="import zone">
 
-import BLL.Global;
+// <editor-fold desc="import zone">
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
@@ -38,9 +37,9 @@ public class HomeController implements Initializable {
     int isExpandChung = 1;
     int isExpandDeadline = 1;
     int isExpandDangKy = 1;
-    
-    // </editor-fold>
 
+    // </editor-fold>
+    
     // <editor-fold desc="FXML variables zone">
     @FXML
     private JFXButton btn_setting;
@@ -90,6 +89,7 @@ public class HomeController implements Initializable {
     // </editor-fold>
     
     // <editor-fold desc="FXML functions zone">
+    
     @FXML
     void btn_expandChungClick(ActionEvent event) {
         if (isExpandChung == 1) {
@@ -180,6 +180,8 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_backClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
 
     }
 
@@ -192,13 +194,12 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+        StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-
-        Global.MinimizeEvent(event, AnchorPaneMain);
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
     }
 
     @FXML
@@ -208,7 +209,8 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_showdateClick(ActionEvent event) {
-
+        form = "../view/Calender.fxml";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -222,7 +224,7 @@ public class HomeController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("../view/Subscribed.fxml"));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 400, 500);
+            scene = new Scene(fxmlLoader.load(), 530, 292);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -237,18 +239,18 @@ public class HomeController implements Initializable {
     // </editor-fold>
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
+    public void initialize(URL url, ResourceBundle rb) {     
+        StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
+
         String name = "Xin chào, 17520433";
         init_cbb_user(name);
         init_lv_dangky();
         init_lv_deadline();
         init_lv_location();
         init_lv_news();
-
     }
 
     public void setKeyEvent() {
@@ -273,12 +275,12 @@ public class HomeController implements Initializable {
                 case ENTER:
                     btn_create.fire();
                     break;
-               
             }
         });
     }
 
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/Home.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -300,7 +302,7 @@ public class HomeController implements Initializable {
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
 
@@ -361,7 +363,7 @@ public class HomeController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
@@ -369,8 +371,13 @@ public class HomeController implements Initializable {
 
         cbb_user.setOnAction(e -> {
             switch (cbb_user.getValue()) {
+                case "Trang chủ":
+                    form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
                 case "Thời khóa biểu":
-                    btn_create.fire();
+                    form = "../view/CreateTimetableNow.fxml";
+                    madeFadeOut(e);
                     break;
                 case "Cài đặt":
                     form = "../view/Setting.fxml";

@@ -1,15 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.controller;
 
-import BLL.Global;
+// <editor-fold desc="import zone">
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -27,32 +21,20 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+//</editor-fold>
 
-/**
- * FXML Controller class
- *
- * @author Admin
- */
 public class SelectMethodCreateController implements Initializable {
 
+    // <editor-fold desc="Static variables zone">
     Stage window;
     String form;
     String state = null;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
-        stack_pane.setDisable(true);
-        Platform.runLater(btn_select_advanced::requestFocus);
-        setKeyEvent();
-        String text = "Xin chào, 17520433"; 
-        init_cbb_user(text);
-    }
-
+    // </editor-fold>
     
+    // <editor-fold desc="FXML variables zone">
     @FXML
     private AnchorPane AnchorPaneMain;
 
@@ -69,9 +51,6 @@ public class SelectMethodCreateController implements Initializable {
     private JFXButton btn_select_random;
 
     @FXML
-    private JFXButton btn_next;
-
-    @FXML
     private JFXButton btn_back;
 
     @FXML
@@ -83,57 +62,25 @@ public class SelectMethodCreateController implements Initializable {
     @FXML
     private JFXComboBox<String> cbb_user;
 
+    // </editor-fold>
+    
+    // <editor-fold desc="FXML function zone">
     @FXML
     void btn_backClick(ActionEvent event) {
-        
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
     }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+        StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-
-        Global.MinimizeEvent(event, AnchorPaneMain);
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
     }
 
-    @FXML
-    void btn_nextClick(ActionEvent event) {
-         switch (state) {
-            case "select_advanced":
-                form = "../view/SelectAdvanced.fxml";
-                madeFadeOut(event);
-                break;
-            case "select_day_off":
-                form = "../view/SelectDayOf.fxml";
-                madeFadeOut(event);
-                break;
-            case "select_random":
-                form = "../view/SelectAdvanced.fxml";
-                madeFadeOut(event);
-                break;
-            default:
-                stack_pane.setDisable(false);
-                JFXDialogLayout content = new JFXDialogLayout();
-                content.setHeading(new Text("Thông báo"));
-                content.setBody(new Text("Chọn 1 trong 3 phương thức"));
-                JFXDialog dialog = new JFXDialog(stack_pane, content, JFXDialog.DialogTransition.CENTER);
-                JFXButton btn = new JFXButton("OK");
-                btn.setOnAction(e -> {
-
-                    dialog.close();
-                   
-
-                });
-                content.setActions(btn);
-                dialog.setOnDialogClosed(e -> stack_pane.setDisable(true));
-                dialog.show();
-                break;
-        }
-
-    }
 
     @FXML
     void btn_select_advancedClick(ActionEvent event) {
@@ -152,15 +99,31 @@ public class SelectMethodCreateController implements Initializable {
     @FXML
     void btn_select_randomClick(ActionEvent event) {
         state = "select_random";
+        form = "../view/CreateTimetableNow.fxml";
+        madeFadeOut(event);
     }
 
     @FXML
     void cbb_userClick(ActionEvent event) {
 
     }
+
+    // </editor-fold>
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        StaticFunctions.AnimationShow(AnchorPaneMain);
+        stack_pane.setDisable(true);
+        Platform.runLater(btn_select_advanced::requestFocus);
+
+        setKeyEvent();
+        String text = "Xin chào, 17520433";
+        init_cbb_user(text);
+    }
+
     public void setKeyEvent() {
         AnchorPaneMain.setOnKeyPressed(e -> {
-            switch (e.getCode()) {                
+            switch (e.getCode()) {
                 case ESCAPE:
                     btn_minimize.fire();
                     break;
@@ -177,7 +140,7 @@ public class SelectMethodCreateController implements Initializable {
                 case ENTER:
                     btn_select_advanced.fire();
                     break;
-               
+
             }
         });
         btn_select_day_off.setOnKeyPressed(e -> {
@@ -185,7 +148,7 @@ public class SelectMethodCreateController implements Initializable {
                 case ENTER:
                     btn_select_day_off.fire();
                     break;
-               
+
             }
         });
         btn_select_random.setOnKeyPressed(e -> {
@@ -193,12 +156,13 @@ public class SelectMethodCreateController implements Initializable {
                 case ENTER:
                     btn_select_random.fire();
                     break;
-               
+
             }
         });
     }
 
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -213,18 +177,19 @@ public class SelectMethodCreateController implements Initializable {
             }
         });
     }
+
     public void LoadNextScene(ActionEvent event) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource(form));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
-    
+
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
@@ -232,8 +197,12 @@ public class SelectMethodCreateController implements Initializable {
 
         cbb_user.setOnAction(e -> {
             switch (cbb_user.getValue()) {
-                case "Thời khóa biểu":
+                case "Trang chủ":
                     form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Thời khóa biểu":
+                    form = "../view/CreateTimetableNow.fxml";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":

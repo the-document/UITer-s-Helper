@@ -1,9 +1,9 @@
 package GUI.controller;
+
 // <editor-fold desc="import zone">
 
-import BLL.Global;
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,6 +21,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
 // </editor-fold>
 
 public class WelcomeController implements Initializable {
@@ -48,9 +49,10 @@ public class WelcomeController implements Initializable {
      // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="FXML functions zone">
+    
     @FXML
     void btn_exitClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+       StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
     @FXML
@@ -61,16 +63,15 @@ public class WelcomeController implements Initializable {
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-        Global.MinimizeEvent(event, AnchorPaneMain);
+        StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
 
     }
 
-     // </editor-fold>
+    // </editor-fold>
 
-    ActionEvent ac_ev;
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
+    public void initialize(URL url, ResourceBundle rb) {        
+        StaticFunctions.AnimationShow(AnchorPaneMain);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
     }
@@ -92,6 +93,7 @@ public class WelcomeController implements Initializable {
     }
    
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/Subscribed.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -111,7 +113,7 @@ public class WelcomeController implements Initializable {
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
 

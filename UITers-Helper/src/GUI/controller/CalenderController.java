@@ -1,78 +1,48 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GUI.controller;
 
-import BLL.Global;
+// <editor-fold desc="import zone">
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.glass.ui.Size;
-import java.awt.Image;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.effect.ColorAdjust;
-import javafx.scene.effect.GaussianBlur;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderPaneBuilder;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
-import javafx.scene.text.Text;
-import javafx.stage.Modality;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
+//</editor-fold>
 
-/**
- * FXML Controller class
- *
- * @author Admin
- */
 public class CalenderController implements Initializable {
 
+    // <editor-fold desc="Static variables zone">
     String form;
     Stage window;
     ObservableList<String> list = FXCollections.observableArrayList("Thời khóa biểu", "Cài đặt", "Đăng xuất");
+    //</editor-fold>
+
+    // <editor-fold desc="FXML variables zone">
     @FXML
     private AnchorPane AnchorPaneMain;
 
@@ -80,16 +50,7 @@ public class CalenderController implements Initializable {
     private StackPane stack_pane;
 
     @FXML
-    private JFXButton btn_back;
-
-    @FXML
-    private JFXComboBox<String> cbb_user;
-
-    @FXML
-    private JFXButton btn_minimize;
-
-    @FXML
-    private JFXButton btn_exit;
+    private JFXListView<Label> lv_lichtrinh;
 
     @FXML
     private JFXButton btn_time;
@@ -102,12 +63,6 @@ public class CalenderController implements Initializable {
 
     @FXML
     private JFXButton btn_add;
-
-    @FXML
-    private JFXButton btn_previous_month;
-
-    @FXML
-    private JFXButton btn_next_month;
 
     @FXML
     private JFXButton btn_day00;
@@ -236,35 +191,36 @@ public class CalenderController implements Initializable {
     private JFXButton btn_day56;
 
     @FXML
-    private JFXListView<Label> lv_location;
+    private JFXListView<Label> lv_holiday;
 
     @FXML
-    private JFXListView<Label> lv_time;
+    private JFXButton btn_back;
 
     @FXML
-    private JFXListView<Label> lv_decription;
+    private JFXButton btn_exit;
 
     @FXML
-    private ScrollPane pane_lichtrinh;
+    private JFXButton btn_minimize;
 
     @FXML
-    private ContextMenu cm_menu;
-    
+    private JFXComboBox<String> cbb_user;
+
+    //</editor-fold>
+    //<editor-fold desc="FXML functions zone">
     @FXML
     void btn_backClick(ActionEvent event) {
-        form = "../view/Login.fxml";
+        form = StaticFunctions.stack_link.pop();
         madeFadeOut(event);
     }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
-
-        Global.ExitEvent(AnchorPaneMain);
+        StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-        Global.ExitEvent(AnchorPaneMain);
+        StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
     @FXML
@@ -278,11 +234,11 @@ public class CalenderController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource("../view/Time.fxml"));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 200, 220);
+            scene = new Scene(fxmlLoader.load(), 220, 200);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-       
+
         Stage stage = new Stage();
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setResizable(false);
@@ -308,50 +264,54 @@ public class CalenderController implements Initializable {
         stage.show();
     }
 
-    @Override
-
-    public void initialize(URL url, ResourceBundle rb) {
-        Global.AnimationShow(AnchorPaneMain);
-        lv_locationClick();
-        Global.AnimationMouseDragButton(btn_exit, "red");
-        stack_pane.setDisable(true);
-       
-        
-        // context menu
-        MenuItem lb_add = new MenuItem();
-        lb_add.setText("Thêm");
-        MenuItem lb_del = new MenuItem();
-        lb_del.setText("Xóa");
-        cm_menu.getItems().addAll(lb_add, lb_del);
-        
-        btn_add.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.SECONDARY)
-                {
-                    cm_menu.show(btn_add, event.getX(), event.getY());
-                }
-            }
-        
-        
-        });
-        btn_add.setContextMenu(cm_menu);
-        
-        
-        
-        
-        
-    }
-
     @FXML
     void btn_addClick(ActionEvent event) {
-        
+        txt_decription.clear();
     }
-    
-    
-    
+
+    //</editor-fold>
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        StaticFunctions.AnimationShow(AnchorPaneMain);
+        stack_pane.setDisable(true);
+        Platform.runLater(AnchorPaneMain::requestFocus);
+
+        init_lv_holiday();
+        init_lv_lichtrinh();
+        setKeyEvent();
+        String text = "Xin chào, 17520433";
+        init_cbb_user(text);
+
+    }
+
+    public void setKeyEvent() {
+        AnchorPaneMain.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ESCAPE:
+                    btn_minimize.fire();
+                    break;
+                case LEFT:
+                    btn_back.fire();
+                    break;
+
+                default:
+                    break;
+            }
+        });
+        txt_decription.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case ENTER:
+                    btn_add.fire();
+                    break;
+                default:
+                    break;
+            }
+        });
+
+    }
+
     public void madeFadeOut(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/Calender.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -373,77 +333,123 @@ public class CalenderController implements Initializable {
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
-        Global.SetStageDrag(root, window, event);
+        StaticFunctions.SetStageDrag(root, window, event);
         window.show();
     }
 
-    public void btn_createClick(ActionEvent event) throws Exception {
-        form = "../view/SelectSemester.fxml";
-        madeFadeOut(event);
-
-    }
-
-    public void lv_locationClick() {
-        // Sự kiện thêm item
+    public void init_lv_holiday() {
         for (int i = 0; i < 4; i++) {
             Label lb = new Label("C10" + i);
-            lv_location.getItems().addAll(lb);
+            lv_holiday.getItems().addAll(lb);
         }
+
+        lv_holiday.setOnMouseClicked(e -> {
+            String id = lv_holiday.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
     }
 
-    public void Dialog(Label arg_1) {
-        stack_pane.setDisable(false);
-        JFXDialogLayout content = new JFXDialogLayout();
-        content.setHeading(new Text("Thông báo"));
-        content.setBody(new Text(arg_1.getText()));
-        JFXDialog dialog = new JFXDialog(stack_pane, content, JFXDialog.DialogTransition.CENTER);
-        HBox hb = new HBox();
-        JFXButton btn_ok = new JFXButton("OK");
-        JFXButton btn_save = new JFXButton("Lưu");
-        hb.getChildren().addAll(btn_ok, btn_save);
-        btn_ok.setOnAction(e -> {
-
-            dialog.close();
-
-        });
-        content.setActions(btn_ok);
-        dialog.setOnDialogClosed(e -> {
-            stack_pane.setDisable(true);
-
-        });
-
-        dialog.show();
-    }
-
-    public void init_pane_lichtrinh(Schedule arrSchedule[]) {
-        // Xóa hết nội dung cũ
-        pane_lichtrinh.setContent(null);
-        VBox root = new VBox();
-        for (int i = 0; i < arrSchedule.length; i++) {
-            Label lb_time = new Label(arrSchedule[i].getTime());
-            lb_time.setStyle("-fx-font-color : white;");
-            lb_time.setMaxSize(80, 40);
-            lb_time.setMinSize(80, 40);
-
-            Label lb_location = new Label(arrSchedule[i].getLocation());
-            lb_location.setStyle("-fx-font-color : white;");
-            lb_location.setMaxSize(80, 40);
-            lb_location.setMinSize(80, 40);
-
-            Label lb_description = new Label(arrSchedule[i].getDescription());
-            lb_location.setStyle("-fx-font-color : white;");
-            lb_location.setMaxSize(200, 80);
-            lb_location.setMinSize(200, 80);
-
-            HBox hb_parent = new HBox();
-            hb_parent.getChildren().addAll(lb_time, new Line(0, 0, 0, 40), lb_location);
-
-            VBox vb_parent = new VBox();
-            vb_parent.getChildren().addAll(hb_parent, lb_description);
-            root.getChildren().add(vb_parent);
+    public void init_lv_lichtrinh() {
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("C10" + i);
+            //init_context_menu(lb, lb.getText());
+            lv_lichtrinh.getItems().addAll(lb);
 
         }
-        pane_lichtrinh.setContent(root);
+        lv_lichtrinh.setOnMouseClicked((MouseEvent e) -> {
+            String id = lv_lichtrinh.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
+
+        lv_lichtrinh.setCellFactory(e -> {
+            JFXListCell<Label> cell = new JFXListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.setStyle("-fx-background-color: transparent;");
+
+            MenuItem addItem = new MenuItem();
+            addItem.setText("Thêm");
+            addItem.setStyle("-fx-text-fill: white;");
+
+            addItem.setOnAction(event -> {
+
+            });
+
+            MenuItem editItem = new MenuItem();
+            editItem.setText("Sửa");
+            editItem.setStyle("-fx-text-fill: white;");
+            editItem.setOnAction(event -> {
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource("../view/EditSchedule.fxml"));
+                Scene scene = null;
+                try {
+                    scene = new Scene(fxmlLoader.load(), 563, 180);
+                } catch (IOException ex) {
+                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setResizable(false);
+                stage.setScene(scene);
+                stage.show();
+            });
+
+            MenuItem deleteItem = new MenuItem();
+            deleteItem.setText("Xóa");
+            deleteItem.setStyle("-fx-text-fill: white;");
+            deleteItem.setOnAction(event -> {
+                lv_lichtrinh.getItems().remove(cell.getItem());
+            });
+
+            contextMenu.getItems().addAll(addItem, editItem, deleteItem);
+
+            //cell.textProperty().bind(cell.itemProperty());
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+
+            return cell;
+        });
+
     }
 
+    public void init_cbb_user(String text) {
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        cbb_user.setPromptText(text);
+        cbb_user.getSelectionModel().select(1);
+        cbb_user.getItems().clear();
+        cbb_user.setItems(list);
+
+        cbb_user.setOnAction(e -> {
+            switch (cbb_user.getValue()) {
+                case "Trang chủ":
+                    form = "../view/Home.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Thời khóa biểu":
+                    form = "../view/CreateTimetableNow.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Cài đặt":
+                    form = "../view/Setting.fxml";
+                    madeFadeOut(e);
+                    break;
+                case "Đăng xuất":
+                    form = "../view/Login.fxml";
+                    madeFadeOut(e);
+                    break;
+                default:
+                    break;
+            }
+
+        });
+    }
 }
