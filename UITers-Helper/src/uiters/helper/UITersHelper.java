@@ -74,8 +74,8 @@ public class UITersHelper {
 //            System.out.println(monHoc.toString());
 //        }
 
-//        LopHoc l1=new LopHoc("IT002.J210.2", "IT002", "gv1", "1", "1", "67890", "2", "a11", "abc", "LT");
-//        LopHoc l2=new LopHoc("MA005.J22", "MA005", "gv1", "1", "1", "678", "2", "a11", "abc", "LT");
-//        System.out.println(l1.isOverlap(l2));
+        LopHoc l1=new LopHoc("IT002.J21.2", "IT002", "gv1", "1", "1", "67890", "2", "a11", "abc", "LT");
+        LopHoc l2=new LopHoc("MA005.J22", "MA005", "gv2", "1", "1", "678", "2", "a11", "abc", "LT");
+        System.out.println(l1.isOverlap(l2));
     }
 }

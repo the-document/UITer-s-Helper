@@ -130,13 +130,13 @@ public class SelectSubjectController implements Initializable {
         //add to list ui and ls logic------------------------
         int checkCount=Global.lsMonHocSelected.size();
             
-        Global.lsMonHocSelected.put(key,new MonHoc(key,"NULL","UNdefine",0,0));
+        Global.lsMonHocSelected.put(key,monHoc);
         System.out.println(Global.lsMonHocSelected.toString());
             
         //check add sucess or exist------------------------------------
         if(checkCount!=Global.lsMonHocSelected.size())
         {
-            cv_subject.getChips().add(key);      
+            cv_subject.getChips().add(key+"("+monHoc.getTenMonHoc()+")");      
             SetVisibleNextButton();
         }
         

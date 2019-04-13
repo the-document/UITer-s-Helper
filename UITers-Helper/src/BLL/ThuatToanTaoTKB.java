@@ -26,6 +26,7 @@ public class ThuatToanTaoTKB {
     static List<LopHoc>dstkbFull=new ArrayList<>();
     
     static String CTDT="CQUI";
+    public static boolean Has_Found=false;
    
     
    public static void NapDanhSachMaMonHoc(List<String> danhSachMaMon)
@@ -83,8 +84,8 @@ public class ThuatToanTaoTKB {
             }
         }
         
-        System.out.println("CTDT: "+CTDT);
-        System.out.println("List Lop: "+dsFilterLT.toString()+dsFilterTH.toString());
+        //System.out.println("CTDT: "+CTDT);
+        //System.out.println("List Lop: "+dsFilterLT.toString()+dsFilterTH.toString());
     }
     
 //    public static void ShowDS(){
@@ -223,7 +224,11 @@ public class ThuatToanTaoTKB {
     public static int countCase=0;
     public static List<TimeTable> listTimeTables=new ArrayList<>();
     public static void Try(int i){
-       if(i==dsMaMon.size())
+        
+        if(Has_Found)
+            return;
+        
+        if(i==dsMaMon.size())
         {
            
             TimeTable table=new TimeTable(i+"");
@@ -239,6 +244,8 @@ public class ThuatToanTaoTKB {
             }
             countCase++;
             listTimeTables.add(table);
+            
+            Has_Found=true;
             //table.Export();
             return;
         }
@@ -252,6 +259,8 @@ public class ThuatToanTaoTKB {
                 //add LT+TH
                 boolean haveTH=AddCourse(dsFilterLT.get(t), i);
                 Try(i+1);
+                
+                //remove and come back try before
                 dstkbFull.remove(dstkbFull.size()-1);
                 if(haveTH)
                     //if have TH, TH course be near Lt and after LT. so it latest
