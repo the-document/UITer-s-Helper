@@ -22,7 +22,7 @@ public class ThuatToanTaoTKB {
     static List<LopHoc> fullDsLop=new ArrayList<>(); //dung tam de load all ds th va lt
     static List<LopHoc> dsFilterLT=new ArrayList<>(); //ds can get to choose LT
     static List<LopHoc> dsFilterTH=new ArrayList<>(); //ds can get to choose
-    static List<String> dsMaLop=new ArrayList<>(); //ds ma mon hoc can hoc trong ky nay
+    static List<String> dsMaMon=new ArrayList<>(); //ds ma mon hoc can hoc trong ky nay
     static List<LopHoc>dstkbFull=new ArrayList<>();
     
     static String CTDT="CQUI";
@@ -30,8 +30,8 @@ public class ThuatToanTaoTKB {
     
    public static void NapDanhSachMaMonHoc(List<String> danhSachMaMon)
    {
-       danhSachMaMon.forEach((malop) -> {
-           dsMaLop.add(malop);
+       danhSachMaMon.forEach((mamon) -> {
+           dsMaMon.add(mamon);
         });
    }
    
@@ -50,9 +50,15 @@ public class ThuatToanTaoTKB {
         
         //loc ra nhung lop trong hoc ky nay (ds mon hoc da duoc nap truoc do)
         for (LopHoc nextLopHoc : fullDsLop) {
-            for (String next1 : dsMaLop) {
-                if(nextLopHoc.getmaMonHoc().equals(next1))
+            
+            for (String maMon : dsMaMon) {
+               // System.out.println("--"+ nextLopHoc.getmaMonHoc()+"--"+maMon);
+                if(nextLopHoc.getmaMonHoc().equals(maMon))
+                {
                     dsFilterLT.add(nextLopHoc);
+                   // System.out.println("--"+ nextLopHoc.getMaLop());
+                }
+                    
             }
         }
         
@@ -76,6 +82,9 @@ public class ThuatToanTaoTKB {
                 }
             }
         }
+        
+        System.out.println("CTDT: "+CTDT);
+        System.out.println("List Lop: "+dsFilterLT.toString()+dsFilterTH.toString());
     }
     
 //    public static void ShowDS(){
@@ -214,22 +223,23 @@ public class ThuatToanTaoTKB {
     public static int countCase=0;
     public static List<TimeTable> listTimeTables=new ArrayList<>();
     public static void Try(int i){
-       if(i==dsMaLop.size())
+       if(i==dsMaMon.size())
         {
            
             TimeTable table=new TimeTable(i+"");
-             for (LopHoc lopHoc : dstkbFull)
-                 table.AddCourse(lopHoc);
+            for (LopHoc lopHoc : dstkbFull)
+                table.AddCourse(lopHoc);
              
-             table.Sort();
+            table.Sort();
              
-             //check exits in list table
-             for (TimeTable  timeTable : listTimeTables) {
+            //check exits in list table
+            for (TimeTable  timeTable : listTimeTables) {
                 if(timeTable.Equals(table))
                     return;
             }
             countCase++;
             listTimeTables.add(table);
+            //table.Export();
             return;
         }
             
@@ -240,10 +250,10 @@ public class ThuatToanTaoTKB {
              if(!CheckOverLap(dsFilterLT.get(t)))
              {
                 //add LT+TH
-                boolean havaTH=AddCourse(dsFilterLT.get(t), i);
+                boolean haveTH=AddCourse(dsFilterLT.get(t), i);
                 Try(i+1);
                 dstkbFull.remove(dstkbFull.size()-1);
-                if(havaTH)
+                if(haveTH)
                     //if have TH, TH course be near Lt and after LT. so it latest
                     dstkbFull.remove(dstkbFull.size()-1);
              }

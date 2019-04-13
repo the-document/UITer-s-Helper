@@ -116,7 +116,7 @@ public class LopHocAccess extends DatabaseAccess{
     
     //type: CQUI, CLC,...
     public List<LopHoc> GetListCourseTheoryOfEducationProgram(String type) throws SQLException{
-        List<LopHoc> list=new ArrayList<LopHoc>();
+        List<LopHoc> list=new ArrayList<>();
         
         String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='LT' ";
         

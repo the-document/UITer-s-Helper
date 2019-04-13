@@ -37,29 +37,30 @@ public class UITersHelper {
         //myFile.ExportConsole(myFile.GetListCourseTheoryOfEducationProgram("*"));
         
        
-        LopHocBLL lhbll=new LopHocBLL();
-        lhbll.DeleteAllData();
-        
-        lhbll.SaveAllLopHoc(myFile.GetListCourseTheoryOfEducationProgram("*"));
-        lhbll.SaveAllLopHoc(myFile.GetListCoursePracticeOfEducationProgram("*"));
-        //lhbll.InsertLopHoc(new LopHoc("TEST.J00","CSDL","Nguyễn Hồng Phúc","12/04/2012","13/5/2018","12345","5","B114","CQUI","LT"));
-//        //lhbll.DeleteAllData();
-
-//            List<String> dsMaLop=new ArrayList<>();
-//            dsMaLop.add("SE214");
-//            dsMaLop.add("SE106");
-//            dsMaLop.add("IS201");
-//            dsMaLop.add("SE109");
-//            dsMaLop.add("SE330");
-//            
-//            ThuatToanTaoTKB.NapDanhSachMaMonHoc(dsMaLop);
-//            ThuatToanTaoTKB.SetHeDaoTao("CQUI");
-//
-//            ThuatToanTaoTKB.init();
-//            ThuatToanTaoTKB.Try(0);
+//        LopHocBLL lhbll=new LopHocBLL();
+//        lhbll.DeleteAllData();
 //        
-//            System.out.println("=========LIST TKB RECOMEND FOR YOU  ( "+ThuatToanTaoTKB.countCase+" ) ============\n");
-//            for (TimeTable table   : ThuatToanTaoTKB.listTimeTables) {
+//        lhbll.SaveAllLopHoc(myFile.GetListCourseTheoryOfEducationProgram("*"));
+//        lhbll.SaveAllLopHoc(myFile.GetListCoursePracticeOfEducationProgram("*"));
+        //lhbll.InsertLopHoc(new LopHoc("TEST.J00","CSDL","Nguyễn Hồng Phúc","12/04/2012","13/5/2018","12345","5","B114","CQUI","LT"));
+//      //lhbll.DeleteAllData();
+
+//        List<String> dsMaLop = new ArrayList<>();
+//        dsMaLop.add("IT002");
+//        dsMaLop.add("IT003");
+//        dsMaLop.add("MA004");
+//        dsMaLop.add("MA005");
+//        dsMaLop.add("EN005");
+//        dsMaLop.add("PE002");
+//
+//        ThuatToanTaoTKB.NapDanhSachMaMonHoc(dsMaLop);
+//        ThuatToanTaoTKB.SetHeDaoTao("CQUI");
+//
+//        ThuatToanTaoTKB.init();
+//        ThuatToanTaoTKB.Try(0);
+//
+//        System.out.println("=========LIST TKB RECOMEND FOR YOU  ( " + ThuatToanTaoTKB.countCase + " ) ============\n");
+//        for (TimeTable table : ThuatToanTaoTKB.listTimeTables) {
 //            table.Export();
 //            System.out.println("===============================================\n");
 //            System.out.println("===============================================\n");
@@ -72,5 +73,9 @@ public class UITersHelper {
 //        for (MonHoc monHoc : dsMonHocGoiY) {
 //            System.out.println(monHoc.toString());
 //        }
+
+//        LopHoc l1=new LopHoc("IT002.J210.2", "IT002", "gv1", "1", "1", "67890", "2", "a11", "abc", "LT");
+//        LopHoc l2=new LopHoc("MA005.J22", "MA005", "gv1", "1", "1", "678", "2", "a11", "abc", "LT");
+//        System.out.println(l1.isOverlap(l2));
     }
 }

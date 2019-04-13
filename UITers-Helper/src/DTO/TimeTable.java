@@ -81,8 +81,9 @@ public class TimeTable {
     }
     
     public void Export(){
+        System.out.println("===============================================");
         for (LopHoc lopHoc : listLopHocs) {
-                System.out.println(lopHoc.getMaLop()+"\n");
+                System.out.println(lopHoc.getMaLop());
             }
            
     }

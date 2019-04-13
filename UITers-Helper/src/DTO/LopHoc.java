@@ -50,8 +50,12 @@ public class LopHoc implements Comparable<LopHoc>{
             this.tietKetThuc = -1;
             return;
         }
+        
         this.tietBatDau = Integer.parseInt(String.valueOf(this.tiet.charAt(0)) ) ;
         this.tietKetThuc = Integer.parseInt(String.valueOf(this.tiet.charAt(this.tiet.length()-1))) ;
+        
+        if(this.tietKetThuc==0)
+            this.tietKetThuc=10;
     }
 
     
@@ -159,13 +163,16 @@ public class LopHoc implements Comparable<LopHoc>{
     // input: course need to check with current course
     // output: true if it intersect and else
     public  boolean isOverlap(LopHoc lop){
-        //the day different of course it not overlap.
-        if(!this.thu.equals(lop.getThu())||this.thu.equals("*")||lop.getThu().equals("*"))
-            return false;
-        
-        else
-        {
-            
+//        //the day different of course it not overlap.
+//        if(!this.thu.equals(lop.getThu())||this.thu.equals("*")||lop.getThu().equals("*"))
+//            return false;
+//        else
+//        {
+//            if(this.tietKetThuc>=lop.getTietBatDau()&&this.tietBatDau<=lop.getTietKetThuc())
+//                return true;
+//        }
+//        return false;
+        if(this.getThu().equals(lop.getThu())){
             if(this.tietKetThuc>=lop.getTietBatDau()&&this.tietBatDau<=lop.getTietKetThuc())
                 return true;
         }
@@ -177,4 +184,8 @@ public class LopHoc implements Comparable<LopHoc>{
         return this.getMaLop().compareTo(o.getMaLop());
     }
     
+    @Override
+    public String toString(){
+        return this.maLop+"\n";
+    }
 }

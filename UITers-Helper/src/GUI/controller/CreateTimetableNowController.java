@@ -4,10 +4,12 @@ import BLL.Global;
 import BLL.ThuatToanTaoTKB;
 import DTO.LopHoc;
 import DTO.MonHoc;
+import DTO.TimeTable;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -178,6 +180,9 @@ public class CreateTimetableNowController implements Initializable {
         setKeyEvent();
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
+        
+        MaKeSchedule();
+        LoadSchedule();
     }
 
     public void setKeyEvent() {
@@ -259,17 +264,32 @@ public class CreateTimetableNowController implements Initializable {
     
     
     //===========================================================
-    private void LoadSchedule(List<LopHoc> lsLopHocs){
+    private void LoadSchedule(){
         
     }
     
     private void MaKeSchedule(){
         List<String> lsMaMon=new ArrayList<>();
         
+        lsMaMon.clear();
         for (MonHoc m : Global.lsMonHocSelected.values()) {
             lsMaMon.add(m.getMaMonHoc());
+            System.out.print(m.getMaMonHoc()+", ");
         }
         ThuatToanTaoTKB.NapDanhSachMaMonHoc(lsMaMon);
         ThuatToanTaoTKB.SetHeDaoTao("CQUI");
+        
+        try {
+            ThuatToanTaoTKB.init();
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateTimetableNowController.class.getName()).log(Level.SEVERE, null, ex);
+            return;
+        }
+        
+        ThuatToanTaoTKB.Try(0);
+        System.out.println("=========LIST TKB RECOMEND FOR YOU  ( " + ThuatToanTaoTKB.countCase + " ) ============\n");
+        for (TimeTable table : ThuatToanTaoTKB.listTimeTables) {
+            table.Export();  
+        }
     }
 }
