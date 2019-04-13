@@ -33,12 +33,13 @@
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
-                  </Label>
+                  </Label>  
                   <JFXListView fx:id="lv_semester" prefHeight="217.0" prefWidth="450.0" stylesheets="@../css/listview.css">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
                   </JFXListView>
+                  
                </children>
                <BorderPane.margin>
                   <Insets left="40.0" top="20.0" />

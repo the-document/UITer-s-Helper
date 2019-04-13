@@ -4,7 +4,9 @@ package GUI.controller;
 import BLL.Global;
 import GUI.StaticFunctions;
 import BLL.MonHocBLL;
+import BLL.NganhHocBLL;
 import DTO.MonHoc;
+import DTO.NganhHoc;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
@@ -13,6 +15,7 @@ import com.jfoenix.controls.JFXTextField;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -40,6 +43,10 @@ public class SelectSubjectController implements Initializable {
     // <editor-fold desc="Static variables zone">
     String form;
     Stage window;
+    
+    //Phuc_______________________________________________________
+    List<NganhHoc> lsNganhHoc;
+    List<MonHoc> lsMonHocs;
 
     // </editor-fold>
     
@@ -82,15 +89,59 @@ public class SelectSubjectController implements Initializable {
 
     @FXML
     private StackPane stack_pane;
+    
+    @FXML
+    private Label lb_Notify;
 
     // </editor-fold>
     
+    
     // <editor-fold desc="FXML functions zone">
     @FXML
-    void btn_addClick(ActionEvent event) {
+    void btn_addClick(ActionEvent event)  {
         String key = txt_subject.getText();
         txt_subject.clear();
-        cv_subject.getChips().add(key);
+        //check empty-----------------------------------------
+        if(key.isEmpty())
+        {
+            lb_Notify.setText("Mã môn không được để trống.");
+            lb_Notify.setVisible(true);
+            return;
+        }
+        
+        //check valid-----------------------------------------
+        MonHocBLL mhbll=new MonHocBLL();
+        MonHoc monHoc;
+        try {
+            monHoc = mhbll.GetMonHoc(key);
+        } catch (SQLException ex) {
+            Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+            
+            lb_Notify.setText("Lỗi kết nối đến hệ thống.");
+            lb_Notify.setVisible(true);
+            return;
+        }
+        if(monHoc==null){
+            lb_Notify.setText("Mã môn không tồn tại trong hệ thống.");
+            lb_Notify.setVisible(true);
+            return;
+        }
+                
+        //add to list ui and ls logic------------------------
+        int checkCount=Global.lsMonHocSelected.size();
+            
+        Global.lsMonHocSelected.put(key,new MonHoc(key,"NULL","UNdefine",0,0));
+        System.out.println(Global.lsMonHocSelected.toString());
+            
+        //check add sucess or exist------------------------------------
+        if(checkCount!=Global.lsMonHocSelected.size())
+        {
+            cv_subject.getChips().add(key);      
+            SetVisibleNextButton();
+        }
+        
+        System.out.println(Global.lsMonHocSelected.toString());
+        lb_Notify.setVisible(false);
     }
 
     @FXML
@@ -102,6 +153,10 @@ public class SelectSubjectController implements Initializable {
     @FXML
     void btn_deleteClick(ActionEvent event) {
         cv_subject.getChips().clear();
+        
+        //--------------------------------------------------
+        Global.lsMonHocSelected.clear();
+        SetVisibleNextButton();
     }
 
 
@@ -119,9 +174,10 @@ public class SelectSubjectController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
+        
+        //------------------------------------------
         form = "../view/SelectMethodCreate.fxml";
-        madeFadeOut(event);
-
+        madeFadeOut(event); 
     }
 
     @FXML
@@ -137,13 +193,28 @@ public class SelectSubjectController implements Initializable {
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
 
+        btn_next.setVisible(false);
+        lb_Notify.setVisible(false);
+        lv_subject.getItems().clear();
+        Global.NGANHHOC="";
+        Global.lsMonHocSelected.clear();
+        
+        
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
-        init_cbb_subjecT();
+        
+        try {
+            init_cbb_subjecT();
+        } catch (SQLException ex) {
+            System.out.println("ERR load Nganh Hoc");
+            Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         init_lv_subject();
         setKeyEvent();
 
     }
+    
     
     public void madeFadeOut(ActionEvent event) {
         StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
@@ -204,37 +275,35 @@ public class SelectSubjectController implements Initializable {
             }
         });
     }
-
-    public void init_lv_subject() {
+    
+    public void init_lv_subject() {         
         try
         {
-            MonHocBLL mhbll = new MonHocBLL();
-            List<MonHoc> lsMonHocs;
-            lsMonHocs = mhbll.GetAllLopHoc(Global.MSSV, Global.NGANHHOC, Global.HOCKY);
-            if(lsMonHocs!=null)
-            for (MonHoc m : lsMonHocs) {
-                Label MonHocLabel = new Label(m.getMaMonHoc() + " - " + m.getTenMonHoc());
-                lv_subject.getItems().addAll(MonHocLabel);
-            }
-            else
-            {
-                Label MonHocLabel = new Label("No connect");
-                lv_subject.getItems().addAll(MonHocLabel);      
-            }
+           LoadAllSubjectOfUser();
         }
         catch (SQLException e)
         {
             Label MonHocLabel = new Label("No connect");
             lv_subject.getItems().addAll(MonHocLabel);         
         }
-       
+
         lv_subject.setOnMouseClicked(e -> {
-            String id = lv_subject.getSelectionModel().getSelectedItem().getText();
-            cv_subject.getChips().add(id);
-            switch (id) {
-                
-                
+            
+            //add subject here--------------------------------
+            int checkCount=Global.lsMonHocSelected.size();
+            
+            MonHoc monHoc=lsMonHocs.get(lv_subject.getSelectionModel().getSelectedIndex());
+            Global.lsMonHocSelected.put(monHoc.getMaMonHoc(),monHoc);
+            System.out.println(Global.lsMonHocSelected.toString());
+            
+            //check add sucess or exist------------------------------------
+            if(checkCount!=Global.lsMonHocSelected.size())
+            {
+                String id = lv_subject.getSelectionModel().getSelectedItem().getText();
+                cv_subject.getChips().add(id);                      
+                SetVisibleNextButton();
             }
+            System.out.println(Global.lsMonHocSelected.toString());
         });
     }
 
@@ -270,30 +339,74 @@ public class SelectSubjectController implements Initializable {
         });
     }
 
-    public void init_cbb_subjecT() {
-        ObservableList<String> list = FXCollections.observableArrayList("CNPM", "KTMT", "KHMT");
+    public void init_cbb_subjecT() throws SQLException {
+        
+        //lay tat ca nganh hoc dang co------------------------------------
+        NganhHocBLL nhbll=new NganhHocBLL();
+        lsNganhHoc=new ArrayList<NganhHoc>();
+        lsNganhHoc=nhbll.GetAllNganhHoc();
+        
+        List<String> lsNameNganhHoc=new ArrayList<String>();
+        for (NganhHoc nh : lsNganhHoc) {
+            lsNameNganhHoc.add(nh.getTenNganh());
+        }
+        
+        ObservableList<String> list = FXCollections.observableArrayList(lsNameNganhHoc);
+
         cbb_subject.setPromptText("Chọn khoa");
         cbb_subject.getSelectionModel().select(1);
         cbb_subject.getItems().clear();
         cbb_subject.setItems(list);
 
         cbb_subject.setOnAction(e -> {
-            switch (cbb_subject.getValue()) {
-                case "CNPM":
-                    break;
-                case "KTMT":
-
-                    break;
-                case "KHMT":
-
-                    break;
-                default:
-                    break;
+            
+            int index=cbb_subject.getSelectionModel().getSelectedIndex();
+            Global.NGANHHOC = lsNganhHoc.get(index).getMaNganh();
+              
+            //reload subject theo khoa-------------------------------
+            try {    
+                LoadAllSubjectOfUser();
+            } catch (SQLException ex) {
+                Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
             }
-
+            
+            
+            //setsize------------------------------------
+            int c=cbb_subject.getItems().size() ;
+            c=c<5?c:5;
+            cbb_subject.setVisibleRowCount(c);
         });
     
 
     }
 
+    //-----------------------------------------------------------------
+    private void LoadAllSubjectOfUser() throws SQLException{
+        
+        lv_subject.getItems().clear();
+        
+        MonHocBLL mhbll = new MonHocBLL();       
+        lsMonHocs = mhbll.GetAllMonHoc(Global.MSSV, Global.NGANHHOC, Global.HOCKY);
+        
+        if (lsMonHocs != null) {
+            for (MonHoc m : lsMonHocs) {
+                Label MonHocLabel = new Label(m.getMaMonHoc() + " - " + m.getTenMonHoc());
+                lv_subject.getItems().addAll(MonHocLabel);
+            }
+            
+            int h=lv_subject.getItems().size() * 40;
+            h=h<240?h:240;
+            lv_subject.setPrefHeight(h);
+        } else {
+            Label MonHocLabel = new Label("No connect");
+            lv_subject.getItems().addAll(MonHocLabel);
+        }
+    }
+    
+    private void SetVisibleNextButton(){
+        if(!cv_subject.getChips().isEmpty())
+            btn_next.setVisible(true);
+        else
+            btn_next.setVisible(false);
+    }
 }

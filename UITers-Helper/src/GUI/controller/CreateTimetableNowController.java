@@ -250,5 +250,4 @@ public class CreateTimetableNowController implements Initializable {
 
         });
     }
-
 }

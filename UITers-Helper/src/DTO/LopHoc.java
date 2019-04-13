@@ -20,7 +20,42 @@ public class LopHoc implements Comparable<LopHoc>{
     private String phong;
     private String heDaoTao;
     private String hinhthucDay;
+    
+    //The property will be created automatically
+    int tietBatDau;
+    int tietKetThuc;
+    
 
+    //---------------------------------------------------
+    public LopHoc() {
+    }
+    
+    public LopHoc(String maLop, String maMonHoc, String tenGiangVien,
+            String ngayBatDau, String ngayKetThuc, String tiet, 
+            String Thu, String phong, String HDT,String hinhThuc) {
+        this.maLop = maLop;
+        this.maMonHoc = maMonHoc;
+        this.tenGiangVien = tenGiangVien;
+        this.ngayBatDau = ngayBatDau;
+        this.ngayKetThuc = ngayKetThuc;
+        this.tiet = tiet;
+        this.thu = Thu;
+        this.phong = phong;
+        this.heDaoTao = HDT;
+        this.hinhthucDay=hinhThuc;
+        
+        if("*".equals(this.tiet)||"NULL".equals(this.tiet)||this.tiet.isEmpty())
+        {
+            this.tietBatDau = -1;
+            this.tietKetThuc = -1;
+            return;
+        }
+        this.tietBatDau = Integer.parseInt(String.valueOf(this.tiet.charAt(0)) ) ;
+        this.tietKetThuc = Integer.parseInt(String.valueOf(this.tiet.charAt(this.tiet.length()-1))) ;
+    }
+
+    
+    //---------------------------------------------------
     public String getHinhthucDay() {
         return hinhthucDay;
     }
@@ -29,12 +64,7 @@ public class LopHoc implements Comparable<LopHoc>{
         this.hinhthucDay = hinhthucDay;
     }
     
-    //The property will be created automatically
-    int tietBatDau;
-    int tietKetThuc;
-
-  
-
+    
     public String getMaLop() {
         return maLop;
     }
@@ -123,34 +153,8 @@ public class LopHoc implements Comparable<LopHoc>{
         this.tietKetThuc = tietKetThuc;
     }
     
-     public LopHoc() {
-    }
     
-    public LopHoc(String maLop, String maMonHoc, String tenGiangVien,
-            String ngayBatDau, String ngayKetThuc, String tiet, 
-            String Thu, String phong, String HDT,String hinhThuc) {
-        this.maLop = maLop;
-        this.maMonHoc = maMonHoc;
-        this.tenGiangVien = tenGiangVien;
-        this.ngayBatDau = ngayBatDau;
-        this.ngayKetThuc = ngayKetThuc;
-        this.tiet = tiet;
-        this.thu = Thu;
-        this.phong = phong;
-        this.heDaoTao = HDT;
-        this.hinhthucDay=hinhThuc;
-        
-        if("*".equals(this.tiet)||"NULL".equals(this.tiet)||this.tiet.isEmpty())
-        {
-            this.tietBatDau = -1;
-            this.tietKetThuc = -1;
-            return;
-        }
-        this.tietBatDau = Integer.parseInt(String.valueOf(this.tiet.charAt(0)) ) ;
-        this.tietKetThuc = Integer.parseInt(String.valueOf(this.tiet.charAt(this.tiet.length()-1))) ;
-    }
-    
-    
+    //---------------------------------------------------
     // check 2 course is intersect
     // input: course need to check with current course
     // output: true if it intersect and else

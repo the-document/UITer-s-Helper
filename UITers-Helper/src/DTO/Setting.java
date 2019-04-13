@@ -16,7 +16,8 @@ public class Setting {
     String language;
     boolean startWithOS;
     boolean allowNotify;
-
+    
+    //---------------------------------------------------
     public Setting() {
     }
 
@@ -29,6 +30,8 @@ public class Setting {
         this.allowNotify = allowNotify;
     }
 
+    
+    //---------------------------------------------------
     public String getBackGround() {
         return backGround;
     }

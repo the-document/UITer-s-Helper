@@ -16,6 +16,7 @@ public class MonHoc {
     int soChiLyThuyet;
     int soChiThucHanh;
 
+    //---------------------------------------------------
     public MonHoc() {
     }
 
@@ -27,6 +28,8 @@ public class MonHoc {
         this.soChiThucHanh = soChiThucHanh;
     }
 
+    
+    //---------------------------------------------------
     public String getMaMonHoc() {
         return maMonHoc;
     }
@@ -67,6 +70,7 @@ public class MonHoc {
         this.soChiThucHanh = soChiThucHanh;
     }
     
+    //---------------------------------------------------
     @Override public String toString()
     {
         return this.maMonHoc+" - "+this.tenMonHoc+" - "+this.donViQL+" - "+this.soChiLyThuyet+" - "+this.soChiThucHanh;

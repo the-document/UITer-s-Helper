@@ -18,8 +18,10 @@ public class TimeTable {
     String name;
     String studentID;
     
-      ArrayList<LopHoc> listLopHocs=new ArrayList<>();
+    ArrayList<LopHoc> listLopHocs=new ArrayList<>();
 
+    
+    //---------------------------------------------------
     public TimeTable() {
     }
 
@@ -34,6 +36,8 @@ public class TimeTable {
         this.studentID = studentID;
     }
 
+    
+    //---------------------------------------------------
     public String getKey() {
         return key;
     }
@@ -66,6 +70,8 @@ public class TimeTable {
         this.listLopHocs = listLopHocs;
     }
     
+    
+    //---------------------------------------------------
     public void AddCourse(LopHoc l){
         listLopHocs.add(l);
     }

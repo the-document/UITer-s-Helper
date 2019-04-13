@@ -14,16 +14,18 @@ public class HocKy {
     int maHK;
     String tenHK;
 
+    
+    //---------------------------------------------------
     public HocKy() {
     }
 
-    
-    
     public HocKy(int maHK, String tenHK) {
         this.maHK = maHK;
         this.tenHK = tenHK;
     }
 
+    
+    //---------------------------------------------------
     public int getMaHK() {
         return maHK;
     }
