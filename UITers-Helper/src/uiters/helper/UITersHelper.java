@@ -31,17 +31,17 @@ public class UITersHelper {
     public static void main(String[] args) throws IOException, SQLException {
         // TODO code application logic here
         
-        //MyFile myFile=new  MyFile("C:\\Users\\Nguyen Hong Phuc\\Downloads\\tkb_khdt_25-01-2019_1548381246_hk_2_nh2018.xlsx");
-        //myFile.ReadAllDataFromSheet(0);
-        //myFile.ReadAllDataFromSheet(1);
+        MyFile myFile=new  MyFile("C:\\Users\\Nguyen Hong Phuc\\Downloads\\tkb_khdt_25-01-2019_1548381246_hk_2_nh2018.xlsx");
+        myFile.ReadAllDataFromSheet(0);
+        myFile.ReadAllDataFromSheet(1);
         //myFile.ExportConsole(myFile.GetListCourseTheoryOfEducationProgram("*"));
         
        
-       // LopHocBLL lhbll=new LopHocBLL();
-        //lhbll.DeleteAllData();
+        LopHocBLL lhbll=new LopHocBLL();
+        lhbll.DeleteAllData();
         
-        //lhbll.SaveAllLopHoc(myFile.GetListCourseTheoryOfEducationProgram("*"));
-        //lhbll.SaveAllLopHoc(myFile.GetListCoursePracticeOfEducationProgram("*"));
+        lhbll.SaveAllLopHoc(myFile.GetListCourseTheoryOfEducationProgram("*"));
+        lhbll.SaveAllLopHoc(myFile.GetListCoursePracticeOfEducationProgram("*"));
         //lhbll.InsertLopHoc(new LopHoc("TEST.J00","CSDL","Nguyễn Hồng Phúc","12/04/2012","13/5/2018","12345","5","B114","CQUI","LT"));
 //        //lhbll.DeleteAllData();
 
@@ -65,12 +65,12 @@ public class UITersHelper {
 //            System.out.println("===============================================\n");
 //        }
 
-        MonHocBLL mhbll=new MonHocBLL();
-        List<MonHoc> dsMonHocGoiY=new ArrayList<MonHoc>();
-        dsMonHocGoiY= mhbll.GetAllLopHoc("18520951", "KTPM", 1) ;
-        
-        for (MonHoc monHoc : dsMonHocGoiY) {
-            System.out.println(monHoc.toString());
-        }
+//        MonHocBLL mhbll=new MonHocBLL();
+//        List<MonHoc> dsMonHocGoiY=new ArrayList<MonHoc>();
+//        dsMonHocGoiY= mhbll.GetAllMonHoc("18520951", "KTPM", 1) ;
+//        
+//        for (MonHoc monHoc : dsMonHocGoiY) {
+//            System.out.println(monHoc.toString());
+//        }
     }
 }

@@ -23,7 +23,7 @@ public class LopHocAccess extends DatabaseAccess{
     public boolean InsertLopHoc(LopHoc lopHoc) throws SQLException{
         super.ConnectToDatabase();
 
-        String query ="insert into LopHoc (maLop,maMon,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
+        String query ="insert into LOPHOC (maLop,MAMH,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
                 + " values (?, ?, "+"N'"+lopHoc.getTenGiangVien()+"', ?, ?,?,?,?,?,?,?,?)";
         
         PreparedStatement preparedStmt = connection.prepareStatement(query);
@@ -51,7 +51,7 @@ public class LopHocAccess extends DatabaseAccess{
     public boolean SaveAllLopHoc(List<LopHoc> listLopHoc) throws SQLException{
         
         super.ConnectToDatabase();
-        String query ="insert into LopHoc (maLop,maMon,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
+        String query ="insert into LOPHOC (maLop,MAMH,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
                 + " values (?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         
@@ -80,7 +80,7 @@ public class LopHocAccess extends DatabaseAccess{
     
     public List<LopHoc> GetAllLopHoc() throws SQLException{
         List<LopHoc> list=new ArrayList<LopHoc>();
-        String query="select * from LopHoc";
+        String query="select * from LOPHOC";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
@@ -118,7 +118,7 @@ public class LopHocAccess extends DatabaseAccess{
     public List<LopHoc> GetListCourseTheoryOfEducationProgram(String type) throws SQLException{
         List<LopHoc> list=new ArrayList<LopHoc>();
         
-        String query="SELECT * FROM `LopHoc` WHERE heDaoTao='"+type+"' AND HinhThuc='LT' ";
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='LT' ";
         
         super.ConnectToDatabase();
         statement=connection.createStatement();
@@ -156,7 +156,7 @@ public class LopHocAccess extends DatabaseAccess{
     
     public List<LopHoc> GetListCoursePracticeOfEducationProgram(String type) throws SQLException{
         List<LopHoc> list=new ArrayList<LopHoc>();
-        String query="SELECT * FROM `LopHoc` WHERE heDaoTao='"+type+"' AND HinhThuc='TH' ";
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='TH' ";
         
         super.ConnectToDatabase();
         statement=connection.createStatement();
@@ -194,7 +194,7 @@ public class LopHocAccess extends DatabaseAccess{
     
     public boolean DeleteAllData() throws SQLException{
         super.ConnectToDatabase();
-        String query="delete from LopHoc";
+        String query="delete from LOPHOC";
         
         statement=connection.createStatement();
         PreparedStatement preparedStmt = connection.prepareStatement(query);

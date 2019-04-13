@@ -1,9 +1,15 @@
 package GUI.controller;
 // <editor-fold desc="import zone">
+import BLL.Global;
+import BLL.ThuatToanTaoTKB;
+import DTO.LopHoc;
+import DTO.MonHoc;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -249,5 +255,21 @@ public class CreateTimetableNowController implements Initializable {
             }
 
         });
+    }
+    
+    
+    //===========================================================
+    private void LoadSchedule(List<LopHoc> lsLopHocs){
+        
+    }
+    
+    private void MaKeSchedule(){
+        List<String> lsMaMon=new ArrayList<>();
+        
+        for (MonHoc m : Global.lsMonHocSelected.values()) {
+            lsMaMon.add(m.getMaMonHoc());
+        }
+        ThuatToanTaoTKB.NapDanhSachMaMonHoc(lsMaMon);
+        ThuatToanTaoTKB.SetHeDaoTao("CQUI");
     }
 }
