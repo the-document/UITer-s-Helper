@@ -158,6 +158,11 @@ public class CreateTimetableNowController implements Initializable {
     @FXML
     private Label lb_t7;
 
+    
+    //_____________________________________________________________
+    @FXML
+    private Label lb_SubjectNotFound;
+    
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
     @FXML
@@ -190,6 +195,7 @@ public class CreateTimetableNowController implements Initializable {
         
         
         //process data to show---------------------------------------
+        lb_SubjectNotFound.setText("");
         MaKeSchedule();
         HideTextOfButton();
         LoadSchedule();
@@ -618,5 +624,12 @@ public class CreateTimetableNowController implements Initializable {
         for (TimeTable table : ThuatToanTaoTKB.listTimeTables) {
             table.Export();  
         }
+        
+        if(!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty())
+        {
+            lb_SubjectNotFound.setText("Những môn học không mở: "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
+            System.out.println("Subject not open in this semeter: "+ThuatToanTaoTKB.dsMaMonNotFound.size()+" - "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
+        }
+       
     }
 }
