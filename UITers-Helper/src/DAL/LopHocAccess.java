@@ -154,6 +154,84 @@ public class LopHocAccess extends DatabaseAccess{
         return list;
     }
     
+    public List<LopHoc> GetListCourseTheory(String type,String MaMH) throws SQLException{
+        List<LopHoc> list=new ArrayList<>();
+        
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='LT' and MAMH = '"+MaMH+"'";
+        
+        super.ConnectToDatabase();
+        statement=connection.createStatement();
+        resultSet =statement.executeQuery(query);
+        
+        if(resultSet.isBeforeFirst()==false)
+        {
+            System.err.println("GetListCourseTheory - DAL package");
+            return null;
+        }
+        
+        while (resultSet.next()) {            
+            LopHoc l =new LopHoc();
+            
+            l.setMaLop(resultSet.getString(1));
+            l.setMaMonHoc(resultSet.getString(2));
+            l.setTenGiangVien(resultSet.getString(3));
+            l.setNgayBatDau(resultSet.getString(4));
+            l.setNgayKetThuc(resultSet.getString(5));
+            l.setTiet(resultSet.getString(6));
+            l.setThu(resultSet.getString(7));
+            l.setPhong(resultSet.getString(8));
+            l.setHeDaoTao(resultSet.getString(9));
+            l.setTietBatDau(resultSet.getInt(10));
+            l.setTietKetThuc(resultSet.getInt(11));
+            l.setHinhthucDay(resultSet.getString(12));
+            
+            list.add(l);
+        }
+            
+        statement.close();
+        
+        return list;
+    }
+    
+    public List<LopHoc> GetListCoursePractice(String type,String MaMH) throws SQLException{
+        List<LopHoc> list=new ArrayList<>();
+        
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='TH' and MAMH = '"+MaMH+"'";
+        
+        super.ConnectToDatabase();
+        statement=connection.createStatement();
+        resultSet =statement.executeQuery(query);
+        
+        if(resultSet.isBeforeFirst()==false)
+        {
+            System.err.println("GetListCourseTheory - DAL package");
+            return null;
+        }
+        
+        while (resultSet.next()) {            
+            LopHoc l =new LopHoc();
+            
+            l.setMaLop(resultSet.getString(1));
+            l.setMaMonHoc(resultSet.getString(2));
+            l.setTenGiangVien(resultSet.getString(3));
+            l.setNgayBatDau(resultSet.getString(4));
+            l.setNgayKetThuc(resultSet.getString(5));
+            l.setTiet(resultSet.getString(6));
+            l.setThu(resultSet.getString(7));
+            l.setPhong(resultSet.getString(8));
+            l.setHeDaoTao(resultSet.getString(9));
+            l.setTietBatDau(resultSet.getInt(10));
+            l.setTietKetThuc(resultSet.getInt(11));
+            l.setHinhthucDay(resultSet.getString(12));
+            
+            list.add(l);
+        }
+            
+        statement.close();
+        
+        return list;
+    }
+    
     public List<LopHoc> GetListCoursePracticeOfEducationProgram(String type) throws SQLException{
         List<LopHoc> list=new ArrayList<LopHoc>();
         String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='TH' ";

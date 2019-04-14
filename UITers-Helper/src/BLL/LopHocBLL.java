@@ -33,20 +33,32 @@ public class LopHocBLL {
     public List<LopHoc> GetListCourseTheoryOfEducationProgram(String type) throws SQLException{
         
         LopHocAccess lhac=new LopHocAccess();
-        
         return lhac.GetListCourseTheoryOfEducationProgram(type);
     }
     
-    public List<LopHoc> GetListCoursePracticeOfEducationProgram(String type) throws SQLException{
+    public List<LopHoc> GetListCourseTheory(String CTDT,String MaMH) throws SQLException
+    {
+       
         LopHocAccess lhac=new LopHocAccess();
+        return lhac.GetListCourseTheory(CTDT,MaMH);
+    }
+    
+    public List<LopHoc> GetListCoursePracticeOfEducationProgram(String type) throws SQLException{
         
+        LopHocAccess lhac=new LopHocAccess();
         return lhac.GetListCoursePracticeOfEducationProgram(type);
     }
+    
+    public List<LopHoc> GetListCoursePractice(String CTDT,String MaMH) throws SQLException
+     {
+       
+        LopHocAccess lhac=new LopHocAccess();
+        return lhac.GetListCoursePractice(CTDT,MaMH);
+     }
     
     public boolean DeleteAllData() throws SQLException{
        
         LopHocAccess lhac=new LopHocAccess();
-        
         return lhac.DeleteAllData();
     }
 }

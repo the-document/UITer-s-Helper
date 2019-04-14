@@ -252,5 +252,6 @@
          </children>
       </VBox>
       <Label layoutX="45.0" layoutY="130.0" prefHeight="23.0" prefWidth="340.0" stylesheets="@../css/label.css" text="Tạo vào ngày ..." />
+      <Label fx:id="lb_SubjectNotFound" layoutX="450.0" layoutY="130.0" prefHeight="23.0" prefWidth="340.0" stylesheets="@../css/waring.css" text="Các môn học không mở ..." textFill="RED"/>
    </children>
 </AnchorPane>
