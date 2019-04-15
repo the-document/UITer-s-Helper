@@ -117,9 +117,9 @@ public class SelectSemesterController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(SelectSemesterController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+      
         String text = "Xin chào, 17520433";
-         btn_next.setVisible(false);
+        btn_next.setVisible(false);
         init_cbb_user(form);
         
     }
@@ -166,6 +166,7 @@ public class SelectSemesterController implements Initializable {
                 Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+       
     }
     public void LoadNextScene(ActionEvent event) throws Exception {
 

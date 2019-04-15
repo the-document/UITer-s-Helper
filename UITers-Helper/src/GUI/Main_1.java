@@ -19,7 +19,7 @@ public class Main_1 extends Application {
     
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/Welcome.fxml"));       
+        Parent root = FXMLLoader.load(getClass().getResource("view/Loader.fxml"));       
         Scene scene = new Scene(root, 1174, 660);  
         primaryStage.setScene(scene);
         root.setOnMousePressed(e -> {
@@ -38,6 +38,7 @@ public class Main_1 extends Application {
         primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setResizable(false);
         primaryStage.show();
+        
         
     }
 
