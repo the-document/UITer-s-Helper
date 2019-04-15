@@ -110,7 +110,11 @@ public class SelectSemesterController implements Initializable {
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
 
-        init_lv_semester();
+        try {
+            init_lv_semester();
+        } catch (SQLException ex) {
+            Logger.getLogger(SelectSemesterController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         String text = "Xin chào, 17520433";
         init_cbb_user(form);
         
@@ -158,6 +162,7 @@ public class SelectSemesterController implements Initializable {
                 Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
+       
     }
     public void LoadNextScene(ActionEvent event) throws Exception {
 
@@ -169,7 +174,7 @@ public class SelectSemesterController implements Initializable {
         window.show();
     }
 
-    public void init_lv_semester() {
+    public void init_lv_semester() throws SQLException {
         HocKyBLL hkbll=new HocKyBLL();
         List<HocKy> lsHocKy= hkbll.GetAllHocKy();
 
