@@ -6,7 +6,7 @@
     -fx-font-family: "Segoe UI";  
     -fx-font-color: white;
     -fx-text-fill: white;
-    
+    -fx-text-align: center;
 }
 
 .button:hover{

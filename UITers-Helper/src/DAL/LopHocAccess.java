@@ -23,7 +23,7 @@ public class LopHocAccess extends DatabaseAccess{
     public boolean InsertLopHoc(LopHoc lopHoc) throws SQLException{
         super.ConnectToDatabase();
 
-        String query ="insert into LopHoc (maLop,maMon,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
+        String query ="insert into LOPHOC (maLop,MAMH,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
                 + " values (?, ?, "+"N'"+lopHoc.getTenGiangVien()+"', ?, ?,?,?,?,?,?,?,?)";
         
         PreparedStatement preparedStmt = connection.prepareStatement(query);
@@ -51,7 +51,7 @@ public class LopHocAccess extends DatabaseAccess{
     public boolean SaveAllLopHoc(List<LopHoc> listLopHoc) throws SQLException{
         
         super.ConnectToDatabase();
-        String query ="insert into LopHoc (maLop,maMon,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
+        String query ="insert into LOPHOC (maLop,MAMH,giangVien,ngayBD,ngayKT,tiet,thu,phong,heDaoTao,tietBatDau,tietKetThuc,HinhThuc)"
                 + " values (?, ?, ?, ?, ?,?,?,?,?,?,?,?)";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         
@@ -80,7 +80,7 @@ public class LopHocAccess extends DatabaseAccess{
     
     public List<LopHoc> GetAllLopHoc() throws SQLException{
         List<LopHoc> list=new ArrayList<LopHoc>();
-        String query="select * from LopHoc";
+        String query="select * from LOPHOC";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
@@ -116,9 +116,9 @@ public class LopHocAccess extends DatabaseAccess{
     
     //type: CQUI, CLC,...
     public List<LopHoc> GetListCourseTheoryOfEducationProgram(String type) throws SQLException{
-        List<LopHoc> list=new ArrayList<LopHoc>();
+        List<LopHoc> list=new ArrayList<>();
         
-        String query="SELECT * FROM `LopHoc` WHERE heDaoTao='"+type+"' AND HinhThuc='LT' ";
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='LT' ";
         
         super.ConnectToDatabase();
         statement=connection.createStatement();
@@ -154,9 +154,87 @@ public class LopHocAccess extends DatabaseAccess{
         return list;
     }
     
+    public List<LopHoc> GetListCourseTheory(String type,String MaMH) throws SQLException{
+        List<LopHoc> list=new ArrayList<>();
+        
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='LT' and MAMH = '"+MaMH+"'";
+        
+        super.ConnectToDatabase();
+        statement=connection.createStatement();
+        resultSet =statement.executeQuery(query);
+        
+        if(resultSet.isBeforeFirst()==false)
+        {
+            System.err.println("GetListCourseTheory - DAL package");
+            return null;
+        }
+        
+        while (resultSet.next()) {            
+            LopHoc l =new LopHoc();
+            
+            l.setMaLop(resultSet.getString(1));
+            l.setMaMonHoc(resultSet.getString(2));
+            l.setTenGiangVien(resultSet.getString(3));
+            l.setNgayBatDau(resultSet.getString(4));
+            l.setNgayKetThuc(resultSet.getString(5));
+            l.setTiet(resultSet.getString(6));
+            l.setThu(resultSet.getString(7));
+            l.setPhong(resultSet.getString(8));
+            l.setHeDaoTao(resultSet.getString(9));
+            l.setTietBatDau(resultSet.getInt(10));
+            l.setTietKetThuc(resultSet.getInt(11));
+            l.setHinhthucDay(resultSet.getString(12));
+            
+            list.add(l);
+        }
+            
+        statement.close();
+        
+        return list;
+    }
+    
+    public List<LopHoc> GetListCoursePractice(String type,String MaMH) throws SQLException{
+        List<LopHoc> list=new ArrayList<>();
+        
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='TH' and MAMH = '"+MaMH+"'";
+        
+        super.ConnectToDatabase();
+        statement=connection.createStatement();
+        resultSet =statement.executeQuery(query);
+        
+        if(resultSet.isBeforeFirst()==false)
+        {
+            System.err.println("GetListCourseTheory - DAL package");
+            return null;
+        }
+        
+        while (resultSet.next()) {            
+            LopHoc l =new LopHoc();
+            
+            l.setMaLop(resultSet.getString(1));
+            l.setMaMonHoc(resultSet.getString(2));
+            l.setTenGiangVien(resultSet.getString(3));
+            l.setNgayBatDau(resultSet.getString(4));
+            l.setNgayKetThuc(resultSet.getString(5));
+            l.setTiet(resultSet.getString(6));
+            l.setThu(resultSet.getString(7));
+            l.setPhong(resultSet.getString(8));
+            l.setHeDaoTao(resultSet.getString(9));
+            l.setTietBatDau(resultSet.getInt(10));
+            l.setTietKetThuc(resultSet.getInt(11));
+            l.setHinhthucDay(resultSet.getString(12));
+            
+            list.add(l);
+        }
+            
+        statement.close();
+        
+        return list;
+    }
+    
     public List<LopHoc> GetListCoursePracticeOfEducationProgram(String type) throws SQLException{
         List<LopHoc> list=new ArrayList<LopHoc>();
-        String query="SELECT * FROM `LopHoc` WHERE heDaoTao='"+type+"' AND HinhThuc='TH' ";
+        String query="SELECT * FROM `LOPHOC` WHERE heDaoTao='"+type+"' AND HinhThuc='TH' ";
         
         super.ConnectToDatabase();
         statement=connection.createStatement();
@@ -194,7 +272,7 @@ public class LopHocAccess extends DatabaseAccess{
     
     public boolean DeleteAllData() throws SQLException{
         super.ConnectToDatabase();
-        String query="delete from LopHoc";
+        String query="delete from LOPHOC";
         
         statement=connection.createStatement();
         PreparedStatement preparedStmt = connection.prepareStatement(query);

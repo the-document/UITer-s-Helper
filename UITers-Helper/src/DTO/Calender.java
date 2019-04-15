@@ -18,6 +18,7 @@ public class Calender {
     String location;
     String Describe;
 
+    //---------------------------------------------------
     public Calender() {
     }
 
@@ -28,6 +29,7 @@ public class Calender {
         this.Describe = Describe;
     }
 
+    //---------------------------------------------------
     public Date getDate() {
         return date;
     }

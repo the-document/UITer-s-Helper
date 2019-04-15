@@ -18,7 +18,7 @@ import java.util.List;
 public class MonHocBLL {
     
     //khóa học vd: 2018, 2019,2020
-     public List<MonHoc> GetAllLopHoc(String MSSV,String nganhhoc,int hocky) throws SQLException
+     public List<MonHoc> GetAllMonHoc(String MSSV,String nganhhoc,int hocky) throws SQLException
      {
          if(MSSV.isEmpty()||nganhhoc.isEmpty()||hocky<1)
              return null;
@@ -48,8 +48,12 @@ public class MonHocBLL {
          
 
          MonHocAccess lhAccess=new MonHocAccess();
-         return lhAccess.GetAllLopHoc(khoa, nganhhoc, hocky);
+         return lhAccess.GetAllMonHoc(khoa, nganhhoc, hocky);
      }
 
 
+     public MonHoc GetMonHoc(String MaMH) throws SQLException{
+         MonHocAccess mha=new MonHocAccess();
+         return mha.GetMonHoc(MaMH);
+     }
 }

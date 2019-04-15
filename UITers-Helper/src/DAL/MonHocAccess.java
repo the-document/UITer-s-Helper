@@ -17,7 +17,7 @@ import java.util.List;
 public class MonHocAccess extends DatabaseAccess{
     
     //khóa học vd: 2018, 2019,2020
-     public List<MonHoc> GetAllLopHoc(int khoahoc,String nganhhoc,int hocky) throws SQLException{
+     public List<MonHoc> GetAllMonHoc(int khoahoc,String nganhhoc,int hocky) throws SQLException{
            
         this.ConnectToDatabase();
         List<MonHoc> list=new ArrayList<MonHoc>();
@@ -56,5 +56,34 @@ public class MonHocAccess extends DatabaseAccess{
             
         statement.close();
         return list;
+    }
+     
+    public MonHoc GetMonHoc(String MaMH) throws SQLException{
+           
+        this.ConnectToDatabase();
+         MonHoc m =new MonHoc();
+        
+        String query="SELECT * from MONHOC where MAMH = '"+MaMH+"'";
+
+        
+        statement=connection.createStatement();
+        resultSet =statement.executeQuery(query);
+        
+        if(resultSet.isBeforeFirst()==false)
+        {
+            System.err.println("Err in get  MON Hoc - DAL package");
+            return null;
+        }
+        
+        while (resultSet.next()) {                 
+            m.setMaMonHoc(resultSet.getString(1));
+            m.setTenMonHoc(resultSet.getString(2));
+            m.setDonViQL(resultSet.getString(3));
+            m.setSoChiLyThuyet(resultSet.getInt(4));
+            m.setSoChiThucHanh(resultSet.getInt(5));
+        }
+            
+        statement.close();
+        return m;
     }
 }

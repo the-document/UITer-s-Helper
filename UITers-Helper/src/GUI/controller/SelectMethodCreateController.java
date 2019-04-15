@@ -1,6 +1,7 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.Global;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -84,6 +85,9 @@ public class SelectMethodCreateController implements Initializable {
 
     @FXML
     void btn_select_advancedClick(ActionEvent event) {
+        
+        Global.MeThodCreateSchedule=Global.MeThodCreate.ADVANCE;
+        
         state = "select_advanced";
         form = "../view/SelectAdvanced.fxml";
         madeFadeOut(event);
@@ -91,6 +95,9 @@ public class SelectMethodCreateController implements Initializable {
 
     @FXML
     void btn_select_day_offClick(ActionEvent event) {
+        
+        Global.MeThodCreateSchedule=Global.MeThodCreate.DAYOF;
+        
         state = "select_day_off";
         form = "../view/SelectDayOf.fxml";
         madeFadeOut(event);
@@ -98,6 +105,9 @@ public class SelectMethodCreateController implements Initializable {
 
     @FXML
     void btn_select_randomClick(ActionEvent event) {
+        
+        Global.MeThodCreateSchedule=Global.MeThodCreate.RANDOM;
+        
         state = "select_random";
         form = "../view/CreateTimetableNow.fxml";
         madeFadeOut(event);

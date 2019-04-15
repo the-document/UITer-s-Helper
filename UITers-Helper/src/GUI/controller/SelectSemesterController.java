@@ -8,6 +8,7 @@ import BLL.HocKyBLL;
 import DTO.HocKy;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXListView;
 import java.net.URL;
 import java.sql.SQLException;
@@ -92,8 +93,9 @@ public class SelectSemesterController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-        form = "../view/SelectSubject.fxml";
-        madeFadeOut(event);
+
+            form = "../view/SelectSubject.fxml";
+            madeFadeOut(event);
     }
 
     @FXML
@@ -115,7 +117,9 @@ public class SelectSemesterController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(SelectSemesterController.class.getName()).log(Level.SEVERE, null, ex);
         }
+      
         String text = "Xin chào, 17520433";
+        btn_next.setVisible(false);
         init_cbb_user(form);
         
     }
@@ -185,9 +189,11 @@ public class SelectSemesterController implements Initializable {
         
         lv_semester.setOnMouseClicked(e -> {
             String id = lv_semester.getSelectionModel().getSelectedItem().getText();
-            switch (id) {
-
-            }
+            int _id=lv_semester.getSelectionModel().getSelectedIndex();
+            System.out.println("In selectSemeterController: id semeter = "+_id);
+            
+            Global.HOCKY=lsHocKy.get(_id).getMaHK();
+            btn_next.setVisible(true);
         });
     }
     

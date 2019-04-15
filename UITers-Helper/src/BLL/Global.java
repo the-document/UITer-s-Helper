@@ -5,6 +5,7 @@
  */
 package BLL;
 
+import DTO.MonHoc;
 import GUI.controller.WelcomeController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -26,6 +27,9 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Stack;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -43,15 +47,29 @@ enum EducationProgram {
     KSTN
 }
 
+
+
 public class Global {
 
     private static double xOffSet = 0;
     private static double yOffSet = 0;
       
+    //==========METHOD SCHEDULE===================
+    public static enum MeThodCreate{
+        RANDOM,
+        DAYOF,
+        ADVANCE
+    }
+    
     //==========USER INFOR===================
-    public static final String MSSV="18520951";
-    public static final String NGANHHOC="KTPM";
-    public static final int HOCKY=1;
+    public static  String MSSV="18520951";
+    public static  String NGANHHOC="";
+    public static  int HOCKY=-1;
+    //public static List<MonHoc> lsMonHocSelected=new ArrayList<>();
+    public static HashMap<String,MonHoc> lsMonHocSelected=new HashMap<>();
+    public static MeThodCreate MeThodCreateSchedule;
+    
+    //======================================
     
     public static Stack<String> stack_link;
     
