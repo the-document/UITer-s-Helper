@@ -570,6 +570,9 @@ public class CreateTimetableNowController implements Initializable {
     }
     
     private void LoadSchedule(){
+        if(ThuatToanTaoTKB.listTimeTables.isEmpty())
+            return;
+        
         for (LopHoc lop : ThuatToanTaoTKB.listTimeTables.get(0).getListLopHocs()) {
             
             String textShow=lop.getMaLop()+"\n"

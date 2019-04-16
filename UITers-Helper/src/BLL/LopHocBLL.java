@@ -56,6 +56,16 @@ public class LopHocBLL {
         return lhac.GetListCoursePractice(CTDT,MaMH);
      }
     
+    public List<LopHoc> GetListCourseTheory(String CTDT,List<String> lsMaMH) throws SQLException{
+        LopHocAccess lhac=new LopHocAccess();
+        return lhac.GetListCourseTheory(CTDT,lsMaMH);
+    }
+    
+    public List<LopHoc> GetListCoursePractice(String CTDT,List<String> lsMaMH) throws SQLException{
+        LopHocAccess lhac=new LopHocAccess();
+        return lhac.GetListCoursePractice(CTDT,lsMaMH);
+    }
+    
     public boolean DeleteAllData() throws SQLException{
        
         LopHocAccess lhac=new LopHocAccess();
