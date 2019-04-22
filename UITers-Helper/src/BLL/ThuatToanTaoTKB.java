@@ -8,10 +8,13 @@ package BLL;
 import DTO.LopHoc;
 import DTO.MonHoc;
 import DTO.TimeTable;
+import GUI.controller.CreateTimetableNowController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -330,4 +333,5 @@ public class ThuatToanTaoTKB {
              }
         }
     }
+    
 }

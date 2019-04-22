@@ -1,5 +1,6 @@
 package GUI.controller;
 // <editor-fold desc="import zone">
+import BLL.Global;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -183,6 +184,7 @@ public class SelectDayOfController implements Initializable {
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
         init_label();
+        Global.lsDayOff.clear();
     }
 
     public void setKeyEvent() {

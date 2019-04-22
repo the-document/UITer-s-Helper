@@ -43,7 +43,8 @@ public class LopHocAccess extends DatabaseAccess{
         // execute the preparedstatement
         preparedStmt.execute();
       
-        connection.close();
+        preparedStmt.close();
+        this.CloseConnection();
         
         return true;
     }
@@ -74,7 +75,8 @@ public class LopHocAccess extends DatabaseAccess{
             preparedStmt.execute();
         }
 
-        connection.close();        
+        preparedStmt.close();
+        this.CloseConnection();
         return true;
     }
     
@@ -111,6 +113,7 @@ public class LopHocAccess extends DatabaseAccess{
         }
             
         statement.close();
+        this.CloseConnection();
         return list;
     }
     
@@ -150,7 +153,7 @@ public class LopHocAccess extends DatabaseAccess{
         }
             
         statement.close();
-        
+        this.CloseConnection();
         return list;
     }
     
@@ -189,7 +192,7 @@ public class LopHocAccess extends DatabaseAccess{
         }
             
         statement.close();
-        
+        this.CloseConnection();
         return list;
     }
     
@@ -234,7 +237,7 @@ public class LopHocAccess extends DatabaseAccess{
         }
             
         statement.close();
-        
+        this.CloseConnection();
         return list;
     }
     
@@ -273,7 +276,7 @@ public class LopHocAccess extends DatabaseAccess{
         }
             
         statement.close();
-        
+        this.CloseConnection();
         return list;
     }
     
@@ -318,7 +321,7 @@ public class LopHocAccess extends DatabaseAccess{
         }
             
         statement.close();
-        
+        this.CloseConnection();
         return list;
     }
     
@@ -356,7 +359,7 @@ public class LopHocAccess extends DatabaseAccess{
         }
             
         statement.close();
-        
+        this.CloseConnection();
         return list;
     }
     
@@ -369,6 +372,7 @@ public class LopHocAccess extends DatabaseAccess{
         preparedStmt.execute();
          
         statement.close();
+        this.CloseConnection();
         return true;
     }
 }

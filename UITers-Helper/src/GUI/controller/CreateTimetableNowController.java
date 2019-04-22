@@ -196,7 +196,7 @@ public class CreateTimetableNowController implements Initializable {
         
         //process data to show---------------------------------------
         lb_SubjectNotFound.setText("");
-        MaKeSchedule();
+        //MaKeSchedule();
         HideTextOfButton();
         LoadSchedule();
         //-----------------------------------------------------------
@@ -571,7 +571,11 @@ public class CreateTimetableNowController implements Initializable {
     
     private void LoadSchedule(){
         if(ThuatToanTaoTKB.listTimeTables.isEmpty())
+        {
+            lb_SubjectNotFound.setText("Can't create, please choose other day-off");
             return;
+        }
+            
         
         for (LopHoc lop : ThuatToanTaoTKB.listTimeTables.get(0).getListLopHocs()) {
             
@@ -602,6 +606,11 @@ public class CreateTimetableNowController implements Initializable {
                     break;
             }
         }
+        
+        if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
+            lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
+            
+        }
     }
     
     private void MaKeSchedule(){
@@ -612,6 +621,7 @@ public class CreateTimetableNowController implements Initializable {
             lsMaMon.add(m.getMaMonHoc());
             System.out.print(m.getMaMonHoc()+", ");
         }
+        
         ThuatToanTaoTKB.NapDanhSachMaMonHoc(lsMaMon);
         ThuatToanTaoTKB.SetHeDaoTao("CQUI");
         
@@ -624,9 +634,9 @@ public class CreateTimetableNowController implements Initializable {
         
         ThuatToanTaoTKB.Try(0);
         System.out.println("=========LIST TKB RECOMEND FOR YOU  ( " + ThuatToanTaoTKB.countCase + " ) ============\n");
-        for (TimeTable table : ThuatToanTaoTKB.listTimeTables) {
-            table.Export();  
-        }
+        ThuatToanTaoTKB.listTimeTables.forEach((table) -> {
+            table.Export();
+        });
         
         if(!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty())
         {

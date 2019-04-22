@@ -109,7 +109,7 @@ public class SelectMethodCreateController implements Initializable {
         Global.MeThodCreateSchedule=Global.MeThodCreate.RANDOM;
         
         state = "select_random";
-        form = "../view/CreateTimetableNow.fxml";
+        form = "../view/Loader.fxml";
         madeFadeOut(event);
     }
 

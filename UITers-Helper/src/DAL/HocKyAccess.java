@@ -22,8 +22,6 @@ public class HocKyAccess extends DatabaseAccess{
         this.ConnectToDatabase();
         List<HocKy> list=new ArrayList<HocKy>();
         String query="SELECT * FROM HOCKY";
-
-      //  String query="select * from MONHOC";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
@@ -43,6 +41,7 @@ public class HocKyAccess extends DatabaseAccess{
         }
             
         statement.close();
+        this.CloseConnection();
         return list;
     }
 }

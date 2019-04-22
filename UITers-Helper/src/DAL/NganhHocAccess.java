@@ -41,6 +41,7 @@ public class NganhHocAccess extends DatabaseAccess{
         }
             
         statement.close();
+        this.CloseConnection();
         return list;
     }
 }
