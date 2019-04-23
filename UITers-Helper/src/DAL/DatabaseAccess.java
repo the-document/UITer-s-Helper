@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  * @author Nguyen Hong Phuc
  */
 public class DatabaseAccess {
-    huhuhu-master
+
     private String dbURL;
     private String username;
     private String passWord;
