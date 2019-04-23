@@ -20,7 +20,12 @@ import java.util.logging.Logger;
  * @author Nguyen Hong Phuc
  */
 public class DatabaseAccess {
+<<<<<<< HEAD
     huhuhu-master
+=======
+    ahihihihihi-nghi
+    
+>>>>>>> test conflict
     private String dbURL;
     private String username;
     private String passWord;
