@@ -53,8 +53,10 @@ public class MakeSchelude extends Thread{
     }
     
     private void filterAndMakeSchedule(){
+        ThuatToanTaoTKB.listTimeTables.clear();
         List<String> lsMaMon = new ArrayList<>();
-
+        System.out.println("in filter------------------------------");
+        
         lsMaMon.clear();
         for (MonHoc m : Global.lsMonHocSelected.values()) {
             lsMaMon.add(m.getMaMonHoc());
@@ -74,24 +76,37 @@ public class MakeSchelude extends Thread{
         //filter dayof with select dayof for list course current.
         HashSet <String> mySet=new HashSet<>();
         for (LopHoc lopDayoff : Global.lsDayOff) {
-            for (LopHoc lopHienCo : ThuatToanTaoTKB.dsFilterLT) {
-                if(lopDayoff.isOverlap(lopHienCo))
-                {
-                    ThuatToanTaoTKB.dsFilterLT.remove(lopHienCo);
-//                    for (LopHoc lopTH : ThuatToanTaoTKB.dsFilterTH) {
-//                        if((lopHienCo.getMaLop()+".1")
-//                        {
-//                            break;
-//                        }
-//                    }
-                  break;
+            System.out.println("in list dayof");
+            
+            int index=0;
+            while (index<ThuatToanTaoTKB.dsFilterLT.size()) {                
+                while (index<ThuatToanTaoTKB.dsFilterLT.size()&&!ThuatToanTaoTKB.dsFilterLT.get(index).isOverlap(lopDayoff)) {                    
+                    mySet.add(ThuatToanTaoTKB.dsFilterLT.get(index).getmaMonHoc());
+                    index++;
                 }
-                mySet.add(lopHienCo.getmaMonHoc());
+                if(index<=ThuatToanTaoTKB.dsFilterLT.size()-1)
+                    ThuatToanTaoTKB.dsFilterLT.remove(ThuatToanTaoTKB.dsFilterLT.get(index));  
             }
+//            for (LopHoc lopHienCo : ThuatToanTaoTKB.dsFilterLT) {
+//                if(lopDayoff.isOverlap(lopHienCo))
+//                {
+//                    System.out.println("overlap"+ lopDayoff.getmaMonHoc());
+//                    ThuatToanTaoTKB.dsFilterLT.remove(lopHienCo);
+////                    for (LopHoc lopTH : ThuatToanTaoTKB.dsFilterTH) {
+////                        if((lopHienCo.getMaLop()+".1")
+////                        {
+////                            break;
+////                        }
+////                    }
+//                }else
+//                mySet.add(lopHienCo.getmaMonHoc());
+//            }
             
         }
         
         //check couse co du de tao hay k
+        System.out.println("myset size:"+mySet.size());
+        System.out.println("Course found:"+ThuatToanTaoTKB.NumberOfCouseFound);
         if(mySet.size()<ThuatToanTaoTKB.NumberOfCouseFound)
         {
             System.out.println("Can't create, please choose other dayoff");

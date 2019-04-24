@@ -169,7 +169,7 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-        form = "../view/CreateTimetableNow.fxml";
+        form = "../view/Loader.fxml";
         madeFadeOut(event);
     }
 
@@ -185,6 +185,7 @@ public class SelectDayOfController implements Initializable {
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
         init_label();
+        
         Global.lsDayOff.clear();
     }
 
@@ -235,7 +236,7 @@ public class SelectDayOfController implements Initializable {
     public void initButtonClick(JFXButton btn) {
         
         String fullname=btn.getId();
-        String thu=fullname.split("_")[1];
+        String thu=fullname.split("_")[1].substring(1, 2);
         String tiet=fullname.split("_")[2];
                 
         btn.setOnAction(e -> {
@@ -247,11 +248,10 @@ public class SelectDayOfController implements Initializable {
                     {
                          Global.lsDayOff.remove(lopHoc);
                          break;
-                    }
-                       
+                    } 
                 }
                 
-                System.out.println("remove -"+fullname+ " -size: "+Global.lsDayOff.size());
+                System.out.println("remove -"+thu+"-"+tiet+" -size: "+Global.lsDayOff.size());
             } 
             else {
 
@@ -259,7 +259,7 @@ public class SelectDayOfController implements Initializable {
                 
                 LopHoc l=new LopHoc("DAY-OFF", "DAY-OFF", "DAY-OFF", "1", "1", tiet, thu, "DAY-OFF", "DAY-OFF", "DAY-OFF");
                 Global.lsDayOff.add(l);
-                System.out.println("add -"+fullname+ " -size: "+Global.lsDayOff.size());
+                System.out.println("add -"+thu+"-"+tiet+" -size: "+Global.lsDayOff.size());
             }
 
         });

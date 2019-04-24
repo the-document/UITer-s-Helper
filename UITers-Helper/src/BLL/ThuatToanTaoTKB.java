@@ -38,6 +38,7 @@ public class ThuatToanTaoTKB {
     
    public static void NapDanhSachMaMonHoc(List<String> danhSachMaMon)
    {
+       dsMaMonNeedCreate.clear();
        danhSachMaMon.forEach((mamon) -> {
            dsMaMonNeedCreate.add(mamon);
         });
@@ -55,6 +56,13 @@ public class ThuatToanTaoTKB {
         //===============================================================
         LopHocBLL lhbll =new LopHocBLL();
         List<LopHoc> lsLopHocTemp=new ArrayList<>();
+        dsMaMonNotFound.clear();
+        dsFilterLT.clear();
+        dsFilterTH.clear();
+        listTimeTables.clear();
+        Has_Found=false;
+        countCase=0;
+        
         
 //        for (String monHoc : dsMaMonNeedCreate) 
 //        {
@@ -74,21 +82,21 @@ public class ThuatToanTaoTKB {
 //        }
 
         dsFilterLT=lhbll.GetListCourseTheory(CTDT, dsMaMonNeedCreate);
+        System.out.println("Size LT:"+dsFilterLT.size());
         
         Boolean check;
         for (String maMH : dsMaMonNeedCreate){
             check=false;
-            {
-                for (LopHoc lop : dsFilterLT)
-                if(lop.getmaMonHoc().equals(maMH))
-                {
-                    check=true;
+
+            for (LopHoc lop : dsFilterLT) {
+                if (lop.getmaMonHoc().equals(maMH)) {
+                    check = true;
                     break;
-                }                                 
-            }
+                }
+            }                              
+
             
-            if(!check)
-            {
+            if(!check){
                 dsMaMonNotFound.add(maMH);
                // System.out.println("Mon khong co: " + maMH);
             } 

@@ -580,7 +580,7 @@ public class CreateTimetableNowController implements Initializable {
         for (LopHoc lop : ThuatToanTaoTKB.listTimeTables.get(0).getListLopHocs()) {
             
             String textShow=lop.getMaLop()+"\n"
-                    + lop.getTenGiangVien()+ "\n P_"
+                    + lop.getTenGiangVien()+ "\n P. "
                     + lop.getPhong()+"\n"
                     + lop.getNgayBatDau()+"\n"
                     + lop.getNgayKetThuc();
