@@ -5,6 +5,7 @@
  */
 package BLL;
 
+import DTO.LopHoc;
 import DTO.MonHoc;
 import GUI.controller.WelcomeController;
 import com.jfoenix.controls.JFXButton;
@@ -69,6 +70,7 @@ public class Global {
     public static HashMap<String,MonHoc> lsMonHocSelected=new HashMap<>();
     public static MeThodCreate MeThodCreateSchedule;
     
+    public static List<LopHoc> lsDayOff=new ArrayList();
     //======================================
     
     public static Stack<String> stack_link;

@@ -1,6 +1,7 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.MakeSchelude;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSpinner;
@@ -34,6 +35,9 @@ public class LoaderController implements Initializable {
     // </editor-fold>
 
     // <editor-fold defaultstate="collapsed" desc="FXML variables zone">
+    @FXML
+    private JFXButton btn_showResult;
+    
     @FXML
     private AnchorPane AnchorPaneMain;
 
@@ -69,7 +73,10 @@ public class LoaderController implements Initializable {
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
 
-        Loading(spn_loader, 5);
+        this.btn_showResult.setVisible(false);
+        Loading(spn_loader, 1);
+        MakeSchelude schedule=new MakeSchelude();
+        schedule.start();
     }
 
     public void setKeyEvent() {
@@ -96,11 +103,18 @@ public class LoaderController implements Initializable {
                         new KeyValue(spn_loader.progressProperty(), 1)
                 )
         );
+        
         timeline.setCycleCount((int) time_value);
         timeline.play();
+        
+        timeline.setOnFinished(eh->{
+            this.btn_showResult.setVisible(true);    
+        });
+        
     }
+    
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Subscribed.fxml");
+       
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -127,4 +141,8 @@ public class LoaderController implements Initializable {
         window.show();
     }
 
+    public void btn_showResult(ActionEvent event){
+        form = "../view/CreateTimetableNow.fxml";
+            madeFadeOut(event);
+    }
 }

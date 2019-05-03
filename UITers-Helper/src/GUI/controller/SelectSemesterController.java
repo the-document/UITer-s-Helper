@@ -1,7 +1,6 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
-
 import GUI.StaticFunctions;
 import BLL.Global;
 import BLL.HocKyBLL;
@@ -35,18 +34,15 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 //</editor-fold>
-
 public class SelectSemesterController implements Initializable {
 
     // <editor-fold desc="Static variables zone">
-    
     String form;
     Stage window;
-    
+
     // </editor-fold>
-    
     // <editor-fold desc="FXML variables zone">
-     @FXML
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -67,13 +63,11 @@ public class SelectSemesterController implements Initializable {
     @FXML
     private JFXButton btn_next;
 
-    @FXML 
+    @FXML
     private StackPane stack_pane;
-    
+
     // </editor-fold>
-    
     //<editor-fold desc="FXML functions zone">
-        
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -94,8 +88,9 @@ public class SelectSemesterController implements Initializable {
     @FXML
     void btn_nextClick(ActionEvent event) {
 
-            form = "../view/SelectSubject.fxml";
-            madeFadeOut(event);
+        StaticFunctions.stack_link.push("../view/SelectSemester.fxml");
+        form = "../view/SelectSubject.fxml";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -104,9 +99,8 @@ public class SelectSemesterController implements Initializable {
     }
 
     // </editor-fold>
-    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {      
+    public void initialize(URL url, ResourceBundle rb) {
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
@@ -117,11 +111,11 @@ public class SelectSemesterController implements Initializable {
         } catch (SQLException ex) {
             Logger.getLogger(SelectSemesterController.class.getName()).log(Level.SEVERE, null, ex);
         }
-      
+
         String text = "Xin chào, 17520433";
         btn_next.setVisible(false);
         init_cbb_user(form);
-        
+
     }
 
     public void setKeyEvent() {
@@ -146,13 +140,12 @@ public class SelectSemesterController implements Initializable {
                 case ENTER:
                     btn_next.fire();
                     break;
-               
+
             }
         });
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/SelectSemester.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -166,8 +159,9 @@ public class SelectSemesterController implements Initializable {
                 Logger.getLogger(WelcomeController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-       
+
     }
+
     public void LoadNextScene(ActionEvent event) throws Exception {
 
         Parent root = FXMLLoader.load(getClass().getResource(form));
@@ -179,32 +173,34 @@ public class SelectSemesterController implements Initializable {
     }
 
     public void init_lv_semester() throws SQLException {
-        HocKyBLL hkbll=new HocKyBLL();
-        List<HocKy> lsHocKy= hkbll.GetAllHocKy();
+        HocKyBLL hkbll = new HocKyBLL();
+        List<HocKy> lsHocKy = hkbll.GetAllHocKy();
 
         for (HocKy hocKy : lsHocKy) {
             Label lb = new Label(hocKy.getTenHK());
             lv_semester.getItems().addAll(lb);
         }
-        
+
         lv_semester.setOnMouseClicked(e -> {
             String id = lv_semester.getSelectionModel().getSelectedItem().getText();
-            int _id=lv_semester.getSelectionModel().getSelectedIndex();
-            System.out.println("In selectSemeterController: id semeter = "+_id);
-            
-            Global.HOCKY=lsHocKy.get(_id).getMaHK();
+            int _id = lv_semester.getSelectionModel().getSelectedIndex();
+            System.out.println("In selectSemeterController: id semeter = " + _id);
+
+            Global.HOCKY = lsHocKy.get(_id).getMaHK();
             btn_next.setVisible(true);
         });
     }
-    
+
     public void init_cbb_user(String text) {
-         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+
+            StaticFunctions.stack_link.push("../view/SelectSemester.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";
@@ -226,10 +222,9 @@ public class SelectSemesterController implements Initializable {
                     break;
             }
 
-
           //==============================
-          // init hoc ky for Global here
-          //==============================
+            // init hoc ky for Global here
+            //==============================
         });
     }
 

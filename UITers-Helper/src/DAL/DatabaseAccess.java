@@ -9,8 +9,11 @@ package DAL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -53,5 +56,13 @@ public class DatabaseAccess {
             System.err.println("error conect to database");
         }
         return false;
+    }
+    
+    public void CloseConnection(){
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseAccess.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

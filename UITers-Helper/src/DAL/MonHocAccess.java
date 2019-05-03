@@ -55,6 +55,7 @@ public class MonHocAccess extends DatabaseAccess{
         }
             
         statement.close();
+        this.CloseConnection();
         return list;
     }
      
@@ -84,6 +85,7 @@ public class MonHocAccess extends DatabaseAccess{
         }
             
         statement.close();
+        this.CloseConnection();
         return m;
     }
 }

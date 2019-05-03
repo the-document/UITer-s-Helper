@@ -93,7 +93,7 @@ public class WelcomeController implements Initializable {
     }
    
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Subscribed.fxml");
+        StaticFunctions.stack_link.push("../view/Welcome.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);

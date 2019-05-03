@@ -8,10 +8,13 @@ package BLL;
 import DTO.LopHoc;
 import DTO.MonHoc;
 import DTO.TimeTable;
+import GUI.controller.CreateTimetableNowController;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 /**
@@ -53,22 +56,44 @@ public class ThuatToanTaoTKB {
         LopHocBLL lhbll =new LopHocBLL();
         List<LopHoc> lsLopHocTemp=new ArrayList<>();
         
-        for (String monHoc : dsMaMonNeedCreate) 
-        {
+//        for (String monHoc : dsMaMonNeedCreate) 
+//        {
+//            
+//            lsLopHocTemp=lhbll.GetListCourseTheory(CTDT, monHoc);
+//            if(lsLopHocTemp!=null)
+//            {
+//                System.out.println("found: "+monHoc);
+//                dsFilterLT.addAll(lsLopHocTemp);
+//            }
+//            else
+//            {
+//                System.out.println("not found: "+monHoc);
+//                dsMaMonNotFound.add(monHoc);
+//            }
+//                
+//        }
+
+        dsFilterLT=lhbll.GetListCourseTheory(CTDT, dsMaMonNeedCreate);
+        
+        Boolean check;
+        for (String maMH : dsMaMonNeedCreate){
+            check=false;
+            {
+                for (LopHoc lop : dsFilterLT)
+                if(lop.getmaMonHoc().equals(maMH))
+                {
+                    check=true;
+                    break;
+                }                                 
+            }
             
-            lsLopHocTemp=lhbll.GetListCourseTheory(CTDT, monHoc);
-            if(lsLopHocTemp!=null)
+            if(!check)
             {
-                System.out.println("found: "+monHoc);
-                dsFilterLT.addAll(lsLopHocTemp);
-            }
-            else
-            {
-                System.out.println("not found: "+monHoc);
-                dsMaMonNotFound.add(monHoc);
-            }
-                
+                dsMaMonNotFound.add(maMH);
+               // System.out.println("Mon khong co: " + maMH);
+            } 
         }
+
         //fullDsLop = lhbll.GetListCourseTheoryOfEducationProgram(CTDT);
         
         //loc ra nhung lop trong hoc ky nay (ds mon hoc da duoc nap truoc do)
@@ -88,16 +113,18 @@ public class ThuatToanTaoTKB {
         //==============================================================
         //lay ra tat ca cac lop Thuc hanh theo chuong trinh dao tao
         
-        for (String monHoc : dsMaMonNeedCreate) 
-        {
-            lsLopHocTemp=lhbll.GetListCoursePractice(CTDT, monHoc);
-            if(lsLopHocTemp!=null)
-            {
-                dsFilterTH.addAll(lsLopHocTemp);
-            }
-//            else
-//                dsMaMonNotFound.add(monHoc);
-        }
+//        for (String monHoc : dsMaMonNeedCreate) 
+//        {
+//            lsLopHocTemp=lhbll.GetListCoursePractice(CTDT, monHoc);
+//            if(lsLopHocTemp!=null)
+//            {
+//                dsFilterTH.addAll(lsLopHocTemp);
+//            }
+////            else
+////                dsMaMonNotFound.add(monHoc);
+//        }
+
+        dsFilterTH=lhbll.GetListCoursePractice(CTDT, dsMaMonNeedCreate);
         
         NumberOfCouseFound=dsMaMonNeedCreate.size()-dsMaMonNotFound.size();
 //        fullDsLop = lhbll.GetListCoursePracticeOfEducationProgram(CTDT);
@@ -306,4 +333,5 @@ public class ThuatToanTaoTKB {
              }
         }
     }
+    
 }

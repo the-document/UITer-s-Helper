@@ -35,8 +35,15 @@
                </font>
             </JFXButton>
          </children>
-      </HBox>
+        </HBox>
       <Circle fill="WHITE" layoutX="587.0" layoutY="250.0" opacity="0.3" radius="30.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="557.0" />
       <JFXSpinner fx:id="spn_loader" layoutX="562.0" layoutY="363.0" progress="0.0" styleClass="materialDesign-percent" stylesheets="@../css/spinner.css" />
+      
+        <JFXButton fx:id="btn_showResult" layoutX="562.0" layoutY="430.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_showResult" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Xem kết quả" textFill="WHITE" AnchorPane.leftAnchor="527.0" AnchorPane.rightAnchor="527.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
    </children>
+   
 </AnchorPane>

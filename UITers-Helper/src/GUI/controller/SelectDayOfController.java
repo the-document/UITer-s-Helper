@@ -1,5 +1,7 @@
 package GUI.controller;
 // <editor-fold desc="import zone">
+import BLL.Global;
+import DTO.LopHoc;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -167,6 +169,8 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
+        
+        StaticFunctions.stack_link.push("../view/SelectDayOf.fxml");
         form = "../view/CreateTimetableNow.fxml";
         madeFadeOut(event);
     }
@@ -183,6 +187,7 @@ public class SelectDayOfController implements Initializable {
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
         init_label();
+        Global.lsDayOff.clear();
     }
 
     public void setKeyEvent() {
@@ -203,7 +208,6 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/SelectDayOf.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -230,15 +234,33 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void initButtonClick(JFXButton btn) {
-
+        
+        String fullname=btn.getId();
+        String thu=fullname.split("_")[1];
+        String tiet=fullname.split("_")[2];
+                
         btn.setOnAction(e -> {
             if (btn.getStyle().compareTo(style) == 0) {
                 btn.setStyle(style2);
-
-            } else {
+                LopHoc l=new LopHoc("DAY-OFF", "DAY-OFF", "DAY-OFF", "1", "1", tiet, thu, "DAY-OFF", "DAY-OFF", "DAY-OFF");
+                for (LopHoc lopHoc : Global.lsDayOff) {
+                    if(lopHoc.getThu().equals(thu)&&lopHoc.getTiet().equals(tiet))
+                    {
+                         Global.lsDayOff.remove(lopHoc);
+                         break;
+                    }
+                       
+                }
+                
+                System.out.println("remove -"+fullname+ " -size: "+Global.lsDayOff.size());
+            } 
+            else {
 
                 btn.setStyle(style);
-
+                
+                LopHoc l=new LopHoc("DAY-OFF", "DAY-OFF", "DAY-OFF", "1", "1", tiet, thu, "DAY-OFF", "DAY-OFF", "DAY-OFF");
+                Global.lsDayOff.add(l);
+                System.out.println("add -"+fullname+ " -size: "+Global.lsDayOff.size());
             }
 
         });
@@ -321,6 +343,8 @@ public class SelectDayOfController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            
+            StaticFunctions.stack_link.push("../view/SelectDayOf.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";
