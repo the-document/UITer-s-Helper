@@ -53,10 +53,6 @@ public class MakeSchelude extends Thread{
     }
     
     private void filterAndMakeSchedule(){
-        ThuatToanTaoTKB.listTimeTables.clear();
-        List<String> lsMaMon = new ArrayList<>();
-        System.out.println("in filter------------------------------");
-        
         lsMaMon.clear();
         for (MonHoc m : Global.lsMonHocSelected.values()) {
             lsMaMon.add(m.getMaMonHoc());
@@ -76,6 +72,7 @@ public class MakeSchelude extends Thread{
         //filter dayof with select dayof for list course current.
         HashSet <String> mySet=new HashSet<>();
         for (LopHoc lopDayoff : Global.lsDayOff) {
+
             System.out.println("in list dayof");
             
             int index=0;
@@ -101,10 +98,12 @@ public class MakeSchelude extends Thread{
 //                }else
 //                mySet.add(lopHienCo.getmaMonHoc());
 //            }
+
             
         }
         
         //check couse co du de tao hay k
+
         System.out.println("myset size:"+mySet.size());
         System.out.println("Course found:"+ThuatToanTaoTKB.NumberOfCouseFound);
         if(mySet.size()<ThuatToanTaoTKB.NumberOfCouseFound)

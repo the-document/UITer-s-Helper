@@ -98,6 +98,7 @@ public class LoginController implements Initializable {
 
             JFXButton btn = new JFXButton("OK");
             btn.setOnAction(e -> {
+                StaticFunctions.stack_link.push("../view/Login.fxml");
                 form = "../view/Home.fxml";
                 madeFadeOut(event);
 
@@ -126,6 +127,7 @@ public class LoginController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/Login.fxml");
         form = "../view/Setting.fxml";
         madeFadeOut(event);
     }
@@ -163,7 +165,7 @@ public class LoginController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-         StaticFunctions.stack_link.push("../view/Login.fxml");
+      
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);

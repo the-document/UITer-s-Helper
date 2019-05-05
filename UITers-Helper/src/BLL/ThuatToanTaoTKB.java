@@ -63,7 +63,7 @@ public class ThuatToanTaoTKB {
         Has_Found=false;
         countCase=0;
         
-        
+
 //        for (String monHoc : dsMaMonNeedCreate) 
 //        {
 //            
@@ -87,6 +87,7 @@ public class ThuatToanTaoTKB {
         Boolean check;
         for (String maMH : dsMaMonNeedCreate){
             check=false;
+
 
             for (LopHoc lop : dsFilterLT) {
                 if (lop.getmaMonHoc().equals(maMH)) {

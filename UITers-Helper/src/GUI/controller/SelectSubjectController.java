@@ -176,6 +176,8 @@ public class SelectSubjectController implements Initializable {
     void btn_nextClick(ActionEvent event) {
         
         //------------------------------------------
+        
+        StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
         form = "../view/SelectMethodCreate.fxml";
         madeFadeOut(event); 
     }
@@ -217,7 +219,6 @@ public class SelectSubjectController implements Initializable {
     
     
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -315,6 +316,8 @@ public class SelectSubjectController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            
+        StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";

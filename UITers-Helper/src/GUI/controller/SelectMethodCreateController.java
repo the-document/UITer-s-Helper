@@ -89,6 +89,8 @@ public class SelectMethodCreateController implements Initializable {
         Global.MeThodCreateSchedule=Global.MeThodCreate.ADVANCE;
         
         state = "select_advanced";
+        
+        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
         form = "../view/SelectAdvanced.fxml";
         madeFadeOut(event);
     }
@@ -99,6 +101,8 @@ public class SelectMethodCreateController implements Initializable {
         Global.MeThodCreateSchedule=Global.MeThodCreate.DAYOF;
         
         state = "select_day_off";
+        
+        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
         form = "../view/SelectDayOf.fxml";
         madeFadeOut(event);
     }
@@ -109,6 +113,9 @@ public class SelectMethodCreateController implements Initializable {
         Global.MeThodCreateSchedule=Global.MeThodCreate.RANDOM;
         
         state = "select_random";
+
+        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
+
         form = "../view/Loader.fxml";
         madeFadeOut(event);
     }
@@ -172,7 +179,6 @@ public class SelectMethodCreateController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -206,6 +212,8 @@ public class SelectMethodCreateController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            
+            StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";

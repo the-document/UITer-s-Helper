@@ -253,7 +253,6 @@ public class SettingController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Setting.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -287,6 +286,8 @@ public class SettingController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            
+        StaticFunctions.stack_link.push("../view/Setting.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";

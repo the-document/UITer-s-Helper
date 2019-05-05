@@ -205,7 +205,9 @@ public class LopHocAccess extends DatabaseAccess{
         }
         query=query+lsMaMH.get(lsMaMH.size()-1)+"' )";
         
+
         //System.out.println("Query: "+query);
+
         
         super.ConnectToDatabase();
         statement=connection.createStatement();

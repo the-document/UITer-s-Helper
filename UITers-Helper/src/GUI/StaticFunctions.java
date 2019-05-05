@@ -34,6 +34,7 @@ public class StaticFunctions {
     private String URL_form;
 
     static public void SetStageDrag(Parent root, Stage window, ActionEvent event) {
+        //window.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(e -> {
             xOffSet = e.getSceneX();
             yOffSet = e.getSceneY();
@@ -45,7 +46,7 @@ public class StaticFunctions {
         root.setOnMouseReleased(e -> {
         });
 
-        window.initStyle(StageStyle.UNDECORATED);
+      
         window.setResizable(false);
     }
 

@@ -157,6 +157,8 @@ public class SelectAdvancedController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
+        
+        StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
         form = "../view/CreateTimetableNow.fxml";
         madeFadeOut(event);
     }
@@ -237,7 +239,6 @@ public class SelectAdvancedController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -271,6 +272,7 @@ public class SelectAdvancedController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";

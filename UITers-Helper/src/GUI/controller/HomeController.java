@@ -187,6 +187,7 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_createClick(ActionEvent event) {
+        StaticFunctions.stack_link.push("../view/Home.fxml");
         form = "../view/SelectSemester.fxml";
         madeFadeOut(event);
 
@@ -209,6 +210,7 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_showdateClick(ActionEvent event) {
+         StaticFunctions.stack_link.push("../view/Home.fxml");
         form = "../view/Calender.fxml";
         madeFadeOut(event);
     }
@@ -280,7 +282,7 @@ public class HomeController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Home.fxml");
+       
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -356,8 +358,10 @@ public class HomeController implements Initializable {
         }
         lv_deadline.setOnMouseClicked(e -> {
             String id = lv_deadline.getSelectionModel().getSelectedItem().getText();
+            
             switch (id) {
-
+                
+                
             }
         });
     }
@@ -370,7 +374,9 @@ public class HomeController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            StaticFunctions.stack_link.push("../view/Home.fxml");
             switch (cbb_user.getValue()) {
+                
                 case "Trang chủ":
                     form = "../view/Home.fxml";
                     madeFadeOut(e);
