@@ -113,8 +113,9 @@ public class SelectMethodCreateController implements Initializable {
         Global.MeThodCreateSchedule=Global.MeThodCreate.RANDOM;
         
         state = "select_random";
-        
+
         StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
+
         form = "../view/Loader.fxml";
         madeFadeOut(event);
     }

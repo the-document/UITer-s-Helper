@@ -558,18 +558,21 @@ public class CreateTimetableNowController implements Initializable {
         }
     }
 
-    private void LoadSchedule() {
-        if (ThuatToanTaoTKB.listTimeTables.isEmpty()) {
+    
+    private void LoadSchedule(){
+        if(ThuatToanTaoTKB.listTimeTables.isEmpty())
+        {
             lb_SubjectNotFound.setText("Can't create, please choose other day-off");
             return;
         }
-
+            
+        
         for (LopHoc lop : ThuatToanTaoTKB.listTimeTables.get(0).getListLopHocs()) {
-
-            String textShow = lop.getMaLop() + "\n"
-                    + lop.getTenGiangVien() + "\n P_"
-                    + lop.getPhong() + "\n"
-                    + lop.getNgayBatDau() + "\n"
+            
+            String textShow=lop.getMaLop()+"\n"
+                    + lop.getTenGiangVien()+ "\n P. "
+                    + lop.getPhong()+"\n"
+                    + lop.getNgayBatDau()+"\n"
                     + lop.getNgayKetThuc();
 
             switch (lop.getThu()) {
@@ -594,8 +597,10 @@ public class CreateTimetableNowController implements Initializable {
             }
         }
 
+        
         if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
             lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
+            
 
         }
     }
@@ -625,9 +630,12 @@ public class CreateTimetableNowController implements Initializable {
             table.Export();
         });
 
-        if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
-            lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
-            System.out.println("Subject not open in this semeter: " + ThuatToanTaoTKB.dsMaMonNotFound.size() + " - " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
+        
+        if(!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty())
+        {
+            lb_SubjectNotFound.setText("Những môn học không mở: "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
+            System.out.println("Subject not open in this semeter: "+ThuatToanTaoTKB.dsMaMonNotFound.size()+" - "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
+
         }
 
     }
