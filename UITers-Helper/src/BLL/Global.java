@@ -48,13 +48,21 @@ enum EducationProgram {
     KSTN
 }
 
+enum WebDriverMode
+{
+    Firefox,
+    Chrome,
+    IE,
+}
 
 
 public class Global {
 
     private static double xOffSet = 0;
     private static double yOffSet = 0;
-      
+    public static String IEDriverPath = "D:\\UIT Stuffs\\UIT Stuffs\\Documents\\Tai_Lieu\\Mon_hoc\\HK4\\Java\\Library\\WebDriver\\IEDriverServer.exe";
+    public static String FirefoxDriverPath = "D:\\UIT Stuffs\\UIT Stuffs\\Documents\\Tai_Lieu\\Mon_hoc\\HK4\\Java\\Library\\WebDriver\\geckodriver.exe";
+
     //==========METHOD SCHEDULE===================
     public static enum MeThodCreate{
         RANDOM,
