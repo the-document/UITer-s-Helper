@@ -48,13 +48,6 @@ enum EducationProgram {
     KSTN
 }
 
-enum WebDriverMode
-{
-    Firefox,
-    Chrome,
-    IE,
-}
-
 
 public class Global {
 

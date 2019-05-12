@@ -36,6 +36,8 @@ public class WebCommunicate {
     
     boolean isLoggedIn =false;
     WebDriver driver;
+    String mssv;
+    String password;
     
     public static void SetProperty()
     {
@@ -44,16 +46,18 @@ public class WebCommunicate {
        System.setProperty("webdriver.gecko.driver",Global.FirefoxDriverPath);
     }
     
-    public WebCommunicate(WebDriverMode driverMode)
+    public WebCommunicate(WebDriverMode driverMode, String _mssv, String _password)
     {
         SetProperty();
         if (driverMode.equals(WebDriverMode.Firefox))
             driver = new FirefoxDriver();
         else if (driverMode.equals(WebDriverMode.IE))
             driver = new InternetExplorerDriver();
+        mssv = _mssv;
+        password = _password;
     }
     
-    public void ExecuteLogin(String mssv, String password) throws CannotBrowseCourseException, CannotLoginException
+    public void ExecuteLogin() throws CannotBrowseCourseException, CannotLoginException
     {
         //Mở trang chủ của courses.
         driver.get("https://courses.uit.edu.vn");

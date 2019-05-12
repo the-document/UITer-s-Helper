@@ -1,12 +1,16 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.WebCommunicate;
+import BLL.Global;
+import BLL.WebDriverMode;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -335,9 +339,24 @@ public class HomeController implements Initializable {
     }
 
     public void init_lv_dangky() {
-
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
+        WebCommunicate webCM = new WebCommunicate(WebDriverMode.Firefox,"17520350","1654805354");
+        
+        try {
+            webCM.ExecuteLogin();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        ArrayList<BLL.Course> curCourses = new ArrayList<>();
+        
+        try {
+            curCourses = webCM.GetCoursesList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        for (int i = 0; i < curCourses.size(); i++) {
+            Label lb = new Label(curCourses.get(i).getCourseName());
             lv_dangky.getItems().addAll(lb);
         }
         lv_dangky.setOnMouseClicked(e -> {
