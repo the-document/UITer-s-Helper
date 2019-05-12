@@ -5,6 +5,8 @@
  */
 package BLL;
 
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
 /**
  *
  * @author mirushi
@@ -13,6 +15,7 @@ package BLL;
 public enum WebDriverMode
 {
     Firefox,
+    HtmlUnitDriver,
     Chrome,
     IE,
 }

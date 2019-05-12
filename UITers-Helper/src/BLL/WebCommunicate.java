@@ -39,6 +39,8 @@ public class WebCommunicate {
     String mssv;
     String password;
     
+    ArrayList<Course> currentCourses;
+    
     public static void SetProperty()
     {
         //Lấy path trực tiếp từ class Global.
@@ -49,12 +51,25 @@ public class WebCommunicate {
     public WebCommunicate(WebDriverMode driverMode, String _mssv, String _password)
     {
         SetProperty();
-        if (driverMode.equals(WebDriverMode.Firefox))
-            driver = new FirefoxDriver();
-        else if (driverMode.equals(WebDriverMode.IE))
-            driver = new InternetExplorerDriver();
+        switch (driverMode) {
+            case Firefox:
+                driver = new FirefoxDriver();
+                break;
+            case IE:
+                driver = new InternetExplorerDriver();
+                break;
+            case HtmlUnitDriver:
+                driver = new HtmlUnitDriver();
+                break;
+            default:
+                System.out.println("You selected an invalid driver mode. Won't create any driver and web communicate will not function.");
+                break;
+        }
+        
         mssv = _mssv;
         password = _password;
+        
+        currentCourses = new ArrayList<Course>();
     }
     
     public void ExecuteLogin() throws CannotBrowseCourseException, CannotLoginException
@@ -94,23 +109,75 @@ public class WebCommunicate {
             
     }
     
-    public ArrayList<Course> GetCoursesList() throws NotLoggedInException
+    public ArrayList<Course> GetCoursesList(boolean wantUpdate) throws NotLoggedInException
     {
         if (!isLoggedIn)
             throw new NotLoggedInException("Please login before get courses list.");
         
-        ArrayList<Course> courses = new ArrayList<>();
-        List<WebElement> coursesElement = GetCourses();
+        //Nếu WebCommunicate đã lưu danh sách courses trước đó và không cần update lại thì trả về ds cũ.
+        if (!wantUpdate && currentCourses != null && currentCourses.size() > 0)
+            return currentCourses;
         
+        List<WebElement> coursesElement = GetCourses();
+
+        currentCourses = new ArrayList<Course>();
         Course tmp;
         
         for (WebElement c : coursesElement)
         {
-            tmp = new Course(c.getText(), GetIDByURL(c.getAttribute("href")));
-            courses.add(tmp);
+            tmp = new Course(GetIDByURL(c.getAttribute("href")),c.getText() );
+            currentCourses.add(tmp);
         }
         
-        return courses;
+        return currentCourses;
+    }
+    
+    public ArrayList<Deadline> GetDeadlinesByCourse(Course course) throws NotLoggedInException
+    {
+        if (!isLoggedIn)
+            throw new NotLoggedInException("Please login before get deadlines !");
+        String courseID = course.getCourseID();
+        List<WebElement> deadlineElements = new ArrayList<>();
+        String deadlineID = "";
+        String deadlineDate = "";
+        String deadlineName = "";
+        String destURL = "https://courses.uit.edu.vn/course/recent.php?id=" + courseID;
+        driver.navigate().to(destURL);
+
+        ArrayList<Deadline> deadlines = new ArrayList<>();
+        
+        //Get all deadlines WebElement.
+        try
+        {
+            deadlineElements = driver.findElements(By.xpath("//*[@class='box generalbox']//a[contains(@href,'assign')]"));        
+        }
+        catch (NoSuchElementException ex)
+        {
+            System.out.println("Không tìm thấy deadlines nào !");
+        }
+        Deadline tmp;
+        
+        //Get text deadlineElement sẽ trả ra tên deadline. Get Attribute href sẽ trả ra URL của deadline.
+        for (int i=0;i<deadlineElements.size();++i)
+        {
+            tmp = new Deadline();
+            deadlineElements = driver.findElements(By.xpath("//*[@class='box generalbox']//a[contains(@href,'assign')]"));
+            
+            WebElement e = deadlineElements.get(i);
+            deadlineID = GetIDByURL(e.getAttribute("href"));
+            deadlineName = e.getText();
+            driver.get("https://courses.uit.edu.vn/mod/assign/view.php?id=" + deadlineID);
+            deadlineDate = driver.findElement(By.xpath("//div[@class='submissionstatustable']/div/table/tbody/tr[3]/td[@class='cell c1 lastcol']")).getText();
+            
+            tmp.setDeadlineID(deadlineID);
+            tmp.setDeadLineName(deadlineName);
+            tmp.setDeadLineDate(GetDateTimeFromString(deadlineDate));
+            
+            deadlines.add(tmp);
+            driver.navigate().back();
+        }
+        
+        return deadlines;
     }
     
     public ArrayList<Deadline> GetDeadlinesByCourseID(String courseID) throws NotLoggedInException
@@ -150,15 +217,22 @@ public class WebCommunicate {
             driver.get("https://courses.uit.edu.vn/mod/assign/view.php?id=" + deadlineID);
             deadlineDate = driver.findElement(By.xpath("//div[@class='submissionstatustable']/div/table/tbody/tr[3]/td[@class='cell c1 lastcol']")).getText();
             
-            tmp.DeadlineID = deadlineID;
-            tmp.DeadLineName = deadlineName;
-            tmp.DeadLineDate = GetDateTimeFromString(deadlineDate);
+            tmp.setDeadlineID(deadlineID);
+            tmp.setDeadLineName(deadlineName);
+            tmp.setDeadLineDate(GetDateTimeFromString(deadlineDate));
             
             deadlines.add(tmp);
             driver.navigate().back();
         }
         
         return deadlines;
+    }
+    
+    //Hàm dùng để dọn dẹp và tắt các WebDriver đang chạy.
+    public void Dispose()
+    {
+        driver.close();
+        
     }
     
     //Bên dưới là các phương thức private. Chỉ nên được sử dụng bên trong class.

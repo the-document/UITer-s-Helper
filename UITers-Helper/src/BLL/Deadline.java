@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
  * @author mirushi
  */
 public class Deadline {
-    public String DeadlineID;
-    public String DeadLineName;
-    public LocalDateTime DeadLineDate;
+    private String DeadlineID;
+    private String DeadLineName;
+    private LocalDateTime DeadLineDate;
     public Deadline()
     {
         DeadLineName = DeadlineID = "";
@@ -26,4 +26,31 @@ public class Deadline {
         DeadLineName = _tenDL;
         DeadLineDate = _ngayDL;
     }
+    
+    public String getDeadlineID()
+    {
+        return DeadlineID;
+    }
+    
+        public String getDeadLineName() {
+        return DeadLineName;
+    }
+
+    public void setDeadLineName(String DeadLineName) {
+        this.DeadLineName = DeadLineName;
+    }
+
+    public LocalDateTime getDeadLineDate() {
+        return DeadLineDate;
+    }
+
+    public void setDeadLineDate(LocalDateTime DeadLineDate) {
+        this.DeadLineDate = DeadLineDate;
+    }
+    
+    public void setDeadlineID(String _DeadlineID)
+    {
+        DeadlineID = _DeadlineID;
+    }
+    
 }
