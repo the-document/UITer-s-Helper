@@ -261,7 +261,7 @@ public class HomeController implements Initializable {
         String name = "Xin chào, 17520433";
         
         //Ta tạo 1 đối tượng WebCommunicate để trao đổi và tương tác với courses, lấy thông tin.
-        webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
+            webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
         
         init_cbb_user(name);
         init_lv_dangky();
@@ -400,7 +400,7 @@ public class HomeController implements Initializable {
         ArrayList<Deadline> deadlines = new ArrayList<>();
         try
         {
-            deadlines = webCM.GetDeadlinesByCourse(course);
+            deadlines = webCM.GetDeadlinesByCourse(course, false);
         }
         catch (NotLoggedInException ex)
         {

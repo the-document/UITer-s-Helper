@@ -11,6 +11,7 @@ import Exception.NotLoggedInException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
@@ -41,6 +42,8 @@ public class WebCommunicate {
     
     ArrayList<Course> currentCourses;
     
+    HashMap <String, ArrayList<Deadline>> deadlineOfCourses;
+    
     public static void SetProperty()
     {
         //Lấy path trực tiếp từ class Global.
@@ -69,7 +72,11 @@ public class WebCommunicate {
         mssv = _mssv;
         password = _password;
         
+        //Khởi tạo 1 danh sách courses rỗng.
         currentCourses = new ArrayList<Course>();
+        
+        //Tạo 1 danh sách các deadlines rỗng cho các courses.
+        deadlineOfCourses = new HashMap<String, ArrayList<Deadline>>();
     }
     
     public void ExecuteLogin() throws CannotBrowseCourseException, CannotLoginException
@@ -132,10 +139,26 @@ public class WebCommunicate {
         return currentCourses;
     }
     
-    public ArrayList<Deadline> GetDeadlinesByCourse(Course course) throws NotLoggedInException
+    /*Nếu bật cờ wantUpdate, hàm GetDeadlines sẽ luôn luôn lấy deadline trực tiếp từ server.
+    Nếu không bật cờ wantUpdate, hàm GetDeadlines sẽ trả về giá trị trước đó lấy được đã lưu trong đối tượng WebCommunicate.
+    Và nếu trước đó không lưu, hàm GetDeadlines sẽ tự động lấy dữ liệu từ server.
+    Để wantUpdate = false, thì hàm sẽ chạy nhanh hơn (do có lưu lại trạng thái trước).*/
+    public ArrayList<Deadline> GetDeadlinesByCourse(Course course, boolean wantUpdate) throws NotLoggedInException
     {
         if (!isLoggedIn)
             throw new NotLoggedInException("Please login before get deadlines !");
+        
+        //Kiểm tra xem deadline của courses đã được lấy về trước đó chưa.
+        
+        ArrayList<Deadline> deadlines;
+        
+        if (!wantUpdate && (deadlines = deadlineOfCourses.get(course.getCourseID())) != null )
+        {
+            return deadlines;
+        }
+        
+        deadlines = new ArrayList<Deadline>();
+        
         String courseID = course.getCourseID();
         List<WebElement> deadlineElements = new ArrayList<>();
         String deadlineID = "";
@@ -143,8 +166,7 @@ public class WebCommunicate {
         String deadlineName = "";
         String destURL = "https://courses.uit.edu.vn/course/recent.php?id=" + courseID;
         driver.navigate().to(destURL);
-
-        ArrayList<Deadline> deadlines = new ArrayList<>();
+        
         
         //Get all deadlines WebElement.
         try
@@ -177,13 +199,25 @@ public class WebCommunicate {
             driver.navigate().back();
         }
         
+        //Thêm deadlines vào danh sách.
+        deadlineOfCourses.put(course.getCourseID(), deadlines);
+        
         return deadlines;
     }
     
-    public ArrayList<Deadline> GetDeadlinesByCourseID(String courseID) throws NotLoggedInException
+    public ArrayList<Deadline> GetDeadlinesByCourseID(String courseID, boolean wantUpdate) throws NotLoggedInException
     {
         if (!isLoggedIn)
             throw new NotLoggedInException("Please login before get deadlines !");
+        
+        //Kiểm tra xem deadline của courses đã được lấy về trước đó chưa.
+        ArrayList<Deadline> deadlines;
+        
+        if (!wantUpdate && (deadlines = deadlineOfCourses.get(courseID))!= null )
+        {
+            return deadlines;
+        }
+        deadlines = new ArrayList<>();
         
         List<WebElement> deadlineElements = new ArrayList<>();
         String deadlineID = "";
@@ -191,8 +225,6 @@ public class WebCommunicate {
         String deadlineName = "";
         String destURL = "https://courses.uit.edu.vn/course/recent.php?id=" + courseID;
         driver.navigate().to(destURL);
-
-        ArrayList<Deadline> deadlines = new ArrayList<>();
         
         //Get all deadlines WebElement.
         try
@@ -224,6 +256,9 @@ public class WebCommunicate {
             deadlines.add(tmp);
             driver.navigate().back();
         }
+        
+        //Thêm deadlines vào danh sách.
+        deadlineOfCourses.put(courseID, deadlines);
         
         return deadlines;
     }
@@ -267,7 +302,7 @@ public class WebCommunicate {
             return null;
         
         
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM uuuu hh:mm a", Locale.US);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM uuuu h:m a", Locale.US);
         
         res = LocalDateTime.parse(split[1] + " " + split[2], formatter);
         return res;
