@@ -35,14 +35,22 @@ import org.openqa.selenium.ie.InternetExplorerDriver;
 
 public class WebCommunicate {
     
-    boolean isLoggedIn =false;
+    boolean isLoggedIn = false;
     WebDriver driver;
     String mssv;
     String password;
     
+    //Lưu lại danh sách các courses.
     ArrayList<Course> currentCourses;
     
+    //Lưu lại danh sách các deadline.
     HashMap <String, ArrayList<Deadline>> deadlineOfCourses;
+    
+    //Lưu lại danh sách các thông báo của courses.
+    HashMap <String, ArrayList<Advertise>> adverties;
+    
+    //Danh sách các khoa, để phục vụ cho việc lọc ra xem đâu là courses môn học, đâu là courses khác.
+    ArrayList<String> facultiesList;
     
     public static void SetProperty()
     {
@@ -77,6 +85,12 @@ public class WebCommunicate {
         
         //Tạo 1 danh sách các deadlines rỗng cho các courses.
         deadlineOfCourses = new HashMap<String, ArrayList<Deadline>>();
+        
+        //Tạo 1 danh sách các thông báo rỗng.
+        adverties = new HashMap<String, ArrayList<Advertise>>();
+        
+        //Tạo danh sách các khoa.
+        InitializeFalcultyList();
     }
     
     public void ExecuteLogin() throws CannotBrowseCourseException, CannotLoginException
@@ -116,6 +130,9 @@ public class WebCommunicate {
             
     }
     
+    //Cờ wantUpdate dùng để đưa tín hiệu cho hàm xem có muốn lấy lại danh sách môn học trước đó không.
+    //Việc để cờ wantUpdate nên được cân nhắc kỹ, vì việc lấy danh sách môn học trên courses rất lâu. 
+    //Nếu không cần thiết, nên để wantUpdate = false. 
     public ArrayList<Course> GetCoursesList(boolean wantUpdate) throws NotLoggedInException
     {
         if (!isLoggedIn)
@@ -130,12 +147,27 @@ public class WebCommunicate {
         currentCourses = new ArrayList<Course>();
         Course tmp;
         
+        //Đầu tiên là ta thêm 2 thứ : CourseID và CourseName vào trước.
         for (WebElement c : coursesElement)
         {
-            tmp = new Course(GetIDByURL(c.getAttribute("href")),c.getText() );
+            tmp = new Course(GetIDByURL(c.getAttribute("href")),c.getText());
             currentCourses.add(tmp);
         }
+        boolean tmpCourseCheck;
+        //Tiếp theo ta thêm vào mã lớp.
+        for (Course c : currentCourses)
+        {
+            //Kiểm tra xem courses này có phải là một môn học không.
+            if ((tmpCourseCheck = IsGoodCourse(c)) == true)
+            {
+                c.setCourseCode(GetCodeByCourseID(c.getCourseID()));
+                c.setIsRealCourse(tmpCourseCheck);
+            }
+            else
+                c.setCourseCode("NOT A COURSE");
+        }
         
+        //Cuối cùng thì ta trả về danh sách các courses đã lấy được.
         return currentCourses;
     }
     
@@ -205,69 +237,44 @@ public class WebCommunicate {
         return deadlines;
     }
     
-    public ArrayList<Deadline> GetDeadlinesByCourseID(String courseID, boolean wantUpdate) throws NotLoggedInException
-    {
-        if (!isLoggedIn)
-            throw new NotLoggedInException("Please login before get deadlines !");
-        
-        //Kiểm tra xem deadline của courses đã được lấy về trước đó chưa.
-        ArrayList<Deadline> deadlines;
-        
-        if (!wantUpdate && (deadlines = deadlineOfCourses.get(courseID))!= null )
-        {
-            return deadlines;
-        }
-        deadlines = new ArrayList<>();
-        
-        List<WebElement> deadlineElements = new ArrayList<>();
-        String deadlineID = "";
-        String deadlineDate = "";
-        String deadlineName = "";
-        String destURL = "https://courses.uit.edu.vn/course/recent.php?id=" + courseID;
-        driver.navigate().to(destURL);
-        
-        //Get all deadlines WebElement.
-        try
-        {
-            deadlineElements = driver.findElements(By.xpath("//*[@class='box generalbox']//a[contains(@href,'assign')]"));        
-        }
-        catch (NoSuchElementException ex)
-        {
-            System.out.println("Không tìm thấy deadlines nào !");
-        }
-        Deadline tmp;
-        
-        //Get text deadlineElement sẽ trả ra tên deadline. Get Attribute href sẽ trả ra URL của deadline.
-        for (int i=0;i<deadlineElements.size();++i)
-        {
-            tmp = new Deadline();
-            deadlineElements = driver.findElements(By.xpath("//*[@class='box generalbox']//a[contains(@href,'assign')]"));
-            
-            WebElement e = deadlineElements.get(i);
-            deadlineID = GetIDByURL(e.getAttribute("href"));
-            deadlineName = e.getText();
-            driver.get("https://courses.uit.edu.vn/mod/assign/view.php?id=" + deadlineID);
-            deadlineDate = driver.findElement(By.xpath("//div[@class='submissionstatustable']/div/table/tbody/tr[3]/td[@class='cell c1 lastcol']")).getText();
-            
-            tmp.setDeadlineID(deadlineID);
-            tmp.setDeadLineName(deadlineName);
-            tmp.setDeadLineDate(GetDateTimeFromString(deadlineDate));
-            
-            deadlines.add(tmp);
-            driver.navigate().back();
-        }
-        
-        //Thêm deadlines vào danh sách.
-        deadlineOfCourses.put(courseID, deadlines);
-        
-        return deadlines;
-    }
-    
     //Hàm dùng để dọn dẹp và tắt các WebDriver đang chạy.
     public void Dispose()
     {
         driver.close();
         
+    }
+    
+    public ArrayList<Advertise> GetCourseAdvertisesByCourse(Course _Course, boolean wantUpdate)
+    {
+        if (!_Course.isRealCourse)
+            return null;
+        
+        ArrayList<Advertise> adv;
+        
+        String courseCode = _Course.getCourseCode();
+        
+        if (!wantUpdate && (adv = adverties.get(courseCode)) != null)
+        {
+            return adv;
+        }
+        
+        
+        
+        List<WebElement> advElement = GetAdvertiseElementByCourseCode(courseCode);
+        
+        adv = new ArrayList<>();
+        Advertise tmp;
+        
+        for (WebElement e : advElement)
+        {
+            tmp = new Advertise(_Course, e.getText() , "", LocalDateTime.MAX, LocalDateTime.MIN);
+            System.out.println(e.getText());
+            adv.add(tmp);
+        }
+        //Add newly created advertise into hashmap.
+        adverties.put(_Course.getCourseCode(), adv);
+        
+        return adv;
     }
     
     //Bên dưới là các phương thức private. Chỉ nên được sử dụng bên trong class.
@@ -315,9 +322,68 @@ public class WebCommunicate {
         return split[1];
     }
     
+    //Hàm này trả về mã môn học (VD IT001.J21). Nhằm mục đích tìm kiếm thông báo trên daa.
+    private String GetCodeByCourseID(String courseID)
+    {
+        driver.get("https://courses.uit.edu.vn/course/view.php?id=" + courseID);
+        WebElement titleSection = driver.findElement(By.xpath("//div[@class='navbar clearfix']/div[@class='breadcrumb']/nav/ul/li[last()]/a"));
+        return titleSection.getText();
+    }
+    
+    private List<WebElement> GetAdvertiseElementByCourseCode(String courseCode)
+    {
+        driver.get("https://daa.uit.edu.vn/search/node/" + courseCode);
+        List<WebElement> advertise = driver.findElements(By.xpath("//li[@class='search-result']/h3/a"));
+        return advertise;
+    }
+    
+    public boolean IsGoodCourse(Course _course)
+    {
+        String courseID = _course.getCourseID();
+        driver.get("https://courses.uit.edu.vn/course/view.php?id=" + courseID);
+        List <WebElement> titleSection = driver.findElements(By.xpath("//div[@class='navbar clearfix']/div[@class='breadcrumb']/nav/ul/li[*]/a"));
+        
+        boolean flag = false;
+        for (WebElement e : titleSection)
+        {
+            if (IsValidName(e.getText()))
+            {
+                flag = true;
+                break;
+            }   
+        }
+        
+        driver.navigate().back();
+        return flag;
+    }
+    
+    private boolean IsValidName(String name)
+    {
+        for (String faculty : facultiesList)
+        {
+            if (name.equalsIgnoreCase(faculty))
+                return true;
+        }
+        return false;
+    }
+    
     //Phương 
     private void ErrorOccured(String errorDetails)
     {
         System.out.println("Error : " + errorDetails);
+    }
+
+    private void InitializeFalcultyList() {
+        facultiesList = new ArrayList<>();
+        facultiesList.add("Môn chung");
+        facultiesList.add("Trung tâm ngoại ngữ");
+        facultiesList.add("Bộ môn anh văn");
+        facultiesList.add("Khoa MMT & Truyền Thông");
+        facultiesList.add("Khoa Kỹ Thuật Máy Tính");
+        facultiesList.add("Khoa Khoa Học Máy Tính");
+        facultiesList.add("Khoa Hệ Thống Thông Tin");
+        facultiesList.add("Khoa Công Nghệ Phần Mềm");
+        facultiesList.add("Bộ Môn KH&KTTT");
+        facultiesList.add("Bộ Môn Toán Lý");
     }
 }

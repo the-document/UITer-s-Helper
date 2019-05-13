@@ -17,7 +17,10 @@ import java.util.ArrayList;
 public class Course
 {
     String courseID;
+    String courseCode;
     String courseName;
+    boolean isRealCourse;
+    
     public Course()
     {
         courseID = "";
@@ -26,6 +29,13 @@ public class Course
     public Course(String _courseID, String _courseName)
     {
         courseID = _courseID;
+        courseName = _courseName;
+    }
+    
+    public Course(String _courseID, String _courseCode, String _courseName)
+    {
+        courseID = _courseID;
+        courseCode = _courseCode;
         courseName = _courseName;
     }
     
@@ -49,4 +59,19 @@ public class Course
         courseName = _courseName;
     }
     
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public boolean isIsRealCourse() {
+        return isRealCourse;
+    }
+
+    public void setIsRealCourse(boolean isRealCourse) {
+        this.isRealCourse = isRealCourse;
+    }
 }

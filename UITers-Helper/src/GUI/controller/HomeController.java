@@ -1,6 +1,7 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.Advertise;
 import BLL.Course;
 import BLL.Deadline;
 import BLL.WebCommunicate;
@@ -14,6 +15,7 @@ import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,9 +130,7 @@ public class HomeController implements Initializable {
                 lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
                 lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
             }
-
         }
-
     }
 
     @FXML
@@ -349,6 +349,27 @@ public class HomeController implements Initializable {
             
         });
     }
+    
+    public void init_lv_news(Course course)
+    {
+        if (lv_news != null)
+            lv_news.getItems().clear();
+        
+        ArrayList<Advertise> adv = webCM.GetCourseAdvertisesByCourse(course, false);
+        
+        if (adv == null)
+            return;
+        
+        for (int i = 0; i < adv.size(); i++) {
+            Label lb = new Label(adv.get(i).getName());
+            // Xử lý sự kiện tại đây
+            lv_news.getItems().addAll(lb);
+        }
+        lv_news.setOnMouseClicked(e -> {
+            String id = lv_news.getSelectionModel().getSelectedItem().getText();
+            
+        });
+    }
 
     public void init_lv_dangky() {
         
@@ -374,6 +395,7 @@ public class HomeController implements Initializable {
             int id = lv_dangky.getSelectionModel().getSelectedIndex();
             Course course = curCourses.get(id);
             init_lv_deadline(course);
+            init_lv_news(course);
         });
     }
 
