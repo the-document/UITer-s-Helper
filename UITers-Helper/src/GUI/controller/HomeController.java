@@ -48,10 +48,7 @@ public class HomeController implements Initializable {
     int isExpandDangKy = 1;
 
     //Danh sách các courses hiện có của người dùng.
-    ArrayList<Course> curCourses; 
-    
-    //Đối tượng WebCommunicate dùng để tương tác với courses.
-    WebCommunicate webCM;
+    ArrayList<Course> curCourses;
     
     // </editor-fold>
     
@@ -260,11 +257,16 @@ public class HomeController implements Initializable {
 
         String name = "Xin chào, 17520433";
         
-        //Ta tạo 1 đối tượng WebCommunicate để trao đổi và tương tác với courses, lấy thông tin.
-            webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
+        try {
+            Global.webCM.hashCode();
+        } catch (Exception e) {
+            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
+        }
+            
         
         init_cbb_user(name);
-        init_lv_dangky();
+        init_lv_dangky(false);
+        System.out.println(Global.webCM.hashCode());
         init_lv_deadline();
         init_lv_location();
         init_lv_news();
@@ -355,7 +357,7 @@ public class HomeController implements Initializable {
         if (lv_news != null)
             lv_news.getItems().clear();
         
-        ArrayList<Advertise> adv = webCM.GetCourseAdvertisesByCourse(course, false);
+        ArrayList<Advertise> adv = Global.webCM.GetCourseAdvertisesByCourse(course, false);
         
         if (adv == null)
             return;
@@ -371,10 +373,10 @@ public class HomeController implements Initializable {
         });
     }
 
-    public void init_lv_dangky() {
+    public void init_lv_dangky(boolean wantUpdate) {
         
         try {
-            webCM.ExecuteLogin();
+            Global.webCM.ExecuteLogin();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -382,7 +384,7 @@ public class HomeController implements Initializable {
         curCourses = new ArrayList<Course>();
         
         try {
-            curCourses = webCM.GetCoursesList(true);
+            curCourses = Global.webCM.GetCoursesList(wantUpdate);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -422,7 +424,7 @@ public class HomeController implements Initializable {
         ArrayList<Deadline> deadlines = new ArrayList<>();
         try
         {
-            deadlines = webCM.GetDeadlinesByCourse(course, false);
+            deadlines = Global.webCM.GetDeadlinesByCourse(course, false);
         }
         catch (NotLoggedInException ex)
         {
