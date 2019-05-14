@@ -1,12 +1,21 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.Advertise;
+import BLL.Course;
+import BLL.Deadline;
+import BLL.WebCommunicate;
+import BLL.Global;
+import BLL.WebDriverMode;
+import Exception.NotLoggedInException;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +47,12 @@ public class HomeController implements Initializable {
     int isExpandDeadline = 1;
     int isExpandDangKy = 1;
 
+    //Danh sách các courses hiện có của người dùng.
+    ArrayList<Course> curCourses; 
+    
+    //Đối tượng WebCommunicate dùng để tương tác với courses.
+    WebCommunicate webCM;
+    
     // </editor-fold>
     
     // <editor-fold desc="FXML variables zone">
@@ -115,9 +130,7 @@ public class HomeController implements Initializable {
                 lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
                 lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
             }
-
         }
-
     }
 
     @FXML
@@ -248,6 +261,10 @@ public class HomeController implements Initializable {
         setKeyEvent();
 
         String name = "Xin chào, 17520433";
+        
+        //Ta tạo 1 đối tượng WebCommunicate để trao đổi và tương tác với courses, lấy thông tin.
+            webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
+        
         init_cbb_user(name);
         init_lv_dangky();
         init_lv_deadline();
@@ -309,9 +326,9 @@ public class HomeController implements Initializable {
     }
 
     public void init_lv_location() {
-
+        //Lịch học và vị trí phòng học.
         for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
+            Label lb = new Label("LOCA" + i);
             lv_location.getItems().addAll(lb);
         }
         lv_location.setOnMouseClicked(e -> {
@@ -323,34 +340,69 @@ public class HomeController implements Initializable {
     }
 
     public void init_lv_news() {
+        //Đây là mục "Chung".
         for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
+            Label lb = new Label("NEWS" + i);
             // Xử lý sự kiện tại đây
             lv_news.getItems().addAll(lb);
         }
         lv_news.setOnMouseClicked(e -> {
             String id = lv_news.getSelectionModel().getSelectedItem().getText();
-            switch (id) {
-
-            }
+            
+        });
+    }
+    
+    public void init_lv_news(Course course)
+    {
+        if (lv_news != null)
+            lv_news.getItems().clear();
+        
+        ArrayList<Advertise> adv = webCM.GetCourseAdvertisesByCourse(course, false);
+        
+        if (adv == null)
+            return;
+        
+        for (int i = 0; i < adv.size(); i++) {
+            Label lb = new Label(adv.get(i).getName());
+            // Xử lý sự kiện tại đây
+            lv_news.getItems().addAll(lb);
+        }
+        lv_news.setOnMouseClicked(e -> {
+            String id = lv_news.getSelectionModel().getSelectedItem().getText();
+            
         });
     }
 
     public void init_lv_dangky() {
-
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
+        
+        try {
+            webCM.ExecuteLogin();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        curCourses = new ArrayList<Course>();
+        
+        try {
+            curCourses = webCM.GetCoursesList(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        for (int i = 0; i < curCourses.size(); i++) {
+            Label lb = new Label(curCourses.get(i).getCourseName());
             lv_dangky.getItems().addAll(lb);
         }
         lv_dangky.setOnMouseClicked(e -> {
-            String id = lv_dangky.getSelectionModel().getSelectedItem().getText();
-            switch (id) {
-
-            }
+            int id = lv_dangky.getSelectionModel().getSelectedIndex();
+            Course course = curCourses.get(id);
+            init_lv_deadline(course);
+            init_lv_news(course);
         });
     }
 
     public void init_lv_deadline() {
+        //Đây là nơi hiển thị deadline.
         for (int i = 0; i < 4; i++) {
             Label lb = new Label("C10" + i);
             // Xử lý sự kiện tại đây
@@ -365,6 +417,35 @@ public class HomeController implements Initializable {
             }
         });
     }
+    
+    
+    //Hàm này hiển thị deadline của 1 courseID cho trước.
+    public void init_lv_deadline(Course course)
+    {
+        //Đây là nơi hiển thị deadline.
+        ArrayList<Deadline> deadlines = new ArrayList<>();
+        try
+        {
+            deadlines = webCM.GetDeadlinesByCourse(course, false);
+        }
+        catch (NotLoggedInException ex)
+        {
+            System.out.println("Lỗi đăng nhập.");
+        }
+        
+        lv_deadline.getItems().clear();
+        
+        for (int i = 0; i < deadlines.size(); i++) {
+            Label lb = new Label(deadlines.get(i).getDeadLineName());
+            // Xử lý sự kiện tại đây
+            lv_deadline.getItems().addAll(lb);
+        }
+        lv_deadline.setOnMouseClicked(e -> {
+            String id = lv_deadline.getSelectionModel().getSelectedItem().getText();
+            
+        });
+    } 
+           
 
     public void init_cbb_user(String text) {
         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
