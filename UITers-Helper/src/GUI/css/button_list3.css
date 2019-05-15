@@ -1,0 +1,42 @@
+.button{
+    -fx-alignment:left;
+    -fx-background-color: #1D1B1A;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+    -fx-text-fill: white;
+    -fx-background-image: url("../images/speaker.png");
+    -fx-background-size: 20px 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:  10% 50% ;
+    
+}
+
+.button:hover{
+    -fx-alignment: left;
+    -fx-background-color: #1D1B1A;
+    -fx-opacity: 0.8;
+    -fx-border-color: #18A0FB;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+    -fx-text-fill: white;
+    
+}
+
+.button:focused{
+     -fx-alignment:left;
+    -fx-background-color: #18A0FB;
+    -fx-border-color: #18A0FB;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+    -fx-text-fill: white;
+}

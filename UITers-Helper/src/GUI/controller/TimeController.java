@@ -46,7 +46,7 @@ public class TimeController implements Initializable {
         time = pk_time.getValue();
         Stage stage = (Stage) btn_ok.getScene().getWindow();
         stage.hide();
-                
+        
     }
 
     // </editor-fold>

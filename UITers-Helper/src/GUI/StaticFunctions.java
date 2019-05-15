@@ -10,6 +10,12 @@ import GUI.controller.WelcomeController;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +38,7 @@ public class StaticFunctions {
     private static double xOffSet = 0;
     private static double yOffSet = 0;
     private String URL_form;
-
+ 
     static public void SetStageDrag(Parent root, Stage window, ActionEvent event) {
         //window.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(e -> {
@@ -140,5 +146,48 @@ public class StaticFunctions {
         content.setActions(btn);
         dialog.setOnDialogClosed(e -> stack_pane.setDisable(true));
         return dialog;
+    }
+    
+    
+    static public void WriteSettingLog(String str_old_status, String str_new_status) throws FileNotFoundException, IOException {
+        int i = 0;
+        String save_tmp[] = new String[100];
+
+        try {
+            //Bước 1: Tạo đối tượng luồng và liên kết nguồn dữ liệu
+            //FileOutputStream fos = new FileOutputStream("C:/Users/Admin/Documents/GitHub/UITer-s-Helper/UITers-Helper/src/GUI/SettingLog.txt");
+            // DataOutputStream dos = new DataOutputStream(fos);
+            BufferedReader br = new BufferedReader(new FileReader("C:/Users/Admin/Documents/GitHub/UITer-s-Helper/UITers-Helper/src/GUI/SettingLog.txt"));
+
+            //Bước 2: Ghi dữ liệu
+            //dos.writeBytes("Status setting: 2");
+            String textInALine = br.readLine();
+
+            while (textInALine != null) {
+                System.out.println(textInALine);
+                save_tmp[i++] = textInALine;
+                textInALine = br.readLine();
+
+            }
+            br.close();
+            //Bước 3: Đóng luồng
+            //fos.close();
+            //dos.close();
+            System.out.println("Done!");
+        } catch (IOException ex) {
+        }
+
+        DataOutputStream dos;
+        try (FileOutputStream fos = new FileOutputStream("C:/Users/Admin/Documents/GitHub/UITer-s-Helper/UITers-Helper/src/GUI/SettingLog.txt")) {
+            dos = new DataOutputStream(fos);
+            for (int j = 0; j < i; j++) {
+                if (save_tmp[j].compareTo(str_old_status) == 0) {
+                    save_tmp[j] = str_new_status;
+                }
+                dos.writeBytes(save_tmp[j]);
+                dos.write(System.getProperty("line.separator").getBytes());
+            }
+        }
+        dos.close();
     }
 }

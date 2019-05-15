@@ -20,9 +20,11 @@ import java.util.logging.Logger;
  * @author Nguyen Hong Phuc
  */
 public class MakeSchelude extends Thread{
- 
+    
+    List<String> lsMaMon = new ArrayList<>();
+    
     private void maKeSchedule(){
-        List<String> lsMaMon = new ArrayList<>();
+        
 
         lsMaMon.clear();
         for (MonHoc m : Global.lsMonHocSelected.values()) {
