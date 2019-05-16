@@ -311,7 +311,6 @@ public class CalenderController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Calender.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -429,6 +428,8 @@ public class CalenderController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            
+        StaticFunctions.stack_link.push("../view/Calender.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";

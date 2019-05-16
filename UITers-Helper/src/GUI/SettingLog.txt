@@ -1,0 +1,1 @@
+Is_open_setting_window: 1

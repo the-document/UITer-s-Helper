@@ -1,0 +1,32 @@
+.button{
+    -fx-background-image: url("../images/setting_new.png");
+    -fx-background-size: 20px 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:  50% 50% ;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: #18A0FB;
+    -fx-text-fill: #18A0FB;
+    
+}
+
+.button:hover{
+    -fx-background-image: url("../images/setting_new.png");
+    -fx-opacity: 0.8;
+    -fx-background-size: 20px 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:  50% 50% ;
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: #18A0FB;
+    -fx-text-fill: #18A0FB;
+    
+}

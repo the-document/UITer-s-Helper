@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,14 +35,12 @@ import javafx.util.Duration;
 public class SettingController implements Initializable {
 
     // <editor-fold desc="Static variables zone">
-    
     String form;
     Stage window;
     int isExpandTerm = 1;
     int isExpandCachSuDung = 1;
-    
+
     // </editor-fold>
-    
     // <editor-fold desc="import zone">
     @FXML
     private AnchorPane AnchorPaneMain;
@@ -106,9 +106,7 @@ public class SettingController implements Initializable {
     private JFXComboBox<String> cbb_user;
 
     //</editor-fold>
-    
     //<editor-fold desc="FXML functions zone">
-    
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -148,13 +146,13 @@ public class SettingController implements Initializable {
             txt_cachsudung.setMinHeight(0f);
             isExpandCachSuDung = 0;
         } else {
-            if (isExpandTerm == 1) {               
+            if (isExpandTerm == 1) {
                 txt_cachsudung.setMaxHeight(150);
                 txt_cachsudung.setMinHeight(150);
                 txt_term.setMaxHeight(150);
                 txt_term.setMinHeight(150);
             } else {
-                
+
                 txt_cachsudung.setMaxHeight(300);
                 txt_cachsudung.setMinHeight(300);
             }
@@ -162,7 +160,7 @@ public class SettingController implements Initializable {
         }
         txt_cachsudung.setVisible(true);
         txt_cachsudung.setText("abc");
-            
+
     }
 
     @FXML
@@ -173,12 +171,12 @@ public class SettingController implements Initializable {
             txt_term.setMinHeight(0f);
             isExpandTerm = 0;
         } else {
-            if (isExpandCachSuDung == 1) {                
+            if (isExpandCachSuDung == 1) {
                 txt_term.setMaxHeight(150);
                 txt_term.setMinHeight(150);
                 txt_cachsudung.setMaxHeight(150);
                 txt_cachsudung.setMinHeight(150);
-            } else {                
+            } else {
                 txt_term.setMaxHeight(300);
                 txt_term.setMinHeight(300);
             }
@@ -223,10 +221,9 @@ public class SettingController implements Initializable {
     }
 
     //</editor-fold>
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
@@ -253,7 +250,6 @@ public class SettingController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Setting.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -280,13 +276,15 @@ public class SettingController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+
+            StaticFunctions.stack_link.push("../view/Setting.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";

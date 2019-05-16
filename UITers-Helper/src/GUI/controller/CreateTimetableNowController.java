@@ -1,5 +1,6 @@
 package GUI.controller;
 // <editor-fold desc="import zone">
+
 import BLL.Global;
 import BLL.ThuatToanTaoTKB;
 import DTO.LopHoc;
@@ -158,11 +159,10 @@ public class CreateTimetableNowController implements Initializable {
     @FXML
     private Label lb_t7;
 
-    
     //_____________________________________________________________
     @FXML
     private Label lb_SubjectNotFound;
-    
+
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
     @FXML
@@ -183,7 +183,6 @@ public class CreateTimetableNowController implements Initializable {
     }
 
     // </editor-fold>
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         StaticFunctions.AnimationShow(AnchorPaneMain);
@@ -192,8 +191,7 @@ public class CreateTimetableNowController implements Initializable {
         setKeyEvent();
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
-        
-        
+
         //process data to show---------------------------------------
         lb_SubjectNotFound.setText("");
         //MaKeSchedule();
@@ -220,7 +218,6 @@ public class CreateTimetableNowController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/CreateTimetableNow.fxml");
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -246,15 +243,15 @@ public class CreateTimetableNowController implements Initializable {
 
     }
 
-
     public void init_cbb_user(String text) {
-         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
+            StaticFunctions.stack_link.push("../view/CreateTimetableNow.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";
@@ -278,11 +275,9 @@ public class CreateTimetableNowController implements Initializable {
 
         });
     }
-    
-    
+
     //==========================================================================
-    
-    private void HideTextOfButton(){
+    private void HideTextOfButton() {
         btn_t2_123.setText("");
         btn_t2_45.setText("");
         btn_t3_123.setText("");
@@ -295,7 +290,7 @@ public class CreateTimetableNowController implements Initializable {
         btn_t6_45.setText("");
         btn_t7_123.setText("");
         btn_t7_45.setText("");
-          
+
         btn_t2_678.setText("");
         btn_t2_910.setText("");
         btn_t3_678.setText("");
@@ -309,265 +304,260 @@ public class CreateTimetableNowController implements Initializable {
         btn_t7_678.setText("");
         btn_t7_910.setText("");
     }
-    
-    private void SetTextForButtonThu2(LopHoc lop,String textShow){
-        switch(lop.getTiet())
-                    {
-                        case "123":
-                            btn_t2_123.setText(textShow);
-                           
-                            break;
-                            
-                        case "12345":
-                            btn_t2_123.setText(textShow);
-                            btn_t2_123.setMaxHeight(170);
-                            btn_t2_45.setVisible(false);
-                            break;
-                        
-                        case "1234":
-                            btn_t2_123.setText(textShow);
-                            btn_t2_123.setMaxHeight(136);
-                            break;
-                        
-                        case "45":
-                            btn_t2_45.setText(textShow);
-                            break;
-                            
-                        case "678":
-                            btn_t2_678.setText(textShow);
-                            break;
-                            
-                        case "67890":
-                            btn_t2_678.setText(textShow);
-                            btn_t2_678.setMaxHeight(170);
-                            btn_t2_910.setVisible(false);
-                            break;
-                            
-                        case "6789":
-                            btn_t2_678.setText(textShow);
-                            btn_t2_678.setMaxHeight(136); 
-                            break;
-                            
-                        case "90":
-                            btn_t2_910.setText(textShow);
-                            break;
-                    }
+
+    private void SetTextForButtonThu2(LopHoc lop, String textShow) {
+        switch (lop.getTiet()) {
+            case "123":
+                btn_t2_123.setText(textShow);
+
+                break;
+
+            case "12345":
+                btn_t2_123.setText(textShow);
+                btn_t2_123.setMaxHeight(170);
+                btn_t2_45.setVisible(false);
+                break;
+
+            case "1234":
+                btn_t2_123.setText(textShow);
+                btn_t2_123.setMaxHeight(136);
+                break;
+
+            case "45":
+                btn_t2_45.setText(textShow);
+                break;
+
+            case "678":
+                btn_t2_678.setText(textShow);
+                break;
+
+            case "67890":
+                btn_t2_678.setText(textShow);
+                btn_t2_678.setMaxHeight(170);
+                btn_t2_910.setVisible(false);
+                break;
+
+            case "6789":
+                btn_t2_678.setText(textShow);
+                btn_t2_678.setMaxHeight(136);
+                break;
+
+            case "90":
+                btn_t2_910.setText(textShow);
+                break;
+        }
     }
-    
-    private void SetTextForButtonThu3(LopHoc lop,String textShow){
-        switch(lop.getTiet())
-                    {
-                        case "123":
-                            btn_t3_123.setText(textShow);
-                            break;
-                            
-                        case "12345":
-                            btn_t3_123.setText(textShow);
-                            btn_t3_123.setMaxHeight(170);
-                            btn_t3_45.setVisible(false);
-                            break;
-                        
-                        case "1234":
-                            btn_t3_123.setText(textShow);
-                            btn_t3_123.setMaxHeight(136);
-                            break;
-                        
-                        case "45":
-                            btn_t3_45.setText(textShow);
-                            break;
-                            
-                        case "678":
-                            btn_t3_678.setText(textShow);
-                            break;
-                            
-                        case "67890":
-                            btn_t3_678.setText(textShow);
-                            btn_t3_678.setMaxHeight(170);
-                            btn_t3_910.setVisible(false);
-                            break;
-                            
-                        case "6789":
-                            btn_t3_678.setText(textShow);
-                            btn_t3_678.setMaxHeight(136); 
-                            break;
-                            
-                        case "90":
-                            btn_t3_910.setText(textShow);
-                            break;
-                    }
+
+    private void SetTextForButtonThu3(LopHoc lop, String textShow) {
+        switch (lop.getTiet()) {
+            case "123":
+                btn_t3_123.setText(textShow);
+                break;
+
+            case "12345":
+                btn_t3_123.setText(textShow);
+                btn_t3_123.setMaxHeight(170);
+                btn_t3_45.setVisible(false);
+                break;
+
+            case "1234":
+                btn_t3_123.setText(textShow);
+                btn_t3_123.setMaxHeight(136);
+                break;
+
+            case "45":
+                btn_t3_45.setText(textShow);
+                break;
+
+            case "678":
+                btn_t3_678.setText(textShow);
+                break;
+
+            case "67890":
+                btn_t3_678.setText(textShow);
+                btn_t3_678.setMaxHeight(170);
+                btn_t3_910.setVisible(false);
+                break;
+
+            case "6789":
+                btn_t3_678.setText(textShow);
+                btn_t3_678.setMaxHeight(136);
+                break;
+
+            case "90":
+                btn_t3_910.setText(textShow);
+                break;
+        }
     }
-    
-    private void SetTextForButtonThu4(LopHoc lop,String textShow){
-        switch(lop.getTiet())
-                    {
-                        case "123":
-                            btn_t4_123.setText(textShow);
-                            break;
-                            
-                        case "12345":
-                            btn_t4_123.setText(textShow);
-                            btn_t4_123.setMaxHeight(170);
-                            btn_t4_45.setVisible(false);
-                            break;
-                        
-                        case "1234":
-                            btn_t4_123.setText(textShow);
-                            btn_t4_123.setMaxHeight(136);
-                            break;
-                        
-                        case "45":
-                            btn_t4_45.setText(textShow);
-                            break;
-                            
-                        case "678":
-                            btn_t4_678.setText(textShow);
-                            break;
-                            
-                        case "67890":
-                            btn_t4_678.setText(textShow);
-                            btn_t4_678.setMaxHeight(170);
-                            btn_t4_910.setVisible(false);
-                            break;
-                            
-                        case "6789":
-                            btn_t4_678.setText(textShow);
-                            btn_t4_678.setMaxHeight(136); 
-                            break;
-                            
-                        case "90":
-                            btn_t4_910.setText(textShow);
-                            break;
-                    }
+
+    private void SetTextForButtonThu4(LopHoc lop, String textShow) {
+        switch (lop.getTiet()) {
+            case "123":
+                btn_t4_123.setText(textShow);
+                break;
+
+            case "12345":
+                btn_t4_123.setText(textShow);
+                btn_t4_123.setMaxHeight(170);
+                btn_t4_45.setVisible(false);
+                break;
+
+            case "1234":
+                btn_t4_123.setText(textShow);
+                btn_t4_123.setMaxHeight(136);
+                break;
+
+            case "45":
+                btn_t4_45.setText(textShow);
+                break;
+
+            case "678":
+                btn_t4_678.setText(textShow);
+                break;
+
+            case "67890":
+                btn_t4_678.setText(textShow);
+                btn_t4_678.setMaxHeight(170);
+                btn_t4_910.setVisible(false);
+                break;
+
+            case "6789":
+                btn_t4_678.setText(textShow);
+                btn_t4_678.setMaxHeight(136);
+                break;
+
+            case "90":
+                btn_t4_910.setText(textShow);
+                break;
+        }
     }
-    
-    private void SetTextForButtonThu5(LopHoc lop,String textShow){
-        switch(lop.getTiet())
-                    {
-                        case "123":
-                            btn_t5_123.setText(textShow);
-                            break;
-                            
-                        case "12345":
-                            btn_t5_123.setText(textShow);
-                            btn_t5_123.setMaxHeight(170);
-                            btn_t2_45.setVisible(false);
-                            break;
-                        
-                        case "1234":
-                            btn_t5_123.setText(textShow);
-                            btn_t5_123.setMaxHeight(136);
-                            break;
-                        
-                        case "45":
-                            btn_t5_45.setText(textShow);
-                            break;
-                            
-                        case "678":
-                            btn_t5_678.setText(textShow);
-                            break;
-                            
-                        case "67890":
-                            btn_t5_678.setText(textShow);
-                            btn_t5_678.setMaxHeight(170);
-                            btn_t5_910.setVisible(false);
-                            break;
-                            
-                        case "6789":
-                            btn_t5_678.setText(textShow);
-                            btn_t5_678.setMaxHeight(136); 
-                            break;
-                            
-                        case "90":
-                            btn_t5_910.setText(textShow);
-                            break;
-                    }
+
+    private void SetTextForButtonThu5(LopHoc lop, String textShow) {
+        switch (lop.getTiet()) {
+            case "123":
+                btn_t5_123.setText(textShow);
+                break;
+
+            case "12345":
+                btn_t5_123.setText(textShow);
+                btn_t5_123.setMaxHeight(170);
+                btn_t2_45.setVisible(false);
+                break;
+
+            case "1234":
+                btn_t5_123.setText(textShow);
+                btn_t5_123.setMaxHeight(136);
+                break;
+
+            case "45":
+                btn_t5_45.setText(textShow);
+                break;
+
+            case "678":
+                btn_t5_678.setText(textShow);
+                break;
+
+            case "67890":
+                btn_t5_678.setText(textShow);
+                btn_t5_678.setMaxHeight(170);
+                btn_t5_910.setVisible(false);
+                break;
+
+            case "6789":
+                btn_t5_678.setText(textShow);
+                btn_t5_678.setMaxHeight(136);
+                break;
+
+            case "90":
+                btn_t5_910.setText(textShow);
+                break;
+        }
     }
-    
-    private void SetTextForButtonThu6(LopHoc lop,String textShow){
-        switch(lop.getTiet())
-                    {
-                        case "123":
-                            btn_t6_123.setText(textShow);
-                            break;
-                            
-                        case "12345":
-                            btn_t6_123.setText(textShow);
-                            btn_t6_123.setMaxHeight(170);
-                            btn_t6_45.setVisible(false);
-                            break;
-                        
-                        case "1234":
-                            btn_t6_123.setText(textShow);
-                            btn_t6_123.setMaxHeight(136);
-                            break;
-                        
-                        case "45":
-                            btn_t6_45.setText(textShow);
-                            break;
-                            
-                        case "678":
-                            btn_t6_678.setText(textShow);
-                            break;
-                            
-                        case "67890":
-                            btn_t6_678.setText(textShow);
-                            btn_t6_678.setMaxHeight(170);
-                            btn_t6_910.setVisible(false);
-                            break;
-                            
-                        case "6789":
-                            btn_t6_678.setText(textShow);
-                            btn_t6_678.setMaxHeight(136); 
-                            break;
-                            
-                        case "90":
-                            btn_t6_910.setText(textShow);
-                            break;
-                    }
+
+    private void SetTextForButtonThu6(LopHoc lop, String textShow) {
+        switch (lop.getTiet()) {
+            case "123":
+                btn_t6_123.setText(textShow);
+                break;
+
+            case "12345":
+                btn_t6_123.setText(textShow);
+                btn_t6_123.setMaxHeight(170);
+                btn_t6_45.setVisible(false);
+                break;
+
+            case "1234":
+                btn_t6_123.setText(textShow);
+                btn_t6_123.setMaxHeight(136);
+                break;
+
+            case "45":
+                btn_t6_45.setText(textShow);
+                break;
+
+            case "678":
+                btn_t6_678.setText(textShow);
+                break;
+
+            case "67890":
+                btn_t6_678.setText(textShow);
+                btn_t6_678.setMaxHeight(170);
+                btn_t6_910.setVisible(false);
+                break;
+
+            case "6789":
+                btn_t6_678.setText(textShow);
+                btn_t6_678.setMaxHeight(136);
+                break;
+
+            case "90":
+                btn_t6_910.setText(textShow);
+                break;
+        }
     }
-    
-    private void SetTextForButtonThu7(LopHoc lop,String textShow){
-        switch(lop.getTiet())
-                    {
-                        case "123":
-                            btn_t7_123.setText(textShow);
-                            break;
-                            
-                        case "12345":
-                            btn_t7_123.setText(textShow);
-                            btn_t7_123.setMaxHeight(170);
-                            btn_t7_45.setVisible(false);
-                            break;
-                        
-                        case "1234":
-                            btn_t7_123.setText(textShow);
-                            btn_t7_123.setMaxHeight(136);
-                            break;
-                        
-                        case "45":
-                            btn_t7_45.setText(textShow);
-                            break;
-                            
-                        case "678":
-                            btn_t7_678.setText(textShow);
-                            break;
-                            
-                        case "67890":
-                            btn_t7_678.setText(textShow);
-                            btn_t7_678.setMaxHeight(170);
-                            btn_t7_910.setVisible(false);
-                            break;
-                            
-                        case "6789":
-                            btn_t7_678.setText(textShow);
-                            btn_t7_678.setMaxHeight(136); 
-                            break;
-                            
-                        case "90":
-                            btn_t7_910.setText(textShow);
-                            break;
-                    }
+
+    private void SetTextForButtonThu7(LopHoc lop, String textShow) {
+        switch (lop.getTiet()) {
+            case "123":
+                btn_t7_123.setText(textShow);
+                break;
+
+            case "12345":
+                btn_t7_123.setText(textShow);
+                btn_t7_123.setMaxHeight(170);
+                btn_t7_45.setVisible(false);
+                break;
+
+            case "1234":
+                btn_t7_123.setText(textShow);
+                btn_t7_123.setMaxHeight(136);
+                break;
+
+            case "45":
+                btn_t7_45.setText(textShow);
+                break;
+
+            case "678":
+                btn_t7_678.setText(textShow);
+                break;
+
+            case "67890":
+                btn_t7_678.setText(textShow);
+                btn_t7_678.setMaxHeight(170);
+                btn_t7_910.setVisible(false);
+                break;
+
+            case "6789":
+                btn_t7_678.setText(textShow);
+                btn_t7_678.setMaxHeight(136);
+                break;
+
+            case "90":
+                btn_t7_910.setText(textShow);
+                break;
+        }
     }
+
     
     private void LoadSchedule(){
         if(ThuatToanTaoTKB.listTimeTables.isEmpty())
@@ -580,12 +570,12 @@ public class CreateTimetableNowController implements Initializable {
         for (LopHoc lop : ThuatToanTaoTKB.listTimeTables.get(0).getListLopHocs()) {
             
             String textShow=lop.getMaLop()+"\n"
-                    + lop.getTenGiangVien()+ "\n P_"
+                    + lop.getTenGiangVien()+ "\n P. "
                     + lop.getPhong()+"\n"
                     + lop.getNgayBatDau()+"\n"
                     + lop.getNgayKetThuc();
-            
-            switch(lop.getThu()){
+
+            switch (lop.getThu()) {
                 case "2":
                     SetTextForButtonThu2(lop, textShow);
                     break;
@@ -606,43 +596,47 @@ public class CreateTimetableNowController implements Initializable {
                     break;
             }
         }
+
         
         if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
             lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
             
+
         }
     }
-    
-    private void MaKeSchedule(){
-        List<String> lsMaMon=new ArrayList<>();
-        
+
+    private void MaKeSchedule() {
+        List<String> lsMaMon = new ArrayList<>();
+
         lsMaMon.clear();
         for (MonHoc m : Global.lsMonHocSelected.values()) {
             lsMaMon.add(m.getMaMonHoc());
-            System.out.print(m.getMaMonHoc()+", ");
+            System.out.print(m.getMaMonHoc() + ", ");
         }
-        
+
         ThuatToanTaoTKB.NapDanhSachMaMonHoc(lsMaMon);
         ThuatToanTaoTKB.SetHeDaoTao("CQUI");
-        
+
         try {
             ThuatToanTaoTKB.init();
         } catch (SQLException ex) {
             Logger.getLogger(CreateTimetableNowController.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
-        
+
         ThuatToanTaoTKB.Try(0);
         System.out.println("=========LIST TKB RECOMEND FOR YOU  ( " + ThuatToanTaoTKB.countCase + " ) ============\n");
         ThuatToanTaoTKB.listTimeTables.forEach((table) -> {
             table.Export();
         });
+
         
         if(!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty())
         {
             lb_SubjectNotFound.setText("Những môn học không mở: "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
             System.out.println("Subject not open in this semeter: "+ThuatToanTaoTKB.dsMaMonNotFound.size()+" - "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
+
         }
-       
+
     }
 }
