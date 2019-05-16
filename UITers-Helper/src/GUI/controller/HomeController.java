@@ -74,9 +74,6 @@ public class HomeController implements Initializable {
     //Danh sách các courses hiện có của người dùng.
     ArrayList<Course> curCourses;
 
-    //Đối tượng WebCommunicate dùng để tương tác với courses.
-    WebCommunicate webCM;
-
     // </editor-fold>
     // <editor-fold desc="FXML variables zone">
     @FXML
@@ -587,8 +584,11 @@ public class HomeController implements Initializable {
 
         String name = "Xin chào, 17520433";
 
-        //Ta tạo 1 đối tượng WebCommunicate để trao đổi và tương tác với courses, lấy thông tin.
-        webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, "17520350", "1654805354");
+        try {
+            Global.webCM.hashCode();
+        } catch (Exception e) {
+            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
+        }
         ExpandDateTime();
         initCalendar(java.time.LocalDate.now().getDayOfMonth(), java.time.LocalDate.now().getMonthValue(), java.time.LocalDate.now().getYear());
         init_cbb_user(name);
@@ -687,7 +687,7 @@ public class HomeController implements Initializable {
 //            lv_news.getItems().clear();
 //        }
 //
-//        ArrayList<Advertise> adv = webCM.GetCourseAdvertisesByCourse(course, false);
+//        ArrayList<Advertise> adv = Global.webCM.GetCourseAdvertisesByCourse(course, false);
 //
 //        if (adv == null) {
 //            return;
@@ -704,10 +704,10 @@ public class HomeController implements Initializable {
 //        });
 //    }
 //
-//    public void init_lv_dangky() {
+//    public void init_lv_dangky(boolean wantUpdate) {
 //        lv_dangky.getItems().clear();
 //        try {
-//            webCM.ExecuteLogin();
+//            Global.webCM.ExecuteLogin();
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
@@ -715,7 +715,7 @@ public class HomeController implements Initializable {
 //        curCourses = new ArrayList<Course>();
 //
 //        try {
-//            curCourses = webCM.GetCoursesList(true);
+//            curCourses = f.GetCoursesList(true);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
@@ -755,11 +755,10 @@ public class HomeController implements Initializable {
         lv_new.getItems().clear();
         ArrayList<Deadline> deadlines = new ArrayList<>();
         try {
-            deadlines = webCM.GetDeadlinesByCourse(course, false);
+            deadlines = Global.webCM.GetDeadlinesByCourse(course, false);
         } catch (NotLoggedInException ex) {
             System.out.println("Lỗi đăng nhập.");
         }
-
         lv_new.getItems().clear();
 
         for (int i = 0; i < deadlines.size(); i++) {
@@ -772,7 +771,6 @@ public class HomeController implements Initializable {
 
         });
     }
-
     public void ExpandDateTime() {
         if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 0) {
             panel_calender.setVisible(false);
@@ -813,7 +811,6 @@ public class HomeController implements Initializable {
             panel_themlichtrinh.setMaxSize(0, 0);
             panel_themlichtrinh.setMinSize(0, 0);
         }
-
         if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 4) {
             panel_calender.setVisible(false);
             panel_calender.setMaxSize(0, 0);

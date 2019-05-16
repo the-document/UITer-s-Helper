@@ -143,7 +143,7 @@ public class WebCommunicate {
             return currentCourses;
         
         List<WebElement> coursesElement = GetCourses();
-
+        System.out.println("Old course not found.");
         currentCourses = new ArrayList<Course>();
         Course tmp;
         
@@ -165,6 +165,7 @@ public class WebCommunicate {
             }
             else
                 c.setCourseCode("NOT A COURSE");
+            
         }
         
         //Cuối cùng thì ta trả về danh sách các courses đã lấy được.
@@ -257,8 +258,6 @@ public class WebCommunicate {
         {
             return adv;
         }
-        
-        
         
         List<WebElement> advElement = GetAdvertiseElementByCourseCode(courseCode);
         
