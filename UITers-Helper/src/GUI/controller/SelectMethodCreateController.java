@@ -2,6 +2,7 @@ package GUI.controller;
 
 // <editor-fold desc="import zone">
 import BLL.Global;
+import BLL.MakeSchelude;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -88,6 +89,9 @@ public class SelectMethodCreateController implements Initializable {
         
         Global.MeThodCreateSchedule=Global.MeThodCreate.ADVANCE;
         
+        MakeSchelude schedule=new MakeSchelude();
+        schedule.start();
+
         state = "select_advanced";
         
         StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");

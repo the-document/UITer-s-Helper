@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jdk.nashorn.internal.parser.TokenType;
 
 /**
  *
@@ -128,13 +129,25 @@ public class MakeSchelude extends Thread{
         }
     }
     
+    private void loadSubjectForHandCreate(){
+        //load all subject need for schedule
+    }
     @Override
     public void run(){
         
-        if(Global.MeThodCreateSchedule==Global.MeThodCreate.RANDOM)
-        this.maKeSchedule();
-        else
-            if(Global.MeThodCreateSchedule==Global.MeThodCreate.DAYOF)
+        if(null!=Global.MeThodCreateSchedule)
+        switch (Global.MeThodCreateSchedule) {
+            case RANDOM:
+                this.maKeSchedule();
+                break;
+            case DAYOF:
                 filterAndMakeSchedule();
+                break;
+        //load subject for user create with hand
+            case ADVANCE:
+                break;
+            default:
+                break;
+        }
     }
 }

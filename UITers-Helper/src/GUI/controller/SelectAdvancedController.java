@@ -1,6 +1,8 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.Global;
+import DTO.MonHoc;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -204,9 +206,11 @@ public class SelectAdvancedController implements Initializable {
         pane_subject.setContent(null);
         HBox root = new HBox();
         root.setSpacing(20);
-        for (int i = 0; i < 50; i++) {
+        
+        for (MonHoc monhoc : Global.lsMonHocSelected.values()) {
             Button btn = new Button();
-            btn.setText("nuts thuws" + i);
+            btn.setText(monhoc.getTenMonHoc());
+            btn.setId(monhoc.getMaMonHoc());
             btn.setMaxSize(120, 40);
             btn.setMinSize(120, 40);
             initButton(btn);
