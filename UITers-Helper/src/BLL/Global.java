@@ -68,7 +68,9 @@ public class Global {
     //==========USER INFOR===================
     public static  String MSSV="18520951";
     public static  String NGANHHOC="";
+    public static  String CTDT="CQUI";
     public static  int HOCKY=-1;
+    
     //public static List<MonHoc> lsMonHocSelected=new ArrayList<>();
     public static HashMap<String,MonHoc> lsMonHocSelected=new HashMap<>();
     public static MeThodCreate MeThodCreateSchedule;

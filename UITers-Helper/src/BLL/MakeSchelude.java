@@ -20,12 +20,12 @@ import jdk.nashorn.internal.parser.TokenType;
  *
  * @author Nguyen Hong Phuc
  */
-public class MakeSchelude extends Thread{
-    
+public class MakeSchelude extends Thread {
+
+    //ls ma mon can tao tkb
     List<String> lsMaMon = new ArrayList<>();
-    
-    private void maKeSchedule(){
-        
+
+    private void maKeSchedule() {
 
         lsMaMon.clear();
         for (MonHoc m : Global.lsMonHocSelected.values()) {
@@ -34,7 +34,7 @@ public class MakeSchelude extends Thread{
         }
 
         ThuatToanTaoTKB.NapDanhSachMaMonHoc(lsMaMon);
-        ThuatToanTaoTKB.SetHeDaoTao("CQUI");
+        ThuatToanTaoTKB.SetHeDaoTao(Global.CTDT);
 
         try {
             ThuatToanTaoTKB.init();
@@ -50,12 +50,12 @@ public class MakeSchelude extends Thread{
         });
 
         if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
-           // lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
+            // lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
             System.out.println("Subject not open in this semeter: " + ThuatToanTaoTKB.dsMaMonNotFound.size() + " - " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
         }
     }
-    
-    private void filterAndMakeSchedule(){
+
+    private void filterAndMakeSchedule() {
         lsMaMon.clear();
         for (MonHoc m : Global.lsMonHocSelected.values()) {
             lsMaMon.add(m.getMaMonHoc());
@@ -63,7 +63,7 @@ public class MakeSchelude extends Thread{
         }
 
         ThuatToanTaoTKB.NapDanhSachMaMonHoc(lsMaMon);
-        ThuatToanTaoTKB.SetHeDaoTao("CQUI");
+        ThuatToanTaoTKB.SetHeDaoTao(Global.CTDT);
 
         try {
             ThuatToanTaoTKB.init();
@@ -71,21 +71,22 @@ public class MakeSchelude extends Thread{
             Logger.getLogger(CreateTimetableNowController.class.getName()).log(Level.SEVERE, null, ex);
             return;
         }
-        
+
         //filter dayof with select dayof for list course current.
-        HashSet <String> mySet=new HashSet<>();
+        HashSet<String> mySet = new HashSet<>();
         for (LopHoc lopDayoff : Global.lsDayOff) {
 
             System.out.println("in list dayof");
-            
-            int index=0;
-            while (index<ThuatToanTaoTKB.dsFilterLT.size()) {                
-                while (index<ThuatToanTaoTKB.dsFilterLT.size()&&!ThuatToanTaoTKB.dsFilterLT.get(index).isOverlap(lopDayoff)) {                    
+
+            int index = 0;
+            while (index < ThuatToanTaoTKB.dsFilterLT.size()) {
+                while (index < ThuatToanTaoTKB.dsFilterLT.size() && !ThuatToanTaoTKB.dsFilterLT.get(index).isOverlap(lopDayoff)) {
                     mySet.add(ThuatToanTaoTKB.dsFilterLT.get(index).getmaMonHoc());
                     index++;
                 }
-                if(index<=ThuatToanTaoTKB.dsFilterLT.size()-1)
-                    ThuatToanTaoTKB.dsFilterLT.remove(ThuatToanTaoTKB.dsFilterLT.get(index));  
+                if (index <= ThuatToanTaoTKB.dsFilterLT.size() - 1) {
+                    ThuatToanTaoTKB.dsFilterLT.remove(ThuatToanTaoTKB.dsFilterLT.get(index));
+                }
             }
 //            for (LopHoc lopHienCo : ThuatToanTaoTKB.dsFilterLT) {
 //                if(lopDayoff.isOverlap(lopHienCo))
@@ -102,52 +103,65 @@ public class MakeSchelude extends Thread{
 //                mySet.add(lopHienCo.getmaMonHoc());
 //            }
 
-            
         }
-        
-        //check couse co du de tao hay k
 
-        System.out.println("myset size:"+mySet.size());
-        System.out.println("Course found:"+ThuatToanTaoTKB.NumberOfCouseFound);
-        if(mySet.size()<ThuatToanTaoTKB.NumberOfCouseFound)
-        {
+        //check couse co du de tao hay k
+        System.out.println("myset size:" + mySet.size());
+        System.out.println("Course found:" + ThuatToanTaoTKB.NumberOfCouseFound);
+        if (mySet.size() < ThuatToanTaoTKB.NumberOfCouseFound) {
             System.out.println("Can't create, please choose other dayoff");
-        }
-        else
-        {
+        } else {
             ThuatToanTaoTKB.Try(0);
         }
-        
+
         System.out.println("=========LIST TKB RECOMEND FOR YOU  ( " + ThuatToanTaoTKB.countCase + " ) ============\n");
         ThuatToanTaoTKB.listTimeTables.forEach((table) -> {
             table.Export();
         });
 
         if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
-           // lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
+            // lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
             System.out.println("Subject not open in this semeter: " + ThuatToanTaoTKB.dsMaMonNotFound.size() + " - " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
         }
     }
-    
-    private void loadSubjectForHandCreate(){
+
+    private void loadSubjectForHandCreate() {
         //load all subject need for schedule
+        System.out.println("in load subject for handcreate");
+        lsMaMon.clear();
+        for (MonHoc m : Global.lsMonHocSelected.values()) {
+            lsMaMon.add(m.getMaMonHoc());
+            System.out.print(m.getMaMonHoc() + ", ");
+        }
+
+        ThuatToanTaoTKB.NapDanhSachMaMonHoc(lsMaMon);
+        ThuatToanTaoTKB.SetHeDaoTao(Global.CTDT);
+
+        try {
+            ThuatToanTaoTKB.init();
+        } catch (SQLException ex) {
+            Logger.getLogger(CreateTimetableNowController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
+
     @Override
-    public void run(){
-        
-        if(null!=Global.MeThodCreateSchedule)
-        switch (Global.MeThodCreateSchedule) {
-            case RANDOM:
-                this.maKeSchedule();
-                break;
-            case DAYOF:
-                filterAndMakeSchedule();
-                break;
-        //load subject for user create with hand
-            case ADVANCE:
-                break;
-            default:
-                break;
+    public void run() {
+
+        if (null != Global.MeThodCreateSchedule) {
+            switch (Global.MeThodCreateSchedule) {
+                case RANDOM:
+                    this.maKeSchedule();
+                    break;
+                case DAYOF:
+                    this.filterAndMakeSchedule();
+                    break;
+                //load subject for user create with hand
+                case ADVANCE:
+                    this.loadSubjectForHandCreate();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

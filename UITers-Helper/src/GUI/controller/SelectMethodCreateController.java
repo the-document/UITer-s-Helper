@@ -89,6 +89,7 @@ public class SelectMethodCreateController implements Initializable {
         
         Global.MeThodCreateSchedule=Global.MeThodCreate.ADVANCE;
         
+        //load data from database in new thread.
         MakeSchelude schedule=new MakeSchelude();
         schedule.start();
 
