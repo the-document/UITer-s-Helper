@@ -5,6 +5,7 @@ import BLL.Global;
 import BLL.ThuatToanTaoTKB;
 import DTO.LopHoc;
 import DTO.MonHoc;
+import DTO.TimeTable;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -179,6 +180,15 @@ public class SelectAdvancedController implements Initializable {
     @FXML
     void btn_nextClick(ActionEvent event) {
 
+        TimeTable timeTable=new TimeTable();
+        for (LopHoc lopHoc : lsLopHocSelected) {
+            System.out.print(lopHoc.getMaLop()+"-");
+            timeTable.AddCourse(lopHoc);
+        }
+        
+        ThuatToanTaoTKB.listTimeTables.add(timeTable);
+        
+        
         StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
         form = "../view/CreateTimetableNow.fxml";
         madeFadeOut(event);
@@ -322,7 +332,7 @@ public class SelectAdvancedController implements Initializable {
             for (LopHoc l : lsLopHocSelected) {
                 HighLightButtons(l,1); //flag 1 mean this btn has selected
             }
-            System.out.println("onclick");
+            System.out.println("onclick -menu subject");
         });
     }
 
@@ -901,7 +911,82 @@ public class SelectAdvancedController implements Initializable {
         MenuItem item_switch = new MenuItem("Đổi lớp");
         item_switch.setStyle("-fx-text-fill: white;");
         item_switch.setOnAction(e -> {
-            System.out.println("switch");
+        System.out.println("switch");
+            
+            
+            //remove this course and course TH---------------------------------
+            String maMonHoc=null;
+            for (LopHoc lopHoc : lsLopHocSelected){
+                if(lopHoc.getMaLop().equals(btn.getId())){
+                    
+                    maMonHoc=lopHoc.getmaMonHoc();
+                    //save infor course need remove (change to other course)----
+                    List<LopHoc> lsNeedRemove=new ArrayList<>();
+                    
+                    for (LopHoc lop : lsLopHocSelected) {//LT or TH
+                        if(lop.getmaMonHoc().equals(maMonHoc))
+                        {
+                           lsNeedRemove.add(lop);
+                            //System.out.println("delete"+lop.getMaLop());
+                        }
+                    }
+                    
+                    lsLopHocSelected.removeAll(lsNeedRemove);
+                    break;
+                }
+            }
+            
+            HideTextOfButton();
+           
+            //suggest new course of this subject-------------------------------
+            for (LopHoc lopHoc : lsLopHocLT) {
+                if (lopHoc.getmaMonHoc().equals(maMonHoc)) {
+                    
+                    //Get course TH (if can)------------------------------------
+                    LopHoc loptemp=null;
+                    for (LopHoc l : lsLopHocTH) {
+                        if (l.getMaLop().equals(lopHoc.getMaLop()+".1")) {
+                            loptemp=l;
+                            break;
+                        }
+                    }
+                    
+                    if(loptemp==null){
+                        System.out.println(lopHoc.getMaLop());
+                        HighLightButtons(lopHoc,0); //flag 0 mean just hightlight temp
+                    }
+                    else
+                    {
+                        //check overlap TH with course selecred-----------------
+                        boolean check=false;
+                        for (LopHoc lopselected : lsLopHocSelected) {
+                            if(lopselected.isOverlap(loptemp))
+                            {
+                                check=true;
+                                break;
+                            }      
+                        }
+                        
+                        if(!check){
+                            System.out.println(lopHoc.getMaLop());
+                            HighLightButtons(lopHoc,0); //flag 0 mean just hightlight temp
+                        }
+                        
+                        
+                        //System.out.println(loptemp.getMaLop());
+                        //HighLightButtons(loptemp,0); //flag 0 mean just hightlight temp
+                        
+                    }
+                    
+                }
+            }
+            
+            //redraw subject selected (override)------------------------
+            for (LopHoc l : lsLopHocSelected) {
+                HighLightButtons(l,1); //flag 1 mean this btn has selected
+            }
+            System.out.println("onclick -context menu button");
+            
         });
 
         ct.getItems().addAll(item_info, item_switch);
