@@ -15,8 +15,10 @@ import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -43,7 +45,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -66,11 +72,7 @@ public class HomeController implements Initializable {
     int isExpandDangKy = 1;
     int currentMonth = java.time.LocalDate.now().getMonthValue();
     int currentYear = java.time.LocalDate.now().getYear();
-    
-    // Giống như phân quyền chmod
-    int isExpandCalendar = 1;
-    int isExpandLichTrinh = 0;
-    int isExpandThemLichTrinh = 0; // đáng lẽ là 4 mà thôi cho 2 cái đầu expand
+
     //Danh sách các courses hiện có của người dùng.
     ArrayList<Course> curCourses;
 
@@ -109,8 +111,6 @@ public class HomeController implements Initializable {
     @FXML
     private Label lbl_day;
 
-    @FXML
-    private JFXButton btn_expand;
 
     @FXML
     private JFXButton btn_back;
@@ -148,16 +148,19 @@ public class HomeController implements Initializable {
     @FXML
     private JFXButton btn_day21;
 
+
     @FXML
     private JFXButton btn_day31;
 
     @FXML
     private JFXButton btn_day41;
 
+
     @FXML
     private JFXButton btn_day51;
 
     @FXML
+
     private JFXButton btn_day02;
 
     @FXML
@@ -257,25 +260,7 @@ public class HomeController implements Initializable {
     private JFXListView<Label> lv_holiday;
 
     @FXML
-    private JFXListView<Label> lv_lictrinh;
-
-    @FXML
-    private Label lbl_themlichtrinh;
-
-    @FXML
-    private VBox panel_themlichtrinh;
-
-    @FXML
-    private JFXTextField txt_time;
-
-    @FXML
-    private JFXTextField txt_desc;
-
-    @FXML
-    private JFXTextField txt_type;
-
-    @FXML
-    private JFXButton btn_add;
+    private JFXListView<Label> lv_lichtrinh;
 
     @FXML
     private Label lbl_thongbao;
@@ -301,112 +286,28 @@ public class HomeController implements Initializable {
     @FXML
     private Button btn_create2;
 
+    @FXML
+    private JFXButton btn_addLichtrinh;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
-//    @FXML
-//    void btn_expandChungClick(ActionEvent event) {
-//        if (isExpandChung == 1) {
-//            lv_news.setVisible(false);
-//            lv_news.setMaxHeight(0f);
-//            lv_news.setMinHeight(0f);
-//            isExpandChung = 0;
-//            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
-//            btn_expandChung.getStylesheets().add(css);
-//        } else {
-//            lv_news.setVisible(true);
-//            lv_news.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandDeadline)));
-//            lv_news.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandDeadline)));
-//            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
-//            btn_expandChung.getStylesheets().clear();
-//            btn_expandChung.getStylesheets().add(css);
-//            isExpandChung = 1;
-//            if (isExpandDangKy == 1) {
-//                lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//                lv_dangky.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            }
-//            if (isExpandDeadline == 1) {
-//                lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//                lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            }
-//        }
-//    }
-//
-//    @FXML
-//    void btn_expandDangKyClick(ActionEvent event) {
-//        if (isExpandDangKy == 1) {
-//            lv_dangky.setVisible(false);
-//            lv_dangky.setMaxHeight(0f);
-//            lv_dangky.setMinHeight(0f);
-//            isExpandDangKy = 0;
-//            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
-//            btn_expandDangKy.getStylesheets().add(css);
-//        } else {
-//            lv_dangky.setVisible(true);
-//            lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            lv_dangky.setMaxHeight(3060 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            btn_expandDangKy.getStylesheets().clear();
-//            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
-//            btn_expandDangKy.getStylesheets().add(css);
-//            isExpandDangKy = 1;
-//            if (isExpandChung == 1) {
-//                lv_news.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//                lv_news.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            }
-//            if (isExpandDeadline == 1) {
-//                lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//                lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            }
-//
-//        }
-//    }
-//
-//    @FXML
-//    void btn_expandDeadlineClick(ActionEvent event) {
-//        if (isExpandDeadline == 1) {
-//            lv_deadline.setVisible(false);
-//            lv_deadline.setMinHeight(0f);
-//            lv_deadline.setMaxHeight(0f);
-//            isExpandDeadline = 0;
-//            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
-//            btn_expandDeadline.getStylesheets().add(css);
-//        } else {
-//            lv_deadline.setVisible(true);
-//            lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            btn_expandDeadline.getStylesheets().clear();
-//            isExpandDeadline = 1;
-//            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
-//            btn_expandDeadline.getStylesheets().add(css);
-//            if (isExpandDangKy == 1) {
-//                lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//                lv_dangky.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            }
-//            if (isExpandChung == 1) {
-//                lv_news.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//                lv_news.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            }
-//
-//        }
-//    }
-//    @FXML
-//    void btn_backClick(ActionEvent event) {
-//        form = StaticFunctions.stack_link.pop();
-//        madeFadeOut(event);
-//
-//    }
     @FXML
     void btn_newClick(ActionEvent event) {
-
+        init_lv_deadline();
     }
 
     @FXML
+
     void btn_deadlineClick(ActionEvent event) {
         init_lv_deadline();
     }
 
     @FXML
     void btn_restClick(ActionEvent event) {
-
+        init_lv_deadline();
     }
 
     @FXML
@@ -437,17 +338,7 @@ public class HomeController implements Initializable {
         StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
-    @FXML
-    void btn_expandClick(ActionEvent event) {
-        if (isExpandCalendar == 1) {
-            isExpandCalendar = 0;
-        } else {
-            isExpandCalendar = 1;
-        }
-        ExpandDateTime();
-
-    }
-
+  
     @FXML
     void btn_forwardClick(ActionEvent event) {
         currentMonth++;
@@ -466,6 +357,30 @@ public class HomeController implements Initializable {
     }
 
     @FXML
+    void btn_expandClick(ActionEvent event) {
+        if (isExpandCalendar == 1) {
+            isExpandCalendar = 0;
+        } else {
+            isExpandCalendar = 1;
+        }
+        ExpandDateTime();
+
+    }
+
+    @FXML
+
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+
+    void btn_settingClick(ActionEvent event) throws IOException {
+        form = "../view/Setting.fxml";
+        madeFadeOut(event);
+    }
+
+    @FXML
     void btn_minimizeClick(ActionEvent event) {
         StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
     }
@@ -476,28 +391,7 @@ public class HomeController implements Initializable {
     }
 
     @FXML
-    void btn_settingClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("../view/Subscribed.fxml"));
-        Scene scene = null;
-        try {
-            scene = new Scene(fxmlLoader.load(), 530, 292);
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    }
 
-    @FXML
-    void cbb_userClick(ActionEvent event) {
-
-    }
-
-    @FXML
     void lbl_congcuClick(MouseEvent event) {
 
     }
@@ -521,22 +415,12 @@ public class HomeController implements Initializable {
 
     @FXML
     void lbl_alldayClick(MouseEvent event) {
-        if (isExpandLichTrinh == 2) {
-            isExpandLichTrinh = 0;
-        } else {
-            isExpandLichTrinh = 2;
-        }
-        ExpandDateTime();
+
     }
 
     @FXML
     void lbl_themlichtrinhClick(MouseEvent event) {
-        if (isExpandThemLichTrinh == 4) {
-            isExpandThemLichTrinh = 0;
-        } else {
-            isExpandThemLichTrinh = 4;
-        }
-        ExpandDateTime();
+
     }
 
 //    @FXML
@@ -587,15 +471,15 @@ public class HomeController implements Initializable {
         try {
             Global.webCM.hashCode();
         } catch (Exception e) {
-            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
+
+            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, "17520350", "1654805354");
         }
-        ExpandDateTime();
         initCalendar(java.time.LocalDate.now().getDayOfMonth(), java.time.LocalDate.now().getMonthValue(), java.time.LocalDate.now().getYear());
         init_cbb_user(name);
-//        init_lv_dangky();
-//        init_lv_deadline();
-//        init_lv_location();
-//        init_lv_news();
+        init_lv_lichtrinh();
+        init_lv_holiday();
+        init_button_thongbao();
+        btn_rest.fire();
     }
 
     public void setKeyEvent() {
@@ -653,34 +537,82 @@ public class HomeController implements Initializable {
         window.show();
     }
 
-//    public void init_lv_location() {
-//        //Lịch học và vị trí phòng học.
-//        for (int i = 0; i < 4; i++) {
-//            Label lb = new Label("LOCA" + i);
-//            lv_location.getItems().addAll(lb);
-//        }
-//        lv_location.setOnMouseClicked(e -> {
-//            String id = lv_location.getSelectionModel().getSelectedItem().getText();
-//            switch (id) {
-//
-//            }
-//        });
-//    }
-//
-//    public void init_lv_news() {
-//        //Đây là mục "Chung".
-//        lv_news.getItems().clear();
-//        for (int i = 0; i < 4; i++) {
-//            Label lb = new Label("NEWS" + i);
-//            // Xử lý sự kiện tại đây
-//            lv_news.getItems().addAll(lb);
-//        }
-//        lv_news.setOnMouseClicked(e -> {
-//            String id = lv_news.getSelectionModel().getSelectedItem().getText();
-//
-//        });
-//    }
-//
+
+    public void init_lv_lichtrinh() {
+        //Lịch học và vị trí phòng học.
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("LOCA" + i);
+            lv_lichtrinh.getItems().addAll(lb);
+        }
+        lv_lichtrinh.setOnMouseClicked(e -> {
+            String id = lv_lichtrinh.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
+
+        lv_lichtrinh.setCellFactory(e -> {
+            JFXListCell<Label> cell = new JFXListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.setStyle("-fx-background-color: transparent;");
+
+            MenuItem infoItem = new MenuItem();
+            infoItem.setText("Chi tiết");
+            infoItem.setStyle("-fx-text-fill: white;");
+
+            infoItem.setOnAction(event -> {
+
+            });
+
+            MenuItem deleteItem = new MenuItem();
+            deleteItem.setText("Xóa");
+            deleteItem.setStyle("-fx-text-fill: white;");
+            deleteItem.setOnAction(event -> {
+                lv_lichtrinh.getItems().remove(cell.getItem());
+            });
+
+            contextMenu.getItems().addAll(infoItem, deleteItem);
+
+            //cell.textProperty().bind(cell.itemProperty());
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+
+            return cell;
+        });
+
+    }
+
+
+    public void init_lv_holiday() {
+        //Đây là mục "Chung".
+        lv_holiday.getItems().clear();
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("NEWS" + i);
+            // Xử lý sự kiện tại đây
+            lv_holiday.getItems().addAll(lb);
+        }
+        lv_holiday.setOnMouseClicked(e -> {
+            String id = lv_holiday.getSelectionModel().getSelectedItem().getText();
+
+        });
+    }
+    public void ExpandDateTime() {
+        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 0) {
+            panel_calender.setVisible(false);
+            panel_calender.setMaxSize(0, 0);
+            panel_calender.setMinSize(0, 0);
+            panel_lichtrinh.setMaxSize(0, 0);
+            panel_lichtrinh.setMinSize(0, 0);
+            panel_themlichtrinh.setMaxSize(0, 0);
+            panel_themlichtrinh.setMinSize(0, 0);
+        }
+
+
 //    public void init_lv_news(Course course) {
 //        lv_news.getItems().clear();
 //        if (lv_news != null) {
@@ -747,6 +679,32 @@ public class HomeController implements Initializable {
 
             }
         });
+
+        lv_new.setCellFactory(e -> {
+            JFXListCell<Label> cell = new JFXListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.setStyle("-fx-background-color: transparent;");
+
+            MenuItem infoItem = new MenuItem();
+            infoItem.setText("Chi tiết");
+            infoItem.setStyle("-fx-text-fill: white;");
+
+            infoItem.setOnAction(event -> {
+
+            });
+            contextMenu.getItems().addAll(infoItem);
+
+            //cell.textProperty().bind(cell.itemProperty());
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+
+            return cell;
+        });
     }
 
     //Hàm này hiển thị deadline của 1 courseID cho trước.
@@ -770,86 +728,6 @@ public class HomeController implements Initializable {
             String id = lv_new.getSelectionModel().getSelectedItem().getText();
 
         });
-    }
-    public void ExpandDateTime() {
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 0) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 1) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 2) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 3) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 4) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(364, 173);
-            panel_themlichtrinh.setMinSize(364, 173);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 5) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(364, 173);
-            panel_themlichtrinh.setMinSize(364, 173);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 6) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(364, 173);
-            panel_themlichtrinh.setMinSize(364, 173);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 7) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
 
     }
 
@@ -915,7 +793,7 @@ public class HomeController implements Initializable {
         btn_day54.setText(Integer.toString(a[5][4]));
         btn_day55.setText(Integer.toString(a[5][5]));
         btn_day56.setText(Integer.toString(a[5][6]));
-        
+
         btn_day56.setVisible(false);
     }
 
@@ -951,6 +829,53 @@ public class HomeController implements Initializable {
             }
 
         });
+    }
+
+    public void init_button_thongbao() {
+        ObservableList<String> list = FXCollections.observableArrayList("Thông báo 1", "Thông báo 2");
+
+        JFXListCell<Label> cell = new JFXListCell<>();
+        ContextMenu contextMenu = new ContextMenu();
+        contextMenu.setStyle("-fx-background-color: transparent;");
+        for (String item : list) {
+            MenuItem infoItem = new MenuItem();
+            infoItem.setText(item);
+            infoItem.setStyle("-fx-text-fill: white;");
+
+            infoItem.setOnAction(event -> {
+
+            });
+            contextMenu.getItems().addAll(infoItem);
+
+        }
+
+        btn_notification.setContextMenu(contextMenu);
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+        if (toggle_mode.isSelected()) {
+            toggle_mode.setText("Dark mode");
+        } else {
+            toggle_mode.setText("Nornal mode");
+        }
+    }
+
+    @FXML
+    void btn_addLichTrinhClick(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("../view/ThemLichTrinh.fxml"));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 352, 238);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

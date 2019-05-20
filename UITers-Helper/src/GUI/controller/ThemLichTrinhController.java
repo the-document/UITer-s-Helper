@@ -20,7 +20,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 // </editor-fold>
 
-public class SubscribedController implements Initializable {
+public class ThemLichTrinhController implements Initializable {
 
     // <editor-fold desc="FXML variables zone">
     
@@ -74,7 +74,7 @@ public class SubscribedController implements Initializable {
         });
          txt_desc.setOnKeyPressed(e -> {
             switch (e.getCode()) {
-                case TAB:
+                case ENTER:
                     btn_add.fire();
             }
         });
@@ -89,6 +89,7 @@ public class SubscribedController implements Initializable {
         String desc = txt_desc.getText();
         LichTrinh temp = new LichTrinh(time, location, desc);
         StaticFunctions.lichTrinh = temp;
+        btn_exit.fire();
     }
 
     @FXML

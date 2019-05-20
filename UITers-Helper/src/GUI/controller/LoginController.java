@@ -161,16 +161,7 @@ public class LoginController implements Initializable {
                 default:
                     break;
             }
-        });   
-        txt_user.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case ENTER:
-                    btn_login.fire();
-                    break;
-                default:
-                    break;
-            }
-        });   
+        });       
     }
 
     public void madeFadeOut(ActionEvent event) {

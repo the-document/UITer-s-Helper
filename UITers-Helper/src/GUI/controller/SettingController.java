@@ -42,23 +42,11 @@ public class SettingController implements Initializable {
 
     // </editor-fold>
     // <editor-fold desc="import zone">
-    @FXML
+   @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
-    private ImageView img_background;
-
-    @FXML
-    private JFXButton btn_select_images;
-
-    @FXML
     private StackPane stack_pane;
-
-    @FXML
-    private Label lb_name_picture;
-
-    @FXML
-    private JFXToggleButton tg_language;
 
     @FXML
     private JFXToggleButton tg_start_with_os;
@@ -91,10 +79,10 @@ public class SettingController implements Initializable {
     private Label lb_source;
 
     @FXML
-    private Label lb_about;
+    private JFXButton btn_home;
 
     @FXML
-    private JFXButton btn_back;
+    private Label lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -105,8 +93,56 @@ public class SettingController implements Initializable {
     @FXML
     private JFXComboBox<String> cbb_user;
 
+    @FXML
+    private JFXButton btn_setting;
+
+    @FXML
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
+    @FXML
+    private Label lb_about;
+
+    @FXML
+    private Label txt_about;
+
+  
+
     //</editor-fold>
     //<editor-fold desc="FXML functions zone">
+
+    @FXML
+    void btn_homeClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_select_ringtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+
+    }
+    
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -126,16 +162,6 @@ public class SettingController implements Initializable {
 
     @FXML
     void btn_select_imagesClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void btn_select_ringtonClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cbb_userClick(ActionEvent event) {
 
     }
 
@@ -191,16 +217,7 @@ public class SettingController implements Initializable {
         double volume = sl_volume.getValue();
     }
 
-    @FXML
-    void tg_languageClick(ActionEvent event) {
-        if (tg_language.isSelected()) {
-            tg_language.setText("Tiếng việt");
-        } else {
-            tg_language.setText("English");
-        }
-
-    }
-
+    
     @FXML
     void tg_start_with_osClick(ActionEvent event) {
         if (tg_start_with_os.isSelected()) {
@@ -239,7 +256,7 @@ public class SettingController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:

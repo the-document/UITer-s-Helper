@@ -38,7 +38,10 @@ public class StaticFunctions {
     private static double xOffSet = 0;
     private static double yOffSet = 0;
     private String URL_form;
- 
+
+    public static boolean IsDarkMode = true;
+    public static LichTrinh lichTrinh = new LichTrinh();
+
     static public void SetStageDrag(Parent root, Stage window, ActionEvent event) {
         //window.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(e -> {
