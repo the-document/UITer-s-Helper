@@ -40,7 +40,6 @@ import javafx.collections.ObservableList;
  * @author Nguyen Hong Phuc
  */
 enum EducationProgram {
-
     CQUI,
     CTTT,
     CLC,
@@ -49,12 +48,16 @@ enum EducationProgram {
 }
 
 
-
 public class Global {
 
     private static double xOffSet = 0;
     private static double yOffSet = 0;
-      
+    
+    public static WebCommunicate webCM;
+    
+    public static String IEDriverPath = "D:\\UIT Stuffs\\UIT Stuffs\\Documents\\Tai_Lieu\\Mon_hoc\\HK4\\Java\\Library\\WebDriver\\IEDriverServer.exe";
+    public static String FirefoxDriverPath = "D:\\UIT Stuffs\\UIT Stuffs\\Documents\\Tai_Lieu\\Mon_hoc\\HK4\\Java\\Library\\WebDriver\\geckodriver.exe";
+
     //==========METHOD SCHEDULE===================
     public static enum MeThodCreate{
         RANDOM,
@@ -65,7 +68,9 @@ public class Global {
     //==========USER INFOR===================
     public static  String MSSV="18520951";
     public static  String NGANHHOC="";
+    public static  String CTDT="CQUI";
     public static  int HOCKY=-1;
+    
     //public static List<MonHoc> lsMonHocSelected=new ArrayList<>();
     public static HashMap<String,MonHoc> lsMonHocSelected=new HashMap<>();
     public static MeThodCreate MeThodCreateSchedule;

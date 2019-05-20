@@ -1,6 +1,7 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.Global;
 import BLL.MakeSchelude;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
@@ -75,8 +76,19 @@ public class LoaderController implements Initializable {
 
         this.btn_showResult.setVisible(false);
         Loading(spn_loader, 1);
-        MakeSchelude schedule=new MakeSchelude();
-        schedule.start();
+        
+        if(Global.MeThodCreateSchedule==Global.MeThodCreate.RANDOM
+           ||Global.MeThodCreateSchedule==Global.MeThodCreate.DAYOF)
+        {
+            MakeSchelude schedule=new MakeSchelude();
+            schedule.start();
+        }
+        else
+        {
+            this.btn_showResult.setVisible(true);
+            this.btn_showResult.setText("Loading data...");
+        }
+        
     }
 
     public void setKeyEvent() {
@@ -142,7 +154,13 @@ public class LoaderController implements Initializable {
     }
 
     public void btn_showResult(ActionEvent event){
-        form = "../view/CreateTimetableNow.fxml";
+        
+        //handle to create timetable now mode view_______________________
+        if(Global.MeThodCreateSchedule==Global.MeThodCreate.RANDOM
+                ||Global.MeThodCreateSchedule==Global.MeThodCreate.DAYOF)
+        {
+            form = "../view/CreateTimetableNow.fxml";
             madeFadeOut(event);
+        }
     }
 }

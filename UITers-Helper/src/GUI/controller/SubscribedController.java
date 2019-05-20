@@ -1,10 +1,15 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import GUI.LichTrinh;
+import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXChipView;
+import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTimePicker;
 import java.net.URL;
+import java.time.LocalTime;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -19,39 +24,31 @@ public class SubscribedController implements Initializable {
 
     // <editor-fold desc="FXML variables zone">
     
-    @FXML
+   @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
     private JFXButton btn_exit;
 
     @FXML
-    private JFXCheckBox cb_daa;
+    private JFXTimePicker pk_time;
 
     @FXML
-    private JFXCheckBox cb_gm;
+    private JFXTextField txt_location;
 
     @FXML
-    private JFXCheckBox cb_courses;
-
-    @FXML
-    private TextField txt_keyword;
+    private JFXTextField txt_desc;
 
     @FXML
     private JFXButton btn_add;
 
-    @FXML
-    private JFXChipView<String> cv_keyword;
+  
 
     // </editor-fold>
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        cb_courses.setSelected(true);
-        cb_daa.setSelected(true);
-        cb_gm.setSelected(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
-        initChipvView();
         setKeyEvent();
     }
 
@@ -63,52 +60,41 @@ public class SubscribedController implements Initializable {
                     break;
             }
         });
-        txt_keyword.setOnKeyPressed(e -> {
+        pk_time.setOnKeyPressed(e -> {
             switch (e.getCode()) {
-                case ENTER:
+                case TAB:
+                    txt_location.requestFocus();
+            }
+        });
+        txt_location.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case TAB:
+                    txt_desc.requestFocus();
+            }
+        });
+         txt_desc.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case TAB:
                     btn_add.fire();
-                    break;
             }
         });
     }
 
-    public void initChipvView() {
-        String list_item[] = new String[100]; // Danh sách các item để add vô chipview
-        String hint_item[] = new String[100]; // Danh sách các item được hint trong quá trình gõ
-        cv_keyword.getChips().addAll("WEF", "WWW", "JD");
-        cv_keyword.getSuggestions().addAll("HELLO", "TROLL", "WFEWEF", "WEF");
-
-    }
+   
 
     @FXML
     void btn_addClick(ActionEvent event) {
-        String key = txt_keyword.getText();
-        txt_keyword.clear();
-        cv_keyword.getChips().add(key);
+        LocalTime time =  pk_time.getValue();
+        String location = txt_location.getText();
+        String desc = txt_desc.getText();
+        LichTrinh temp = new LichTrinh(time, location, desc);
+        StaticFunctions.lichTrinh = temp;
     }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
         Stage stage = (Stage) btn_exit.getScene().getWindow();
         stage.close();
-
-    }
-
-    @FXML
-    void cb_coursesClick(ActionEvent event) {
-        boolean status = cb_courses.isSelected();
-
-    }
-
-    @FXML
-    void cb_daaClick(ActionEvent event) {
-        boolean status = cb_daa.isSelected();
-
-    }
-
-    @FXML
-    void cb_gmClick(ActionEvent event) {
-        boolean status = cb_gm.isSelected();
 
     }
 

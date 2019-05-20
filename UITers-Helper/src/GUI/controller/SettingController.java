@@ -12,6 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -33,32 +35,18 @@ import javafx.util.Duration;
 public class SettingController implements Initializable {
 
     // <editor-fold desc="Static variables zone">
-    
     String form;
     Stage window;
     int isExpandTerm = 1;
     int isExpandCachSuDung = 1;
-    
+
     // </editor-fold>
-    
     // <editor-fold desc="import zone">
-    @FXML
+   @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
-    private ImageView img_background;
-
-    @FXML
-    private JFXButton btn_select_images;
-
-    @FXML
     private StackPane stack_pane;
-
-    @FXML
-    private Label lb_name_picture;
-
-    @FXML
-    private JFXToggleButton tg_language;
 
     @FXML
     private JFXToggleButton tg_start_with_os;
@@ -91,10 +79,10 @@ public class SettingController implements Initializable {
     private Label lb_source;
 
     @FXML
-    private Label lb_about;
+    private JFXButton btn_home;
 
     @FXML
-    private JFXButton btn_back;
+    private Label lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -105,9 +93,54 @@ public class SettingController implements Initializable {
     @FXML
     private JFXComboBox<String> cbb_user;
 
+    @FXML
+    private JFXButton btn_setting;
+
+    @FXML
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
+    @FXML
+    private Label lb_about;
+
+    @FXML
+    private Label txt_about;
+
+  
+
     //</editor-fold>
-    
     //<editor-fold desc="FXML functions zone">
+    @FXML
+    void btn_homeClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_select_ringtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+
+    }
     
     @FXML
     void btn_backClick(ActionEvent event) {
@@ -132,29 +165,19 @@ public class SettingController implements Initializable {
     }
 
     @FXML
-    void btn_select_ringtonClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cbb_userClick(ActionEvent event) {
-
-    }
-
-    @FXML
     void lb_cachsudungClick(MouseEvent event) {
         if (isExpandCachSuDung == 1) {
             txt_cachsudung.setMaxHeight(0f);
             txt_cachsudung.setMinHeight(0f);
             isExpandCachSuDung = 0;
         } else {
-            if (isExpandTerm == 1) {               
+            if (isExpandTerm == 1) {
                 txt_cachsudung.setMaxHeight(150);
                 txt_cachsudung.setMinHeight(150);
                 txt_term.setMaxHeight(150);
                 txt_term.setMinHeight(150);
             } else {
-                
+
                 txt_cachsudung.setMaxHeight(300);
                 txt_cachsudung.setMinHeight(300);
             }
@@ -162,7 +185,7 @@ public class SettingController implements Initializable {
         }
         txt_cachsudung.setVisible(true);
         txt_cachsudung.setText("abc");
-            
+
     }
 
     @FXML
@@ -173,12 +196,12 @@ public class SettingController implements Initializable {
             txt_term.setMinHeight(0f);
             isExpandTerm = 0;
         } else {
-            if (isExpandCachSuDung == 1) {                
+            if (isExpandCachSuDung == 1) {
                 txt_term.setMaxHeight(150);
                 txt_term.setMinHeight(150);
                 txt_cachsudung.setMaxHeight(150);
                 txt_cachsudung.setMinHeight(150);
-            } else {                
+            } else {
                 txt_term.setMaxHeight(300);
                 txt_term.setMinHeight(300);
             }
@@ -193,16 +216,7 @@ public class SettingController implements Initializable {
         double volume = sl_volume.getValue();
     }
 
-    @FXML
-    void tg_languageClick(ActionEvent event) {
-        if (tg_language.isSelected()) {
-            tg_language.setText("Tiếng việt");
-        } else {
-            tg_language.setText("English");
-        }
-
-    }
-
+    
     @FXML
     void tg_start_with_osClick(ActionEvent event) {
         if (tg_start_with_os.isSelected()) {
@@ -223,10 +237,9 @@ public class SettingController implements Initializable {
     }
 
     //</editor-fold>
-    
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
@@ -242,7 +255,7 @@ public class SettingController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:
@@ -279,15 +292,15 @@ public class SettingController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            
-        StaticFunctions.stack_link.push("../view/Setting.fxml");
+
+            StaticFunctions.stack_link.push("../view/Setting.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
                     form = "../view/Home.fxml";

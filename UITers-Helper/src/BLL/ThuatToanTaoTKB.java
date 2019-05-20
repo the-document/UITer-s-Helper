@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
 public class ThuatToanTaoTKB {
     
     static List<LopHoc> fullDsLop=new ArrayList<>(); //dung tam de load all ds th va lt
-    static List<LopHoc> dsFilterLT=new ArrayList<>(); //ds can get to choose LT
-    static List<LopHoc> dsFilterTH=new ArrayList<>(); //ds can get to choose
+    public static List<LopHoc> dsFilterLT=new ArrayList<>(); //ds can get to choose LT
+    public static List<LopHoc> dsFilterTH=new ArrayList<>(); //ds can get to choose
     static List<LopHoc> dstkbFull=new ArrayList<>();
     
     static List<String> dsMaMonNeedCreate=new ArrayList<>(); //ds ma mon hoc can hoc trong ky nay

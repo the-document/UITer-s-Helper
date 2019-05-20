@@ -9,6 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -42,14 +43,23 @@ public class SelectSemesterController implements Initializable {
 
     // </editor-fold>
     // <editor-fold desc="FXML variables zone">
-    @FXML
+     @FXML
     private AnchorPane AnchorPaneMain;
+
+    @FXML
+    private StackPane stack_pane;
 
     @FXML
     private JFXListView<Label> lv_semester;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton btn_next;
+
+    @FXML
+    private JFXButton btn_home;
+
+    @FXML
+    private Label lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -61,13 +71,46 @@ public class SelectSemesterController implements Initializable {
     private JFXComboBox<String> cbb_user;
 
     @FXML
-    private JFXButton btn_next;
+    private JFXButton btn_setting;
 
     @FXML
-    private StackPane stack_pane;
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
+   
 
     // </editor-fold>
     //<editor-fold desc="FXML functions zone">
+
+    @FXML
+    void btn_homeClick(ActionEvent event) {
+        form = "../view/Home.fxml";
+        madeFadeOut(event);
+    }
+
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+
+    }
+
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -93,10 +136,6 @@ public class SelectSemesterController implements Initializable {
         madeFadeOut(event);
     }
 
-    @FXML
-    void cbb_userClick(ActionEvent event) {
-
-    }
 
     // </editor-fold>
     @Override
@@ -128,7 +167,7 @@ public class SelectSemesterController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:
