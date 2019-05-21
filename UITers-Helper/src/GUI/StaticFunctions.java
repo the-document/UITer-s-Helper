@@ -42,6 +42,8 @@ public class StaticFunctions {
     public static boolean IsDarkMode = true;
     public static LichTrinh lichTrinh = new LichTrinh();
 
+    public static Path path = new Path();
+
     static public void SetStageDrag(Parent root, Stage window, ActionEvent event) {
         //window.initStyle(StageStyle.UNDECORATED);
         root.setOnMousePressed(e -> {

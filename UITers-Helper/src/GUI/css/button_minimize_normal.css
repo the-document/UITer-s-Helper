@@ -1,0 +1,16 @@
+.button{
+    -fx-background-color: transparent;  
+    -fx-font-size: 12;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: black;
+    -fx-text-fill: black;   
+}
+
+.button:hover{
+    -fx-background-color: #5E6467;  
+    -fx-font-size: 12;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: black;
+    -fx-text-fill: black;
+    
+}

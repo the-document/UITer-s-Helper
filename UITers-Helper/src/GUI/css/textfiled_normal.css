@@ -24,15 +24,15 @@ and open the template in the editor.
     -fx-background-color: transparent;
 }
 .text-input {
-    -fx-text-inner-color: white;
+    -fx-text-inner-color: black;
     -fx-prompt-text-fill: gray;
 }
 .text-input:focused {
    // -fx-text-inner-color: white;
 }
 .textfiled:hover{
-    -fx-text-inner-color: white;
+    -fx-text-inner-color: black;
 }
 .textfiled {
-    -fx-prompt-text-fill: gray;
+    -fx-prompt-text-fill: gray
 }
