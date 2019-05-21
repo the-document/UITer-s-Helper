@@ -108,8 +108,6 @@ public class HomeController implements Initializable {
     @FXML
     private Label lbl_day;
 
-  
-
     @FXML
     private JFXButton btn_back;
 
@@ -332,7 +330,6 @@ public class HomeController implements Initializable {
         StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
-  
     @FXML
     void btn_forwardClick(ActionEvent event) {
         currentMonth++;
@@ -488,7 +485,6 @@ public class HomeController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -516,6 +512,17 @@ public class HomeController implements Initializable {
         window.show();
     }
 
+    public static MenuItem getMenuItem(String content) {
+        MenuItem item = new MenuItem();
+        item.setText(content);
+        if (StaticFunctions.IsDarkMode == true) {
+              item.setStyle("-fx-text-fill: white;");
+        }
+        else {
+               item.setStyle("-fx-text-fill: black;");
+        }
+        return item;
+    }
     public void init_lv_lichtrinh() {
         //Lịch học và vị trí phòng học.
         for (int i = 0; i < 4; i++) {
@@ -534,17 +541,12 @@ public class HomeController implements Initializable {
             ContextMenu contextMenu = new ContextMenu();
             contextMenu.setStyle("-fx-background-color: transparent;");
 
-            MenuItem infoItem = new MenuItem();
-            infoItem.setText("Chi tiết");
-            infoItem.setStyle("-fx-text-fill: white;");
-
+            MenuItem infoItem = getMenuItem("Chi tiết");         
             infoItem.setOnAction(event -> {
 
             });
 
-            MenuItem deleteItem = new MenuItem();
-            deleteItem.setText("Xóa");
-            deleteItem.setStyle("-fx-text-fill: white;");
+            MenuItem deleteItem = getMenuItem("Xóa");
             deleteItem.setOnAction(event -> {
                 lv_lichtrinh.getItems().remove(cell.getItem());
             });
@@ -651,9 +653,7 @@ public class HomeController implements Initializable {
             ContextMenu contextMenu = new ContextMenu();
             contextMenu.setStyle("-fx-background-color: transparent;");
 
-            MenuItem infoItem = new MenuItem();
-            infoItem.setText("Chi tiết");
-            infoItem.setStyle("-fx-text-fill: white;");
+            MenuItem infoItem = getMenuItem("Chi tiết");
 
             infoItem.setOnAction(event -> {
 
@@ -708,56 +708,56 @@ public class HomeController implements Initializable {
         int first_day_in_month = nt.NgayTrongTuan(year, month, 1);
         int count_day_of_month = nt.SoNgayTrongThang(year, month);
         Calendar cld = new Calendar();
-        int a[][] = new int[6][7];
+        String a[][] = new String[6][7];
         a = cld.Xuat(first_day_in_month, count_day_of_month);
 
-        btn_day00.setText(Integer.toString(a[0][0]));
-        btn_day01.setText(Integer.toString(a[0][1]));
-        btn_day02.setText(Integer.toString(a[0][2]));
-        btn_day03.setText(Integer.toString(a[0][3]));
-        btn_day04.setText(Integer.toString(a[0][4]));
-        btn_day05.setText(Integer.toString(a[0][5]));
-        btn_day06.setText(Integer.toString(a[0][6]));
+        btn_day00.setText((a[0][0]));
+        btn_day01.setText((a[0][1]));
+        btn_day02.setText((a[0][2]));
+        btn_day03.setText((a[0][3]));
+        btn_day04.setText((a[0][4]));
+        btn_day05.setText((a[0][5]));
+        btn_day06.setText((a[0][6]));
 
-        btn_day10.setText(Integer.toString(a[1][0]));
-        btn_day11.setText(Integer.toString(a[1][1]));
-        btn_day12.setText(Integer.toString(a[1][2]));
-        btn_day13.setText(Integer.toString(a[1][3]));
-        btn_day14.setText(Integer.toString(a[1][4]));
-        btn_day15.setText(Integer.toString(a[1][5]));
-        btn_day16.setText(Integer.toString(a[1][6]));
+        btn_day10.setText((a[1][0]));
+        btn_day11.setText((a[1][1]));
+        btn_day12.setText((a[1][2]));
+        btn_day13.setText((a[1][3]));
+        btn_day14.setText((a[1][4]));
+        btn_day15.setText((a[1][5]));
+        btn_day16.setText((a[1][6]));
 
-        btn_day20.setText(Integer.toString(a[2][0]));
-        btn_day21.setText(Integer.toString(a[2][1]));
-        btn_day22.setText(Integer.toString(a[2][2]));
-        btn_day23.setText(Integer.toString(a[2][3]));
-        btn_day24.setText(Integer.toString(a[2][4]));
-        btn_day25.setText(Integer.toString(a[2][5]));
-        btn_day26.setText(Integer.toString(a[2][6]));
+        btn_day20.setText((a[2][0]));
+        btn_day21.setText((a[2][1]));
+        btn_day22.setText((a[2][2]));
+        btn_day23.setText((a[2][3]));
+        btn_day24.setText((a[2][4]));
+        btn_day25.setText((a[2][5]));
+        btn_day26.setText((a[2][6]));
 
-        btn_day30.setText(Integer.toString(a[3][0]));
-        btn_day31.setText(Integer.toString(a[3][1]));
-        btn_day32.setText(Integer.toString(a[3][2]));
-        btn_day33.setText(Integer.toString(a[3][3]));
-        btn_day34.setText(Integer.toString(a[3][4]));
-        btn_day35.setText(Integer.toString(a[3][5]));
-        btn_day36.setText(Integer.toString(a[3][6]));
+        btn_day30.setText((a[3][0]));
+        btn_day31.setText((a[3][1]));
+        btn_day32.setText((a[3][2]));
+        btn_day33.setText((a[3][3]));
+        btn_day34.setText((a[3][4]));
+        btn_day35.setText((a[3][5]));
+        btn_day36.setText((a[3][6]));
 
-        btn_day40.setText(Integer.toString(a[4][0]));
-        btn_day41.setText(Integer.toString(a[4][1]));
-        btn_day42.setText(Integer.toString(a[4][2]));
-        btn_day43.setText(Integer.toString(a[4][3]));
-        btn_day44.setText(Integer.toString(a[4][4]));
-        btn_day45.setText(Integer.toString(a[4][5]));
-        btn_day46.setText(Integer.toString(a[4][6]));
+        btn_day40.setText((a[4][0]));
+        btn_day41.setText((a[4][1]));
+        btn_day42.setText((a[4][2]));
+        btn_day43.setText((a[4][3]));
+        btn_day44.setText((a[4][4]));
+        btn_day45.setText((a[4][5]));
+        btn_day46.setText((a[4][6]));
 
-        btn_day50.setText(Integer.toString(a[5][0]));
-        btn_day51.setText(Integer.toString(a[5][1]));
-        btn_day52.setText(Integer.toString(a[5][2]));
-        btn_day53.setText(Integer.toString(a[5][3]));
-        btn_day54.setText(Integer.toString(a[5][4]));
-        btn_day55.setText(Integer.toString(a[5][5]));
-        btn_day56.setText(Integer.toString(a[5][6]));
+        btn_day50.setText((a[5][0]));
+        btn_day51.setText((a[5][1]));
+        btn_day52.setText((a[5][2]));
+        btn_day53.setText((a[5][3]));
+        btn_day54.setText((a[5][4]));
+        btn_day55.setText((a[5][5]));
+        btn_day56.setText((a[5][6]));
 
         btn_day56.setVisible(false);
     }
@@ -803,9 +803,7 @@ public class HomeController implements Initializable {
         ContextMenu contextMenu = new ContextMenu();
         contextMenu.setStyle("-fx-background-color: transparent;");
         for (String item : list) {
-            MenuItem infoItem = new MenuItem();
-            infoItem.setText(item);
-            infoItem.setStyle("-fx-text-fill: white;");
+            MenuItem infoItem = getMenuItem(item);
 
             infoItem.setOnAction(event -> {
 
@@ -820,11 +818,17 @@ public class HomeController implements Initializable {
     @FXML
     void toggle_modeClick(ActionEvent event) {
         if (toggle_mode.isSelected()) {
-            toggle_mode.setText("Dark mode");
+            form = "../view/Home.fxml";
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
         } else {
-            toggle_mode.setText("Nornal mode");
+            form = "../view/Home_Normal.fxml";
+           StaticFunctions.IsDarkMode = false;
+            madeFadeOut(event);
         }
     }
+
+   
 
     @FXML
     void btn_addLichTrinhClick(ActionEvent event) {

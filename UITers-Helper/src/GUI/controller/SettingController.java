@@ -42,7 +42,7 @@ public class SettingController implements Initializable {
 
     // </editor-fold>
     // <editor-fold desc="import zone">
-   @FXML
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -108,13 +108,12 @@ public class SettingController implements Initializable {
     @FXML
     private Label txt_about;
 
-  
-
     //</editor-fold>
     //<editor-fold desc="FXML functions zone">
     @FXML
     void btn_homeClick(ActionEvent event) {
-
+        form = "../view/Home.fxml";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -139,9 +138,17 @@ public class SettingController implements Initializable {
 
     @FXML
     void toggle_modeClick(ActionEvent event) {
-
+        if (toggle_mode.isSelected()) {
+            form = "../view/Setting.fxml";
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
+        } else {
+            form = "../view/Setting_Normal.fxml";
+            StaticFunctions.IsDarkMode = false;
+            madeFadeOut(event);
+        }
     }
-    
+
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -216,7 +223,6 @@ public class SettingController implements Initializable {
         double volume = sl_volume.getValue();
     }
 
-    
     @FXML
     void tg_start_with_osClick(ActionEvent event) {
         if (tg_start_with_os.isSelected()) {
@@ -239,7 +245,7 @@ public class SettingController implements Initializable {
     //</editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);

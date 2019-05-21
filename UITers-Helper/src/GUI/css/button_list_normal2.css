@@ -1,0 +1,42 @@
+.button{
+    -fx-alignment: center-left;
+    -fx-background-color: #D3D1D1;
+    -fx-border-color: white;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: black;
+    -fx-text-fill: black;
+    -fx-background-image: url("../images/deadline.png");
+    -fx-background-size: 20px 20px;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:  10% 50% ;
+    
+}
+
+.button:hover{
+    -fx-alignment: center-left;
+    -fx-background-color: #D3D1D1;
+    -fx-opacity: 0.8;
+    -fx-border-color: #18A0FB;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: black;
+    -fx-text-fill: black;
+    
+}
+
+.button:focused{
+    -fx-alignment: center-left;
+    -fx-background-color: #747A7E;
+    -fx-border-color: #18A0FB;
+    -fx-border-width: 0 0 0 0;
+    -fx-border-radius: 10;
+    -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+   -fx-font-color: white;
+    -fx-text-fill: white;
+}

@@ -6,6 +6,7 @@ import BLL.MakeSchelude;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -21,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -37,7 +39,7 @@ public class SelectMethodCreateController implements Initializable {
     // </editor-fold>
     
     // <editor-fold desc="FXML variables zone">
-    @FXML
+     @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -53,7 +55,10 @@ public class SelectMethodCreateController implements Initializable {
     private JFXButton btn_select_random;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton btn_home;
+
+    @FXML
+    private Label lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -64,9 +69,49 @@ public class SelectMethodCreateController implements Initializable {
     @FXML
     private JFXComboBox<String> cbb_user;
 
+    @FXML
+    private JFXButton btn_setting;
+
+    @FXML
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
     // </editor-fold>
     
     // <editor-fold desc="FXML function zone">
+
+
+    @FXML
+    void btn_homeClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+         if (toggle_mode.isSelected()) {
+            form = "../view/SelectMethodCreate.fxml";
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
+        } else {
+            form = "../view/SelectMethodCreate_Normal.fxml";
+            StaticFunctions.IsDarkMode = false;
+            madeFadeOut(event);
+        }
+    }
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -150,7 +195,7 @@ public class SelectMethodCreateController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:

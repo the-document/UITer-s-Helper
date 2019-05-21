@@ -106,9 +106,17 @@ public class SelectSemesterController implements Initializable {
 
     }
 
-    @FXML
+     @FXML
     void toggle_modeClick(ActionEvent event) {
-
+        if (toggle_mode.isSelected()) {
+            form = "../view/SelectSemester.fxml";
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
+        } else {
+            form = "../view/SelectSemester_Normal.fxml";
+            StaticFunctions.IsDarkMode = false;
+            madeFadeOut(event);
+        }
     }
 
     @FXML
