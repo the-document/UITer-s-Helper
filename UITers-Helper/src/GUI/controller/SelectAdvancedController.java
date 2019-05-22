@@ -9,6 +9,7 @@ import DTO.TimeTable;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
@@ -56,17 +58,16 @@ public class SelectAdvancedController implements Initializable {
     Stage window;
     String form;
     String style = "-fx-border-color : white";
+    String style3 = "-fx-border-color : black";
+    
     String style2 = "-fx-border-color : transparent";
-    String clickStyle="-fx-border-color: #18A0FB";
-    String buttonHighLightStyle="-fx-border-color: #fffafa";
+    String clickStyle = "-fx-border-color: #18A0FB";
+    String buttonHighLightStyle = "-fx-border-color: #fffafa";
 
     // </editor-fold>
     // <editor-fold desc="FXML variables zone">
     @FXML
     private AnchorPane AnchorPaneMain;
-
-    @FXML
-    private JFXComboBox<String> cbb_user;
 
     @FXML
     private StackPane stack_pane;
@@ -75,7 +76,10 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_next;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton btn_home;
+
+    @FXML
+    private Label lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -84,7 +88,22 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_minimize;
 
     @FXML
+    private JFXComboBox<String> cbb_user;
+
+    @FXML
+    private JFXButton btn_setting;
+
+    @FXML
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
+    @FXML
     private ScrollPane pane_subject;
+
+    @FXML
+    private Label lb_t3;
 
     @FXML
     private JFXButton btn_t3_123;
@@ -99,6 +118,9 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_t2_910;
 
     @FXML
+    private Label lb_t2;
+
+    @FXML
     private JFXButton btn_t2_123;
 
     @FXML
@@ -111,6 +133,9 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_t3_910;
 
     @FXML
+    private Label lb_t4;
+
+    @FXML
     private JFXButton btn_t4_123;
 
     @FXML
@@ -121,6 +146,9 @@ public class SelectAdvancedController implements Initializable {
 
     @FXML
     private JFXButton btn_t4_910;
+
+    @FXML
+    private Label lb_t5;
 
     @FXML
     private JFXButton btn_t5_123;
@@ -141,10 +169,16 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_t6_910;
 
     @FXML
+    private Label lb_t6;
+
+    @FXML
     private JFXButton btn_t6_123;
 
     @FXML
     private JFXButton btn_t6_45;
+
+    @FXML
+    private Label lb_t7;
 
     @FXML
     private JFXButton btn_t7_123;
@@ -160,6 +194,34 @@ public class SelectAdvancedController implements Initializable {
 
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
+    @FXML
+    void btn_homeClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+        if (toggle_mode.isSelected()) {
+            form = "../view/SelectAdvanced.fxml";
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
+        } else {
+            form = "../view/SelectAdvanced_Normal.fxml";
+            StaticFunctions.IsDarkMode = false;
+            madeFadeOut(event);
+        }
+    }
+
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -180,15 +242,14 @@ public class SelectAdvancedController implements Initializable {
     @FXML
     void btn_nextClick(ActionEvent event) {
 
-        TimeTable timeTable=new TimeTable();
+        TimeTable timeTable = new TimeTable();
         for (LopHoc lopHoc : lsLopHocSelected) {
-            System.out.print(lopHoc.getMaLop()+"-");
+            System.out.print(lopHoc.getMaLop() + "-");
             timeTable.AddCourse(lopHoc);
         }
-        
+
         ThuatToanTaoTKB.listTimeTables.add(timeTable);
-        
-        
+
         StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
         form = "../view/CreateTimetableNow.fxml";
         madeFadeOut(event);
@@ -226,7 +287,7 @@ public class SelectAdvancedController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:
@@ -256,7 +317,12 @@ public class SelectAdvancedController implements Initializable {
 
     //button in menur bar subject----------------------------------------------
     public void initButton(Button btn) {
-        String css = this.getClass().getResource("../css/button_chipitem.css").toExternalForm();
+        String css;
+        if (StaticFunctions.IsDarkMode == true) {
+            css = this.getClass().getResource("../css/button_chipitem.css").toExternalForm();
+        } else {
+            css = this.getClass().getResource("../css/button_chipitem_normal.css").toExternalForm();
+        }
         btn.getStylesheets().clear();
         btn.getStylesheets().add(css);
 //        btn.setOnMouseDragged(e -> {
@@ -277,9 +343,9 @@ public class SelectAdvancedController implements Initializable {
 
         //click subject btn event---------------------------
         btn.setOnAction((ActionEvent t) -> {
-            
+
             btn.setStyle(clickStyle);
-            
+
             if (lsLopHocLT.isEmpty()) {
                 lsLopHocLT = ThuatToanTaoTKB.dsFilterLT;
                 lsLopHocTH = ThuatToanTaoTKB.dsFilterTH;
@@ -288,49 +354,44 @@ public class SelectAdvancedController implements Initializable {
             //suggest all can choose-------------------------------------
             for (LopHoc lopHoc : lsLopHocLT) {
                 if (lopHoc.getmaMonHoc().equals(btn.getId())) {
-                    
+
                     //Get course TH (if can)------------------------------------
-                    LopHoc loptemp=null;
+                    LopHoc loptemp = null;
                     for (LopHoc l : lsLopHocTH) {
-                        if (l.getMaLop().equals(lopHoc.getMaLop()+".1")) {
-                            loptemp=l;
+                        if (l.getMaLop().equals(lopHoc.getMaLop() + ".1")) {
+                            loptemp = l;
                             break;
                         }
                     }
-                    
-                    if(loptemp==null){
+
+                    if (loptemp == null) {
                         System.out.println(lopHoc.getMaLop());
-                        HighLightButtons(lopHoc,0); //flag 0 mean just hightlight temp
-                    }
-                    else
-                    {
+                        HighLightButtons(lopHoc, 0); //flag 0 mean just hightlight temp
+                    } else {
                         //check overlap TH with course selecred-----------------
-                        boolean check=false;
+                        boolean check = false;
                         for (LopHoc lopselected : lsLopHocSelected) {
-                            if(lopselected.isOverlap(loptemp))
-                            {
-                                check=true;
+                            if (lopselected.isOverlap(loptemp)) {
+                                check = true;
                                 break;
-                            }      
+                            }
                         }
-                        
-                        if(!check){
+
+                        if (!check) {
                             System.out.println(lopHoc.getMaLop());
-                            HighLightButtons(lopHoc,0); //flag 0 mean just hightlight temp
+                            HighLightButtons(lopHoc, 0); //flag 0 mean just hightlight temp
                         }
-                        
-                        
+
                         //System.out.println(loptemp.getMaLop());
                         //HighLightButtons(loptemp,0); //flag 0 mean just hightlight temp
-                        
                     }
-                    
+
                 }
             }
-            
+
             //redraw subject selected (override)------------------------
             for (LopHoc l : lsLopHocSelected) {
-                HighLightButtons(l,1); //flag 1 mean this btn has selected
+                HighLightButtons(l, 1); //flag 1 mean this btn has selected
             }
             System.out.println("onclick -menu subject");
         });
@@ -363,7 +424,7 @@ public class SelectAdvancedController implements Initializable {
         btn_t6_910.setText("");
         btn_t7_678.setText("");
         btn_t7_910.setText("");
-        
+
         //reset border-------------------------------------
         btn_t2_123.setStyle(style2);
         btn_t2_45.setStyle(style2);
@@ -390,7 +451,7 @@ public class SelectAdvancedController implements Initializable {
         btn_t6_910.setStyle(style2);
         btn_t7_678.setStyle(style2);
         btn_t7_910.setStyle(style2);
-        
+
         //reset id-------------------------------------
         btn_t2_123.setId("");
         btn_t2_45.setId("");
@@ -419,14 +480,14 @@ public class SelectAdvancedController implements Initializable {
         btn_t7_910.setId("");
     }
 
-    private void SetTextForButtonThu2(LopHoc lop, String textShow ,int flag) {
-        
+    private void SetTextForButtonThu2(LopHoc lop, String textShow, int flag) {
+
         if (flag == 0) {
             buttonHighLightStyle = "-fx-border-color: #fffafa";
         } else {
             buttonHighLightStyle = "-fx-border-color: #6842f4";
         }
-        
+
         switch (lop.getTiet()) {
             case "123":
                 btn_t2_123.setStyle(buttonHighLightStyle);
@@ -484,14 +545,14 @@ public class SelectAdvancedController implements Initializable {
         }
     }
 
-    private void SetTextForButtonThu3(LopHoc lop, String textShow,int flag) {
-        
+    private void SetTextForButtonThu3(LopHoc lop, String textShow, int flag) {
+
         if (flag == 0) {
             buttonHighLightStyle = "-fx-border-color: #fffafa";
         } else {
             buttonHighLightStyle = "-fx-border-color: #6842f4";
         }
-        
+
         switch (lop.getTiet()) {
             case "123":
                 btn_t3_123.setStyle(buttonHighLightStyle);
@@ -549,14 +610,14 @@ public class SelectAdvancedController implements Initializable {
         }
     }
 
-   private void SetTextForButtonThu4(LopHoc lop, String textShow,int flag) {
-       
+    private void SetTextForButtonThu4(LopHoc lop, String textShow, int flag) {
+
         if (flag == 0) {
             buttonHighLightStyle = "-fx-border-color: #fffafa";
         } else {
             buttonHighLightStyle = "-fx-border-color: #6842f4";
         }
-       
+
         switch (lop.getTiet()) {
             case "123":
                 btn_t4_123.setStyle(buttonHighLightStyle);
@@ -613,15 +674,15 @@ public class SelectAdvancedController implements Initializable {
                 break;
         }
     }
-   
-   private void SetTextForButtonThu5(LopHoc lop, String textShow,int flag) {
-       
+
+    private void SetTextForButtonThu5(LopHoc lop, String textShow, int flag) {
+
         if (flag == 0) {
             buttonHighLightStyle = "-fx-border-color: #fffafa";
         } else {
             buttonHighLightStyle = "-fx-border-color: #6842f4";
         }
-       
+
         switch (lop.getTiet()) {
             case "123":
                 btn_t5_123.setStyle(buttonHighLightStyle);
@@ -678,15 +739,15 @@ public class SelectAdvancedController implements Initializable {
                 break;
         }
     }
-   
-   private void SetTextForButtonThu6(LopHoc lop, String textShow,int flag) {
-       
+
+    private void SetTextForButtonThu6(LopHoc lop, String textShow, int flag) {
+
         if (flag == 0) {
             buttonHighLightStyle = "-fx-border-color: #fffafa";
         } else {
             buttonHighLightStyle = "-fx-border-color: #6842f4";
         }
-       
+
         switch (lop.getTiet()) {
             case "123":
                 btn_t6_123.setStyle(buttonHighLightStyle);
@@ -743,15 +804,15 @@ public class SelectAdvancedController implements Initializable {
                 break;
         }
     }
-   
-   private void SetTextForButtonThu7(LopHoc lop, String textShow,int flag) {
-       
+
+    private void SetTextForButtonThu7(LopHoc lop, String textShow, int flag) {
+
         if (flag == 0) {
             buttonHighLightStyle = "-fx-border-color: #fffafa";
         } else {
             buttonHighLightStyle = "-fx-border-color: #6842f4";
         }
-       
+
         switch (lop.getTiet()) {
             case "123":
                 btn_t7_123.setStyle(buttonHighLightStyle);
@@ -809,8 +870,8 @@ public class SelectAdvancedController implements Initializable {
         }
     }
 
-    private void HighLightButtons(LopHoc lop,int flag) {
-        
+    private void HighLightButtons(LopHoc lop, int flag) {
+
         //flag to show type of border: temp,selected
         String textShow = lop.getMaLop() + "\n"
                 + lop.getTenGiangVien() + "\n P. "
@@ -820,22 +881,22 @@ public class SelectAdvancedController implements Initializable {
 
         switch (lop.getThu()) {
             case "2":
-                SetTextForButtonThu2(lop, textShow,flag);
+                SetTextForButtonThu2(lop, textShow, flag);
                 break;
             case "3":
-                SetTextForButtonThu3(lop, textShow,flag);
+                SetTextForButtonThu3(lop, textShow, flag);
                 break;
             case "4":
-                SetTextForButtonThu4(lop, textShow,flag);
+                SetTextForButtonThu4(lop, textShow, flag);
                 break;
             case "5":
-                SetTextForButtonThu5(lop, textShow,flag);
+                SetTextForButtonThu5(lop, textShow, flag);
                 break;
             case "6":
-                SetTextForButtonThu6(lop, textShow,flag);
+                SetTextForButtonThu6(lop, textShow, flag);
                 break;
             case "7":
-                SetTextForButtonThu7(lop, textShow,flag);
+                SetTextForButtonThu7(lop, textShow, flag);
                 break;
         }
     }
@@ -911,98 +972,91 @@ public class SelectAdvancedController implements Initializable {
         MenuItem item_switch = new MenuItem("Đổi lớp");
         item_switch.setStyle("-fx-text-fill: white;");
         item_switch.setOnAction(e -> {
-        System.out.println("switch");
-            
-            
+            System.out.println("switch");
+
             //remove this course and course TH---------------------------------
-            String maMonHoc=null;
-            for (LopHoc lopHoc : lsLopHocSelected){
-                if(lopHoc.getMaLop().equals(btn.getId())){
-                    
-                    maMonHoc=lopHoc.getmaMonHoc();
+            String maMonHoc = null;
+            for (LopHoc lopHoc : lsLopHocSelected) {
+                if (lopHoc.getMaLop().equals(btn.getId())) {
+
+                    maMonHoc = lopHoc.getmaMonHoc();
                     //save infor course need remove (change to other course)----
-                    List<LopHoc> lsNeedRemove=new ArrayList<>();
-                    
+                    List<LopHoc> lsNeedRemove = new ArrayList<>();
+
                     for (LopHoc lop : lsLopHocSelected) {//LT or TH
-                        if(lop.getmaMonHoc().equals(maMonHoc))
-                        {
-                           lsNeedRemove.add(lop);
+                        if (lop.getmaMonHoc().equals(maMonHoc)) {
+                            lsNeedRemove.add(lop);
                             //System.out.println("delete"+lop.getMaLop());
                         }
                     }
-                    
+
                     lsLopHocSelected.removeAll(lsNeedRemove);
                     break;
                 }
             }
-            
+
             HideTextOfButton();
-           
+
             //suggest new course of this subject-------------------------------
             for (LopHoc lopHoc : lsLopHocLT) {
                 if (lopHoc.getmaMonHoc().equals(maMonHoc)) {
-                    
+
                     //Get course TH (if can)------------------------------------
-                    LopHoc loptemp=null;
+                    LopHoc loptemp = null;
                     for (LopHoc l : lsLopHocTH) {
-                        if (l.getMaLop().equals(lopHoc.getMaLop()+".1")) {
-                            loptemp=l;
+                        if (l.getMaLop().equals(lopHoc.getMaLop() + ".1")) {
+                            loptemp = l;
                             break;
                         }
                     }
-                    
-                    if(loptemp==null){
+
+                    if (loptemp == null) {
                         System.out.println(lopHoc.getMaLop());
-                        HighLightButtons(lopHoc,0); //flag 0 mean just hightlight temp
-                    }
-                    else
-                    {
+                        HighLightButtons(lopHoc, 0); //flag 0 mean just hightlight temp
+                    } else {
                         //check overlap TH with course selecred-----------------
-                        boolean check=false;
+                        boolean check = false;
                         for (LopHoc lopselected : lsLopHocSelected) {
-                            if(lopselected.isOverlap(loptemp))
-                            {
-                                check=true;
+                            if (lopselected.isOverlap(loptemp)) {
+                                check = true;
                                 break;
-                            }      
+                            }
                         }
-                        
-                        if(!check){
+
+                        if (!check) {
                             System.out.println(lopHoc.getMaLop());
-                            HighLightButtons(lopHoc,0); //flag 0 mean just hightlight temp
+                            HighLightButtons(lopHoc, 0); //flag 0 mean just hightlight temp
                         }
-                        
-                        
+
                         //System.out.println(loptemp.getMaLop());
                         //HighLightButtons(loptemp,0); //flag 0 mean just hightlight temp
-                        
                     }
-                    
+
                 }
             }
-            
+
             //redraw subject selected (override)------------------------
             for (LopHoc l : lsLopHocSelected) {
-                HighLightButtons(l,1); //flag 1 mean this btn has selected
+                HighLightButtons(l, 1); //flag 1 mean this btn has selected
             }
             System.out.println("onclick -context menu button");
-            
+
         });
 
         ct.getItems().addAll(item_info, item_switch);
         ct.setStyle("-fx-background-color: transparent;");
         btn.setContextMenu(ct);
     }
-    
-    private void InitOnclickButtons(JFXButton btn){
+
+    private void InitOnclickButtons(JFXButton btn) {
         //init button in timetable
         btn.setOnAction((t) -> {
-            
+
             for (LopHoc lopHoc : lsLopHocLT) {
                 if (lopHoc.getMaLop().equals(btn.getId())) {
                     lsLopHocSelected.add(lopHoc);
                     for (LopHoc l : lsLopHocTH) {
-                        if (l.getMaLop().equals(lopHoc.getMaLop()+".1")) {
+                        if (l.getMaLop().equals(lopHoc.getMaLop() + ".1")) {
                             lsLopHocSelected.add(l);
                             break;
                         }
@@ -1010,19 +1064,19 @@ public class SelectAdvancedController implements Initializable {
                     break;
                 }
             }
-            
+
             HideTextOfButton();
-            
+
             //redraw subject selected (override)------------------------
             for (LopHoc l : lsLopHocSelected) {
-                HighLightButtons(l,1); //flag 1 mean this btn has selected
+                HighLightButtons(l, 1); //flag 1 mean this btn has selected
             }
-            System.out.println("size:-"+lsLopHocSelected.size());
+            System.out.println("size:-" + lsLopHocSelected.size());
         });
     }
 
     public void init_arrButton() {
-        
+
         //init  contex menu - onclick right mouse
         init_context_menu(btn_t2_123, btn_t2_123.getText());
         init_context_menu(btn_t2_45, btn_t2_45.getText());
@@ -1053,7 +1107,7 @@ public class SelectAdvancedController implements Initializable {
         init_context_menu(btn_t4_45, btn_t4_45.getText());
         init_context_menu(btn_t4_678, btn_t4_678.getText());
         init_context_menu(btn_t4_910, btn_t4_910.getText());
-        
+
         //init action onclick left mouse----------------------------------
         InitOnclickButtons(btn_t2_123);
         InitOnclickButtons(btn_t2_45);
