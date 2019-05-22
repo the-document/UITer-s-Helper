@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -37,17 +38,26 @@ public class LoginController implements Initializable {
     // </editor-fold>
     
     // <editor-fold desc="FXML variables zone">
-    @FXML
+     @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
     private StackPane stack_pane;
 
     @FXML
-    private JFXButton btn_minimize;
+    private JFXButton btn_home;
 
     @FXML
     private JFXButton btn_exit;
+
+    @FXML
+    private JFXButton btn_minimize;
+
+    @FXML
+    private JFXButton btn_setting2;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
 
     @FXML
     private Button btn_setting1;
@@ -62,16 +72,13 @@ public class LoginController implements Initializable {
     private JFXPasswordField txt_password;
 
     @FXML
-    private Hyperlink btn_lose;
+    private JFXCheckBox cb_remember;
 
     @FXML
     private JFXButton btn_login;
 
     @FXML
-    private JFXCheckBox cb_remember;
-
-    @FXML
-    private Button btn_setting;
+    private Hyperlink btn_lose;
 
     @FXML
     private JFXButton btn_more;
@@ -85,8 +92,28 @@ public class LoginController implements Initializable {
     }
 
     @FXML
+    void btn_homeClick(ActionEvent event) {
+
+    }
+
+
+    @FXML
     void btn_moreClick(ActionEvent event) {
 
+    }
+
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+          if (toggle_mode.isSelected()) {
+            form = "../view/Login.fxml";
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
+        } else {
+            form = "../view/Login_Normal.fxml";
+            StaticFunctions.IsDarkMode = false;
+            madeFadeOut(event);
+        }
     }
 
     @FXML
@@ -135,9 +162,9 @@ public class LoginController implements Initializable {
     @FXML
     void cb_rememberCheck(ActionEvent event) {
         if (cb_remember.isSelected()) {
-            cb_remember.setText("Đã ghi nhớ");
+            cb_remember.setText("    Đã ghi nhớ");
         } else {
-            cb_remember.setText("Nhớ mật khẩu");
+            cb_remember.setText("    Nhớ mật khẩu");
         }
     }
 

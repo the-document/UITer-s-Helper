@@ -1,0 +1,12 @@
+.jfx-check-box {
+     -jfx-checked-color: #18A0FB;
+     -jfx-unchecked-color: white;
+     -fx-font-size: 18;
+    -fx-font-family: "Segoe UI";  
+    -fx-font-color: white;
+}
+
+/* Styling checkmark */
+.jfx-check-box .mark{
+     -fx-border-color: white;
+}

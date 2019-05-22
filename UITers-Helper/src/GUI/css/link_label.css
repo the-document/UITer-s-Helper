@@ -1,10 +1,10 @@
 .hyperlink {
-    -fx-font-size: 12;
+    -fx-font-size: 18;
     -fx-font-family: "Segoe UI";  
     -fx-text-fill: white;
 }
 .hyperlink:hover {
-    -fx-font-size: 12;
+    -fx-font-size: 18;
     -fx-font-family: "Segoe UI";  
     -fx-text-fill: #18A0FB;
     -fx-underline: true;

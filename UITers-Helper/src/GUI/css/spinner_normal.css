@@ -1,0 +1,11 @@
+.materialDesign-blue .arc {
+    -fx-stroke: black;
+}
+.materialDesign-percent .arc {
+    -fx-stroke: #18A0FB;
+}
+.materialDesign-percent .percentage {
+    -fx-fill: black;
+    -fx-font-size: 12;
+    -fx-font-family: "Segoe UI";  
+}

@@ -1,10 +1,12 @@
 package GUI.controller;
 // <editor-fold desc="import zone">
+
 import BLL.Global;
 import DTO.LopHoc;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -33,6 +35,8 @@ public class SelectDayOfController implements Initializable {
     Stage window;
     String form;
     String style = "-fx-border-color : white";
+    String style3 = "-fx-border-color : black";
+    
     String style2 = "-fx-border-color : transparent";
 
     // </editor-fold>
@@ -44,19 +48,34 @@ public class SelectDayOfController implements Initializable {
     private StackPane stack_pane;
 
     @FXML
-    private JFXComboBox<String> cbb_user;
-
-    @FXML
     private JFXButton btn_next;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton btn_home;
+
+    @FXML
+    private Label lbl_path;
+
+    @FXML
+    private JFXButton btn_exit;
 
     @FXML
     private JFXButton btn_minimize;
 
     @FXML
-    private JFXButton btn_exit;
+    private JFXComboBox<String> cbb_user;
+
+    @FXML
+    private JFXButton btn_setting;
+
+    @FXML
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
+    @FXML
+    private Label lb_t3;
 
     @FXML
     private JFXButton btn_t3_123;
@@ -71,6 +90,9 @@ public class SelectDayOfController implements Initializable {
     private JFXButton btn_t2_910;
 
     @FXML
+    private Label lb_t2;
+
+    @FXML
     private JFXButton btn_t2_123;
 
     @FXML
@@ -83,6 +105,9 @@ public class SelectDayOfController implements Initializable {
     private JFXButton btn_t3_910;
 
     @FXML
+    private Label lb_t4;
+
+    @FXML
     private JFXButton btn_t4_123;
 
     @FXML
@@ -93,6 +118,9 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     private JFXButton btn_t4_910;
+
+    @FXML
+    private Label lb_t5;
 
     @FXML
     private JFXButton btn_t5_123;
@@ -113,10 +141,16 @@ public class SelectDayOfController implements Initializable {
     private JFXButton btn_t6_910;
 
     @FXML
+    private Label lb_t6;
+
+    @FXML
     private JFXButton btn_t6_123;
 
     @FXML
     private JFXButton btn_t6_45;
+
+    @FXML
+    private Label lb_t7;
 
     @FXML
     private JFXButton btn_t7_123;
@@ -130,26 +164,39 @@ public class SelectDayOfController implements Initializable {
     @FXML
     private JFXButton btn_t7_910;
 
-    @FXML
-    private Label lb_t2;
-
-    @FXML
-    private Label lb_t3;
-
-    @FXML
-    private Label lb_t4;
-
-    @FXML
-    private Label lb_t5;
-
-    @FXML
-    private Label lb_t6;
-
-    @FXML
-    private Label lb_t7;
-
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
+    @FXML
+    void btn_homeClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+
+    }
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+        if (toggle_mode.isSelected()) {
+            form = "../view/SelectDayOf.fxml";
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
+        } else {
+            form = "../view/SelectDayOff_Normal.fxml";
+            StaticFunctions.IsDarkMode = false;
+            madeFadeOut(event);
+        }
+    }
+
     @FXML
     void btn_backClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -197,7 +244,7 @@ public class SelectDayOfController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:
@@ -234,37 +281,40 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void initButtonClick(JFXButton btn) {
-        
-        String fullname=btn.getId();
 
-        String thu=fullname.split("_")[1].substring(1, 2);
-      
-        String tiet=fullname.split("_")[2];
-                
+        String fullname = btn.getId();
+
+        String thu = fullname.split("_")[1].substring(1, 2);
+
+        String tiet = fullname.split("_")[2];
+
         btn.setOnAction(e -> {
             if (btn.getStyle().compareTo(style) == 0) {
                 btn.setStyle(style2);
-                LopHoc l=new LopHoc("DAY-OFF", "DAY-OFF", "DAY-OFF", "1", "1", tiet, thu, "DAY-OFF", "DAY-OFF", "DAY-OFF");
+                LopHoc l = new LopHoc("DAY-OFF", "DAY-OFF", "DAY-OFF", "1", "1", tiet, thu, "DAY-OFF", "DAY-OFF", "DAY-OFF");
                 for (LopHoc lopHoc : Global.lsDayOff) {
-                    if(lopHoc.getThu().equals(thu)&&lopHoc.getTiet().equals(tiet))
-                    {
-                         Global.lsDayOff.remove(lopHoc);
-                         break;
+                    if (lopHoc.getThu().equals(thu) && lopHoc.getTiet().equals(tiet)) {
+                        Global.lsDayOff.remove(lopHoc);
+                        break;
 
-                    } 
+                    }
                 }
-                
-                System.out.println("remove -"+thu+"-"+tiet+" -size: "+Global.lsDayOff.size());
 
-            } 
-            else {
+                System.out.println("remove -" + thu + "-" + tiet + " -size: " + Global.lsDayOff.size());
 
-                btn.setStyle(style);
-                
-                LopHoc l=new LopHoc("DAY-OFF", "DAY-OFF", "DAY-OFF", "1", "1", tiet, thu, "DAY-OFF", "DAY-OFF", "DAY-OFF");
+            } else {
+                if (StaticFunctions.IsDarkMode == true) {
+                     btn.setStyle(style);
+
+                }
+                else {
+                    btn.setStyle(style3);
+
+                }
+                LopHoc l = new LopHoc("DAY-OFF", "DAY-OFF", "DAY-OFF", "1", "1", tiet, thu, "DAY-OFF", "DAY-OFF", "DAY-OFF");
                 Global.lsDayOff.add(l);
 
-                System.out.println("add -"+thu+"-"+tiet+" -size: "+Global.lsDayOff.size());
+                System.out.println("add -" + thu + "-" + tiet + " -size: " + Global.lsDayOff.size());
 
             }
 
@@ -341,14 +391,14 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            
+
             StaticFunctions.stack_link.push("../view/SelectDayOf.fxml");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
