@@ -34,15 +34,14 @@ import javafx.util.Duration;
 
 public class StaticFunctions {
 
-    public static Stack<String> stack_link = new Stack<String>();
+    public static Path stack_link = new Path();
     private static double xOffSet = 0;
     private static double yOffSet = 0;
     private String URL_form;
 
-    public static boolean IsDarkMode = true;
+    public static boolean IsDarkMode;
     public static LichTrinh lichTrinh = new LichTrinh();
-
-    public static Path path = new Path();
+    public static SwitchUIMode switcher = new SwitchUIMode();
 
     static public void SetStageDrag(Parent root, Stage window, ActionEvent event) {
         //window.initStyle(StageStyle.UNDECORATED);

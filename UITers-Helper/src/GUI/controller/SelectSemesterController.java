@@ -43,7 +43,7 @@ public class SelectSemesterController implements Initializable {
 
     // </editor-fold>
     // <editor-fold desc="FXML variables zone">
-     @FXML
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -59,7 +59,7 @@ public class SelectSemesterController implements Initializable {
     private JFXButton btn_home;
 
     @FXML
-    private Label lbl_path;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -79,18 +79,21 @@ public class SelectSemesterController implements Initializable {
     @FXML
     private JFXToggleButton toggle_mode;
 
-   
-
     // </editor-fold>
     //<editor-fold desc="FXML functions zone">
-
     @FXML
     void btn_homeClick(ActionEvent event) {
-        form = "../view/Home.fxml";
+        StaticFunctions.stack_link.push("SelectSemester");
+        form = "Home";
         madeFadeOut(event);
     }
 
-
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+    
     @FXML
     void btn_notification_Click(ActionEvent event) {
 
@@ -98,7 +101,9 @@ public class SelectSemesterController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectSemester");
+        form = "Setting";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -106,24 +111,20 @@ public class SelectSemesterController implements Initializable {
 
     }
 
-     @FXML
+    @FXML
     void toggle_modeClick(ActionEvent event) {
         if (toggle_mode.isSelected()) {
-            form = "../view/SelectSemester.fxml";
             StaticFunctions.IsDarkMode = true;
             madeFadeOut(event);
         } else {
-            form = "../view/SelectSemester_Normal.fxml";
-            StaticFunctions.IsDarkMode = false;
-            madeFadeOut(event);
-        }
-    }
 
-    @FXML
-    void btn_backClick(ActionEvent event) {
-        form = StaticFunctions.stack_link.pop();
+            StaticFunctions.IsDarkMode = false;
+        }
+        form = "SelectSemeste";
         madeFadeOut(event);
     }
+
+   
 
     @FXML
     void btn_exitClick(ActionEvent event) {
@@ -139,11 +140,10 @@ public class SelectSemesterController implements Initializable {
     @FXML
     void btn_nextClick(ActionEvent event) {
 
-        StaticFunctions.stack_link.push("../view/SelectSemester.fxml");
-        form = "../view/SelectSubject.fxml";
+        StaticFunctions.stack_link.push("SelectSemester");
+        form = "SelectSubject";
         madeFadeOut(event);
     }
-
 
     // </editor-fold>
     @Override
@@ -152,7 +152,8 @@ public class SelectSemesterController implements Initializable {
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
-
+        form = "SelectSemester";
+         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         try {
             init_lv_semester();
         } catch (SQLException ex) {
@@ -161,7 +162,7 @@ public class SelectSemesterController implements Initializable {
 
         String text = "Xin chào, 17520433";
         btn_next.setVisible(false);
-        init_cbb_user(form);
+        init_cbb_user(text);
 
     }
 
@@ -177,7 +178,6 @@ public class SelectSemesterController implements Initializable {
                 case LEFT:
                     btn_home.fire();
                     break;
-
                 default:
                     break;
             }
@@ -210,8 +210,7 @@ public class SelectSemesterController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -239,39 +238,35 @@ public class SelectSemesterController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+            ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-
-            StaticFunctions.stack_link.push("../view/SelectSemester.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:
                     break;
             }
 
-          //==============================
-            // init hoc ky for Global here
-            //==============================
         });
     }
 

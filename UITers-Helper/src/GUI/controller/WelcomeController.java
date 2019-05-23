@@ -57,7 +57,7 @@ public class WelcomeController implements Initializable {
 
     @FXML
     void btn_launchClick(ActionEvent event) {
-        form = "../view/Login.fxml";
+        form = "Login";
         madeFadeOut(event);
     }
 
@@ -71,6 +71,7 @@ public class WelcomeController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {        
+        StaticFunctions.IsDarkMode = false;
         StaticFunctions.AnimationShow(AnchorPaneMain);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
@@ -93,7 +94,7 @@ public class WelcomeController implements Initializable {
     }
    
     public void madeFadeOut(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Welcome.fxml");
+        
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -109,7 +110,7 @@ public class WelcomeController implements Initializable {
         });
     }
     public void LoadNextScene(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);

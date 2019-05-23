@@ -37,9 +37,8 @@ public class SelectMethodCreateController implements Initializable {
     String state = null;
 
     // </editor-fold>
-    
     // <editor-fold desc="FXML variables zone">
-     @FXML
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -58,7 +57,7 @@ public class SelectMethodCreateController implements Initializable {
     private JFXButton btn_home;
 
     @FXML
-    private Label lbl_path;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -79,42 +78,43 @@ public class SelectMethodCreateController implements Initializable {
     private JFXToggleButton toggle_mode;
 
     // </editor-fold>
-    
     // <editor-fold desc="FXML function zone">
-
-
     @FXML
     void btn_homeClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectMethodCreate");
+        form = "Home";
+        madeFadeOut(event);
     }
 
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+    
     @FXML
     void btn_notification_Click(ActionEvent event) {
 
     }
 
-
     @FXML
     void btn_settingClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectMethodCreate");
+        form = "Setting";
+        madeFadeOut(event);
     }
-
 
     @FXML
     void toggle_modeClick(ActionEvent event) {
-         if (toggle_mode.isSelected()) {
-            form = "../view/SelectMethodCreate.fxml";
+        if (toggle_mode.isSelected()) {
+
             StaticFunctions.IsDarkMode = true;
-            madeFadeOut(event);
         } else {
-            form = "../view/SelectMethodCreate_Normal.fxml";
+
             StaticFunctions.IsDarkMode = false;
-            madeFadeOut(event);
+
         }
-    }
-    @FXML
-    void btn_backClick(ActionEvent event) {
-        form = StaticFunctions.stack_link.pop();
+        form = "SelectMethodCreate";
         madeFadeOut(event);
     }
 
@@ -128,45 +128,33 @@ public class SelectMethodCreateController implements Initializable {
         StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
     }
 
-
     @FXML
     void btn_select_advancedClick(ActionEvent event) {
-        
-        Global.MeThodCreateSchedule=Global.MeThodCreate.ADVANCE;
-        
+        Global.MeThodCreateSchedule = Global.MeThodCreate.ADVANCE;
         //load data from database in new thread.
-        MakeSchelude schedule=new MakeSchelude();
+        MakeSchelude schedule = new MakeSchelude();
         schedule.start();
-
         state = "select_advanced";
-        
-        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
-        form = "../view/SelectAdvanced.fxml";
+        StaticFunctions.stack_link.push("SelectMethodCreate");
+        form = "SelectAdvanced";
         madeFadeOut(event);
     }
 
     @FXML
     void btn_select_day_offClick(ActionEvent event) {
-        
-        Global.MeThodCreateSchedule=Global.MeThodCreate.DAYOF;
-        
+        Global.MeThodCreateSchedule = Global.MeThodCreate.DAYOF;
         state = "select_day_off";
-        
-        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
-        form = "../view/SelectDayOf.fxml";
+        StaticFunctions.stack_link.push("SelectMethodCreate");
+        form = "SelectDayOf";
         madeFadeOut(event);
     }
 
     @FXML
     void btn_select_randomClick(ActionEvent event) {
-        
-        Global.MeThodCreateSchedule=Global.MeThodCreate.RANDOM;
-        
+        Global.MeThodCreateSchedule = Global.MeThodCreate.RANDOM;
         state = "select_random";
-
-        StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
-
-        form = "../view/Loader.fxml";
+        StaticFunctions.stack_link.push("SelectMethodCreate");
+        form = "Loader";
         madeFadeOut(event);
     }
 
@@ -176,13 +164,13 @@ public class SelectMethodCreateController implements Initializable {
     }
 
     // </editor-fold>
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(btn_select_advanced::requestFocus);
-
+        form = "SelectMethodCreate";
+        lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         setKeyEvent();
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
@@ -207,6 +195,11 @@ public class SelectMethodCreateController implements Initializable {
                 case ENTER:
                     btn_select_advanced.fire();
                     break;
+                case TAB:
+                    btn_select_day_off.fire();
+                    break;
+                default:
+                    break;
 
             }
         });
@@ -215,7 +208,11 @@ public class SelectMethodCreateController implements Initializable {
                 case ENTER:
                     btn_select_day_off.fire();
                     break;
-
+                case TAB:
+                    btn_select_random.fire();
+                    break;
+                default:
+                    break;
             }
         });
         btn_select_random.setOnKeyPressed(e -> {
@@ -223,7 +220,11 @@ public class SelectMethodCreateController implements Initializable {
                 case ENTER:
                     btn_select_random.fire();
                     break;
-
+                case TAB:
+                    btn_select_advanced.fire();
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -245,8 +246,7 @@ public class SelectMethodCreateController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -255,30 +255,29 @@ public class SelectMethodCreateController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+          ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            
-            StaticFunctions.stack_link.push("../view/SelectMethodCreate.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:

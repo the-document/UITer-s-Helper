@@ -85,7 +85,7 @@ public class SelectSubjectController implements Initializable {
     private JFXButton btn_home;
 
     @FXML
-    private Label lbl_path;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -107,6 +107,12 @@ public class SelectSubjectController implements Initializable {
 
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+    
     @FXML
     void btn_addClick(ActionEvent event) {
         String key = txt_subject.getText();
@@ -152,11 +158,7 @@ public class SelectSubjectController implements Initializable {
         lb_Notify.setVisible(false);
     }
 
-    @FXML
-    void btn_backClick(ActionEvent event) {
-        form = StaticFunctions.stack_link.pop();
-        madeFadeOut(event);
-    }
+  
 
     @FXML
     void btn_deleteClick(ActionEvent event) {
@@ -183,8 +185,8 @@ public class SelectSubjectController implements Initializable {
     void btn_nextClick(ActionEvent event) {
 
         //------------------------------------------
-        StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
-        form = "../view/SelectMethodCreate.fxml";
+        StaticFunctions.stack_link.push("SelectSubject");
+        form = "SelectMethodCreate";
         madeFadeOut(event);
     }
 
@@ -199,7 +201,8 @@ public class SelectSubjectController implements Initializable {
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
-
+        form = "SelectSubject";
+        lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         btn_next.setVisible(false);
         lb_Notify.setVisible(false);
         lv_subject.getItems().clear();
@@ -212,7 +215,7 @@ public class SelectSubjectController implements Initializable {
         try {
             init_cbb_subjecT();
         } catch (SQLException ex) {
-            System.out.println("ERR load Nganh Hoc");
+            System.out.println("ERROR load Nganh Hoc");
             Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -238,8 +241,7 @@ public class SelectSubjectController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -250,7 +252,6 @@ public class SelectSubjectController implements Initializable {
     public void setKeyEvent() {
         AnchorPaneMain.setOnKeyPressed(e -> {
             switch (e.getCode()) {
-
                 case ESCAPE:
                     btn_minimize.fire();
                     break;
@@ -284,7 +285,7 @@ public class SelectSubjectController implements Initializable {
         try {
             LoadAllSubjectOfUser();
         } catch (SQLException e) {
-            Label MonHocLabel = new Label("No connect");
+            Label MonHocLabel = new Label("No connection");
             lv_subject.getItems().addAll(MonHocLabel);
         }
 
@@ -308,30 +309,29 @@ public class SelectSubjectController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+           ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-
-            StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:
@@ -398,7 +398,7 @@ public class SelectSubjectController implements Initializable {
             h = h < 240 ? h : 240;
             lv_subject.setPrefHeight(h);
         } else {
-            Label MonHocLabel = new Label("No connect");
+            Label MonHocLabel = new Label("No connection");
             lv_subject.getItems().addAll(MonHocLabel);
         }
     }
@@ -413,7 +413,9 @@ public class SelectSubjectController implements Initializable {
 
     @FXML
     void btn_homeClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectSubject");
+        form = "Home";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -428,14 +430,13 @@ public class SelectSubjectController implements Initializable {
 
     @FXML
     void toggle_modeClick(ActionEvent event) {
-        if (toggle_mode.isSelected()) {
-            form = "../view/SelectSubject.fxml";
+        if (toggle_mode.isSelected()) {          
             StaticFunctions.IsDarkMode = true;
             madeFadeOut(event);
-        } else {
-            form = "../view/SelectSubject_Normal.fxml";
-            StaticFunctions.IsDarkMode = false;
-            madeFadeOut(event);
+        } else {          
+            StaticFunctions.IsDarkMode = false;         
         }
+        form = "SelectSubject";
+         madeFadeOut(event);
     }
 }

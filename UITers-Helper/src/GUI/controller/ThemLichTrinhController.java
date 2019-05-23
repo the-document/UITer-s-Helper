@@ -4,8 +4,6 @@ package GUI.controller;
 import GUI.LichTrinh;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import java.net.URL;
@@ -15,7 +13,6 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 // </editor-fold>
@@ -43,7 +40,6 @@ public class ThemLichTrinhController implements Initializable {
     private JFXButton btn_add;
 
   
-
     // </editor-fold>
     
     @Override

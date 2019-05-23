@@ -134,15 +134,34 @@
                   </Label>
                </children></VBox>
          </right>
+         <center>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label fx:id="lb_about" prefHeight="43.0" prefWidth="341.0" stylesheets="@../css/big_label_normal.css" text="Về chúng tôi">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="txt_about" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="409.0" stylesheets="@../css/label_normal.css" text="Ban học tập Công nghệ phân mềm\n + - Ngôi nhà sẻ chia Đây là group chính thức của Ban học tập Đoàn khoa Công nghệ Phần mềm, nơi giúp các bạn trao đổi những thắc mắc liên quan tới học thuật, các hoạt động training, seminar... của Ban.">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="20.0" right="40.0" top="20.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
          <top>
-            <HBox alignment="CENTER_LEFT" maxWidth="1299.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="1299.0" style="-fx-background-color: #D4D4D4;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" maxWidth="1299.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="1299.0" style="-fx-background-color: D4D4D4;" BorderPane.alignment="CENTER">
                <children>
                   <JFXButton fx:id="btn_home" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_homeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_home.css">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <Label fx:id="lbl_path" stylesheets="@../css/label_normal.css" text="Home  |  Calendar" />
+                  <JFXButton fx:id="lbl_path" alignment="TOP_LEFT" onAction="#lbl_pathClick" prefHeight="35.0" prefWidth="607.0" styleClass="label" stylesheets="@../css/label_normal.css" text="Path" />
                   <Region />
                   <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
@@ -196,25 +215,6 @@
                </children>
             </HBox>
          </top>
-         <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="lb_about" prefHeight="43.0" prefWidth="341.0" stylesheets="@../css/big_label_normal.css" text="Về chúng tôi">
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="txt_about" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="409.0" stylesheets="@../css/label_normal.css" text="Ban học tập Công nghệ phân mềm\n + - Ngôi nhà sẻ chia Đây là group chính thức của Ban học tập Đoàn khoa Công nghệ Phần mềm, nơi giúp các bạn trao đổi những thắc mắc liên quan tới học thuật, các hoạt động training, seminar... của Ban.">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </Label>
-               </children>
-               <BorderPane.margin>
-                  <Insets bottom="20.0" right="40.0" top="20.0" />
-               </BorderPane.margin>
-            </VBox>
-         </center>
       </BorderPane>
    </children>
 </AnchorPane>

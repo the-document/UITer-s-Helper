@@ -12,8 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -82,7 +79,7 @@ public class SettingController implements Initializable {
     private JFXButton btn_home;
 
     @FXML
-    private Label lbl_path;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -113,7 +110,14 @@ public class SettingController implements Initializable {
 
     @FXML
     void btn_homeClick(ActionEvent event) {
-        form = "../view/Home.fxml";
+        StaticFunctions.stack_link.push("Setting");
+        form = "Home";
+        madeFadeOut(event);
+    }
+    
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
         madeFadeOut(event);
     }
 
@@ -140,19 +144,12 @@ public class SettingController implements Initializable {
     @FXML
     void toggle_modeClick(ActionEvent event) {
         if (toggle_mode.isSelected()) {
-            form = "../view/Setting.fxml";
             StaticFunctions.IsDarkMode = true;
-            madeFadeOut(event);
         } else {
-            form = "../view/Setting_Normal.fxml";
             StaticFunctions.IsDarkMode = false;
-            madeFadeOut(event);
-        }
-    }
 
-    @FXML
-    void btn_backClick(ActionEvent event) {
-        form = StaticFunctions.stack_link.pop();
+        }
+        form = "Setting";
         madeFadeOut(event);
     }
 
@@ -246,13 +243,14 @@ public class SettingController implements Initializable {
     //</editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
         String name = "Xin chào, 17520433";
         init_cbb_user(name);
+        form = "Setting";
+         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
     }
 
     public void setKeyEvent() {
@@ -290,7 +288,7 @@ public class SettingController implements Initializable {
 
     public void LoadNextScene(ActionEvent event) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -299,30 +297,29 @@ public class SettingController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-
-            StaticFunctions.stack_link.push("../view/Setting.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:
