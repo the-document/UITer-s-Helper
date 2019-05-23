@@ -5,7 +5,6 @@
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,24 +15,23 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #252322;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectAdvancedController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #ECECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.CreateTimetableNowController">
     <children>
       <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
-      <JFXButton fx:id="btn_next" layoutX="855.0" layoutY="609.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="12.0" onAction="#btn_nextClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_darkmode.css" text="Tiếp tục" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
       <BorderPane prefHeight="40.0" prefWidth="1174.0">
          <top>
-            <HBox alignment="CENTER_LEFT" maxWidth="1299.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="1299.0" style="-fx-background-color: #1D1B1A;" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" maxWidth="1299.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="1299.0" style="-fx-background-color: D4D4D4;" BorderPane.alignment="CENTER">
                <children>
                   <JFXButton fx:id="btn_home" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_homeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_home.css">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="lbl_path" alignment="TOP_LEFT" onAction="#lbl_pathClick" prefHeight="35.0" prefWidth="607.0" styleClass="label" stylesheets="@../css/label.css" text="Path" />
+                  <JFXButton fx:id="lbl_path" alignment="TOP_LEFT" onAction="#lbl_pathClick" prefHeight="35.0" prefWidth="607.0" styleClass="label" stylesheets="@../css/label_normal.css" text="Path" />
                   <Region />
                   <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textFill="WHITE">
+                        <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_exit_normal.css" text="X" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -41,7 +39,7 @@
                               <Insets />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textFill="WHITE">
+                        <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_minimize_normal.css" text="-" textFill="WHITE">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -50,7 +48,7 @@
                            </HBox.margin>
                         </JFXButton>
                         <Region prefHeight="40.0" prefWidth="10.0" />
-                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="160.0" stylesheets="@../css/combobox.css" unFocusColor="#ffffff00">
+                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="160.0" stylesheets="@../css/combobox_normal.css" unFocusColor="#ffffff00">
                            <HBox.margin>
                               <Insets right="10.0" top="5.0" />
                            </HBox.margin>
@@ -70,7 +68,7 @@
                               <Insets top="5.0" />
                            </HBox.margin>
                         </JFXButton>
-                        <JFXToggleButton fx:id="toggle_mode" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#toggle_modeClick" prefHeight="40.0" prefWidth="40.0" selected="true" stylesheets="@../css/button_toggle_darkmode.css" text="." textFill="WHITE" toggleColor="#fba018" toggleLineColor="#19433f" unToggleColor="WHITE" unToggleLineColor="#4d3c3c">
+                        <JFXToggleButton fx:id="toggle_mode" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#toggle_modeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_toggle_darkmode.css" text="." textFill="WHITE" toggleColor="#fba018" toggleLineColor="#19433f" unToggleColor="WHITE" unToggleLineColor="#4d3c3c">
                            <font>
                               <Font name="Segoe UI" size="0.1" />
                            </font>
@@ -84,12 +82,11 @@
             </HBox>
          </top>
       </BorderPane>
-      <Label prefHeight="43.0" prefWidth="244.0" stylesheets="@../css/big_label.css" text="Chọn môn học" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
+      <Label prefHeight="43.0" prefWidth="317.0" stylesheets="@../css/big_label_normal.css" text="Thời khóa biểu" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="pane_subject" prefHeight="60.0" prefWidth="1174.0" stylesheets="@../css/scroll-pane.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="120.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="50.0" layoutY="180.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="24.0" layoutY="401.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="227.0" layoutY="183.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.rightAnchor="784.0" AnchorPane.topAnchor="180.0" />
@@ -104,13 +101,13 @@
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="779.0" layoutY="451.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="40.0" />
       <VBox layoutX="22.0" layoutY="220.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="784.0" AnchorPane.topAnchor="180.0">
          <children>
-            <Label fx:id="lb_t3" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 3" />
-            <JFXButton fx:id="btn_t3_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+            <Label fx:id="lb_t3" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label_normal.css" text="Thứ 3" />
+            <JFXButton fx:id="btn_t3_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 123" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t3_45" layoutX="10.0" layoutY="50.0" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+            <JFXButton fx:id="btn_t3_45" layoutX="10.0" layoutY="50.0" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 45" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -119,12 +116,12 @@
       </VBox>
       <VBox layoutX="32.0" layoutY="190.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0">
          <children>
-            <JFXButton fx:id="btn_t2_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+            <JFXButton fx:id="btn_t2_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 678" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t2_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+            <JFXButton fx:id="btn_t2_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 910" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -133,8 +130,8 @@
       </VBox>
       <VBox layoutX="32.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" nodeOrientation="LEFT_TO_RIGHT" prefHeight="190.0" prefWidth="165.6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0">
          <children>
-            <Label fx:id="lb_t2" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 2" />
-            <JFXButton fx:id="btn_t2_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+            <Label fx:id="lb_t2" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label_normal.css" text="Thứ 2" />
+            <JFXButton fx:id="btn_t2_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 123" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -142,7 +139,7 @@
                   <Insets />
                </VBox.margin>
             </JFXButton>
-            <JFXButton fx:id="btn_t2_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+            <JFXButton fx:id="btn_t2_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 45" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -151,12 +148,12 @@
       </VBox>
       <VBox layoutX="30.0" layoutY="410.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="784.0">
          <children>
-            <JFXButton fx:id="btn_t3_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+            <JFXButton fx:id="btn_t3_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 678" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t3_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+            <JFXButton fx:id="btn_t3_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 910" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -165,13 +162,13 @@
       </VBox>
       <VBox layoutX="187.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="598.0" AnchorPane.topAnchor="180.0">
          <children>
-            <Label fx:id="lb_t4" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 4" />
-            <JFXButton fx:id="btn_t4_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+            <Label fx:id="lb_t4" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label_normal.css" text="Thứ 4" />
+            <JFXButton fx:id="btn_t4_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 123" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t4_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+            <JFXButton fx:id="btn_t4_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 45" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -180,12 +177,12 @@
       </VBox>
       <VBox layoutX="30.0" layoutY="410.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="598.0">
          <children>
-            <JFXButton fx:id="btn_t4_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+            <JFXButton fx:id="btn_t4_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 678" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t4_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+            <JFXButton fx:id="btn_t4_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 910" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -194,13 +191,13 @@
       </VBox>
       <VBox layoutX="30.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="163.0" prefHeight="190.0" prefWidth="163.0" AnchorPane.rightAnchor="412.0" AnchorPane.topAnchor="180.0">
          <children>
-            <Label fx:id="lb_t5" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 5" />
-            <JFXButton fx:id="btn_t5_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+            <Label fx:id="lb_t5" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label_normal.css" text="Thứ 5" />
+            <JFXButton fx:id="btn_t5_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 123" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t5_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+            <JFXButton fx:id="btn_t5_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 45" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -209,12 +206,12 @@
       </VBox>
       <VBox layoutX="187.0" layoutY="410.0" maxHeight="170.0" maxWidth="165.6" minHeight="170.0" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="412.0">
          <children>
-            <JFXButton fx:id="btn_t5_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+            <JFXButton fx:id="btn_t5_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 678" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t5_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+            <JFXButton fx:id="btn_t5_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 910" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -223,12 +220,12 @@
       </VBox>
       <VBox maxWidth="165.6" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="226.0">
          <children>
-            <JFXButton fx:id="btn_t6_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+            <JFXButton fx:id="btn_t6_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 678" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t6_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+            <JFXButton fx:id="btn_t6_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 910" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -237,13 +234,13 @@
       </VBox>
       <VBox layoutX="342.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="226.0" AnchorPane.topAnchor="180.0">
          <children>
-            <Label fx:id="lb_t6" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 6" />
-            <JFXButton fx:id="btn_t6_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+            <Label fx:id="lb_t6" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label_normal.css" text="Thứ 6" />
+            <JFXButton fx:id="btn_t6_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 123" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t6_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+            <JFXButton fx:id="btn_t6_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 45" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -252,13 +249,13 @@
       </VBox>
       <VBox layoutX="998.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="165.6" prefHeight="190.0" prefWidth="165.6" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="180.0">
          <children>
-            <Label fx:id="lb_t7" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 7" />
-            <JFXButton fx:id="btn_t7_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+            <Label fx:id="lb_t7" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label_normal.css" text="Thứ 7" />
+            <JFXButton fx:id="btn_t7_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 123" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t7_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 45" textFill="WHITE">
+            <JFXButton fx:id="btn_t7_45" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 45" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -267,17 +264,22 @@
       </VBox>
       <VBox layoutX="500.0" layoutY="410.0" maxWidth="165.6" minWidth="165.6" prefHeight="170.0" prefWidth="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.rightAnchor="40.0">
          <children>
-            <JFXButton fx:id="btn_t7_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 678" textFill="WHITE">
+            <JFXButton fx:id="btn_t7_678" maxHeight="102.0" minHeight="102.0" prefHeight="102.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 678" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_t7_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 910" textFill="WHITE">
+            <JFXButton fx:id="btn_t7_910" maxHeight="68.0" minHeight="68.0" prefHeight="68.0" prefWidth="166.0" stylesheets="@../css/button_item_normal.css" text="Tiết 910" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
          </children>
       </VBox>
+      <Label layoutX="45.0" layoutY="130.0" prefHeight="23.0" prefWidth="340.0" stylesheets="@../css/label_normal.css" text="Tạo vào ngày ..." />
+      <Label fx:id="lb_SubjectNotFound" layoutX="450.0" layoutY="130.0" prefHeight="23.0" prefWidth="340.0" text="Các môn học không mở ..." textFill="RED">
+         <font>
+            <Font name="Segoe UI" size="18.0" />
+         </font></Label>
    </children>
 </AnchorPane>

@@ -12,15 +12,15 @@ public class Path {
         this.form = new ArrayList<String>();
     }
 
-    public void UpdatePath() {
-        if (form.isEmpty()) { path = ""; return;}
+    public String UpdatePath(String current_form) {
+        if (form.isEmpty()) { path = ""; return "";}
         path = "";
         for (int i = 0; i < form.size() - 1; i++) {
             path += form.get(i);
             path += " | ";
         }
-        path += form.get(form.size() - 1);
-
+        path += form.get(form.size() - 1) + " | [" + current_form + "]";
+        return path;
     }
     
     public int Search(String form_name) {
@@ -32,7 +32,7 @@ public class Path {
         }
         return -1;
     }
-    public void AddtoForm(String form_name) {
+    public void push(String form_name) {
         if (Search(form_name) != -1) {
             form.remove(Search(form_name));
             form.add(form.size(), form_name);
@@ -42,8 +42,10 @@ public class Path {
             form.add(form.size(), form_name);
         }
     }
-    public void Back() {
+    public String pop() {
+        String temp = form.get(form.size() - 1);
         form.remove(form.size()-1);
+        return temp;
     }
     public static void main(String args[]) {
         Scanner scn = new Scanner(System.in);
@@ -54,12 +56,12 @@ public class Path {
             String temp = scn.nextLine();
             if (temp.compareTo("1") == 0) {
                  String tmp = scn.nextLine();
-                 p.AddtoForm(tmp);
+                 p.push(tmp);
             }
             else {
-                p.Back();
+                p.pop();
             }
-            p.UpdatePath();
+            //p.UpdatePath();
             System.out.println(p.path);
         }
     }

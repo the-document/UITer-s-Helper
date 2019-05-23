@@ -36,7 +36,7 @@ public class SelectDayOfController implements Initializable {
     String form;
     String style = "-fx-border-color : white";
     String style3 = "-fx-border-color : black";
-    
+
     String style2 = "-fx-border-color : transparent";
 
     // </editor-fold>
@@ -54,7 +54,7 @@ public class SelectDayOfController implements Initializable {
     private JFXButton btn_home;
 
     @FXML
-    private Label lbl_path;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -168,9 +168,17 @@ public class SelectDayOfController implements Initializable {
     // <editor-fold desc="FXML functions zone">
     @FXML
     void btn_homeClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectDayOf");
+        form = "Home";
+        madeFadeOut(event);
     }
 
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+    
     @FXML
     void btn_notification_Click(ActionEvent event) {
 
@@ -178,28 +186,24 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectDayOf");
+        form = "Setting";
+        madeFadeOut(event);
     }
+
     @FXML
     void cbb_userClick(ActionEvent event) {
 
     }
+
     @FXML
     void toggle_modeClick(ActionEvent event) {
         if (toggle_mode.isSelected()) {
-            form = "../view/SelectDayOf.fxml";
             StaticFunctions.IsDarkMode = true;
-            madeFadeOut(event);
         } else {
-            form = "../view/SelectDayOff_Normal.fxml";
             StaticFunctions.IsDarkMode = false;
-            madeFadeOut(event);
         }
-    }
-
-    @FXML
-    void btn_backClick(ActionEvent event) {
-        form = StaticFunctions.stack_link.pop();
+        form = "SelectDayOf";
         madeFadeOut(event);
     }
 
@@ -210,14 +214,13 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     void btn_minimizeClick(ActionEvent event) {
-
         StaticFunctions.MinimizeEvent(event, AnchorPaneMain);
     }
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-
-        form = "../view/Loader.fxml";
+        StaticFunctions.stack_link.push("SelectDayOf");
+        form = "Loader";
         madeFadeOut(event);
     }
 
@@ -233,7 +236,8 @@ public class SelectDayOfController implements Initializable {
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
         init_label();
-
+        form = "SelectDayOff";
+         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         Global.lsDayOff.clear();
     }
 
@@ -246,7 +250,9 @@ public class SelectDayOfController implements Initializable {
                 case LEFT:
                     btn_home.fire();
                     break;
-
+                case ENTER:
+                    btn_next.fire();
+                    break;
                 default:
                     break;
             }
@@ -271,7 +277,7 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -281,11 +287,8 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void initButtonClick(JFXButton btn) {
-
         String fullname = btn.getId();
-
         String thu = fullname.split("_")[1].substring(1, 2);
-
         String tiet = fullname.split("_")[2];
 
         btn.setOnAction(e -> {
@@ -304,10 +307,9 @@ public class SelectDayOfController implements Initializable {
 
             } else {
                 if (StaticFunctions.IsDarkMode == true) {
-                     btn.setStyle(style);
+                    btn.setStyle(style);
 
-                }
-                else {
+                } else {
                     btn.setStyle(style3);
 
                 }
@@ -391,30 +393,29 @@ public class SelectDayOfController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+            ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-
-            StaticFunctions.stack_link.push("../view/SelectDayOf.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:

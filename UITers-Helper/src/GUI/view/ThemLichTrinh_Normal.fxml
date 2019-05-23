@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxHeight="500.0" maxWidth="781.0" minHeight="229.0" minWidth="261.0" prefHeight="238.0" prefWidth="352.0" style="-fx-background-color: #ECECEC; -fx-border-color: gray; -fx-border-width: 1 1 1 1;" styleClass="pane" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.ThemLichTrinhController">
+   <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="470.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton fx:id="btn_exit" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" styleClass="button-exit" stylesheets="@../css/button_exit.css" text="X" />
+         </children>
+      </HBox>
+      <VBox layoutX="24.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="142.0" prefWidth="312.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <JFXTimePicker fx:id="pk_time" defaultColor="BLACK" maxHeight="40.0" maxWidth="345.0" minHeight="40.0" minWidth="180.0" prefHeight="40.0" prefWidth="339.0" promptText="Chọn thời gian" />
+            <JFXTextField fx:id="txt_location" focusColor="#18a0fb" maxHeight="40.0" maxWidth="372.0" minHeight="40.0" minWidth="180.0" prefHeight="40.0" prefWidth="372.0" promptText="Ở đâu?" stylesheets="@../css/textfiled_normal.css" />
+            <JFXTextField fx:id="txt_desc" focusColor="#18a0fb" maxHeight="40.0" maxWidth="379.0" minHeight="40.0" minWidth="180.0" prefHeight="40.0" prefWidth="379.0" promptText="Mô tả" stylesheets="@../css/textfiled_normal.css" />
+         </children>
+      </VBox>
+      <JFXButton fx:id="btn_add" onAction="#btn_addClick" prefHeight="40.0" prefWidth="80.0" stylesheets="@../css/button_darkmode.css" text="Thêm" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0" />
+   </children>
+</AnchorPane>

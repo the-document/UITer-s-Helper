@@ -79,7 +79,7 @@ public class SelectAdvancedController implements Initializable {
     private JFXButton btn_home;
 
     @FXML
-    private Label lbl_path;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -196,9 +196,17 @@ public class SelectAdvancedController implements Initializable {
     // <editor-fold desc="FXML functions zone">
     @FXML
     void btn_homeClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectAdvanced");
+        form = "Home";
+        madeFadeOut(event);
     }
 
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+    
     @FXML
     void btn_notification_Click(ActionEvent event) {
 
@@ -206,27 +214,26 @@ public class SelectAdvancedController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
-
+         StaticFunctions.stack_link.push("SelectAdvanced");
+        form = "Setting";
+        madeFadeOut(event);
     }
 
     @FXML
     void toggle_modeClick(ActionEvent event) {
         if (toggle_mode.isSelected()) {
-            form = "../view/SelectAdvanced.fxml";
+           
             StaticFunctions.IsDarkMode = true;
-            madeFadeOut(event);
+           
         } else {
-            form = "../view/SelectAdvanced_Normal.fxml";
+           
             StaticFunctions.IsDarkMode = false;
-            madeFadeOut(event);
+          
         }
+        form = "SelectAdvanced";
+          madeFadeOut(event);
     }
 
-    @FXML
-    void btn_backClick(ActionEvent event) {
-        form = StaticFunctions.stack_link.pop();
-        madeFadeOut(event);
-    }
 
     @FXML
     void btn_exitClick(ActionEvent event) {
@@ -241,7 +248,6 @@ public class SelectAdvancedController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-
         TimeTable timeTable = new TimeTable();
         for (LopHoc lopHoc : lsLopHocSelected) {
             System.out.print(lopHoc.getMaLop() + "-");
@@ -250,8 +256,8 @@ public class SelectAdvancedController implements Initializable {
 
         ThuatToanTaoTKB.listTimeTables.add(timeTable);
 
-        StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
-        form = "../view/CreateTimetableNow.fxml";
+        StaticFunctions.stack_link.push("SelectAdvanced");
+        form = "CreateTimetableNow";
         madeFadeOut(event);
     }
 
@@ -272,7 +278,8 @@ public class SelectAdvancedController implements Initializable {
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
         init_arrButton();
-
+        form = "SelectAdvanced";
+         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         //clear before load ls from thuat toan tkb
         lsLopHocLT.clear();
         lsLopHocTH.clear();
@@ -393,7 +400,7 @@ public class SelectAdvancedController implements Initializable {
             for (LopHoc l : lsLopHocSelected) {
                 HighLightButtons(l, 1); //flag 1 mean this btn has selected
             }
-            System.out.println("onclick -menu subject");
+            System.out.println("onclick - menu subject");
         });
     }
 
@@ -918,7 +925,7 @@ public class SelectAdvancedController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -928,29 +935,29 @@ public class SelectAdvancedController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            StaticFunctions.stack_link.push("../view/SelectAdvanced.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:

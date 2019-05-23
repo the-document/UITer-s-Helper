@@ -5,7 +5,6 @@
 <?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -16,7 +15,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #252322;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectAdvancedController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #252322;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectDayOfController">
     <children>
       <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
       <JFXButton fx:id="btn_next" layoutX="855.0" layoutY="609.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="12.0" onAction="#btn_nextClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_darkmode.css" text="Tiếp tục" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="40.0" />
@@ -84,12 +83,11 @@
             </HBox>
          </top>
       </BorderPane>
-      <Label prefHeight="43.0" prefWidth="244.0" stylesheets="@../css/big_label.css" text="Chọn môn học" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
+      <Label prefHeight="43.0" prefWidth="271.0" stylesheets="@../css/big_label.css" text="Chọn tiết học" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="60.0">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ScrollPane fx:id="pane_subject" prefHeight="60.0" prefWidth="1174.0" stylesheets="@../css/scroll-pane.css" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="120.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="50.0" layoutY="180.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="180.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="170.0" layoutX="24.0" layoutY="401.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="190.0" layoutX="227.0" layoutY="183.0" opacity="0.1" stroke="BLACK" strokeType="INSIDE" width="165.6" AnchorPane.rightAnchor="784.0" AnchorPane.topAnchor="180.0" />
@@ -195,7 +193,7 @@
       <VBox layoutX="30.0" layoutY="190.0" maxHeight="190.0" maxWidth="165.6" minHeight="190.0" minWidth="163.0" prefHeight="190.0" prefWidth="163.0" AnchorPane.rightAnchor="412.0" AnchorPane.topAnchor="180.0">
          <children>
             <Label fx:id="lb_t5" alignment="CENTER" maxHeight="40.0" maxWidth="166.0" minHeight="40.0" minWidth="166.0" prefHeight="40.0" prefWidth="166.0" stylesheets="@../css/label.css" text="Thứ 5" />
-            <JFXButton fx:id="btn_t5_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="166.0" prefHeight="90.0" prefWidth="166.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
+            <JFXButton fx:id="btn_t5_123" alignment="CENTER" maxHeight="90.0" maxWidth="166.0" minHeight="90.0" minWidth="113.0" prefHeight="90.0" prefWidth="113.0" stylesheets="@../css/button_item.css" text="Tiết 123" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
@@ -279,5 +277,6 @@
             </JFXButton>
          </children>
       </VBox>
+      <Label layoutX="45.0" layoutY="130.0" prefHeight="23.0" prefWidth="340.0" stylesheets="@../css/label.css" text="Click vào những tiết mà bạn muốn nghỉ" />
    </children>
 </AnchorPane>

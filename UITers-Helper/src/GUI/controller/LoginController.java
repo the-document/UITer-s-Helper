@@ -86,6 +86,7 @@ public class LoginController implements Initializable {
     // </editor-fold>
     
     // <editor-fold desc="FXML functions zone">
+    
     @FXML
     void btn_exitClick(ActionEvent event) {
         StaticFunctions.ExitEvent(AnchorPaneMain);
@@ -93,7 +94,7 @@ public class LoginController implements Initializable {
 
     @FXML
     void btn_homeClick(ActionEvent event) {
-
+        
     }
 
 
@@ -106,15 +107,15 @@ public class LoginController implements Initializable {
     @FXML
     void toggle_modeClick(ActionEvent event) {
           if (toggle_mode.isSelected()) {
-            form = "../view/Login.fxml";
             StaticFunctions.IsDarkMode = true;
-            madeFadeOut(event);
         } else {
-            form = "../view/Login_Normal.fxml";
             StaticFunctions.IsDarkMode = false;
-            madeFadeOut(event);
+          
         }
+        form = "Login";
+        madeFadeOut(event);
     }
+    
 
     @FXML
     void btn_loginClick(ActionEvent event) {
@@ -125,8 +126,9 @@ public class LoginController implements Initializable {
 
             JFXButton btn = new JFXButton("OK");
             btn.setOnAction(e -> {
-                StaticFunctions.stack_link.push("../view/Login.fxml");
-                form = "../view/Home.fxml";
+                StaticFunctions.stack_link.push("Login");
+                System.out.println(StaticFunctions.IsDarkMode);
+                form = "Home";
                 madeFadeOut(event);
 
             });
@@ -154,13 +156,17 @@ public class LoginController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Login.fxml");
-        form = "../view/Setting.fxml";
+        StaticFunctions.stack_link.push("Login");
+        form = "Setting";
         madeFadeOut(event);
     }
 
     @FXML
     void cb_rememberCheck(ActionEvent event) {
+        // cần code sự kiện quên mật khẩu
+        
+        
+        
         if (cb_remember.isSelected()) {
             cb_remember.setText("    Đã ghi nhớ");
         } else {
@@ -188,11 +194,30 @@ public class LoginController implements Initializable {
                 default:
                     break;
             }
-        });       
+        });  
+        txt_user.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case TAB:
+                    txt_password.focusedProperty();
+                    break;
+                case ENTER:
+                    txt_password.focusedProperty();
+                default:
+                    break;
+            }
+        });
+        
+        txt_password.setOnKeyPressed(e -> {
+            switch (e.getCode()) {             
+                case ENTER:
+                    btn_login.fire();
+                default:
+                    break;
+            }
+        });
     }
 
-    public void madeFadeOut(ActionEvent event) {
-      
+    public void madeFadeOut(ActionEvent event) {     
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -209,7 +234,7 @@ public class LoginController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);

@@ -145,7 +145,7 @@ public class LoaderController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -159,7 +159,7 @@ public class LoaderController implements Initializable {
         if(Global.MeThodCreateSchedule==Global.MeThodCreate.RANDOM
                 ||Global.MeThodCreateSchedule==Global.MeThodCreate.DAYOF)
         {
-            form = "../view/CreateTimetableNow.fxml";
+            form = "CreateTimetableNow";
             madeFadeOut(event);
         }
     }
