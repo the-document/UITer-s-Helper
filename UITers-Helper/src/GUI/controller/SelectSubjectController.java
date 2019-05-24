@@ -51,7 +51,7 @@ public class SelectSubjectController implements Initializable {
 
     // </editor-fold>
     // <editor-fold desc="FXML variabls zone">
-     @FXML
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -112,7 +112,7 @@ public class SelectSubjectController implements Initializable {
         form = StaticFunctions.stack_link.pop();
         madeFadeOut(event);
     }
-    
+
     @FXML
     void btn_addClick(ActionEvent event) {
         String key = txt_subject.getText();
@@ -157,8 +157,6 @@ public class SelectSubjectController implements Initializable {
         System.out.println(Global.lsMonHocSelected.toString());
         lb_Notify.setVisible(false);
     }
-
-  
 
     @FXML
     void btn_deleteClick(ActionEvent event) {
@@ -309,7 +307,7 @@ public class SelectSubjectController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-           ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
@@ -425,18 +423,20 @@ public class SelectSubjectController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
-
+        StaticFunctions.stack_link.push("SelectSemester");
+        form = "Setting";
+        madeFadeOut(event);
     }
 
     @FXML
     void toggle_modeClick(ActionEvent event) {
-        if (toggle_mode.isSelected()) {          
+        if (toggle_mode.isSelected()) {
             StaticFunctions.IsDarkMode = true;
             madeFadeOut(event);
-        } else {          
-            StaticFunctions.IsDarkMode = false;         
+        } else {
+            StaticFunctions.IsDarkMode = false;
         }
         form = "SelectSubject";
-         madeFadeOut(event);
+        madeFadeOut(event);
     }
 }
