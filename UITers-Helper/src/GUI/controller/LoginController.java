@@ -1,6 +1,7 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import GUI.PopUp_Notification;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXCheckBox;
@@ -36,9 +37,8 @@ public class LoginController implements Initializable {
     Stage window;
 
     // </editor-fold>
-    
     // <editor-fold desc="FXML variables zone">
-     @FXML
+    @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
@@ -84,9 +84,7 @@ public class LoginController implements Initializable {
     private JFXButton btn_more;
 
     // </editor-fold>
-    
     // <editor-fold desc="FXML functions zone">
-    
     @FXML
     void btn_exitClick(ActionEvent event) {
         StaticFunctions.ExitEvent(AnchorPaneMain);
@@ -94,28 +92,25 @@ public class LoginController implements Initializable {
 
     @FXML
     void btn_homeClick(ActionEvent event) {
-        
-    }
 
+    }
 
     @FXML
     void btn_moreClick(ActionEvent event) {
 
     }
 
-
     @FXML
     void toggle_modeClick(ActionEvent event) {
-          if (toggle_mode.isSelected()) {
+        if (toggle_mode.isSelected()) {
             StaticFunctions.IsDarkMode = true;
         } else {
             StaticFunctions.IsDarkMode = false;
-          
+
         }
         form = "Login";
         madeFadeOut(event);
     }
-    
 
     @FXML
     void btn_loginClick(ActionEvent event) {
@@ -125,22 +120,26 @@ public class LoginController implements Initializable {
         if (user_name.compareTo("123") == 0) {
 
             JFXButton btn = new JFXButton("OK");
-            btn.setOnAction(e -> {
-                StaticFunctions.stack_link.push("Login");
+            btn.setOnAction(e -> {                
                 System.out.println(StaticFunctions.IsDarkMode);
                 form = "Home";
                 madeFadeOut(event);
 
             });
 
-            JFXDialog dialog = StaticFunctions.getDialogStatic(stack_pane, "Thông báo", "Đăng nhập thành công", btn);
-            dialog.show();
-            
+            //JFXDialog dialog = StaticFunctions.getDialogStatic(stack_pane, "Thông báo", "Đăng nhập thành công", btn);
+            //dialog.show();
+            PopUp_Notification.run("Thông báo", "Đăng nhập thành công", "SUCCESS");
+            System.out.println(StaticFunctions.IsDarkMode);
+            form = "Home";
+            madeFadeOut(event);
+
         } else {
 
-            JFXDialog dialog = StaticFunctions.getDialog(stack_pane, "Thông báo", "Đăng nhập thất bại");
-            dialog.show();
-           
+            //JFXDialog dialog = StaticFunctions.getDialog(stack_pane, "Thông báo", "Đăng nhập thất bại");
+            // dialog.show();
+            PopUp_Notification.run("Thông báo", "Đăng nhập thất bại", "FAIL");
+
         }
     }
 
@@ -164,9 +163,7 @@ public class LoginController implements Initializable {
     @FXML
     void cb_rememberCheck(ActionEvent event) {
         // cần code sự kiện quên mật khẩu
-        
-        
-        
+
         if (cb_remember.isSelected()) {
             cb_remember.setText("    Đã ghi nhớ");
         } else {
@@ -175,10 +172,9 @@ public class LoginController implements Initializable {
     }
 
     // </editor-fold>
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
+
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
@@ -194,7 +190,7 @@ public class LoginController implements Initializable {
                 default:
                     break;
             }
-        });  
+        });
         txt_user.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case TAB:
@@ -206,9 +202,9 @@ public class LoginController implements Initializable {
                     break;
             }
         });
-        
+
         txt_password.setOnKeyPressed(e -> {
-            switch (e.getCode()) {             
+            switch (e.getCode()) {
                 case ENTER:
                     btn_login.fire();
                 default:
@@ -217,7 +213,7 @@ public class LoginController implements Initializable {
         });
     }
 
-    public void madeFadeOut(ActionEvent event) {     
+    public void madeFadeOut(ActionEvent event) {
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);

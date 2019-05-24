@@ -20,6 +20,7 @@
 
 <AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #ECECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
    <children>
+      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" stylesheets="@../css/label.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="416.0" layoutX="666.0" layoutY="129.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="407.0" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="120.0" />
       <BorderPane layoutX="57.0" layoutY="-13.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -153,6 +154,5 @@
          </font>
       </Label>
       <JFXButton fx:id="btn_more" layoutX="80.0" layoutY="372.0" maxHeight="40.0" maxWidth="160.0" minHeight="40.0" minWidth="160.0" onAction="#btn_moreClick" prefHeight="40.0" prefWidth="160.0" stylesheets="@../css/button_darkmode.css" text="Tìm hiểu thêm" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="372.0" />
-      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" stylesheets="@../css/label.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
    </children>
 </AnchorPane>

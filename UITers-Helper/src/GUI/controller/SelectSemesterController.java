@@ -120,7 +120,7 @@ public class SelectSemesterController implements Initializable {
 
             StaticFunctions.IsDarkMode = false;
         }
-        form = "SelectSemeste";
+        form = "SelectSemester";
         madeFadeOut(event);
     }
 

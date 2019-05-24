@@ -11,6 +11,7 @@ import DTO.Calender;
 import Exception.NotLoggedInException;
 import GUI.Calendar;
 import GUI.NgayThang;
+import GUI.PopUp_Notification;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
@@ -38,6 +39,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -55,6 +57,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.apache.xalan.lib.ExsltDatetime;
+import org.controlsfx.control.Notifications;
 // </editor-fold>
 
 public class HomeController implements Initializable {
@@ -351,7 +354,7 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_notification_Click(ActionEvent event) {
-        // code cái thông báo
+       PopUp_Notification.loadNotification();
     }
 
     @FXML

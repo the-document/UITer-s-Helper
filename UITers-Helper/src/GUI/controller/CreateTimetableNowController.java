@@ -186,7 +186,7 @@ public class CreateTimetableNowController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
-          StaticFunctions.stack_link.push("CreateTimetableNow");
+        StaticFunctions.stack_link.push("CreateTimetableNow");
         form = "Setting";
         madeFadeOut(event);
     }
