@@ -112,10 +112,7 @@ public class HomeController implements Initializable {
     @FXML
     private Label lbl_day;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> Fix so many form
     @FXML
     private JFXButton btn_back;
 
@@ -544,9 +541,7 @@ public class HomeController implements Initializable {
         window.show();
     }
 
-<<<<<<< HEAD
 
-=======
     public static MenuItem getMenuItem(String content) {
         MenuItem item = new MenuItem();
         item.setText(content);
@@ -557,11 +552,7 @@ public class HomeController implements Initializable {
         }
         return item;
     }
-<<<<<<< HEAD
->>>>>>> Fix so many form
-=======
 
->>>>>>> 99%
     public void init_lv_lichtrinh() {
         //Lịch học và vị trí phòng học.
         for (int i = 0; i < 4; i++) {
