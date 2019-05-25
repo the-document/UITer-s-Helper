@@ -27,6 +27,7 @@
     -fx-font-family: "Segoe UI";  
     -fx-font-color: white;
     -fx-text-fill: white;
+
 }
 
 .button:focused{
