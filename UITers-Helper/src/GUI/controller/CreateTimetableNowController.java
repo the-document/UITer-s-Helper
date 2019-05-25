@@ -9,6 +9,7 @@ import DTO.TimeTable;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -28,14 +29,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import static javax.swing.text.StyleConstants.Background;
@@ -58,16 +54,31 @@ public class CreateTimetableNowController implements Initializable {
     private StackPane stack_pane;
 
     @FXML
-    private JFXComboBox<String> cbb_user;
+    private JFXButton btn_home;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton lbl_path;
+
+    @FXML
+    private JFXButton btn_exit;
 
     @FXML
     private JFXButton btn_minimize;
 
     @FXML
-    private JFXButton btn_exit;
+    private JFXComboBox<String> cbb_user;
+
+    @FXML
+    private JFXButton btn_setting;
+
+    @FXML
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
+    @FXML
+    private Label lb_t3;
 
     @FXML
     private JFXButton btn_t3_123;
@@ -82,6 +93,9 @@ public class CreateTimetableNowController implements Initializable {
     private JFXButton btn_t2_910;
 
     @FXML
+    private Label lb_t2;
+
+    @FXML
     private JFXButton btn_t2_123;
 
     @FXML
@@ -94,6 +108,9 @@ public class CreateTimetableNowController implements Initializable {
     private JFXButton btn_t3_910;
 
     @FXML
+    private Label lb_t4;
+
+    @FXML
     private JFXButton btn_t4_123;
 
     @FXML
@@ -104,6 +121,9 @@ public class CreateTimetableNowController implements Initializable {
 
     @FXML
     private JFXButton btn_t4_910;
+
+    @FXML
+    private Label lb_t5;
 
     @FXML
     private JFXButton btn_t5_123;
@@ -124,10 +144,16 @@ public class CreateTimetableNowController implements Initializable {
     private JFXButton btn_t6_910;
 
     @FXML
+    private Label lb_t6;
+
+    @FXML
     private JFXButton btn_t6_123;
 
     @FXML
     private JFXButton btn_t6_45;
+
+    @FXML
+    private Label lb_t7;
 
     @FXML
     private JFXButton btn_t7_123;
@@ -142,34 +168,56 @@ public class CreateTimetableNowController implements Initializable {
     private JFXButton btn_t7_910;
 
     @FXML
-    private Label lb_t2;
-
-    @FXML
-    private Label lb_t3;
-
-    @FXML
-    private Label lb_t4;
-
-    @FXML
-    private Label lb_t5;
-
-    @FXML
-    private Label lb_t6;
-
-    @FXML
-    private Label lb_t7;
-
-    //_____________________________________________________________
-    @FXML
     private Label lb_SubjectNotFound;
 
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
     @FXML
-    void btn_backClick(ActionEvent event) {
+    void btn_homeClick(ActionEvent event) {
+        StaticFunctions.stack_link.push("CreateTimetableNow");
+        form = "Home";
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+        StaticFunctions.stack_link.push("CreateTimetableNow");
+        form = "Setting";
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
         madeFadeOut(event);
     }
+    
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+        if (toggle_mode.isSelected()) {
+       
+            StaticFunctions.IsDarkMode = true;
+          
+        } else {
+            
+            StaticFunctions.IsDarkMode = false;
+          
+        }
+        form = "CreateTimetableNow";
+          madeFadeOut(event);
+    }
+
+   
 
     @FXML
     void btn_exitClick(ActionEvent event) {
@@ -191,7 +239,8 @@ public class CreateTimetableNowController implements Initializable {
         setKeyEvent();
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
-
+        form = "CreateTimeTableNow";
+        lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         //process data to show---------------------------------------
         lb_SubjectNotFound.setText("");
         //MaKeSchedule();
@@ -207,7 +256,7 @@ public class CreateTimetableNowController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:
@@ -234,7 +283,7 @@ public class CreateTimetableNowController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -244,29 +293,29 @@ public class CreateTimetableNowController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+            ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            StaticFunctions.stack_link.push("../view/CreateTimetableNow.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:
@@ -558,21 +607,18 @@ public class CreateTimetableNowController implements Initializable {
         }
     }
 
-    
-    private void LoadSchedule(){
-        if(ThuatToanTaoTKB.listTimeTables.isEmpty())
-        {
+    private void LoadSchedule() {
+        if (ThuatToanTaoTKB.listTimeTables.isEmpty()) {
             lb_SubjectNotFound.setText("Can't create, please choose other day-off");
             return;
         }
-            
-        
+
         for (LopHoc lop : ThuatToanTaoTKB.listTimeTables.get(0).getListLopHocs()) {
-            
-            String textShow=lop.getMaLop()+"\n"
-                    + lop.getTenGiangVien()+ "\n P. "
-                    + lop.getPhong()+"\n"
-                    + lop.getNgayBatDau()+"\n"
+
+            String textShow = lop.getMaLop() + "\n"
+                    + lop.getTenGiangVien() + "\n P. "
+                    + lop.getPhong() + "\n"
+                    + lop.getNgayBatDau() + "\n"
                     + lop.getNgayKetThuc();
 
             switch (lop.getThu()) {
@@ -597,10 +643,8 @@ public class CreateTimetableNowController implements Initializable {
             }
         }
 
-        
         if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
             lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
-            
 
         }
     }
@@ -630,11 +674,9 @@ public class CreateTimetableNowController implements Initializable {
             table.Export();
         });
 
-        
-        if(!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty())
-        {
-            lb_SubjectNotFound.setText("Những môn học không mở: "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
-            System.out.println("Subject not open in this semeter: "+ThuatToanTaoTKB.dsMaMonNotFound.size()+" - "+ThuatToanTaoTKB.dsMaMonNotFound.toString());
+        if (!ThuatToanTaoTKB.dsMaMonNotFound.isEmpty()) {
+            lb_SubjectNotFound.setText("Những môn học không mở: " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
+            System.out.println("Subject not open in this semeter: " + ThuatToanTaoTKB.dsMaMonNotFound.size() + " - " + ThuatToanTaoTKB.dsMaMonNotFound.toString());
 
         }
 

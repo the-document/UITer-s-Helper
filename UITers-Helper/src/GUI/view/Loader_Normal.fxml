@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="AnchorPaneMain" maxHeight="660.0" maxWidth="1174.0" minHeight="660.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #ECECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoaderController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="426.0" layoutY="286.0" prefHeight="53.0" prefWidth="321.0" stylesheets="@../css/header_normal.css" text="UIT DESKTOP" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="426.0" AnchorPane.rightAnchor="427.0">
+         <font>
+            <Font name="Segoe UI" size="36.0" />
+         </font>
+      </Label>
+      <Circle fill="WHITE" layoutX="587.0" layoutY="250.0" opacity="0.3" radius="30.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="557.0" />
+      <JFXSpinner fx:id="spn_loader" layoutX="562.0" layoutY="363.0" progress="0.0" styleClass="materialDesign-percent" stylesheets="@../css/spinner_normal.css" />
+      
+        <JFXButton fx:id="btn_showResult" layoutX="519.0" layoutY="430.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_showResult" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_darkmode.css" text="Xem kết quả" textFill="WHITE" AnchorPane.leftAnchor="519.0" AnchorPane.rightAnchor="519.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <HBox alignment="CENTER_LEFT" maxWidth="1174.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="1174.0" style="-fx-background-color: D4D4D4;">
+         <children>
+            <Region />
+            <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_exit_normal.css" text="X" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_minimize_normal.css" text="-" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </JFXButton>
+                  <Region prefHeight="40.0" prefWidth="10.0" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+   </children>
+   
+</AnchorPane>

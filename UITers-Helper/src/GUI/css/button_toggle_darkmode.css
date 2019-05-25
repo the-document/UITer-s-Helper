@@ -1,0 +1,19 @@
+.jfx-toggle-button {
+    -jfx-toggle-color: #18A0FB;
+    -jfx-untoggle-color: #FAFAFA;
+    -jfx-toggle-line-color: #999999;
+    -jfx-untoggle-line-color: #999999;
+    -jfx-size: 10.0;
+    -jfx-disable-visual-focus: false;
+}
+
+.jfx-toggle-button:hover {
+    -jfx-opacity: 0.8;
+   -jfx-toggle-color: #18A0FB;
+    -jfx-untoggle-color: #FAFAFA;
+    -jfx-toggle-line-color: #999999;
+    -jfx-untoggle-line-color: #999999;
+    -jfx-size: 10.0;
+    -jfx-disable-visual-focus: false;
+}
+

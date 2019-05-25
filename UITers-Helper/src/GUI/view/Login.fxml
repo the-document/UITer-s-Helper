@@ -4,51 +4,77 @@
 <?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #252322;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.LoginController">
    <children>
-      <ImageView fitHeight="660.0" fitWidth="1174.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/background.jpg" />
-         </image>
-      </ImageView>
+      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" stylesheets="@../css/label.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="416.0" layoutX="666.0" layoutY="129.0" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="407.0" AnchorPane.bottomAnchor="124.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="120.0" />
       <BorderPane layoutX="57.0" layoutY="-13.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
-            <HBox alignment="CENTER_RIGHT" prefHeight="40.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_LEFT" maxWidth="1299.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="1299.0" style="-fx-background-color: #1D1B1A;" BorderPane.alignment="CENTER">
                <children>
-                  <JFXButton fx:id="btn_minimize" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
+                  <JFXButton fx:id="btn_home" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_homeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_home.css">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
                   </JFXButton>
-                  <JFXButton fx:id="btn_exit" layoutX="930.0" layoutY="10.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </JFXButton>
+                  <Region />
+                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </JFXButton>
+                        <Region prefHeight="40.0" prefWidth="10.0" />
+                        <JFXButton fx:id="btn_setting2" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_setting_new.css" text=".">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXToggleButton fx:id="toggle_mode" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#toggle_modeClick" prefHeight="40.0" prefWidth="40.0" selected="true" stylesheets="@../css/button_toggle_darkmode.css" text="." textFill="WHITE" toggleColor="#fba018" toggleLineColor="#19433f" unToggleColor="WHITE" unToggleLineColor="#4d3c3c">
+                           <font>
+                              <Font name="Segoe UI" size="0.1" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </JFXToggleButton>
+                     </children>
+                  </HBox>
                </children>
             </HBox>
          </top>
       </BorderPane>
-      <VBox layoutX="725.0" layoutY="154.0" prefHeight="347.0" prefWidth="325.0" AnchorPane.leftAnchor="725.0" AnchorPane.rightAnchor="124.0">
+      <VBox layoutX="727.0" layoutY="154.0" prefHeight="347.0" prefWidth="325.0" AnchorPane.leftAnchor="727.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="154.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@../css/header.css">
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label alignment="CENTER" text="Đăng nhập" textFill="WHITE">
+                  <Label alignment="CENTER" prefHeight="23.0" prefWidth="335.0" stylesheets="@../css/label.css" text="Đăng nhập" textFill="WHITE">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -89,15 +115,8 @@
             </HBox>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Hyperlink fx:id="btn_lose" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#btn_loseClick" prefHeight="35.0" prefWidth="103.0" stylesheets="@../css/linklabel.css" text="Quên mật khẩu?" textAlignment="CENTER" textFill="WHITE">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </Hyperlink>
-                  <JFXButton fx:id="btn_login" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_loginClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button.css" text="Đăng nhập" textFill="WHITE">
+                  <JFXCheckBox fx:id="cb_remember" checkedColor="#18a0fb" onAction="#cb_rememberCheck" prefHeight="23.0" prefWidth="192.0" stylesheets="@../css/check_box.css" text="    Nhớ mật khẩu" textFill="WHITE" unCheckedColor="WHITE" />
+                  <JFXButton fx:id="btn_login" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_loginClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_darkmode.css" text="Đăng nhập" textFill="WHITE">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -107,32 +126,33 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+            <HBox alignment="CENTER" prefHeight="60.0" prefWidth="325.0">
                <children>
-                  <JFXCheckBox fx:id="cb_remember" checkedColor="#18a0fb" onAction="#cb_rememberCheck" text="Nhớ mật khẩu" textFill="WHITE" unCheckedColor="WHITE" />
+                  <Hyperlink fx:id="btn_lose" alignment="CENTER_RIGHT" contentDisplay="RIGHT" onAction="#btn_loseClick" prefHeight="40.0" prefWidth="156.0" stylesheets="@../css/link_label.css" text="Quên mật khẩu?" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Hyperlink>
                </children>
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </HBox>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Button fx:id="btn_setting" alignment="CENTER" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#btn_settingClick" prefHeight="50.0" prefWidth="50.0" styleClass="setting" stylesheets="@../css/button_setting.css" />
-               </children>
-            </HBox>
          </children>
       </VBox>
-      <Label layoutX="80.0" layoutY="232.0" prefHeight="80.0" prefWidth="493.0" text="Chào mừng đến với UIT Helper" textFill="WHITE" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="232.0">
+      <Label layoutX="80.0" layoutY="232.0" prefHeight="80.0" prefWidth="493.0" stylesheets="@../css/big_label.css" text="Chào mừng đến với UIT Helper" textFill="WHITE" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="232.0">
          <font>
             <Font name="Segoe UI" size="35.0" />
          </font>
       </Label>
-      <Label layoutX="80.0" layoutY="312.0" prefHeight="40.0" prefWidth="520.0" text="Phần mềm quản lý, tạo lập thời khóa biểu cho bạn" textFill="WHITE" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="312.0">
+      <Label layoutX="80.0" layoutY="312.0" prefHeight="40.0" prefWidth="520.0" stylesheets="@../css/label.css" text="Phần mềm quản lý, tạo lập thời khóa biểu cho bạn" textFill="WHITE" AnchorPane.bottomAnchor="308.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="312.0">
          <font>
             <Font name="Segoe UI" size="12.0" />
          </font>
       </Label>
-      <JFXButton fx:id="btn_more" layoutX="80.0" layoutY="372.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_moreClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_special.css" text="Tìm hiểu thêm" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="372.0" />
-      <StackPane fx:id="stack_pane" disable="true" layoutX="-356.0" layoutY="69.0" maxWidth="1174.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" stylesheets="@../css/label.css" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <JFXButton fx:id="btn_more" layoutX="80.0" layoutY="372.0" maxHeight="40.0" maxWidth="160.0" minHeight="40.0" minWidth="160.0" onAction="#btn_moreClick" prefHeight="40.0" prefWidth="160.0" stylesheets="@../css/button_darkmode.css" text="Tìm hiểu thêm" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="372.0" />
    </children>
 </AnchorPane>

@@ -1,5 +1,9 @@
 .button{
-    -fx-alignment:left;
+<<<<<<< HEAD
+
+=======
+>>>>>>> cced7571eabe34434626ead882c556acd335408f
+    -fx-alignment: center-left;
     -fx-background-color: #1D1B1A;
     -fx-border-color: white;
     -fx-border-width: 0 0 0 0;
@@ -16,7 +20,8 @@
 }
 
 .button:hover{
-    -fx-alignment: left;
+
+    -fx-alignment: center-left;
     -fx-background-color: #1D1B1A;
     -fx-opacity: 0.8;
     -fx-border-color: #18A0FB;
@@ -30,7 +35,7 @@
 }
 
 .button:focused{
-     -fx-alignment:left;
+    -fx-alignment: center-left;
     -fx-background-color: #18A0FB;
     -fx-border-color: #18A0FB;
     -fx-border-width: 0 0 0 0;

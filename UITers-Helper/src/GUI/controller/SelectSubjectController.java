@@ -12,6 +12,7 @@ import com.jfoenix.controls.JFXChipView;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXToggleButton;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -43,122 +44,128 @@ public class SelectSubjectController implements Initializable {
     // <editor-fold desc="Static variables zone">
     String form;
     Stage window;
-    
+
     //Phuc_______________________________________________________
     List<NganhHoc> lsNganhHoc;
     List<MonHoc> lsMonHocs;
 
     // </editor-fold>
-    
     // <editor-fold desc="FXML variabls zone">
     @FXML
     private AnchorPane AnchorPaneMain;
 
     @FXML
-    private JFXListView<Label> lv_subject;
+    private StackPane stack_pane;
 
     @FXML
-    private JFXTextField txt_subject;
+    private JFXListView<Label> lv_subject;
 
     @FXML
     private JFXComboBox<String> cbb_subject;
 
     @FXML
+    private JFXTextField txt_subject;
+
+    @FXML
     private JFXButton btn_add;
+
+    @FXML
+    private Label lb_Notify;
 
     @FXML
     private JFXChipView<String> cv_subject;
 
     @FXML
+    private JFXButton btn_delete;
+
+    @FXML
     private JFXButton btn_next;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton btn_home;
+
+    @FXML
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
 
     @FXML
     private JFXButton btn_minimize;
-    
-    @FXML
-    private JFXButton btn_delete;
 
     @FXML
     private JFXComboBox<String> cbb_user;
 
     @FXML
-    private StackPane stack_pane;
-    
+    private JFXButton btn_setting;
+
     @FXML
-    private Label lb_Notify;
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
 
     // </editor-fold>
-    
-    
     // <editor-fold desc="FXML functions zone">
     @FXML
-    void btn_addClick(ActionEvent event)  {
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_addClick(ActionEvent event) {
         String key = txt_subject.getText();
         txt_subject.clear();
         //check empty-----------------------------------------
-        if(key.isEmpty())
-        {
+        if (key.isEmpty()) {
             lb_Notify.setText("Mã môn không được để trống.");
             lb_Notify.setVisible(true);
             return;
         }
-        
+
         //check valid-----------------------------------------
-        MonHocBLL mhbll=new MonHocBLL();
+        MonHocBLL mhbll = new MonHocBLL();
         MonHoc monHoc;
         try {
             monHoc = mhbll.GetMonHoc(key);
         } catch (SQLException ex) {
             Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
-            
+
             lb_Notify.setText("Lỗi kết nối đến hệ thống.");
             lb_Notify.setVisible(true);
             return;
         }
-        if(monHoc==null){
+        if (monHoc == null) {
             lb_Notify.setText("Mã môn không tồn tại trong hệ thống.");
             lb_Notify.setVisible(true);
             return;
         }
-                
+
         //add to list ui and ls logic------------------------
-        int checkCount=Global.lsMonHocSelected.size();
-            
-        Global.lsMonHocSelected.put(key,monHoc);
+        int checkCount = Global.lsMonHocSelected.size();
+
+        Global.lsMonHocSelected.put(key, monHoc);
         System.out.println(Global.lsMonHocSelected.toString());
-            
+
         //check add sucess or exist------------------------------------
-        if(checkCount!=Global.lsMonHocSelected.size())
-        {
-            cv_subject.getChips().add(key+"("+monHoc.getTenMonHoc()+")");      
+        if (checkCount != Global.lsMonHocSelected.size()) {
+            cv_subject.getChips().add(key + "(" + monHoc.getTenMonHoc() + ")");
             SetVisibleNextButton();
         }
-        
+
         System.out.println(Global.lsMonHocSelected.toString());
         lb_Notify.setVisible(false);
     }
 
     @FXML
-    void btn_backClick(ActionEvent event) {
-        form = StaticFunctions.stack_link.pop();
-        madeFadeOut(event);
-    }
-    
-    @FXML
     void btn_deleteClick(ActionEvent event) {
         cv_subject.getChips().clear();
-        
+
         //--------------------------------------------------
         Global.lsMonHocSelected.clear();
         SetVisibleNextButton();
     }
-
 
     @FXML
     void btn_exitClick(ActionEvent event) {
@@ -174,12 +181,11 @@ public class SelectSubjectController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-        
+
         //------------------------------------------
-        
-        StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
-        form = "../view/SelectMethodCreate.fxml";
-        madeFadeOut(event); 
+        StaticFunctions.stack_link.push("SelectSubject");
+        form = "SelectMethodCreate";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -188,36 +194,34 @@ public class SelectSubjectController implements Initializable {
     }
 
     // </editor-fold>
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
-
+        form = "SelectSubject";
+        lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         btn_next.setVisible(false);
         lb_Notify.setVisible(false);
         lv_subject.getItems().clear();
-        Global.NGANHHOC="";
+        Global.NGANHHOC = "";
         Global.lsMonHocSelected.clear();
-        
-        
+
         String text = "Xin chào, 17520433";
         init_cbb_user(text);
-        
+
         try {
             init_cbb_subjecT();
         } catch (SQLException ex) {
-            System.out.println("ERR load Nganh Hoc");
+            System.out.println("ERROR load Nganh Hoc");
             Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         init_lv_subject();
         setKeyEvent();
 
     }
-    
-    
+
     public void madeFadeOut(ActionEvent event) {
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
@@ -235,8 +239,7 @@ public class SelectSubjectController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -247,12 +250,11 @@ public class SelectSubjectController implements Initializable {
     public void setKeyEvent() {
         AnchorPaneMain.setOnKeyPressed(e -> {
             switch (e.getCode()) {
-
                 case ESCAPE:
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:
@@ -276,32 +278,28 @@ public class SelectSubjectController implements Initializable {
             }
         });
     }
-    
-    public void init_lv_subject() {         
-        try
-        {
-           LoadAllSubjectOfUser();
-        }
-        catch (SQLException e)
-        {
-            Label MonHocLabel = new Label("No connect");
-            lv_subject.getItems().addAll(MonHocLabel);         
+
+    public void init_lv_subject() {
+        try {
+            LoadAllSubjectOfUser();
+        } catch (SQLException e) {
+            Label MonHocLabel = new Label("No connection");
+            lv_subject.getItems().addAll(MonHocLabel);
         }
 
         lv_subject.setOnMouseClicked(e -> {
-            
+
             //add subject here--------------------------------
-            int checkCount=Global.lsMonHocSelected.size();
-            
-            MonHoc monHoc=lsMonHocs.get(lv_subject.getSelectionModel().getSelectedIndex());
-            Global.lsMonHocSelected.put(monHoc.getMaMonHoc(),monHoc);
+            int checkCount = Global.lsMonHocSelected.size();
+
+            MonHoc monHoc = lsMonHocs.get(lv_subject.getSelectionModel().getSelectedIndex());
+            Global.lsMonHocSelected.put(monHoc.getMaMonHoc(), monHoc);
             System.out.println(Global.lsMonHocSelected.toString());
-            
+
             //check add sucess or exist------------------------------------
-            if(checkCount!=Global.lsMonHocSelected.size())
-            {
+            if (checkCount != Global.lsMonHocSelected.size()) {
                 String id = lv_subject.getSelectionModel().getSelectedItem().getText();
-                cv_subject.getChips().add(id);                      
+                cv_subject.getChips().add(id);
                 SetVisibleNextButton();
             }
             System.out.println(Global.lsMonHocSelected.toString());
@@ -316,23 +314,22 @@ public class SelectSubjectController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            
-        StaticFunctions.stack_link.push("../view/SelectSubject.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:
@@ -343,17 +340,17 @@ public class SelectSubjectController implements Initializable {
     }
 
     public void init_cbb_subjecT() throws SQLException {
-        
+
         //lay tat ca nganh hoc dang co------------------------------------
-        NganhHocBLL nhbll=new NganhHocBLL();
-        lsNganhHoc=new ArrayList<NganhHoc>();
-        lsNganhHoc=nhbll.GetAllNganhHoc();
-        
-        List<String> lsNameNganhHoc=new ArrayList<String>();
+        NganhHocBLL nhbll = new NganhHocBLL();
+        lsNganhHoc = new ArrayList<NganhHoc>();
+        lsNganhHoc = nhbll.GetAllNganhHoc();
+
+        List<String> lsNameNganhHoc = new ArrayList<String>();
         for (NganhHoc nh : lsNganhHoc) {
             lsNameNganhHoc.add(nh.getTenNganh());
         }
-        
+
         ObservableList<String> list = FXCollections.observableArrayList(lsNameNganhHoc);
 
         cbb_subject.setPromptText("Chọn khoa");
@@ -362,54 +359,84 @@ public class SelectSubjectController implements Initializable {
         cbb_subject.setItems(list);
 
         cbb_subject.setOnAction(e -> {
-            
-            int index=cbb_subject.getSelectionModel().getSelectedIndex();
+
+            int index = cbb_subject.getSelectionModel().getSelectedIndex();
             Global.NGANHHOC = lsNganhHoc.get(index).getMaNganh();
-              
+
             //reload subject theo khoa-------------------------------
-            try {    
+            try {
                 LoadAllSubjectOfUser();
             } catch (SQLException ex) {
                 Logger.getLogger(SelectSubjectController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
+
             //setsize------------------------------------
-            int c=cbb_subject.getItems().size() ;
-            c=c<5?c:5;
+            int c = cbb_subject.getItems().size();
+            c = c < 5 ? c : 5;
             cbb_subject.setVisibleRowCount(c);
         });
-    
 
     }
 
     //-----------------------------------------------------------------
-    private void LoadAllSubjectOfUser() throws SQLException{
-        
+    private void LoadAllSubjectOfUser() throws SQLException {
+
         lv_subject.getItems().clear();
-        
-        MonHocBLL mhbll = new MonHocBLL();       
+
+        MonHocBLL mhbll = new MonHocBLL();
         lsMonHocs = mhbll.GetAllMonHoc(Global.MSSV, Global.NGANHHOC, Global.HOCKY);
-        
+
         if (lsMonHocs != null) {
             for (MonHoc m : lsMonHocs) {
                 Label MonHocLabel = new Label(m.getMaMonHoc() + " - " + m.getTenMonHoc());
                 lv_subject.getItems().addAll(MonHocLabel);
             }
-            
-            int h=lv_subject.getItems().size() * 40;
-            h=h<240?h:240;
+
+            int h = lv_subject.getItems().size() * 40;
+            h = h < 240 ? h : 240;
             lv_subject.setPrefHeight(h);
         } else {
-            Label MonHocLabel = new Label("No connect");
+            Label MonHocLabel = new Label("No connection");
             lv_subject.getItems().addAll(MonHocLabel);
         }
     }
-    
-    private void SetVisibleNextButton(){
-        if(!cv_subject.getChips().isEmpty())
+
+    private void SetVisibleNextButton() {
+        if (!cv_subject.getChips().isEmpty()) {
             btn_next.setVisible(true);
-        else
+        } else {
             btn_next.setVisible(false);
+        }
+    }
+
+    @FXML
+    void btn_homeClick(ActionEvent event) {
+        StaticFunctions.stack_link.push("SelectSubject");
+        form = "Home";
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+        StaticFunctions.stack_link.push("SelectSemester");
+        form = "Setting";
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+        if (toggle_mode.isSelected()) {
+            StaticFunctions.IsDarkMode = true;
+            madeFadeOut(event);
+        } else {
+            StaticFunctions.IsDarkMode = false;
+        }
+        form = "SelectSubject";
+        madeFadeOut(event);
     }
 }

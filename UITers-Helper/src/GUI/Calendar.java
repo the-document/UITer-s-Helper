@@ -1,24 +1,24 @@
 package GUI;
 public class Calendar {
-	int a[][] = new int[6][7];
+	String a[][] = new String[6][7];
 	public Calendar()
 	{
 		for(int i = 0; i< 6; i++)
 		{
 			for(int j = 0; j< 7; j++)
 			{
-				this.a[i][j] = 0;
+				this.a[i][j] = "";
 			}
 		}
 	}
-	public int [][] Xuat(int first_day_in_month, int count_day_of_month)
+	public String [][] Xuat(int first_day_in_month, int count_day_of_month)
 	{
 		this.XuLy(first_day_in_month, count_day_of_month);
 		for(int i = 0; i< 6; i++)
 		{
 			for(int j = 0; j< 7; j++)
 			{
-				if (this.a[i][j] == 0)
+				if (this.a[i][j].compareTo("") == 0)
 				{
 					System.out.print(" \t");
 					
@@ -49,7 +49,7 @@ public class Calendar {
 				i++;
 				
 			}
-			a[i][j] = day++;
+			a[i][j] = Integer.toString(day++);
 			j++;
 		}
 		

@@ -11,22 +11,22 @@ import DTO.Calender;
 import Exception.NotLoggedInException;
 import GUI.Calendar;
 import GUI.NgayThang;
+import GUI.PopUp_Notification;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
+import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
-import java.io.DataOutputStream;
-import java.io.FileOutputStream;
+
+import com.jfoenix.controls.JFXToggleButton;
+
 import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Month;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,11 +39,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Bounds;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -54,6 +59,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Popup;
 import javafx.util.Duration;
+import org.apache.xalan.lib.ExsltDatetime;
+import org.controlsfx.control.Notifications;
 // </editor-fold>
 
 public class HomeController implements Initializable {
@@ -66,11 +73,7 @@ public class HomeController implements Initializable {
     int isExpandDangKy = 1;
     int currentMonth = java.time.LocalDate.now().getMonthValue();
     int currentYear = java.time.LocalDate.now().getYear();
-    
-    // Giống như phân quyền chmod
-    int isExpandCalendar = 1;
-    int isExpandLichTrinh = 0;
-    int isExpandThemLichTrinh = 0; // đáng lẽ là 4 mà thôi cho 2 cái đầu expand
+
     //Danh sách các courses hiện có của người dùng.
     ArrayList<Course> curCourses;
 
@@ -86,7 +89,7 @@ public class HomeController implements Initializable {
     private JFXButton btn_home;
 
     @FXML
-    private Label lbl_path;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -109,8 +112,6 @@ public class HomeController implements Initializable {
     @FXML
     private Label lbl_day;
 
-    @FXML
-    private JFXButton btn_expand;
 
     @FXML
     private JFXButton btn_back;
@@ -147,6 +148,7 @@ public class HomeController implements Initializable {
 
     @FXML
     private JFXButton btn_day21;
+
 
     @FXML
     private JFXButton btn_day31;
@@ -257,25 +259,7 @@ public class HomeController implements Initializable {
     private JFXListView<Label> lv_holiday;
 
     @FXML
-    private JFXListView<Label> lv_lictrinh;
-
-    @FXML
-    private Label lbl_themlichtrinh;
-
-    @FXML
-    private VBox panel_themlichtrinh;
-
-    @FXML
-    private JFXTextField txt_time;
-
-    @FXML
-    private JFXTextField txt_desc;
-
-    @FXML
-    private JFXTextField txt_type;
-
-    @FXML
-    private JFXButton btn_add;
+    private JFXListView<Label> lv_lichtrinh;
 
     @FXML
     private Label lbl_thongbao;
@@ -301,102 +285,17 @@ public class HomeController implements Initializable {
     @FXML
     private Button btn_create2;
 
+    @FXML
+    private JFXButton btn_addLichtrinh;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
     // </editor-fold>
     // <editor-fold desc="FXML functions zone">
-//    @FXML
-//    void btn_expandChungClick(ActionEvent event) {
-//        if (isExpandChung == 1) {
-//            lv_news.setVisible(false);
-//            lv_news.setMaxHeight(0f);
-//            lv_news.setMinHeight(0f);
-//            isExpandChung = 0;
-//            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
-//            btn_expandChung.getStylesheets().add(css);
-//        } else {
-//            lv_news.setVisible(true);
-//            lv_news.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandDeadline)));
-//            lv_news.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandDeadline)));
-//            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
-//            btn_expandChung.getStylesheets().clear();
-//            btn_expandChung.getStylesheets().add(css);
-//            isExpandChung = 1;
-//            if (isExpandDangKy == 1) {
-//                lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//                lv_dangky.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            }
-//            if (isExpandDeadline == 1) {
-//                lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//                lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            }
-//        }
-//    }
-//
-//    @FXML
-//    void btn_expandDangKyClick(ActionEvent event) {
-//        if (isExpandDangKy == 1) {
-//            lv_dangky.setVisible(false);
-//            lv_dangky.setMaxHeight(0f);
-//            lv_dangky.setMinHeight(0f);
-//            isExpandDangKy = 0;
-//            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
-//            btn_expandDangKy.getStylesheets().add(css);
-//        } else {
-//            lv_dangky.setVisible(true);
-//            lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            lv_dangky.setMaxHeight(3060 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            btn_expandDangKy.getStylesheets().clear();
-//            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
-//            btn_expandDangKy.getStylesheets().add(css);
-//            isExpandDangKy = 1;
-//            if (isExpandChung == 1) {
-//                lv_news.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//                lv_news.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            }
-//            if (isExpandDeadline == 1) {
-//                lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//                lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            }
-//
-//        }
-//    }
-//
-//    @FXML
-//    void btn_expandDeadlineClick(ActionEvent event) {
-//        if (isExpandDeadline == 1) {
-//            lv_deadline.setVisible(false);
-//            lv_deadline.setMinHeight(0f);
-//            lv_deadline.setMaxHeight(0f);
-//            isExpandDeadline = 0;
-//            String css = this.getClass().getResource("../css/button_down.css").toExternalForm();
-//            btn_expandDeadline.getStylesheets().add(css);
-//        } else {
-//            lv_deadline.setVisible(true);
-//            lv_deadline.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            lv_deadline.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            btn_expandDeadline.getStylesheets().clear();
-//            isExpandDeadline = 1;
-//            String css = this.getClass().getResource("../css/button_up.css").toExternalForm();
-//            btn_expandDeadline.getStylesheets().add(css);
-//            if (isExpandDangKy == 1) {
-//                lv_dangky.setMinHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//                lv_dangky.setMaxHeight(360 / (1 + (isExpandChung) + (isExpandDeadline)));
-//            }
-//            if (isExpandChung == 1) {
-//                lv_news.setMinHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//                lv_news.setMaxHeight(360 / (1 + (isExpandDangKy) + (isExpandChung)));
-//            }
-//
-//        }
-//    }
-//    @FXML
-//    void btn_backClick(ActionEvent event) {
-//        form = StaticFunctions.stack_link.pop();
-//        madeFadeOut(event);
-//
-//    }
     @FXML
     void btn_newClick(ActionEvent event) {
-
+        init_lv_deadline();
     }
 
     @FXML
@@ -406,7 +305,7 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_restClick(ActionEvent event) {
-
+        init_lv_deadline();
     }
 
     @FXML
@@ -419,33 +318,33 @@ public class HomeController implements Initializable {
         initCalendar(1, currentMonth, currentYear);
     }
 
+
     @FXML
     void btn_createClick(MouseEvent event) {
-        System.err.println("a");
+        // Do panel ko có action evnet nên phải dùng tạm cái này
         btn_create2.fire();
     }
 
     @FXML
+
     void btn_createFire(ActionEvent event) {
-        StaticFunctions.stack_link.push("../view/Home.fxml");
-        form = "../view/SelectSemester.fxml";
+        StaticFunctions.stack_link.push("Home");
+        form = "SelectSemester";
         madeFadeOut(event);
     }
 
     @FXML
-    void btn_exitClick(ActionEvent event) {
-        StaticFunctions.ExitEvent(AnchorPaneMain);
+
+    void btn_notification_Click(ActionEvent event) {
+       PopUp_Notification.loadNotification();
     }
 
     @FXML
-    void btn_expandClick(ActionEvent event) {
-        if (isExpandCalendar == 1) {
-            isExpandCalendar = 0;
-        } else {
-            isExpandCalendar = 1;
-        }
-        ExpandDateTime();
 
+    void btn_settingClick(ActionEvent event) throws IOException {
+        StaticFunctions.stack_link.push("Home");
+        form = "Setting";
+        madeFadeOut(event);
     }
 
     @FXML
@@ -461,8 +360,7 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_homeClick(ActionEvent event) {
-        form = "../view/Home.fxml";
-        madeFadeOut(event);
+
     }
 
     @FXML
@@ -473,40 +371,15 @@ public class HomeController implements Initializable {
     @FXML
     void btn_notification_Click(ActionEvent event) {
 
+       PopUp_Notification.loadNotification();
     }
 
     @FXML
     void btn_settingClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("../view/Subscribed.fxml"));
-        Scene scene = null;
-        try {
-            scene = new Scene(fxmlLoader.load(), 530, 292);
-        } catch (IOException ex) {
-            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
-    }
+        StaticFunctions.stack_link.push("Home");
+        form = "Setting";
+        madeFadeOut(event);
 
-    @FXML
-    void cbb_userClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void lbl_congcuClick(MouseEvent event) {
-
-    }
-
-    @FXML
-    void lbl_dateClick(MouseEvent event) {
-        System.out.println("d");
-        JFXDatePicker pk_date = new JFXDatePicker();
-        pk_date.show();
     }
 
     @FXML
@@ -515,28 +388,39 @@ public class HomeController implements Initializable {
     }
 
     @FXML
+
+    void lbl_congcuClick(MouseEvent event) {
+
+
+    }
+
+    @FXML
+
+    void lbl_dateClick(MouseEvent event) {
+        JFXDatePicker pk_date = new JFXDatePicker();
+        pk_date.show();
+    }
+
+    @FXML
+    void lbl_dayClick(MouseEvent event) {
+
+
+    }
+
+    @FXML
+
     void lbl_thongbaoClick(MouseEvent event) {
 
     }
 
     @FXML
     void lbl_alldayClick(MouseEvent event) {
-        if (isExpandLichTrinh == 2) {
-            isExpandLichTrinh = 0;
-        } else {
-            isExpandLichTrinh = 2;
-        }
-        ExpandDateTime();
+
     }
 
     @FXML
     void lbl_themlichtrinhClick(MouseEvent event) {
-        if (isExpandThemLichTrinh == 4) {
-            isExpandThemLichTrinh = 0;
-        } else {
-            isExpandThemLichTrinh = 4;
-        }
-        ExpandDateTime();
+
     }
 
 //    @FXML
@@ -575,27 +459,34 @@ public class HomeController implements Initializable {
 //        stage.show();
 //    }
     // </editor-fold>
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
+        form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
-
+        form = "Home";
+        lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         String name = "Xin chào, 17520433";
 
         try {
             Global.webCM.hashCode();
         } catch (Exception e) {
-            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,"17520350","1654805354");
+
+            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, "17520350", "1654805354");
         }
-        ExpandDateTime();
         initCalendar(java.time.LocalDate.now().getDayOfMonth(), java.time.LocalDate.now().getMonthValue(), java.time.LocalDate.now().getYear());
         init_cbb_user(name);
-//        init_lv_dangky();
-//        init_lv_deadline();
-//        init_lv_location();
-//        init_lv_news();
+        init_lv_lichtrinh();
+        init_lv_holiday();
+        init_button_thongbao();
+        btn_rest.fire();
     }
 
     public void setKeyEvent() {
@@ -625,7 +516,6 @@ public class HomeController implements Initializable {
     }
 
     public void madeFadeOut(ActionEvent event) {
-
         FadeTransition fade_trands = new FadeTransition();
         fade_trands.setDuration(new Duration(500));
         fade_trands.setNode(AnchorPaneMain);
@@ -644,8 +534,7 @@ public class HomeController implements Initializable {
     }
 
     public void LoadNextScene(ActionEvent event) throws Exception {
-
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -653,34 +542,89 @@ public class HomeController implements Initializable {
         window.show();
     }
 
-//    public void init_lv_location() {
-//        //Lịch học và vị trí phòng học.
-//        for (int i = 0; i < 4; i++) {
-//            Label lb = new Label("LOCA" + i);
-//            lv_location.getItems().addAll(lb);
-//        }
-//        lv_location.setOnMouseClicked(e -> {
-//            String id = lv_location.getSelectionModel().getSelectedItem().getText();
-//            switch (id) {
-//
-//            }
-//        });
-//    }
-//
-//    public void init_lv_news() {
-//        //Đây là mục "Chung".
-//        lv_news.getItems().clear();
-//        for (int i = 0; i < 4; i++) {
-//            Label lb = new Label("NEWS" + i);
-//            // Xử lý sự kiện tại đây
-//            lv_news.getItems().addAll(lb);
-//        }
-//        lv_news.setOnMouseClicked(e -> {
-//            String id = lv_news.getSelectionModel().getSelectedItem().getText();
-//
-//        });
-//    }
-//
+
+    public static MenuItem getMenuItem(String content) {
+        MenuItem item = new MenuItem();
+        item.setText(content);
+        if (StaticFunctions.IsDarkMode == true) {
+            item.setStyle("-fx-text-fill: white;");
+        } else {
+            item.setStyle("-fx-text-fill: black;");
+        }
+        return item;
+    }
+
+
+    public void init_lv_lichtrinh() {
+        //Lịch học và vị trí phòng học.
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("LOCA" + i);
+            lv_lichtrinh.getItems().addAll(lb);
+        }
+        lv_lichtrinh.setOnMouseClicked(e -> {
+            String id = lv_lichtrinh.getSelectionModel().getSelectedItem().getText();
+            switch (id) {
+
+            }
+        });
+
+        lv_lichtrinh.setCellFactory(e -> {
+            JFXListCell<Label> cell = new JFXListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.setStyle("-fx-background-color: transparent;");
+
+            MenuItem infoItem = getMenuItem("Chi tiết");
+            infoItem.setOnAction(event -> {
+
+            });
+
+            MenuItem deleteItem = getMenuItem("Xóa");
+            deleteItem.setOnAction(event -> {
+                lv_lichtrinh.getItems().remove(cell.getItem());
+            });
+
+            contextMenu.getItems().addAll(infoItem, deleteItem);
+
+            //cell.textProperty().bind(cell.itemProperty());
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+
+            return cell;
+        });
+
+    }
+
+
+    public void init_lv_holiday() {
+        //Đây là mục "Chung".
+        lv_holiday.getItems().clear();
+        for (int i = 0; i < 4; i++) {
+            Label lb = new Label("NEWS" + i);
+            // Xử lý sự kiện tại đây
+            lv_holiday.getItems().addAll(lb);
+        }
+        lv_holiday.setOnMouseClicked(e -> {
+            String id = lv_holiday.getSelectionModel().getSelectedItem().getText();
+
+        });
+    }
+    public void ExpandDateTime() {
+        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 0) {
+            panel_calender.setVisible(false);
+            panel_calender.setMaxSize(0, 0);
+            panel_calender.setMinSize(0, 0);
+            panel_lichtrinh.setMaxSize(0, 0);
+            panel_lichtrinh.setMinSize(0, 0);
+            panel_themlichtrinh.setMaxSize(0, 0);
+            panel_themlichtrinh.setMinSize(0, 0);
+        }
+
+
 //    public void init_lv_news(Course course) {
 //        lv_news.getItems().clear();
 //        if (lv_news != null) {
@@ -747,6 +691,30 @@ public class HomeController implements Initializable {
 
             }
         });
+
+        lv_new.setCellFactory(e -> {
+            JFXListCell<Label> cell = new JFXListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.setStyle("-fx-background-color: transparent;");
+
+            MenuItem infoItem = getMenuItem("Chi tiết");
+
+            infoItem.setOnAction(event -> {
+
+            });
+            contextMenu.getItems().addAll(infoItem);
+
+            //cell.textProperty().bind(cell.itemProperty());
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+
+            return cell;
+        });
     }
 
     //Hàm này hiển thị deadline của 1 courseID cho trước.
@@ -770,153 +738,949 @@ public class HomeController implements Initializable {
             String id = lv_new.getSelectionModel().getSelectedItem().getText();
 
         });
+
     }
-    public void ExpandDateTime() {
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 0) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
 
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 1) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
+    public void Button_DateClick(int day) {
+        NgayThang nt = new NgayThang(currentYear, currentMonth, day);
+        if (nt.NgayTrongTuan(currentYear, currentMonth, day) != 8) {
+             lbl_day.setText("Thứ " + nt.NgayTrongTuan(currentYear, currentMonth, day));
 
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 2) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
         }
+        else {
+             lbl_day.setText("Chủ nhật");
 
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 3) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
         }
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 4) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(364, 173);
-            panel_themlichtrinh.setMinSize(364, 173);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 5) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(0, 0);
-            panel_lichtrinh.setMinSize(0, 0);
-            panel_themlichtrinh.setMaxSize(364, 173);
-            panel_themlichtrinh.setMinSize(364, 173);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 6) {
-            panel_calender.setVisible(false);
-            panel_calender.setMaxSize(0, 0);
-            panel_calender.setMinSize(0, 0);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(364, 173);
-            panel_themlichtrinh.setMinSize(364, 173);
-        }
-
-        if (isExpandCalendar + isExpandLichTrinh + isExpandThemLichTrinh == 7) {
-            panel_calender.setVisible(true);
-            panel_calender.setMaxSize(364, 250);
-            panel_calender.setMinSize(364, 250);
-            panel_lichtrinh.setMaxSize(200, 100);
-            panel_lichtrinh.setMinSize(200, 100);
-            panel_themlichtrinh.setMaxSize(0, 0);
-            panel_themlichtrinh.setMinSize(0, 0);
-        }
-
     }
 
     public void initCalendar(int day, int month, int year) {
-        int i = 0;
+//        JFXButton arrButton[][] = new JFXButton[6][7];
 
+        Calendar cld = new Calendar();
+        String a[][] = new String[6][7];
         LocalDate date = LocalDate.of(year, month, day);
         DayOfWeek thu = date.getDayOfWeek();
-        lbl_day.setText("Thứ " + thu.getValue());
-        lbl_date.setText("Tháng " + Integer.toString(month) + " " + Integer.toString(year));
-
         NgayThang nt = new NgayThang(year, 1, 1);
         int first_day_in_month = nt.NgayTrongTuan(year, month, 1);
         int count_day_of_month = nt.SoNgayTrongThang(year, month);
-        Calendar cld = new Calendar();
-        int a[][] = new int[6][7];
+
+ //        btn_day00 = arrButton[0][0];
+//        arrButton[0][1] = btn_day01;
+//        arrButton[0][2] = btn_day02;
+//        arrButton[0][3] = btn_day03;
+//        arrButton[0][4] = btn_day04;
+//        arrButton[0][5] = btn_day05;
+//        arrButton[0][6] = btn_day06;
+//
+//        arrButton[1][0] = btn_day10;
+//        arrButton[1][1] = btn_day11;
+//        arrButton[1][2] = btn_day12;
+//        arrButton[1][3] = btn_day13;
+//        arrButton[1][4] = btn_day14;
+//        arrButton[1][5] = btn_day15;
+//        arrButton[1][6] = btn_day16;
+//
+//        arrButton[2][0] = btn_day20;
+//        arrButton[2][1] = btn_day21;
+//        arrButton[2][2] = btn_day22;
+//        arrButton[2][3] = btn_day23;
+//        arrButton[2][4] = btn_day24;
+//        arrButton[2][5] = btn_day25;
+//        arrButton[2][6] = btn_day26;
+//
+//        arrButton[3][0] = btn_day30;
+//        arrButton[3][1] = btn_day31;
+//        arrButton[3][2] = btn_day32;
+//        arrButton[3][3] = btn_day33;
+//        arrButton[3][4] = btn_day34;
+//        arrButton[3][5] = btn_day35;
+//        arrButton[3][6] = btn_day36;
+//
+//        arrButton[4][0] = btn_day40;
+//        arrButton[4][1] = btn_day41;
+//        arrButton[4][2] = btn_day42;
+//        arrButton[4][3] = btn_day43;
+//        arrButton[4][4] = btn_day44;
+//        arrButton[4][5] = btn_day45;
+//        arrButton[4][6] = btn_day46;
+//
+//        arrButton[5][0] = btn_day50;
+//        arrButton[5][1] = btn_day51;
+//        arrButton[5][2] = btn_day52;
+//        arrButton[5][3] = btn_day53;
+//        arrButton[5][4] = btn_day54;
+//        arrButton[5][5] = btn_day55;
+//        arrButton[5][6] = btn_day56;
+//
+//        for (int i = 0; i < 6; i++) {
+//            for (int j = 0; j < 7; j++) {
+//                arrButton[i][j].setText(a[i][j]);
+//                if (a[i][j].compareTo("") == 0) {
+//                    arrButton[i][j].setDisable(true);
+//                } else {
+//                    arrButton[i][j].setDisable(false);
+//                }
+//            }
+//        }
+        lbl_day.setText("Thứ " + thu.getValue());
+        lbl_date.setText("Tháng " + Integer.toString(month) + " " + Integer.toString(year));
         a = cld.Xuat(first_day_in_month, count_day_of_month);
 
-        btn_day00.setText(Integer.toString(a[0][0]));
-        btn_day01.setText(Integer.toString(a[0][1]));
-        btn_day02.setText(Integer.toString(a[0][2]));
-        btn_day03.setText(Integer.toString(a[0][3]));
-        btn_day04.setText(Integer.toString(a[0][4]));
-        btn_day05.setText(Integer.toString(a[0][5]));
-        btn_day06.setText(Integer.toString(a[0][6]));
+        btn_day00.setText((a[0][0]));
+        btn_day00.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day00.getText()));
+        });
+        if (a[0][0].compareTo("") == 0) {
+            btn_day00.setDisable(true);
+        } else {
+            btn_day00.setDisable(false);
+        }
+        btn_day01.setText((a[0][1]));
+        btn_day01.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day01.getText()));
+        });
+        if (a[0][1].compareTo("") == 0) {
+            btn_day01.setDisable(true);
+        } else {
+            btn_day01.setDisable(false);
+        }
+        btn_day02.setText((a[0][2]));
+        btn_day02.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day02.getText()));
+        });
+        if (a[0][2].compareTo("") == 0) {
+            btn_day02.setDisable(true);
+        } else {
+            btn_day02.setDisable(false);
+        }
+        btn_day03.setText((a[0][3]));
+        btn_day03.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day03.getText()));
+        });
+        if (a[0][3].compareTo("") == 0) {
+            btn_day03.setDisable(true);
+        } else {
+            btn_day03.setDisable(false);
+        }
+        btn_day04.setText((a[0][4]));
+        btn_day04.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day04.getText()));
+        });
+        if (a[0][4].compareTo("") == 0) {
+            btn_day04.setDisable(true);
+        } else {
+            btn_day04.setDisable(false);
+        }
+        btn_day05.setText((a[0][5]));
+        btn_day05.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day05.getText()));
+        });
+        if (a[0][5].compareTo("") == 0) {
+            btn_day05.setDisable(true);
+        } else {
+            btn_day05.setDisable(false);
+        }
+        btn_day06.setText((a[0][6]));
+        btn_day06.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day06.getText()));
+        });
+        if (a[0][6].compareTo("") == 0) {
+            btn_day06.setDisable(true);
+        } else {
+            btn_day06.setDisable(false);
+        }
 
-        btn_day10.setText(Integer.toString(a[1][0]));
-        btn_day11.setText(Integer.toString(a[1][1]));
-        btn_day12.setText(Integer.toString(a[1][2]));
-        btn_day13.setText(Integer.toString(a[1][3]));
-        btn_day14.setText(Integer.toString(a[1][4]));
-        btn_day15.setText(Integer.toString(a[1][5]));
-        btn_day16.setText(Integer.toString(a[1][6]));
+        btn_day10.setText((a[1][0]));
+        btn_day10.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day10.getText()));
+        });
+        if (a[1][0].compareTo("") == 0) {
+            btn_day10.setDisable(true);
+        } else {
+            btn_day10.setDisable(false);
+        }
+        btn_day11.setText((a[1][1]));
+        btn_day11.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day11.getText()));
+        });
+        if (a[1][1].compareTo("") == 0) {
+            btn_day11.setDisable(true);
+        } else {
+            btn_day11.setDisable(false);
+        }
+        btn_day12.setText((a[1][2]));
+        btn_day12.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day12.getText()));
+        });
+        if (a[1][2].compareTo("") == 0) {
+            btn_day12.setDisable(true);
+        } else {
+            btn_day12.setDisable(false);
+        }
+        btn_day13.setText((a[1][3]));
+        btn_day13.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day13.getText()));
+        });
+        if (a[1][3].compareTo("") == 0) {
+            btn_day13.setDisable(true);
+        } else {
+            btn_day13.setDisable(false);
+        }
+        btn_day14.setText((a[1][4]));
+        btn_day14.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day14.getText()));
+        });
+        if (a[1][4].compareTo("") == 0) {
+            btn_day14.setDisable(true);
+        } else {
+            btn_day14.setDisable(false);
+        }
+        btn_day15.setText((a[1][5]));
+        btn_day15.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day15.getText()));
+        });
+        if (a[1][5].compareTo("") == 0) {
+            btn_day15.setDisable(true);
+        } else {
+            btn_day15.setDisable(false);
+        }
+        btn_day16.setText((a[1][6]));
+        btn_day16.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day16.getText()));
+        });
+        if (a[1][6].compareTo("") == 0) {
+            btn_day16.setDisable(true);
+        } else {
+            btn_day16.setDisable(false);
+        }
 
-        btn_day20.setText(Integer.toString(a[2][0]));
-        btn_day21.setText(Integer.toString(a[2][1]));
-        btn_day22.setText(Integer.toString(a[2][2]));
-        btn_day23.setText(Integer.toString(a[2][3]));
-        btn_day24.setText(Integer.toString(a[2][4]));
-        btn_day25.setText(Integer.toString(a[2][5]));
-        btn_day26.setText(Integer.toString(a[2][6]));
+        btn_day20.setText((a[2][0]));
+        btn_day20.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day20.getText()));
+        });
+        if (a[2][0].compareTo("") == 0) {
+            btn_day20.setDisable(true);
+        } else {
+            btn_day20.setDisable(false);
+        }
+        btn_day21.setText((a[2][1]));
+        btn_day21.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day21.getText()));
+        });
+        if (a[2][1].compareTo("") == 0) {
+            btn_day21.setDisable(true);
+        } else {
+            btn_day21.setDisable(false);
+        }
+        btn_day22.setText((a[2][2]));
+        btn_day22.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day22.getText()));
+        });
+        if (a[2][2].compareTo("") == 0) {
+            btn_day22.setDisable(true);
+        } else {
+            btn_day22.setDisable(false);
+        }
+        btn_day23.setText((a[2][3]));
+        btn_day23.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day23.getText()));
+        });
+        if (a[2][3].compareTo("") == 0) {
+            btn_day23.setDisable(true);
+        } else {
+            btn_day23.setDisable(false);
+        }
+        btn_day24.setText((a[2][4]));
+        btn_day24.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day24.getText()));
+        });
+        if (a[2][4].compareTo("") == 0) {
+            btn_day24.setDisable(true);
+        } else {
+            btn_day24.setDisable(false);
+        }
+        btn_day25.setText((a[2][5]));
+        btn_day25.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day25.getText()));
+        });
+        if (a[2][5].compareTo("") == 0) {
+            btn_day25.setDisable(true);
+        } else {
+            btn_day25.setDisable(false);
+        }
+        btn_day26.setText((a[2][6]));
+        btn_day26.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day26.getText()));
+        });
+        if (a[2][6].compareTo("") == 0) {
+            btn_day26.setDisable(true);
+        } else {
+            btn_day26.setDisable(false);
+        }
 
-        btn_day30.setText(Integer.toString(a[3][0]));
-        btn_day31.setText(Integer.toString(a[3][1]));
-        btn_day32.setText(Integer.toString(a[3][2]));
-        btn_day33.setText(Integer.toString(a[3][3]));
-        btn_day34.setText(Integer.toString(a[3][4]));
-        btn_day35.setText(Integer.toString(a[3][5]));
-        btn_day36.setText(Integer.toString(a[3][6]));
+        btn_day30.setText((a[3][0]));
+        btn_day30.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day30.getText()));
+        });
+        if (a[3][0].compareTo("") == 0) {
+            btn_day30.setDisable(true);
+        } else {
+            btn_day30.setDisable(false);
+        }
+        btn_day31.setText((a[3][1]));
+        btn_day31.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day31.getText()));
+        });
+        if (a[3][1].compareTo("") == 0) {
+            btn_day31.setDisable(true);
+        } else {
+            btn_day31.setDisable(false);
+        }
+        btn_day32.setText((a[3][2]));
+        btn_day32.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day32.getText()));
+        });
+        if (a[3][2].compareTo("") == 0) {
+            btn_day32.setDisable(true);
+        } else {
+            btn_day32.setDisable(false);
+        }
+        btn_day33.setText((a[3][3]));
+        btn_day33.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day33.getText()));
+        });
+        if (a[3][3].compareTo("") == 0) {
+            btn_day33.setDisable(true);
+        } else {
+            btn_day33.setDisable(false);
+        }
+        btn_day34.setText((a[3][4]));
+        btn_day34.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day34.getText()));
+        });
+        if (a[3][4].compareTo("") == 0) {
+            btn_day34.setDisable(true);
+        } else {
+            btn_day34.setDisable(false);
+        }
+        btn_day35.setText((a[3][5]));
+        btn_day35.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day35.getText()));
+        });
+        if (a[3][5].compareTo("") == 0) {
+            btn_day35.setDisable(true);
+        } else {
+            btn_day35.setDisable(false);
+        }
+        btn_day36.setText((a[3][6]));
+        btn_day36.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day36.getText()));
+        });
+        if (a[3][6].compareTo("") == 0) {
+            btn_day36.setDisable(true);
+        } else {
+            btn_day36.setDisable(false);
+        }
 
-        btn_day40.setText(Integer.toString(a[4][0]));
-        btn_day41.setText(Integer.toString(a[4][1]));
-        btn_day42.setText(Integer.toString(a[4][2]));
-        btn_day43.setText(Integer.toString(a[4][3]));
-        btn_day44.setText(Integer.toString(a[4][4]));
-        btn_day45.setText(Integer.toString(a[4][5]));
-        btn_day46.setText(Integer.toString(a[4][6]));
+        btn_day40.setText((a[4][0]));
+        btn_day40.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day40.getText()));
+        });
+        if (a[4][0].compareTo("") == 0) {
+            btn_day40.setDisable(true);
+        } else {
+            btn_day40.setDisable(false);
+        }
+        btn_day41.setText((a[4][1]));
+        btn_day41.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day41.getText()));
+        });
+        if (a[4][1].compareTo("") == 0) {
+            btn_day41.setDisable(true);
+        } else {
+            btn_day41.setDisable(false);
+        }
+        btn_day42.setText((a[4][2]));
+        btn_day42.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day42.getText()));
+        });
+        if (a[4][2].compareTo("") == 0) {
+            btn_day42.setDisable(true);
+        } else {
+            btn_day42.setDisable(false);
+        }
+        btn_day43.setText((a[4][3]));
+        btn_day43.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day43.getText()));
+        });
+        if (a[4][3].compareTo("") == 0) {
+            btn_day43.setDisable(true);
+        } else {
+            btn_day43.setDisable(false);
+        }
+        btn_day44.setText((a[4][4]));
+        btn_day44.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day44.getText()));
+        });
+        if (a[4][4].compareTo("") == 0) {
+            btn_day44.setDisable(true);
+        } else {
+            btn_day44.setDisable(false);
+        }
+        btn_day45.setText((a[4][5]));
+        btn_day45.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day45.getText()));
+        });
+        if (a[4][5].compareTo("") == 0) {
+            btn_day45.setDisable(true);
+        } else {
+            btn_day45.setDisable(false);
+        }
+        btn_day46.setText((a[4][6]));
+        btn_day46.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day46.getText()));
+        });
+        if (a[4][6].compareTo("") == 0) {
+            btn_day46.setDisable(true);
+        } else {
+            btn_day46.setDisable(false);
+        }
 
-        btn_day50.setText(Integer.toString(a[5][0]));
-        btn_day51.setText(Integer.toString(a[5][1]));
-        btn_day52.setText(Integer.toString(a[5][2]));
-        btn_day53.setText(Integer.toString(a[5][3]));
-        btn_day54.setText(Integer.toString(a[5][4]));
-        btn_day55.setText(Integer.toString(a[5][5]));
-        btn_day56.setText(Integer.toString(a[5][6]));
-        
-        btn_day56.setVisible(false);
+        btn_day50.setText((a[5][0]));
+        btn_day50.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day50.getText()));
+        });
+        if (a[5][0].compareTo("") == 0) {
+            btn_day50.setDisable(true);
+        } else {
+            btn_day50.setDisable(false);
+        }
+        btn_day51.setText((a[5][1]));
+        btn_day51.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day51.getText()));
+        });
+        if (a[5][1].compareTo("") == 0) {
+            btn_day51.setDisable(true);
+        } else {
+            btn_day51.setDisable(false);
+        }
+        btn_day52.setText((a[5][2]));
+        btn_day52.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day52.getText()));
+        });
+        if (a[5][2].compareTo("") == 0) {
+            btn_day52.setDisable(true);
+        } else {
+            btn_day52.setDisable(false);
+        }
+        btn_day53.setText((a[5][3]));
+        btn_day53.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day53.getText()));
+        });
+        if (a[5][3].compareTo("") == 0) {
+            btn_day53.setDisable(true);
+        } else {
+            btn_day53.setDisable(false);
+        }
+        btn_day54.setText((a[5][4]));
+        btn_day54.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day54.getText()));
+        });
+        if (a[5][4].compareTo("") == 0) {
+            btn_day54.setDisable(true);
+        } else {
+            btn_day54.setDisable(false);
+        }
+        btn_day55.setText((a[5][5]));
+        btn_day55.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day55.getText()));
+        });
+        if (a[5][5].compareTo("") == 0) {
+            btn_day55.setDisable(true);
+        } else {
+            btn_day55.setDisable(false);
+        }
+        btn_day56.setText((a[5][6]));
+        btn_day56.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day56.getText()));
+        });
+        if (a[5][6].compareTo("") == 0) {
+            btn_day56.setDisable(true);
+        } else {
+            btn_day56.setDisable(false);
+        }
+
+    }
+
+    public void Button_DateClick(int day) {
+        NgayThang nt = new NgayThang(currentYear, currentMonth, day);
+        if (nt.NgayTrongTuan(currentYear, currentMonth, day) != 8) {
+             lbl_day.setText("Thứ " + nt.NgayTrongTuan(currentYear, currentMonth, day));
+
+        }
+        else {
+             lbl_day.setText("Chủ nhật");
+
+        }
+    }
+
+    public void initCalendar(int day, int month, int year) {
+//        JFXButton arrButton[][] = new JFXButton[6][7];
+
+        Calendar cld = new Calendar();
+        String a[][] = new String[6][7];
+        LocalDate date = LocalDate.of(year, month, day);
+        DayOfWeek thu = date.getDayOfWeek();
+        NgayThang nt = new NgayThang(year, 1, 1);
+        int first_day_in_month = nt.NgayTrongTuan(year, month, 1);
+        int count_day_of_month = nt.SoNgayTrongThang(year, month);
+
+ //        btn_day00 = arrButton[0][0];
+//        arrButton[0][1] = btn_day01;
+//        arrButton[0][2] = btn_day02;
+//        arrButton[0][3] = btn_day03;
+//        arrButton[0][4] = btn_day04;
+//        arrButton[0][5] = btn_day05;
+//        arrButton[0][6] = btn_day06;
+//
+//        arrButton[1][0] = btn_day10;
+//        arrButton[1][1] = btn_day11;
+//        arrButton[1][2] = btn_day12;
+//        arrButton[1][3] = btn_day13;
+//        arrButton[1][4] = btn_day14;
+//        arrButton[1][5] = btn_day15;
+//        arrButton[1][6] = btn_day16;
+//
+//        arrButton[2][0] = btn_day20;
+//        arrButton[2][1] = btn_day21;
+//        arrButton[2][2] = btn_day22;
+//        arrButton[2][3] = btn_day23;
+//        arrButton[2][4] = btn_day24;
+//        arrButton[2][5] = btn_day25;
+//        arrButton[2][6] = btn_day26;
+//
+//        arrButton[3][0] = btn_day30;
+//        arrButton[3][1] = btn_day31;
+//        arrButton[3][2] = btn_day32;
+//        arrButton[3][3] = btn_day33;
+//        arrButton[3][4] = btn_day34;
+//        arrButton[3][5] = btn_day35;
+//        arrButton[3][6] = btn_day36;
+//
+//        arrButton[4][0] = btn_day40;
+//        arrButton[4][1] = btn_day41;
+//        arrButton[4][2] = btn_day42;
+//        arrButton[4][3] = btn_day43;
+//        arrButton[4][4] = btn_day44;
+//        arrButton[4][5] = btn_day45;
+//        arrButton[4][6] = btn_day46;
+//
+//        arrButton[5][0] = btn_day50;
+//        arrButton[5][1] = btn_day51;
+//        arrButton[5][2] = btn_day52;
+//        arrButton[5][3] = btn_day53;
+//        arrButton[5][4] = btn_day54;
+//        arrButton[5][5] = btn_day55;
+//        arrButton[5][6] = btn_day56;
+//
+//        for (int i = 0; i < 6; i++) {
+//            for (int j = 0; j < 7; j++) {
+//                arrButton[i][j].setText(a[i][j]);
+//                if (a[i][j].compareTo("") == 0) {
+//                    arrButton[i][j].setDisable(true);
+//                } else {
+//                    arrButton[i][j].setDisable(false);
+//                }
+//            }
+//        }
+        lbl_day.setText("Thứ " + thu.getValue());
+        lbl_date.setText("Tháng " + Integer.toString(month) + " " + Integer.toString(year));
+        a = cld.Xuat(first_day_in_month, count_day_of_month);
+
+        btn_day00.setText((a[0][0]));
+        btn_day00.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day00.getText()));
+        });
+        if (a[0][0].compareTo("") == 0) {
+            btn_day00.setDisable(true);
+        } else {
+            btn_day00.setDisable(false);
+        }
+        btn_day01.setText((a[0][1]));
+        btn_day01.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day01.getText()));
+        });
+        if (a[0][1].compareTo("") == 0) {
+            btn_day01.setDisable(true);
+        } else {
+            btn_day01.setDisable(false);
+        }
+        btn_day02.setText((a[0][2]));
+        btn_day02.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day02.getText()));
+        });
+        if (a[0][2].compareTo("") == 0) {
+            btn_day02.setDisable(true);
+        } else {
+            btn_day02.setDisable(false);
+        }
+        btn_day03.setText((a[0][3]));
+        btn_day03.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day03.getText()));
+        });
+        if (a[0][3].compareTo("") == 0) {
+            btn_day03.setDisable(true);
+        } else {
+            btn_day03.setDisable(false);
+        }
+        btn_day04.setText((a[0][4]));
+        btn_day04.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day04.getText()));
+        });
+        if (a[0][4].compareTo("") == 0) {
+            btn_day04.setDisable(true);
+        } else {
+            btn_day04.setDisable(false);
+        }
+        btn_day05.setText((a[0][5]));
+        btn_day05.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day05.getText()));
+        });
+        if (a[0][5].compareTo("") == 0) {
+            btn_day05.setDisable(true);
+        } else {
+            btn_day05.setDisable(false);
+        }
+        btn_day06.setText((a[0][6]));
+        btn_day06.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day06.getText()));
+        });
+        if (a[0][6].compareTo("") == 0) {
+            btn_day06.setDisable(true);
+        } else {
+            btn_day06.setDisable(false);
+        }
+
+        btn_day10.setText((a[1][0]));
+        btn_day10.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day10.getText()));
+        });
+        if (a[1][0].compareTo("") == 0) {
+            btn_day10.setDisable(true);
+        } else {
+            btn_day10.setDisable(false);
+        }
+        btn_day11.setText((a[1][1]));
+        btn_day11.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day11.getText()));
+        });
+        if (a[1][1].compareTo("") == 0) {
+            btn_day11.setDisable(true);
+        } else {
+            btn_day11.setDisable(false);
+        }
+        btn_day12.setText((a[1][2]));
+        btn_day12.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day12.getText()));
+        });
+        if (a[1][2].compareTo("") == 0) {
+            btn_day12.setDisable(true);
+        } else {
+            btn_day12.setDisable(false);
+        }
+        btn_day13.setText((a[1][3]));
+        btn_day13.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day13.getText()));
+        });
+        if (a[1][3].compareTo("") == 0) {
+            btn_day13.setDisable(true);
+        } else {
+            btn_day13.setDisable(false);
+        }
+        btn_day14.setText((a[1][4]));
+        btn_day14.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day14.getText()));
+        });
+        if (a[1][4].compareTo("") == 0) {
+            btn_day14.setDisable(true);
+        } else {
+            btn_day14.setDisable(false);
+        }
+        btn_day15.setText((a[1][5]));
+        btn_day15.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day15.getText()));
+        });
+        if (a[1][5].compareTo("") == 0) {
+            btn_day15.setDisable(true);
+        } else {
+            btn_day15.setDisable(false);
+        }
+        btn_day16.setText((a[1][6]));
+        btn_day16.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day16.getText()));
+        });
+        if (a[1][6].compareTo("") == 0) {
+            btn_day16.setDisable(true);
+        } else {
+            btn_day16.setDisable(false);
+        }
+
+        btn_day20.setText((a[2][0]));
+        btn_day20.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day20.getText()));
+        });
+        if (a[2][0].compareTo("") == 0) {
+            btn_day20.setDisable(true);
+        } else {
+            btn_day20.setDisable(false);
+        }
+        btn_day21.setText((a[2][1]));
+        btn_day21.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day21.getText()));
+        });
+        if (a[2][1].compareTo("") == 0) {
+            btn_day21.setDisable(true);
+        } else {
+            btn_day21.setDisable(false);
+        }
+        btn_day22.setText((a[2][2]));
+        btn_day22.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day22.getText()));
+        });
+        if (a[2][2].compareTo("") == 0) {
+            btn_day22.setDisable(true);
+        } else {
+            btn_day22.setDisable(false);
+        }
+        btn_day23.setText((a[2][3]));
+        btn_day23.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day23.getText()));
+        });
+        if (a[2][3].compareTo("") == 0) {
+            btn_day23.setDisable(true);
+        } else {
+            btn_day23.setDisable(false);
+        }
+        btn_day24.setText((a[2][4]));
+        btn_day24.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day24.getText()));
+        });
+        if (a[2][4].compareTo("") == 0) {
+            btn_day24.setDisable(true);
+        } else {
+            btn_day24.setDisable(false);
+        }
+        btn_day25.setText((a[2][5]));
+        btn_day25.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day25.getText()));
+        });
+        if (a[2][5].compareTo("") == 0) {
+            btn_day25.setDisable(true);
+        } else {
+            btn_day25.setDisable(false);
+        }
+        btn_day26.setText((a[2][6]));
+        btn_day26.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day26.getText()));
+        });
+        if (a[2][6].compareTo("") == 0) {
+            btn_day26.setDisable(true);
+        } else {
+            btn_day26.setDisable(false);
+        }
+
+        btn_day30.setText((a[3][0]));
+        btn_day30.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day30.getText()));
+        });
+        if (a[3][0].compareTo("") == 0) {
+            btn_day30.setDisable(true);
+        } else {
+            btn_day30.setDisable(false);
+        }
+        btn_day31.setText((a[3][1]));
+        btn_day31.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day31.getText()));
+        });
+        if (a[3][1].compareTo("") == 0) {
+            btn_day31.setDisable(true);
+        } else {
+            btn_day31.setDisable(false);
+        }
+        btn_day32.setText((a[3][2]));
+        btn_day32.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day32.getText()));
+        });
+        if (a[3][2].compareTo("") == 0) {
+            btn_day32.setDisable(true);
+        } else {
+            btn_day32.setDisable(false);
+        }
+        btn_day33.setText((a[3][3]));
+        btn_day33.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day33.getText()));
+        });
+        if (a[3][3].compareTo("") == 0) {
+            btn_day33.setDisable(true);
+        } else {
+            btn_day33.setDisable(false);
+        }
+        btn_day34.setText((a[3][4]));
+        btn_day34.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day34.getText()));
+        });
+        if (a[3][4].compareTo("") == 0) {
+            btn_day34.setDisable(true);
+        } else {
+            btn_day34.setDisable(false);
+        }
+        btn_day35.setText((a[3][5]));
+        btn_day35.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day35.getText()));
+        });
+        if (a[3][5].compareTo("") == 0) {
+            btn_day35.setDisable(true);
+        } else {
+            btn_day35.setDisable(false);
+        }
+        btn_day36.setText((a[3][6]));
+        btn_day36.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day36.getText()));
+        });
+        if (a[3][6].compareTo("") == 0) {
+            btn_day36.setDisable(true);
+        } else {
+            btn_day36.setDisable(false);
+        }
+
+        btn_day40.setText((a[4][0]));
+        btn_day40.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day40.getText()));
+        });
+        if (a[4][0].compareTo("") == 0) {
+            btn_day40.setDisable(true);
+        } else {
+            btn_day40.setDisable(false);
+        }
+        btn_day41.setText((a[4][1]));
+        btn_day41.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day41.getText()));
+        });
+        if (a[4][1].compareTo("") == 0) {
+            btn_day41.setDisable(true);
+        } else {
+            btn_day41.setDisable(false);
+        }
+        btn_day42.setText((a[4][2]));
+        btn_day42.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day42.getText()));
+        });
+        if (a[4][2].compareTo("") == 0) {
+            btn_day42.setDisable(true);
+        } else {
+            btn_day42.setDisable(false);
+        }
+        btn_day43.setText((a[4][3]));
+        btn_day43.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day43.getText()));
+        });
+        if (a[4][3].compareTo("") == 0) {
+            btn_day43.setDisable(true);
+        } else {
+            btn_day43.setDisable(false);
+        }
+        btn_day44.setText((a[4][4]));
+        btn_day44.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day44.getText()));
+        });
+        if (a[4][4].compareTo("") == 0) {
+            btn_day44.setDisable(true);
+        } else {
+            btn_day44.setDisable(false);
+        }
+        btn_day45.setText((a[4][5]));
+        btn_day45.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day45.getText()));
+        });
+        if (a[4][5].compareTo("") == 0) {
+            btn_day45.setDisable(true);
+        } else {
+            btn_day45.setDisable(false);
+        }
+        btn_day46.setText((a[4][6]));
+        btn_day46.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day46.getText()));
+        });
+        if (a[4][6].compareTo("") == 0) {
+            btn_day46.setDisable(true);
+        } else {
+            btn_day46.setDisable(false);
+        }
+
+        btn_day50.setText((a[5][0]));
+        btn_day50.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day50.getText()));
+        });
+        if (a[5][0].compareTo("") == 0) {
+            btn_day50.setDisable(true);
+        } else {
+            btn_day50.setDisable(false);
+        }
+        btn_day51.setText((a[5][1]));
+        btn_day51.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day51.getText()));
+        });
+        if (a[5][1].compareTo("") == 0) {
+            btn_day51.setDisable(true);
+        } else {
+            btn_day51.setDisable(false);
+        }
+        btn_day52.setText((a[5][2]));
+        btn_day52.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day52.getText()));
+        });
+        if (a[5][2].compareTo("") == 0) {
+            btn_day52.setDisable(true);
+        } else {
+            btn_day52.setDisable(false);
+        }
+        btn_day53.setText((a[5][3]));
+        btn_day53.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day53.getText()));
+        });
+        if (a[5][3].compareTo("") == 0) {
+            btn_day53.setDisable(true);
+        } else {
+            btn_day53.setDisable(false);
+        }
+        btn_day54.setText((a[5][4]));
+        btn_day54.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day54.getText()));
+        });
+        if (a[5][4].compareTo("") == 0) {
+            btn_day54.setDisable(true);
+        } else {
+            btn_day54.setDisable(false);
+        }
+        btn_day55.setText((a[5][5]));
+        btn_day55.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day55.getText()));
+        });
+        if (a[5][5].compareTo("") == 0) {
+            btn_day55.setDisable(true);
+        } else {
+            btn_day55.setDisable(false);
+        }
+        btn_day56.setText((a[5][6]));
+        btn_day56.setOnAction(e -> {
+            Button_DateClick(Integer.parseInt(btn_day56.getText()));
+        });
+        if (a[5][6].compareTo("") == 0) {
+            btn_day56.setDisable(true);
+        } else {
+            btn_day56.setDisable(false);
+        }
+
     }
 
     public void init_cbb_user(String text) {
@@ -927,23 +1691,22 @@ public class HomeController implements Initializable {
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-            StaticFunctions.stack_link.push("../view/Home.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
-
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:
@@ -951,6 +1714,54 @@ public class HomeController implements Initializable {
             }
 
         });
+    }
+
+    public void init_button_thongbao() {
+        ObservableList<String> list = FXCollections.observableArrayList("Thông báo 1", "Thông báo 2");
+
+        JFXListCell<Label> cell = new JFXListCell<>();
+        ContextMenu contextMenu = new ContextMenu();
+        contextMenu.setStyle("-fx-background-color: transparent;");
+        for (String item : list) {
+            MenuItem infoItem = getMenuItem(item);
+
+            infoItem.setOnAction(event -> {
+
+            });
+            contextMenu.getItems().addAll(infoItem);
+
+        }
+
+        btn_notification.setContextMenu(contextMenu);
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+        if (toggle_mode.isSelected()) {
+            StaticFunctions.IsDarkMode = true;
+
+        } else {
+            StaticFunctions.IsDarkMode = false;
+        }
+        form = "Home";
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_addLichTrinhClick(ActionEvent event) {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource(StaticFunctions.switcher.Switch("ThemLichTrinh")));
+        Scene scene = null;
+        try {
+            scene = new Scene(fxmlLoader.load(), 352, 238);
+        } catch (IOException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
     }
 
 }

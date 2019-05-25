@@ -12,8 +12,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +22,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
@@ -46,19 +43,7 @@ public class SettingController implements Initializable {
     private AnchorPane AnchorPaneMain;
 
     @FXML
-    private ImageView img_background;
-
-    @FXML
-    private JFXButton btn_select_images;
-
-    @FXML
     private StackPane stack_pane;
-
-    @FXML
-    private Label lb_name_picture;
-
-    @FXML
-    private JFXToggleButton tg_language;
 
     @FXML
     private JFXToggleButton tg_start_with_os;
@@ -91,10 +76,10 @@ public class SettingController implements Initializable {
     private Label lb_source;
 
     @FXML
-    private Label lb_about;
+    private JFXButton btn_home;
 
     @FXML
-    private JFXButton btn_back;
+    private JFXButton lbl_path;
 
     @FXML
     private JFXButton btn_exit;
@@ -105,11 +90,66 @@ public class SettingController implements Initializable {
     @FXML
     private JFXComboBox<String> cbb_user;
 
+    @FXML
+    private JFXButton btn_setting;
+
+    @FXML
+    private JFXButton btn_notification;
+
+    @FXML
+    private JFXToggleButton toggle_mode;
+
+    @FXML
+    private Label lb_about;
+
+    @FXML
+    private Label txt_about;
+
     //</editor-fold>
     //<editor-fold desc="FXML functions zone">
+
     @FXML
-    void btn_backClick(ActionEvent event) {
+    void btn_homeClick(ActionEvent event) {
+        StaticFunctions.stack_link.push("Setting");
+        form = "Home";
+        madeFadeOut(event);
+    }
+    
+    @FXML
+    void lbl_pathClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
+        madeFadeOut(event);
+    }
+
+    @FXML
+    void btn_notification_Click(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_select_ringtonClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void btn_settingClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
+
+    @FXML
+    void toggle_modeClick(ActionEvent event) {
+        if (toggle_mode.isSelected()) {
+            StaticFunctions.IsDarkMode = true;
+        } else {
+            StaticFunctions.IsDarkMode = false;
+
+        }
+        form = "Setting";
         madeFadeOut(event);
     }
 
@@ -126,16 +166,6 @@ public class SettingController implements Initializable {
 
     @FXML
     void btn_select_imagesClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void btn_select_ringtonClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void cbb_userClick(ActionEvent event) {
 
     }
 
@@ -192,16 +222,6 @@ public class SettingController implements Initializable {
     }
 
     @FXML
-    void tg_languageClick(ActionEvent event) {
-        if (tg_language.isSelected()) {
-            tg_language.setText("Tiếng việt");
-        } else {
-            tg_language.setText("English");
-        }
-
-    }
-
-    @FXML
     void tg_start_with_osClick(ActionEvent event) {
         if (tg_start_with_os.isSelected()) {
             tg_start_with_os.setText("Khởi động cùng OS");
@@ -223,13 +243,14 @@ public class SettingController implements Initializable {
     //</editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
         String name = "Xin chào, 17520433";
         init_cbb_user(name);
+        form = "Setting";
+         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
     }
 
     public void setKeyEvent() {
@@ -239,7 +260,7 @@ public class SettingController implements Initializable {
                     btn_minimize.fire();
                     break;
                 case LEFT:
-                    btn_back.fire();
+                    btn_home.fire();
                     break;
 
                 default:
@@ -267,7 +288,7 @@ public class SettingController implements Initializable {
 
     public void LoadNextScene(ActionEvent event) throws Exception {
 
-        Parent root = FXMLLoader.load(getClass().getResource(form));
+        Parent root = FXMLLoader.load(getClass().getResource(StaticFunctions.switcher.Switch(form)));
         Scene tableViewScene = new Scene(root);
         window = (Stage) ((Node) event.getSource()).getScene().getWindow();
         window.setScene(tableViewScene);
@@ -276,30 +297,29 @@ public class SettingController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();
         cbb_user.setItems(list);
 
         cbb_user.setOnAction(e -> {
-
-            StaticFunctions.stack_link.push("../view/Setting.fxml");
+            StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
                 case "Trang chủ":
-                    form = "../view/Home.fxml";
+                    form = "Home";
                     madeFadeOut(e);
                     break;
                 case "Thời khóa biểu":
-                    form = "../view/CreateTimetableNow.fxml";
+                    form = "CreateTimetableNow";
                     madeFadeOut(e);
                     break;
                 case "Cài đặt":
-                    form = "../view/Setting.fxml";
+                    form = "Setting";
                     madeFadeOut(e);
                     break;
                 case "Đăng xuất":
-                    form = "../view/Login.fxml";
+                    form = "Login";
                     madeFadeOut(e);
                     break;
                 default:

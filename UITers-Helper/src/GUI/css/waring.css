@@ -9,9 +9,9 @@ and open the template in the editor.
 */
 
 .label{
-    -fx-font-size: 13;
+    -fx-font-size: 12;
     -fx-font-family: "Segoe UI";  
     -fx-text-fill: red;
     -fx-font-color: red;
-    -fx-text-align: LEFT;
+    -fx-text-align: center-left;
 }

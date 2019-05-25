@@ -1,0 +1,38 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Apr 7, 2019, 4:48:27 PM
+    Author     : Admin
+*/
+.text-area {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.text-area .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+.text-area .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+.text-input {
+    -fx-text-inner-color: black;
+    -fx-prompt-text-fill: gray;
+}
+.text-input:focused {
+   // -fx-text-inner-color: white;
+}
+.textfiled:hover{
+    -fx-text-inner-color: black;
+}
+.textfiled {
+    -fx-prompt-text-fill: gray
+}

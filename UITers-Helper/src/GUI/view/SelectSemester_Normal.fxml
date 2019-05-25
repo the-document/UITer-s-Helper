@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #ECECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SelectSemesterController">
+    <children>
+      <StackPane fx:id="stack_pane" prefHeight="150.0" prefWidth="200.0" />
+      <BorderPane prefHeight="660.0" prefWidth="1174.0">
+         <left>
+            <VBox maxWidth="450.0" minWidth="450.0" prefHeight="560.0" prefWidth="450.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label prefHeight="40.0" prefWidth="200.0" stylesheets="@../css/big_label_normal.css" text="Chọn học kì" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>  
+                  <JFXListView fx:id="lv_semester" prefHeight="361.0" prefWidth="450.0" stylesheets="@../css/listview_normal.css">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </JFXListView>
+                  
+               </children>
+               <BorderPane.margin>
+                  <Insets left="40.0" top="20.0" />
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <bottom>
+            <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="80.0" prefWidth="1174.0" style="-fx-background-color: #ECECEC;" BorderPane.alignment="TOP_RIGHT">
+               <children>
+                  <JFXButton fx:id="btn_next" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_nextClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_darkmode.css" text="Tiếp" />
+               </children>
+               <BorderPane.margin>
+                  <Insets left="40.0" right="40.0" />
+               </BorderPane.margin>
+            </HBox>
+         </bottom>
+         <top>
+            <HBox alignment="CENTER_LEFT" maxWidth="1299.0" minWidth="960.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="1299.0" style="-fx-background-color: D4D4D4;" BorderPane.alignment="CENTER">
+               <children>
+                  <JFXButton fx:id="btn_home" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_homeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_home.css">
+                     <HBox.margin>
+                        <Insets left="10.0" right="10.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="lbl_path" alignment="TOP_LEFT" onAction="#lbl_pathClick" prefHeight="35.0" prefWidth="607.0" styleClass="label" stylesheets="@../css/label_normal.css" text="Path" />
+                  <Region />
+                  <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="100.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_exit_normal.css" text="X" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="50.0" prefWidth="40.0" stylesheets="@../css/button_minimize_normal.css" text="-" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </JFXButton>
+                        <Region prefHeight="40.0" prefWidth="10.0" />
+                        <JFXComboBox fx:id="cbb_user" focusColor="#405aa800" onAction="#cbb_userClick" prefHeight="40.0" prefWidth="160.0" stylesheets="@../css/combobox_normal.css" unFocusColor="#ffffff00">
+                           <HBox.margin>
+                              <Insets right="10.0" top="5.0" />
+                           </HBox.margin>
+                        </JFXComboBox>
+                        <Circle fill="#d0d3d7" radius="12.5" stroke="BLACK" strokeType="INSIDE">
+                           <HBox.margin>
+                              <Insets right="10.0" top="12.5" />
+                           </HBox.margin>
+                        </Circle>
+                        <JFXButton fx:id="btn_setting" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_setting_new.css" text=".">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXButton fx:id="btn_notification" layoutX="305.0" layoutY="15.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_notification_Click" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_bell.css" text=".">
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                        <JFXToggleButton fx:id="toggle_mode" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#toggle_modeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_toggle_darkmode.css" text="." textFill="WHITE" toggleColor="#fba018" toggleLineColor="#19433f" unToggleColor="WHITE" unToggleLineColor="#4d3c3c">
+                           <font>
+                              <Font name="Segoe UI" size="0.1" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                        </JFXToggleButton>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>
