@@ -307,6 +307,11 @@ public class HomeController implements Initializable {
     void btn_restClick(ActionEvent event) {
         init_lv_deadline();
     }
+    
+     @FXML
+    void btn_exitClick(ActionEvent event) {
+        StaticFunctions.ExitEvent(AnchorPaneMain);
+    }
 
     @FXML
     void btn_backClick(ActionEvent event) {
@@ -411,10 +416,10 @@ public class HomeController implements Initializable {
 //        madeFadeOut(event);
 //    }
 //
-//    @FXML
-//    void cbb_userClick(ActionEvent event) {
-//
-//    }
+    @FXML
+    void cbb_userClick(ActionEvent event) {
+
+    }
 //    @FXML
 //    void btn_settingClick(ActionEvent event) {
 //        FXMLLoader fxmlLoader = new FXMLLoader();
@@ -1187,9 +1192,7 @@ public class HomeController implements Initializable {
         cbb_user.setOnAction(e -> {
             StaticFunctions.stack_link.push("CreateTimetableNow");
             switch (cbb_user.getValue()) {
-                case "Trang chủ":
-                    form = "Home";
-                    madeFadeOut(e);
+                case "Trang chủ":                 
                     break;
                 case "Thời khóa biểu":
                     form = "CreateTimetableNow";
