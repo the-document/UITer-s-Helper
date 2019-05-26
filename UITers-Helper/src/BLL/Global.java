@@ -28,6 +28,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,6 +59,11 @@ public class Global {
     public static String IEDriverPath = "D:\\UIT Stuffs\\UIT Stuffs\\Documents\\Tai_Lieu\\Mon_hoc\\HK4\\Java\\Library\\WebDriver\\IEDriverServer.exe";
     public static String FirefoxDriverPath = "D:\\UIT Stuffs\\UIT Stuffs\\Documents\\Tai_Lieu\\Mon_hoc\\HK4\\Java\\Library\\WebDriver\\geckodriver.exe";
 
+    //==========SELECTED DAY CALENDA==============
+    public static String dateCalendarSelected=null;
+    public static int CurrentMonth=LocalDate.now().getMonthValue();
+    public static int CurrentYear=LocalDate.now().getYear();
+    
     //==========METHOD SCHEDULE===================
     public static enum MeThodCreate{
         RANDOM,

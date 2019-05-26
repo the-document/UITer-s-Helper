@@ -1,14 +1,20 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.CalenderBLL;
+import BLL.Global;
+import DTO.Calender;
 import GUI.LichTrinh;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -85,6 +91,25 @@ public class ThemLichTrinhController implements Initializable {
         String desc = txt_desc.getText();
         LichTrinh temp = new LichTrinh(time, location, desc);
         StaticFunctions.lichTrinh = temp;
+        
+        //save other calendar-nhp----------
+        if (time==null) {
+            return;
+        }
+
+        String timeToSave=Global.dateCalendarSelected+" "+ time+":00";
+        System.out.println(timeToSave);
+        
+        
+        Calender calender = new Calender(timeToSave, location, desc);
+        CalenderBLL bll = new CalenderBLL();
+
+        try {
+            bll.InsertCalender(calender);
+        } catch (SQLException ex) {
+            Logger.getLogger(ThemLichTrinhController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         btn_exit.fire();
     }
 

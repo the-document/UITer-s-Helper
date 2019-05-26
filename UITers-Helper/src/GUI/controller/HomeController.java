@@ -2,6 +2,7 @@ package GUI.controller;
 
 // <editor-fold desc="import zone">
 import BLL.Advertise;
+import BLL.CalenderBLL;
 import BLL.Course;
 import BLL.Deadline;
 import BLL.WebCommunicate;
@@ -23,10 +24,12 @@ import com.jfoenix.controls.JFXToggleButton;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,6 +62,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.Popup;
 import javafx.util.Duration;
+import javax.swing.JButton;
 import org.apache.xalan.lib.ExsltDatetime;
 import org.controlsfx.control.Notifications;
 // </editor-fold>
@@ -76,6 +80,12 @@ public class HomeController implements Initializable {
 
     //Danh sách các courses hiện có của người dùng.
     ArrayList<Course> curCourses;
+    
+    //them btn trong lich nay vao mang de de quan ly - nhp
+    List<JFXButton> lsBtnCalendar = new ArrayList<>();
+    
+    //lich trinh cua thang dang focus
+    List<Calender> lsCalenders=new ArrayList<>();
 
     // </editor-fold>
     // <editor-fold desc="FXML variables zone">
@@ -321,6 +331,12 @@ public class HomeController implements Initializable {
             currentMonth = 12;
         }
         initCalendar(1, currentMonth, currentYear);
+        
+        //using for DAL
+        Global.CurrentMonth=currentMonth;
+        ResetColorListButtonTableCalendar();
+        ReLoadLichTrinhThangHienTai();
+        fillCalendarWithDayHaveDeadline();
     }
 
 
@@ -356,6 +372,11 @@ public class HomeController implements Initializable {
         }
         initCalendar(1, currentMonth, currentYear);
 
+        //using for DAL
+        Global.CurrentMonth=currentMonth;
+        ResetColorListButtonTableCalendar();
+        ReLoadLichTrinhThangHienTai();
+        fillCalendarWithDayHaveDeadline();
     }
     @FXML
     void btn_homeClick(ActionEvent event) {
@@ -460,11 +481,15 @@ public class HomeController implements Initializable {
 
             Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, "17520350", "1654805354");
         }
+        
+        InitListButtonTableCalendar();
+        
         initCalendar(java.time.LocalDate.now().getDayOfMonth(), java.time.LocalDate.now().getMonthValue(), java.time.LocalDate.now().getYear());
         init_cbb_user(name);
         init_lv_lichtrinh();
         init_lv_holiday();
         init_button_thongbao();
+
         btn_rest.fire();
     }
 
@@ -535,11 +560,14 @@ public class HomeController implements Initializable {
 
 
     public void init_lv_lichtrinh() {
-        //Lịch học và vị trí phòng học.
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("LOCA" + i);
-            lv_lichtrinh.getItems().addAll(lb);
-        }
+        
+        ReLoadLichTrinhThangHienTai();
+
+        //fill data for calendar table
+        fillCalendarWithDayHaveDeadline();
+
+
+        
         lv_lichtrinh.setOnMouseClicked(e -> {
             String id = lv_lichtrinh.getSelectionModel().getSelectedItem().getText();
             switch (id) {
@@ -712,6 +740,10 @@ public class HomeController implements Initializable {
 
     public void Button_DateClick(int day) {
         NgayThang nt = new NgayThang(currentYear, currentMonth, day);
+        
+        //using for create new calendar-bottom
+        Global.dateCalendarSelected=Global.CurrentYear+"-"+Global.CurrentMonth+"-"+day;
+        
         if (nt.NgayTrongTuan(currentYear, currentMonth, day) != 8) {
              lbl_day.setText("Thứ " + nt.NgayTrongTuan(currentYear, currentMonth, day));
 
@@ -722,7 +754,78 @@ public class HomeController implements Initializable {
         }
     }
 
+    public void InitListButtonTableCalendar()
+    {
+        //them btn trong lich nay vao mang de de quan ly - nhp
+        //List<JFXButton> lsBtnCalendar=new ArrayList<>();
+        lsBtnCalendar.add(btn_day00); lsBtnCalendar.add(btn_day01); lsBtnCalendar.add(btn_day02);
+        lsBtnCalendar.add(btn_day03); lsBtnCalendar.add(btn_day04); lsBtnCalendar.add(btn_day05);
+        lsBtnCalendar.add(btn_day06); lsBtnCalendar.add(btn_day10); lsBtnCalendar.add(btn_day11);
+        lsBtnCalendar.add(btn_day12); lsBtnCalendar.add(btn_day13); lsBtnCalendar.add(btn_day14);
+        lsBtnCalendar.add(btn_day15); lsBtnCalendar.add(btn_day16); lsBtnCalendar.add(btn_day20);
+        lsBtnCalendar.add(btn_day21); lsBtnCalendar.add(btn_day22); lsBtnCalendar.add(btn_day23);
+        lsBtnCalendar.add(btn_day24); lsBtnCalendar.add(btn_day25); lsBtnCalendar.add(btn_day26);
+        lsBtnCalendar.add(btn_day30); lsBtnCalendar.add(btn_day31); lsBtnCalendar.add(btn_day32);
+        lsBtnCalendar.add(btn_day33); lsBtnCalendar.add(btn_day34); lsBtnCalendar.add(btn_day35);
+        lsBtnCalendar.add(btn_day36); lsBtnCalendar.add(btn_day40); lsBtnCalendar.add(btn_day41);
+        lsBtnCalendar.add(btn_day42); lsBtnCalendar.add(btn_day43); lsBtnCalendar.add(btn_day44);
+        lsBtnCalendar.add(btn_day45); lsBtnCalendar.add(btn_day46); lsBtnCalendar.add(btn_day50);
+        lsBtnCalendar.add(btn_day51); lsBtnCalendar.add(btn_day52); lsBtnCalendar.add(btn_day53);
+        lsBtnCalendar.add(btn_day54); lsBtnCalendar.add(btn_day55); lsBtnCalendar.add(btn_day56); 
+    }
+    
+    //lich trinh - bang lich =============================================
+    public void ResetColorListButtonTableCalendar(){
+        for (JFXButton btn : lsBtnCalendar) {
+            btn.setStyle("-fx-background-color: transparent");
+        }
+    }
+    
+    public void fillCalendarWithDayHaveDeadline(){
+        
+        if(lsCalenders==null)
+            return;
+        
+        for (Calender calendar : lsCalenders) {
+            String day=calendar.getTime().split("-")[2];
+            day=day.split(" ")[0];
+            for (JFXButton btn : lsBtnCalendar) {
+                if(btn.getText().equals(day))
+                    btn.setStyle("-fx-background-color:  #18A0FB");
+            }
+        }
+    }
+    
+    public void ReLoadLichTrinhThangHienTai(){
+        //load data for current month
+        CalenderBLL cabllBLL = new CalenderBLL();
+        try {
+            //lsCalenders = cabllBLL.GetPersonalCalenderInfuture();
+            if(lsCalenders!=null)
+                lsCalenders.clear();
+            
+            lsCalenders = cabllBLL.GetPersonalCalenderCurrentMonth();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        //Lịch cá nhân tự tạo.
+        lv_lichtrinh.getItems().clear();
+        
+        if(lsCalenders==null)
+            return;
+        
+        
+        for (Calender calender : lsCalenders) {
+            Label lb = new Label(calender.getDescribe());
+            lv_lichtrinh.getItems().addAll(lb);
+        }
+    }
+    //===================================================================
+    
     public void initCalendar(int day, int month, int year) {
+        
 //        JFXButton arrButton[][] = new JFXButton[6][7];
 
         Calendar cld = new Calendar();
@@ -795,7 +898,7 @@ public class HomeController implements Initializable {
         lbl_date.setText("Tháng " + Integer.toString(month) + " " + Integer.toString(year));
         a = cld.Xuat(first_day_in_month, count_day_of_month);
 
-        btn_day00.setText((a[0][0]));
+        btn_day00.setText((a[0][0])); 
         btn_day00.setOnAction(e -> {
             Button_DateClick(Integer.parseInt(btn_day00.getText()));
         });
@@ -1180,8 +1283,8 @@ public class HomeController implements Initializable {
         }
 
     }
-
-   
+    
+    
     public void init_cbb_user(String text) {
         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
@@ -1246,6 +1349,11 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_addLichTrinhClick(ActionEvent event) {
+        
+        //don't create LichTrinh khi chua chon ngay
+        if(Global.dateCalendarSelected==null)
+            return;
+        
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(StaticFunctions.switcher.Switch("ThemLichTrinh")));
         Scene scene = null;
