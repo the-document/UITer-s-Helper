@@ -5,16 +5,13 @@
  */
 package DTO;
 
-import java.sql.Time;
-import java.util.Date;
 
 /**
  *
  * @author Nguyen Hong Phuc
  */
 public class Calender {
-    Date date;
-    Time time;
+    String time;
     String location;
     String Describe;
 
@@ -22,27 +19,19 @@ public class Calender {
     public Calender() {
     }
 
-    public Calender(Date date, Time time, String location, String Describe) {
-        this.date = date;
+    public Calender(String time, String location, String Describe) {
         this.time = time;
         this.location = location;
         this.Describe = Describe;
     }
 
     //---------------------------------------------------
-    public Date getDate() {
-        return date;
-    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Time getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
@@ -61,6 +50,7 @@ public class Calender {
     public void setDescribe(String Describe) {
         this.Describe = Describe;
     }
-    
-    
+
+  
+ 
 }
