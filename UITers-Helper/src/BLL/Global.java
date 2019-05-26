@@ -5,6 +5,7 @@
  */
 package BLL;
 
+import DTO.Calender;
 import DTO.LopHoc;
 import DTO.MonHoc;
 import GUI.controller.WelcomeController;
@@ -63,6 +64,8 @@ public class Global {
     public static String dateCalendarSelected=null;
     public static int CurrentMonth=LocalDate.now().getMonthValue();
     public static int CurrentYear=LocalDate.now().getYear();
+    public static int ModeThemLichTrinh=1; //1-them, 0- xem chi tiet
+    public static Calender LichTrinhDaChonDeXem=null; //lich trinh da chon de xem chi tiet
     
     //==========METHOD SCHEDULE===================
     public static enum MeThodCreate{

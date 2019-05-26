@@ -11,7 +11,10 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,6 +55,28 @@ public class ThemLichTrinhController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
+        
+        if (Global.ModeThemLichTrinh == 0)
+        {
+            btn_add.setText("OK");
+            
+            //view detail
+            SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+            Date date;
+            try {
+                System.out.println(Global.LichTrinhDaChonDeXem.getTime());
+                date = formatter.parse(Global.LichTrinhDaChonDeXem.getTime());
+                System.out.println(date.getHours()+ date.getMinutes()+"");
+                pk_time.setValue(LocalTime.of(date.getHours(), date.getMinutes()));
+            } catch (ParseException ex) {
+                Logger.getLogger(ThemLichTrinhController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            txt_location.setText(Global.LichTrinhDaChonDeXem.getLocation());
+            txt_desc.setText(Global.LichTrinhDaChonDeXem.getDescribe());
+        }
+            
     }
 
     public void setKeyEvent() {
@@ -86,28 +111,31 @@ public class ThemLichTrinhController implements Initializable {
 
     @FXML
     void btn_addClick(ActionEvent event) {
-        LocalTime time =  pk_time.getValue();
-        String location = txt_location.getText();
-        String desc = txt_desc.getText();
-        LichTrinh temp = new LichTrinh(time, location, desc);
-        StaticFunctions.lichTrinh = temp;
         
-        //save other calendar-nhp----------
-        if (time==null) {
-            return;
-        }
+        //add new
+        if (Global.ModeThemLichTrinh == 1) {
+            LocalTime time = pk_time.getValue();
+            String location = txt_location.getText();
+            String desc = txt_desc.getText();
+            LichTrinh temp = new LichTrinh(time, location, desc);
+            StaticFunctions.lichTrinh = temp;
 
-        String timeToSave=Global.dateCalendarSelected+" "+ time+":00";
-        System.out.println(timeToSave);
-        
-        
-        Calender calender = new Calender(timeToSave, location, desc);
-        CalenderBLL bll = new CalenderBLL();
+            //save other calendar-nhp----------
+            if (time == null) {
+                return;
+            }
 
-        try {
-            bll.InsertCalender(calender);
-        } catch (SQLException ex) {
-            Logger.getLogger(ThemLichTrinhController.class.getName()).log(Level.SEVERE, null, ex);
+            String timeToSave = Global.dateCalendarSelected + " " + time + ":00";
+            System.out.println(timeToSave);
+
+            Calender calender = new Calender(timeToSave, location, desc);
+            CalenderBLL bll = new CalenderBLL();
+
+            try {
+                bll.InsertCalender(calender);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThemLichTrinhController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         
         btn_exit.fire();
@@ -119,5 +147,4 @@ public class ThemLichTrinhController implements Initializable {
         stage.close();
 
     }
-
 }

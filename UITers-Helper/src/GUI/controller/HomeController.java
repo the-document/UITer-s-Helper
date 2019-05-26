@@ -570,6 +570,7 @@ public class HomeController implements Initializable {
         
         lv_lichtrinh.setOnMouseClicked(e -> {
             String id = lv_lichtrinh.getSelectionModel().getSelectedItem().getText();
+           
             switch (id) {
 
             }
@@ -582,7 +583,29 @@ public class HomeController implements Initializable {
 
             MenuItem infoItem = getMenuItem("Chi tiết");
             infoItem.setOnAction(event -> {
+                
+                Global.ModeThemLichTrinh = 0; //xem chi tiet
+                for (Calender c : lsCalenders) {
+                    if(c.getDescribe().equals(lv_lichtrinh.getSelectionModel().getSelectedItem().getText()))
+                    {
+                        Global.LichTrinhDaChonDeXem=c;
+                    }
+                }
 
+                //open them lich trinh form
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(getClass().getResource(StaticFunctions.switcher.Switch("ThemLichTrinh")));
+                Scene scene = null;
+                try {
+                    scene = new Scene(fxmlLoader.load(), 352, 238);
+                } catch (IOException ex) {
+                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Stage stage = new Stage();
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setResizable(false);
+                stage.setScene(scene);
+                stage.show();
             });
 
             MenuItem deleteItem = getMenuItem("Xóa");
@@ -1353,6 +1376,8 @@ public class HomeController implements Initializable {
         //don't create LichTrinh khi chua chon ngay
         if(Global.dateCalendarSelected==null)
             return;
+        
+        Global.ModeThemLichTrinh=1;
         
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource(StaticFunctions.switcher.Switch("ThemLichTrinh")));
