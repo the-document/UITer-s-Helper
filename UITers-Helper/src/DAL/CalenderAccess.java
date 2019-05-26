@@ -83,7 +83,7 @@ public class CalenderAccess extends DatabaseAccess{
         while (resultSet.next()) {            
             Calender c =new Calender();
             
-            c.setTime(resultSet.getDate(2).toString());
+            c.setTime(resultSet.getTimestamp(2).toString());
             c.setLocation(resultSet.getString(3));
             c.setDescribe(resultSet.getString(4));
            
@@ -122,7 +122,7 @@ public class CalenderAccess extends DatabaseAccess{
         while (resultSet.next()) {            
             Calender c =new Calender();
             
-            c.setTime(resultSet.getDate(2).toString());
+            c.setTime(resultSet.getTimestamp(2).toString());
             c.setLocation(resultSet.getString(3));
             c.setDescribe(resultSet.getString(4));
            
