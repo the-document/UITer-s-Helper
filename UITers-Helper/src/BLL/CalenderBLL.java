@@ -15,19 +15,24 @@ import java.util.List;
  * @author Nguyen Hong Phuc
  */
 public class CalenderBLL {
-    
-    public boolean InsertCalender(Calender calender) throws SQLException{
-        CalenderAccess ca=new CalenderAccess();
-         return ca.InsertCalender(calender);
+
+    public boolean InsertCalender(Calender calender) throws SQLException {
+        CalenderAccess ca = new CalenderAccess();
+        return ca.InsertCalender(calender);
     }
-    
-    public List<Calender> GetPersonalCalenderInfuture() throws SQLException{
-         CalenderAccess ca=new CalenderAccess();
-         return ca.GetPersonalCalenderInfuture();
-     }
-    
-    public List<Calender> GetPersonalCalenderCurrentMonth() throws SQLException{
-         CalenderAccess ca=new CalenderAccess();
-         return ca.GetPersonalCalenderCurrentMonth();
+
+    public List<Calender> GetPersonalCalenderInfuture() throws SQLException {
+        CalenderAccess ca = new CalenderAccess();
+        return ca.GetPersonalCalenderInfuture();
+    }
+
+    public List<Calender> GetPersonalCalenderCurrentMonth() throws SQLException {
+        CalenderAccess ca = new CalenderAccess();
+        return ca.GetPersonalCalenderCurrentMonth();
+    }
+
+    public boolean DeleteCalender(String id) throws SQLException {
+        CalenderAccess ca = new CalenderAccess();
+        return ca.DeleteCalender(id);
     }
 }
