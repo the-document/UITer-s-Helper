@@ -108,7 +108,7 @@ public class CalenderAccess extends DatabaseAccess{
         Timestamp nextMonth=Timestamp.valueOf(nexTime);
         System.out.println(nextMonth.toString());
         
-        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.MSSV+" and ThoiGian >= '"+currentTime+"' and ThoiGian < '"+nextMonth+"'";
+        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.MSSV+" and ThoiGian >= '"+currentTime+"' and ThoiGian < '"+nextMonth+"' ORDER BY ThoiGian ASC";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
@@ -122,6 +122,7 @@ public class CalenderAccess extends DatabaseAccess{
         while (resultSet.next()) {            
             Calender c =new Calender();
             
+            c.setKey(String.valueOf(resultSet.getInt(1)));
             c.setTime(resultSet.getTimestamp(2).toString());
             c.setLocation(resultSet.getString(3));
             c.setDescribe(resultSet.getString(4));
@@ -133,5 +134,18 @@ public class CalenderAccess extends DatabaseAccess{
         statement.close();
         this.CloseConnection();
         return result;
+    }
+    
+    public boolean DeleteCalender(String id) throws SQLException{
+        super.ConnectToDatabase();
+        String query="DELETE from CALENDAR WHERE MaCalendar = "+id;
+        
+        statement=connection.createStatement();
+        PreparedStatement preparedStmt = connection.prepareStatement(query);
+        preparedStmt.execute();
+         
+        statement.close();
+        this.CloseConnection();
+        return true;
     }
 }

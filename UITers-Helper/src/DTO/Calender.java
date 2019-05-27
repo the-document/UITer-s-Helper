@@ -5,12 +5,13 @@
  */
 package DTO;
 
-
 /**
  *
  * @author Nguyen Hong Phuc
  */
 public class Calender {
+
+    String Key;
     String time;
     String location;
     String Describe;
@@ -25,7 +26,21 @@ public class Calender {
         this.Describe = Describe;
     }
 
+    public Calender(String Key, String time, String location, String Describe) {
+        this.Key = Key;
+        this.time = time;
+        this.location = location;
+        this.Describe = Describe;
+    }
+
     //---------------------------------------------------
+    public String getKey() {
+        return Key;
+    }
+
+    public void setKey(String MSSV) {
+        this.Key = MSSV;
+    }
 
     public String getTime() {
         return time;
@@ -50,7 +65,4 @@ public class Calender {
     public void setDescribe(String Describe) {
         this.Describe = Describe;
     }
-
-  
- 
 }

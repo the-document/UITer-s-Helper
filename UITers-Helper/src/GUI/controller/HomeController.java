@@ -610,7 +610,17 @@ public class HomeController implements Initializable {
 
             MenuItem deleteItem = getMenuItem("Xóa");
             deleteItem.setOnAction(event -> {
-                lv_lichtrinh.getItems().remove(cell.getItem());
+                try {
+                    
+                    System.out.println("delete -"+cell.getItem().getId());
+                    CalenderBLL bll =new CalenderBLL();
+                    bll.DeleteCalender(cell.getItem().getId());
+                    lv_lichtrinh.getItems().remove(cell.getItem());
+                    
+                } catch (SQLException ex) {
+                    Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
             });
 
             contextMenu.getItems().addAll(infoItem, deleteItem);
@@ -777,6 +787,7 @@ public class HomeController implements Initializable {
         }
     }
 
+    //lich trinh - bang lich =============================================
     public void InitListButtonTableCalendar()
     {
         //them btn trong lich nay vao mang de de quan ly - nhp
@@ -797,7 +808,6 @@ public class HomeController implements Initializable {
         lsBtnCalendar.add(btn_day54); lsBtnCalendar.add(btn_day55); lsBtnCalendar.add(btn_day56); 
     }
     
-    //lich trinh - bang lich =============================================
     public void ResetColorListButtonTableCalendar(){
         for (JFXButton btn : lsBtnCalendar) {
             btn.setStyle("-fx-background-color: transparent");
@@ -810,6 +820,8 @@ public class HomeController implements Initializable {
             return;
         
         for (Calender calendar : lsCalenders) {
+            
+            //split to get day of current calender
             String day=calendar.getTime().split("-")[2];
             day=day.split(" ")[0];
             for (JFXButton btn : lsBtnCalendar) {
@@ -842,6 +854,7 @@ public class HomeController implements Initializable {
         
         for (Calender calender : lsCalenders) {
             Label lb = new Label(calender.getDescribe());
+            lb.setId(calender.getKey());
             lv_lichtrinh.getItems().addAll(lb);
         }
     }
