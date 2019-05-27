@@ -473,13 +473,13 @@ public class HomeController implements Initializable {
         setKeyEvent();
         form = "Home";
         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
-        String name = "Xin chào, 17520433";
+        String name = "Xin chào, " + BLL.Global.username;
 
         try {
             Global.webCM.hashCode();
         } catch (Exception e) {
 
-            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, "17520350", "1654805354");
+            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, BLL.Global.username, BLL.Global.password);
         }
         
         InitListButtonTableCalendar();
