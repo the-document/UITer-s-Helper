@@ -826,7 +826,7 @@ public class HomeController implements Initializable {
             day=day.split(" ")[0];
             for (JFXButton btn : lsBtnCalendar) {
                 if(btn.getText().equals(day))
-                    btn.setStyle("-fx-background-color:  #18A0FB");
+                    btn.setStyle("-fx-background-color:  #f44156");
             }
         }
     }
