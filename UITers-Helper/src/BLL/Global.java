@@ -74,6 +74,10 @@ public class Global {
         ADVANCE
     }
     
+    //=============LOGIN INFORMATION =============
+    public static String username;
+    public static String password;
+    
     //==========USER INFOR===================
     public static  String MSSV="18520951";
     public static  String NGANHHOC="";

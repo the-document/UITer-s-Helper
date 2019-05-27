@@ -118,10 +118,12 @@ public class WebCommunicate {
         String pageSource = driver.getPageSource();
 
         //Set login success signal.
-        if (driver.getCurrentUrl().compareToIgnoreCase("https://courses.uit.edu.vn/") == 0 && pageSource.contains("Log out"))
+        if (isLoggedIn())
+        {
             isLoggedIn = true;
-        else if (driver.getCurrentUrl().compareToIgnoreCase("https://courses.uit.edu.vn/") == 0 && pageSource.contains("Thoát"))
-            isLoggedIn = true;
+            System.out.println("Logged in successfully !");
+        }
+            
         else
         {
             isLoggedIn = false;
@@ -363,6 +365,16 @@ public class WebCommunicate {
             if (name.equalsIgnoreCase(faculty))
                 return true;
         }
+        return false;
+    }
+    
+    private boolean isLoggedIn()
+    {
+        driver.navigate().to("https://courses.uit.edu.vn/my/");
+        String curURL = driver.getCurrentUrl();
+        
+        if (curURL.equals("https://courses.uit.edu.vn/my/"))
+            return true;
         return false;
     }
     
