@@ -18,3 +18,7 @@ hs_err_pid*
 /UITers-Helper/nbproject/private/
 /UITers-Helper/build/
 /UITers-Helper/dist/
+UITers-Helper/nbproject/build-impl.xml
+UITers-Helper/nbproject/genfiles.properties
+UITers-Helper/nbproject/project.properties
+UITers-Helper/nbproject/project.xml

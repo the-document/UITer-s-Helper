@@ -473,13 +473,13 @@ public class HomeController implements Initializable {
         setKeyEvent();
         form = "Home";
         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
-        String name = "Xin chào, 17520433";
+        String name = "Xin chào, " + BLL.Global.username;
 
         try {
             Global.webCM.hashCode();
         } catch (Exception e) {
 
-            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, "17520350", "1654805354");
+            Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, BLL.Global.username, BLL.Global.password);
         }
         
         InitListButtonTableCalendar();
@@ -822,10 +822,12 @@ public class HomeController implements Initializable {
         for (Calender calendar : lsCalenders) {
             
             //split to get day of current calender
+            System.out.println(calendar.getTime());
             String day=calendar.getTime().split("-")[2];
             day=day.split(" ")[0];
             for (JFXButton btn : lsBtnCalendar) {
                 if(btn.getText().equals(day))
+                    //btn.setStyle("-fx-background-color:  #505abe");
                     btn.setStyle("-fx-background-color:  #f44156");
             }
         }

@@ -1,6 +1,11 @@
 package GUI.controller;
 
 // <editor-fold desc="import zone">
+import BLL.Global;
+import BLL.WebCommunicate;
+import BLL.WebDriverMode;
+import Exception.CannotBrowseCourseException;
+import Exception.CannotLoginException;
 import GUI.PopUp_Notification;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
@@ -114,10 +119,25 @@ public class LoginController implements Initializable {
 
     @FXML
     void btn_loginClick(ActionEvent event) {
-        String user_name = txt_user.getText();
-        String password = txt_password.getText();
+        BLL.Global.username = txt_user.getText();
+        BLL.Global.password = txt_password.getText();
+        
         stack_pane.setDisable(false);
-        if (user_name.compareTo("123") == 0) {
+
+        Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,BLL.Global.username, BLL.Global.password);
+        
+        boolean loginSuccess = false;
+        
+        try {
+            Global.webCM.ExecuteLogin();
+            loginSuccess = true;
+        } catch (CannotBrowseCourseException ex) {
+            System.out.println("Cannot go to courses. Check your internet connection.");
+        } catch (CannotLoginException ex) {
+            System.out.println("Cannot login. Check username and password.");
+        }
+        
+        if (loginSuccess) {
 
             JFXButton btn = new JFXButton("OK");
             btn.setOnAction(e -> {                
