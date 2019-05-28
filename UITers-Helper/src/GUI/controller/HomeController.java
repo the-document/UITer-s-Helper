@@ -473,7 +473,7 @@ public class HomeController implements Initializable {
         setKeyEvent();
         form = "Home";
         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
-        String name = "Xin chào, " + BLL.Global.username;
+        String name = "Xin chào, " + Global.webCM.getUserName();
 
         try {
             Global.webCM.hashCode();
@@ -708,6 +708,9 @@ public class HomeController implements Initializable {
 //
     public void init_lv_deadline() {
         //Đây là nơi hiển thị deadline.
+        
+        Global.webCM.getDateHaveDeadlines(5, 2019, false);
+        
         lv_new.getItems().clear();
         for (int i = 0; i < 4; i++) {
             Label lb = new Label("C10" + i);

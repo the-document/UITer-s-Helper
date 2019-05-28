@@ -8,14 +8,18 @@ package BLL;
 import Exception.CannotBrowseCourseException;
 import Exception.CannotLoginException;
 import Exception.NotLoggedInException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Scanner;
+import javafx.util.converter.LocalDateTimeStringConverter;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -37,14 +41,18 @@ public class WebCommunicate {
     
     boolean isLoggedIn = false;
     WebDriver driver;
-    String mssv;
-    String password;
+    String mssv = "";
+    String password = "";
+    String userfullname = "";
     
     //Lưu lại danh sách các courses.
     ArrayList<Course> currentCourses;
     
     //Lưu lại danh sách các deadline.
     HashMap <String, ArrayList<Deadline>> deadlineOfCourses;
+    
+    //Lưu lại danh sách các deadline (theo ngày).
+    HashMap <LocalDate,ArrayList<Deadline>> deadlineOfDates;
     
     //Lưu lại danh sách các thông báo của courses.
     HashMap <String, ArrayList<Advertise>> adverties;
@@ -122,6 +130,8 @@ public class WebCommunicate {
         {
             isLoggedIn = true;
             System.out.println("Logged in successfully !");
+            driver.navigate().to("https://courses.uit.edu.vn/?lang=en");
+            updateUserName();
         }
             
         else
@@ -240,11 +250,17 @@ public class WebCommunicate {
         return deadlines;
     }
     
+    public String getUserName()
+    {
+        if (userfullname.length() <= 0)
+            updateUserName();
+        return userfullname;
+    }
+    
     //Hàm dùng để dọn dẹp và tắt các WebDriver đang chạy.
     public void Dispose()
     {
         driver.close();
-        
     }
     
     public ArrayList<Advertise> GetCourseAdvertisesByCourse(Course _Course, boolean wantUpdate)
@@ -276,6 +292,25 @@ public class WebCommunicate {
         adverties.put(_Course.getCourseCode(), adv);
         
         return adv;
+    }
+    
+    //Hàm dùng để tìm những ngày có deadline.
+    public ArrayList<LocalDate> getDateHaveDeadlines(Integer month, Integer year, boolean wantUpdate)
+    {
+        ArrayList<LocalDate> res = new ArrayList<LocalDate>();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d M uuuu", Locale.US);
+        LocalDate thisMonth = LocalDate.parse("1 " + month.toString() + " " + year.toString(), dtf);
+        
+        String monthName = thisMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.US);
+        
+        driver.navigate().to("https://courses.uit.edu.vn/calendar/view.php?view=month");
+        
+        WebElement we = driver.findElement(By.xpath("//h2[@class='current']"));
+        
+        System.out.println("Test 1 : " + we.getText());
+        System.out.println("Test 2 : " + monthName + " " + year.toString());
+        
+        return res;
     }
     
     //Bên dưới là các phương thức private. Chỉ nên được sử dụng bên trong class.
@@ -366,6 +401,14 @@ public class WebCommunicate {
                 return true;
         }
         return false;
+    }
+    
+    private void updateUserName()
+    {
+        driver.navigate().to("https://courses.uit.edu.vn/?lang=en");
+        driver.findElement(By.xpath("//a[@title=\"View profile\"]")).click();
+
+        userfullname = driver.findElement(By.xpath("//h2")).getText();
     }
     
     private boolean isLoggedIn()
