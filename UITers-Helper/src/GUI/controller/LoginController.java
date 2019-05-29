@@ -194,7 +194,7 @@ public class LoginController implements Initializable {
     // </editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
