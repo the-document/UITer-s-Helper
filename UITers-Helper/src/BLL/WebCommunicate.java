@@ -46,16 +46,26 @@ public class WebCommunicate {
     String userfullname = "";
     
     //Lưu lại danh sách các courses.
+    
     ArrayList<Course> currentCourses;
     
     //Lưu lại danh sách các deadline.
     HashMap <String, ArrayList<Deadline>> deadlineOfCourses;
     
-    //Lưu lại danh sách các deadline (theo ngày).
-    HashMap <LocalDate,ArrayList<Deadline>> deadlineOfDates;
-    
     //Lưu lại danh sách các thông báo của courses.
     HashMap <String, ArrayList<Advertise>> adverties;
+    
+    //Lưu lại danh sách các deadline (theo ngày).
+    HashMap <LocalDate,ArrayList<Deadline>> deadlineOfDates;
+    //Lưu lại danh sách các advertise (thông báo) theo ngày.
+    HashMap <LocalDate,ArrayList<Advertise>> advertiesOfDates;
+    
+    //Lưu lại danh sách các thông báo đã được tải về trước đó.
+    HashMap <Integer,ArrayList<ThongBao>> thongBaoOfPageNo;
+    
+    //Cờ để nhận biết đã update chưa.
+    private boolean DeadlineByDateUpdated = false;
+    private boolean AdvertiseByDateUpdated = false;
     
     //Danh sách các khoa, để phục vụ cho việc lọc ra xem đâu là courses môn học, đâu là courses khác.
     ArrayList<String> facultiesList;
@@ -94,11 +104,97 @@ public class WebCommunicate {
         //Tạo 1 danh sách các deadlines rỗng cho các courses.
         deadlineOfCourses = new HashMap<String, ArrayList<Deadline>>();
         
+        //Tạo 1 danh sách các deadline rỗng cho các ngày.
+        deadlineOfDates = new HashMap<LocalDate,ArrayList<Deadline>>();
+        //Tạo 1 danh sách các advertises rỗng cho các ngày.
+        advertiesOfDates = new HashMap<LocalDate,ArrayList<Advertise>>();
+        
         //Tạo 1 danh sách các thông báo rỗng.
         adverties = new HashMap<String, ArrayList<Advertise>>();
         
+        //Tạo 1 danh sách các thông báo chung rỗng.
+        thongBaoOfPageNo = new HashMap<Integer, ArrayList<ThongBao>>();
+        
         //Tạo danh sách các khoa.
         InitializeFalcultyList();
+    }
+    
+    public ArrayList<ThongBao> GetThongBao(Integer pageNo, boolean wantUpdate)
+    {
+        ArrayList<ThongBao> dsThongBao;
+        
+        //Nếu không cần cập nhập mới danh sách thông báo và trước đó đã từng load thông báo.
+        if (!wantUpdate && (dsThongBao = thongBaoOfPageNo.get(pageNo)) != null)
+            return dsThongBao;
+        
+        dsThongBao = new ArrayList<>();
+        List<WebElement> thongBaoElements = GetThongBaoElement(pageNo);
+        
+        for (WebElement e : thongBaoElements)
+        {
+            ThongBao tb = new ThongBao();
+            tb.setName(e.getText());
+            
+            //Do URL khi lấy thuộc tính href không có tên miền, vì vậy ta cần thêm tên miền vào để thành URL hoàn chỉnh.
+            tb.setUrl("https://daa.uit.edu.vn" + e.getAttribute("href"));
+            
+            dsThongBao.add(tb);
+        }
+        
+        thongBaoOfPageNo.put(pageNo, dsThongBao);
+        
+        return dsThongBao;
+        
+    }
+    
+    private List<WebElement> GetThongBaoElement(Integer pageNo)
+    {
+        String urlToVisit = "https://daa.uit.edu.vn/thong-bao-chung?page=" + pageNo.toString();
+        driver.get(urlToVisit);
+        
+        List<WebElement> thongBaoElements = new ArrayList<>();
+        
+        try
+        {
+            thongBaoElements = driver.findElements(By.xpath("//div[@class=\"view-content\"]/div/article/h2/a"));
+        }
+        catch (NoSuchElementException elementNotFound)
+        {
+            System.out.println("Không thể tìm thấy các thông báo !");
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+        
+        return thongBaoElements;
+        
+    }
+    
+    public ArrayList<Deadline> GetDeadlinesByDate(LocalDate date, boolean wantUpdate) throws CannotBrowseCourseException, CannotLoginException
+    {
+        try {
+            BufferDeadlineListByDate(wantUpdate);
+        } catch (NotLoggedInException notLoggedIn) {
+            ExecuteLogin();
+        }
+        
+        return (deadlineOfDates.get(date));
+        
+    }
+    
+    public ArrayList<Advertise> GetAdvertisesByDate(LocalDate date, boolean wantUpdate) throws CannotBrowseCourseException, CannotLoginException
+    {
+        try
+        {
+            BufferAdvertiesListByDate(wantUpdate);
+        }
+        catch (NotLoggedInException notLoggedInException)
+        {
+            ExecuteLogin();
+        }
+        
+        return (advertiesOfDates.get(date));
     }
     
     public void ExecuteLogin() throws CannotBrowseCourseException, CannotLoginException
@@ -234,11 +330,17 @@ public class WebCommunicate {
             deadlineID = GetIDByURL(e.getAttribute("href"));
             deadlineName = e.getText();
             driver.get("https://courses.uit.edu.vn/mod/assign/view.php?id=" + deadlineID);
-            deadlineDate = driver.findElement(By.xpath("//div[@class='submissionstatustable']/div/table/tbody/tr[3]/td[@class='cell c1 lastcol']")).getText();
+            
+            try {
+                deadlineDate = driver.findElement(By.xpath("//div[@class='submissionstatustable']/div/table/tbody/tr[3]/td[@class='cell c1 lastcol']")).getText();
+            } catch (NoSuchElementException nse) {
+                deadlineDate = "TODAY";
+            }
             
             tmp.setDeadlineID(deadlineID);
             tmp.setDeadLineName(deadlineName);
             tmp.setDeadLineDate(GetDateTimeFromString(deadlineDate));
+            tmp.setCourseOfDeadlines(course);
             
             deadlines.add(tmp);
             driver.navigate().back();
@@ -284,14 +386,38 @@ public class WebCommunicate {
         
         for (WebElement e : advElement)
         {
-            tmp = new Advertise(_Course, e.getText() , "", LocalDateTime.MAX, LocalDateTime.MIN);
+            //Nếu không phải là một thông báo nghỉ học hoặc học bù thì chúng ta bỏ qua luôn, không thêm vào kết quả.
+            if (!CheckRealAdvertiseByName(e.getText()))
+                continue;
+            tmp = new Advertise(_Course, e.getText() , GetNodeIDByURL(e.getAttribute("href")),"", GetAdvertiseDateByName(e.getText()));
             System.out.println(e.getText());
             adv.add(tmp);
         }
+        
         //Add newly created advertise into hashmap.
         adverties.put(_Course.getCourseCode(), adv);
         
         return adv;
+    }
+    
+    private boolean CheckRealAdvertiseByName(String advertiseName)
+    {
+        return advertiseName.contains("Thông báo học bù") || advertiseName.contains("Thông báo nghỉ lớp");
+    }
+    
+    private LocalDate GetAdvertiseDateByName(String advertiseName)
+    {
+        LocalDate res;
+        String []split = advertiseName.split(" ngày ");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu", Locale.US);
+        res = LocalDate.parse(split[split.length - 1],dtf);
+        return res;
+    }
+    
+    private String GetNodeIDByURL(String input)
+    {
+        String []res = input.split("/");
+        return res[res.length - 1];
     }
     
     //Hàm dùng để tìm những ngày có deadline.
@@ -336,6 +462,12 @@ public class WebCommunicate {
     private static LocalDateTime GetDateTimeFromString(String dateTime)
     {
         LocalDateTime res;
+        
+        if (dateTime.equals("TODAY"))
+        {
+            res = LocalDateTime.now();
+            return res;
+        }
         
         //String gốc của chúng ta có kèm cả thứ (Monday, Tuesday, Wednesday,...).
         //Ta cần lược bỏ nó đi.
@@ -389,7 +521,7 @@ public class WebCommunicate {
             }   
         }
         
-        driver.navigate().back();
+        //driver.navigate().back();
         return flag;
     }
     
@@ -419,6 +551,79 @@ public class WebCommunicate {
         if (curURL.equals("https://courses.uit.edu.vn/my/"))
             return true;
         return false;
+    }
+    
+    private void BufferDeadlineListByDate(boolean wantUpdate) throws NotLoggedInException
+    {
+        if (!wantUpdate && DeadlineByDateUpdated)
+            return;
+        if (currentCourses.size() <= 0)
+            GetCoursesList(false);
+        System.out.println("Course list : " + currentCourses.size());
+        for (Course c : currentCourses)
+        {
+            if (!c.isIsRealCourse())
+                continue;
+            //Khi gọi hàm GetDeadlinesByCourse, deadline sẽ được tự động buffer vào deadlinesOfCourse. 
+            ArrayList<Deadline> courseDeadlines = GetDeadlinesByCourse(c, false);
+            if (courseDeadlines == null)
+                continue;
+            for (Deadline d : courseDeadlines)
+            {
+                try
+                {
+                    ArrayList<Deadline> currentDeadline = deadlineOfDates.get(d.getDeadLineDate().toLocalDate());
+                    if (currentDeadline == null)
+                        currentDeadline = new ArrayList<Deadline>();
+                    currentDeadline.add(d);
+                    
+                    deadlineOfDates.put(d.getDeadLineDate().toLocalDate(), currentDeadline);
+                    
+                }
+                catch (Exception e)
+                {
+                    System.out.println("Không thể thêm vào buffer deadline theo ngày !");
+                    e.printStackTrace();
+                }
+            }
+        }
+        DeadlineByDateUpdated = true;
+    }
+    
+    private void BufferAdvertiesListByDate(boolean wantUpdate) throws NotLoggedInException
+    {
+        if (!wantUpdate && AdvertiseByDateUpdated)
+            return;
+        if (currentCourses.size() <= 0)
+            GetCoursesList(false);
+        System.out.println("Course list : " + currentCourses.size());
+        for (Course c : currentCourses)
+        {
+            if (!c.isIsRealCourse())
+                continue;
+            ArrayList<Advertise> courseAdvertises = GetCourseAdvertisesByCourse(c, false);
+            if (courseAdvertises == null)
+                continue;
+            for (Advertise a : courseAdvertises)
+            {
+                try
+                {
+                    ArrayList<Advertise> currentAdvertises = advertiesOfDates.get(a.getAdvertiseTime());
+                    if (currentAdvertises == null)
+                        currentAdvertises = new ArrayList<Advertise>();
+                    currentAdvertises.add(a);
+                    
+                    advertiesOfDates.put(a.getAdvertiseTime(), currentAdvertises);
+                    
+                }
+                catch (Exception e)
+                {
+                    System.out.println("Không thể thêm vào buffer advertise theo ngày !");
+                    e.printStackTrace();
+                }
+            }
+        }
+        AdvertiseByDateUpdated = true;
     }
     
     //Phương 
