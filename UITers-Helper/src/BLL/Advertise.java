@@ -5,6 +5,7 @@
  */
 package BLL;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,19 +16,35 @@ public class Advertise {
     Course associatedCourse;
     String name;
     String room;
-    LocalDateTime dateTimeStart;
-    LocalDateTime dateTimeEnd;
+    String nodeID;
+    LocalDate advertiseTime;
+
+    public LocalDate getAdvertiseTime() {
+        return advertiseTime;
+    }
+
+    public void setAdvertiseTime(LocalDate advertiseTime) {
+        this.advertiseTime = advertiseTime;
+    }
     public Advertise()
     {
     
     }
-    public Advertise(Course _associatedCourse, String _name, String _room, LocalDateTime _dateTimeStart, LocalDateTime _dateTimeEnd)
+    public Advertise(Course _associatedCourse, String _name, String _nodeID, String _room, LocalDate _date)
     {
         associatedCourse = _associatedCourse;
         name = _name;
         room = _room;
-        dateTimeStart = _dateTimeStart;
-        dateTimeEnd = _dateTimeEnd;
+        advertiseTime = _date;
+        nodeID = _nodeID;
+    }
+
+    public String getNodeID() {
+        return nodeID;
+    }
+
+    public void setNodeID(String nodeID) {
+        this.nodeID = nodeID;
     }
 
     public Course getAssociatedCourse() {
@@ -44,22 +61,6 @@ public class Advertise {
 
     public void setRoom(String room) {
         this.room = room;
-    }
-
-    public LocalDateTime getDateTimeStart() {
-        return dateTimeStart;
-    }
-
-    public void setDateTimeStart(LocalDateTime dateTimeStart) {
-        this.dateTimeStart = dateTimeStart;
-    }
-
-    public LocalDateTime getDateTimeEnd() {
-        return dateTimeEnd;
-    }
-
-    public void setDateTimeEnd(LocalDateTime dateTimeEnd) {
-        this.dateTimeEnd = dateTimeEnd;
     }
 
     public String getName() {

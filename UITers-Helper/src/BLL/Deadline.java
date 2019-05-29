@@ -14,17 +14,27 @@ import java.time.LocalDateTime;
 public class Deadline {
     private String DeadlineID;
     private String DeadLineName;
+    private Course courseOfDeadlines;
+
+    public Course getCourseOfDeadlines() {
+        return courseOfDeadlines;
+    }
+
+    public void setCourseOfDeadlines(Course courseOfDeadlines) {
+        this.courseOfDeadlines = courseOfDeadlines;
+    }
     private LocalDateTime DeadLineDate;
     public Deadline()
     {
         DeadLineName = DeadlineID = "";
         DeadLineDate = null;
     }
-    public Deadline(String _idDL, String _tenDL, LocalDateTime _ngayDL)
+    public Deadline(String _idDL, String _tenDL, LocalDateTime _ngayDL, Course _course)
     {
         DeadlineID = _idDL;
         DeadLineName = _tenDL;
         DeadLineDate = _ngayDL;
+        courseOfDeadlines = _course;
     }
     
     public String getDeadlineID()

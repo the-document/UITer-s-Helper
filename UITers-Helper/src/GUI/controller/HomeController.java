@@ -7,13 +7,17 @@ import BLL.Course;
 import BLL.Deadline;
 import BLL.WebCommunicate;
 import BLL.Global;
+import BLL.ThongBao;
 import BLL.WebDriverMode;
 import DTO.Calender;
+import Exception.CannotBrowseCourseException;
+import Exception.CannotLoginException;
 import Exception.NotLoggedInException;
 import GUI.Calendar;
 import GUI.NgayThang;
 import GUI.PopUp_Notification;
 import GUI.StaticFunctions;
+import com.gargoylesoftware.htmlunit.javascript.host.intl.DateTimeFormat;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
@@ -27,9 +31,11 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -305,21 +311,28 @@ public class HomeController implements Initializable {
     // <editor-fold desc="FXML functions zone">
     @FXML
     void btn_newClick(ActionEvent event) {
-        init_lv_deadline();
+        init_lv_thongbao(null, false);
+        System.out.println("News");
     }
 
     @FXML
     void btn_deadlineClick(ActionEvent event) {
-        init_lv_deadline();
+        init_lv_deadline(null);
+        System.out.println("Deadline");
     }
 
     @FXML
     void btn_restClick(ActionEvent event) {
-        init_lv_deadline();
+        //Nếu muốn test load 1 ngày cố định, thay null bằng test và chỉnh ngày tương ứng.
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/uuuu", Locale.US);
+        LocalDate test = LocalDate.parse("12/06/2019",dtf);
+        init_lv_rest(null);
+        System.out.println("Rest");
     }
     
      @FXML
     void btn_exitClick(ActionEvent event) {
+        Global.webCM.Dispose();
         StaticFunctions.ExitEvent(AnchorPaneMain);
     }
 
@@ -706,15 +719,154 @@ public class HomeController implements Initializable {
 //        });
 //    }
 //
-    public void init_lv_deadline() {
+    public void init_lv_deadline(LocalDate dateOfDeadline) {
         //Đây là nơi hiển thị deadline.
         
-        Global.webCM.getDateHaveDeadlines(5, 2019, false);
+        if (dateOfDeadline == null)
+            dateOfDeadline = LocalDate.now();
+        
+        ArrayList <Deadline> thisDateDeadline = new ArrayList<>();
+        
+        try
+        {
+            thisDateDeadline = Global.webCM.GetDeadlinesByDate(dateOfDeadline, false);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         
         lv_new.getItems().clear();
-        for (int i = 0; i < 4; i++) {
-            Label lb = new Label("C10" + i);
-            // Xử lý sự kiện tại đây
+        
+        if (thisDateDeadline == null)
+        {
+            System.out.println("Không có deadline trong ngày hôm nay (Hooray).");
+            return;
+        }
+        
+        for (Deadline d : thisDateDeadline)
+        {
+            Label lb = new Label(d.getDeadLineName());
+            lv_new.getItems().addAll(lb);
+        }
+        
+        lv_new.setOnMouseClicked(e -> {
+            String id = lv_new.getSelectionModel().getSelectedItem().getText();
+
+            switch (id) {
+
+            }
+        });
+
+        lv_new.setCellFactory(e -> {
+            JFXListCell<Label> cell = new JFXListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.setStyle("-fx-background-color: transparent;");
+
+            MenuItem infoItem = getMenuItem("Chi tiết");
+
+            infoItem.setOnAction(event -> {
+
+            });
+            contextMenu.getItems().addAll(infoItem);
+
+            //cell.textProperty().bind(cell.itemProperty());
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+
+            return cell;
+        });
+    }
+    
+    //Hàm này để hiển thị thông báo chung.
+    public void init_lv_thongbao(Integer pageNo, boolean wantUpdate)
+    {
+        if (pageNo == null)
+            pageNo = 0;
+        
+        ArrayList<ThongBao> dsThongBao = Global.webCM.GetThongBao(pageNo, wantUpdate);
+        
+        lv_new.getItems().clear();
+        
+        if (dsThongBao == null)
+        {
+            System.out.println("Không có thông báo nào");
+            return;
+        }
+        
+        for (ThongBao tb : dsThongBao)
+        {
+            Label lb = new Label(tb.getName());
+            lv_new.getItems().addAll(lb);
+        }
+        
+        lv_new.setOnMouseClicked(e -> {
+            String id = lv_new.getSelectionModel().getSelectedItem().getText();
+
+            switch (id) {
+
+            }
+        });
+        
+        lv_new.setCellFactory(e -> {
+            JFXListCell<Label> cell = new JFXListCell<>();
+            ContextMenu contextMenu = new ContextMenu();
+            contextMenu.setStyle("-fx-background-color: transparent;");
+
+            MenuItem infoItem = getMenuItem("Chi tiết");
+
+            infoItem.setOnAction(event -> {
+
+            });
+            contextMenu.getItems().addAll(infoItem);
+
+            //cell.textProperty().bind(cell.itemProperty());
+            cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
+                if (isNowEmpty) {
+                    cell.setContextMenu(null);
+                } else {
+                    cell.setContextMenu(contextMenu);
+                }
+            });
+
+            return cell;
+        });
+    }
+    
+    //Hàm này hiển thị thông báo nghỉ.
+    public void init_lv_rest(LocalDate dateToShowRest)
+    {
+        if (dateToShowRest == null)
+        {
+            dateToShowRest = LocalDate.now();
+        }
+        
+        ArrayList<Advertise> thisDateAdvertises = new ArrayList<>();
+        
+        try {
+            thisDateAdvertises = Global.webCM.GetAdvertisesByDate(dateToShowRest, false);
+        } catch (CannotBrowseCourseException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (CannotLoginException ex) {
+            Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        lv_new.getItems().clear();
+        
+        if (thisDateAdvertises == null)
+        {
+            System.out.println("Không có môn nào được nghỉ trong hôm nay !");
+            return;
+        }
+        
+        for (Advertise a : thisDateAdvertises)
+        {
+            Label lb = new Label(a.getName());
             lv_new.getItems().addAll(lb);
         }
         lv_new.setOnMouseClicked(e -> {
@@ -748,30 +900,6 @@ public class HomeController implements Initializable {
 
             return cell;
         });
-    }
-
-    //Hàm này hiển thị deadline của 1 courseID cho trước.
-    public void init_lv_deadline(Course course) {
-        //Đây là nơi hiển thị deadline.
-        lv_new.getItems().clear();
-        ArrayList<Deadline> deadlines = new ArrayList<>();
-        try {
-            deadlines = Global.webCM.GetDeadlinesByCourse(course, false);
-        } catch (NotLoggedInException ex) {
-            System.out.println("Lỗi đăng nhập.");
-        }
-        lv_new.getItems().clear();
-
-        for (int i = 0; i < deadlines.size(); i++) {
-            Label lb = new Label(deadlines.get(i).getDeadLineName());
-            // Xử lý sự kiện tại đây
-            lv_new.getItems().addAll(lb);
-        }
-        lv_new.setOnMouseClicked(e -> {
-            String id = lv_new.getSelectionModel().getSelectedItem().getText();
-
-        });
-
     }
 
     public void Button_DateClick(int day) {
