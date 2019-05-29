@@ -347,6 +347,7 @@ public class HomeController implements Initializable {
         
         //using for DAL
         Global.CurrentMonth=currentMonth;
+        Global.CurrentYear=currentYear;
         ResetColorListButtonTableCalendar();
         ReLoadLichTrinhThangHienTai();
         fillCalendarWithDayHaveDeadline();
@@ -387,6 +388,7 @@ public class HomeController implements Initializable {
 
         //using for DAL
         Global.CurrentMonth=currentMonth;
+        Global.CurrentYear=currentYear;
         ResetColorListButtonTableCalendar();
         ReLoadLichTrinhThangHienTai();
         fillCalendarWithDayHaveDeadline();
@@ -629,6 +631,10 @@ public class HomeController implements Initializable {
                     CalenderBLL bll =new CalenderBLL();
                     bll.DeleteCalender(cell.getItem().getId());
                     lv_lichtrinh.getItems().remove(cell.getItem());
+                    
+                    
+                    //cancle seting notify with system
+                    
                     
                 } catch (SQLException ex) {
                     Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
@@ -907,6 +913,7 @@ public class HomeController implements Initializable {
         
         //using for create new calendar-bottom
         Global.dateCalendarSelected=Global.CurrentYear+"-"+Global.CurrentMonth+"-"+day;
+        Global.CurrentDay=day;
         
         if (nt.NgayTrongTuan(currentYear, currentMonth, day) != 8) {
              lbl_day.setText("Thứ " + nt.NgayTrongTuan(currentYear, currentMonth, day));

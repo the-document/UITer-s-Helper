@@ -5,6 +5,7 @@ import BLL.CalenderBLL;
 import BLL.Global;
 import DTO.Calender;
 import GUI.LichTrinh;
+import GUI.PopUp_Notification;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -14,8 +15,11 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -133,11 +137,43 @@ public class ThemLichTrinhController implements Initializable {
 
             try {
                 bll.InsertCalender(calender);
+                
+                //if insert sucess then setnotify
+                TimerTask timerTask=new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable(){
+                        // ...//System.out.println("timer-running---------------");              
+                            @Override
+                            public void run() {
+                               System.out.println("timer-running---------------");   
+                               PopUp_Notification.run("Thông báo", calender.getDescribe(), "INFO");
+                            }
+                        });
+                        
+                    }
+                };
+                
+                //Calendar of system---------------------
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.MONTH, Global.CurrentMonth);
+                calendar.set(Calendar.DATE, Global.CurrentDay);
+                calendar.set(Calendar.HOUR_OF_DAY, time.getHour());
+                calendar.set(Calendar.MINUTE, time.getMinute());
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+ 
+                Date dateSchedule = calendar.getTime();
+                
+                Timer timer =new  Timer(calender.getDescribe());
+                timer.schedule(timerTask, dateSchedule);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(ThemLichTrinhController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
+        //else just show detail.
         btn_exit.fire();
     }
 

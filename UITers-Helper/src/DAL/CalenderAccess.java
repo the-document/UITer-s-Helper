@@ -47,7 +47,8 @@ public class CalenderAccess extends DatabaseAccess{
             preparedStmt.setTimestamp(1, d);
             preparedStmt.setString(2, calender.getLocation());
             preparedStmt.setString(3, calender.getDescribe());
-            preparedStmt.setString(4, Global.MSSV);
+            preparedStmt.setString(4, Global.username);//MSSV
+            System.out.println(Global.username);
 
         // execute the preparedstatement
         preparedStmt.execute();
@@ -69,7 +70,7 @@ public class CalenderAccess extends DatabaseAccess{
         //need add constrain time after curren day
         Timestamp currentTime =Timestamp.valueOf(LocalDateTime.now());
         System.out.println(currentTime.toString());
-        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.MSSV+" and ThoiGian >= '"+currentTime+"'";
+        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.username+" and ThoiGian >= '"+currentTime+"'";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
@@ -108,7 +109,7 @@ public class CalenderAccess extends DatabaseAccess{
         Timestamp nextMonth=Timestamp.valueOf(nexTime);
         System.out.println(nextMonth.toString());
         
-        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.MSSV+" and ThoiGian >= '"+currentTime+"' and ThoiGian < '"+nextMonth+"' ORDER BY ThoiGian ASC";
+        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.username+" and ThoiGian >= '"+currentTime+"' and ThoiGian < '"+nextMonth+"' ORDER BY ThoiGian ASC";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
