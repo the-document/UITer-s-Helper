@@ -124,7 +124,7 @@ public class LoginController implements Initializable {
         
         stack_pane.setDisable(false);
 
-        Global.webCM = new WebCommunicate(WebDriverMode.Firefox,BLL.Global.username, BLL.Global.password);
+        Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,BLL.Global.username, BLL.Global.password);
         
         boolean loginSuccess = false;
         
