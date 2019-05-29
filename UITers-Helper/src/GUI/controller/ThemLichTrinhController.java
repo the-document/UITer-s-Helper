@@ -10,6 +10,7 @@ import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -29,6 +30,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 // </editor-fold>
 
 public class ThemLichTrinhController implements Initializable {
@@ -113,6 +119,26 @@ public class ThemLichTrinhController implements Initializable {
     }
 
    
+    private void MakeRingTone() {
+        try {
+            String startDir = System.getProperty("user.dir") + "\\LibFile\\ringer.wav";
+            System.out.println(startDir);
+            File ringToneFile = new File(startDir);
+            AudioInputStream stream;
+            AudioFormat format;
+            DataLine.Info info;
+            Clip clip;
+
+            stream = AudioSystem.getAudioInputStream(ringToneFile);
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            //whatevers
+        }
+    }
 
     @FXML
     void btn_addClick(ActionEvent event) {
@@ -156,8 +182,10 @@ public class ThemLichTrinhController implements Initializable {
                                         //System.out.println(l.getDescribe());
                                         //neu khong tim thay co nghia la da xoa, khong cna thong bao
                                         if (l.getDescribe().equals(calender.getDescribe())) {
-                                           // System.out.println("timer-running---------------");
+                                            // System.out.println("timer-running---------------");
                                             PopUp_Notification.run("Thông báo", calender.getDescribe(), "INFO");
+
+                                            MakeRingTone();
                                             break;
                                         }
                                     }
@@ -173,8 +201,8 @@ public class ThemLichTrinhController implements Initializable {
                 
                 //Calendar of system---------------------
                 Calendar calendar = Calendar.getInstance();
-                //calendar.set(Calendar.MONTH, Global.CurrentMonth);
-                //calendar.set(Calendar.DATE, Global.CurrentDay);
+                calendar.set(Calendar.MONTH, Global.CurrentMonth-1);
+                calendar.set(Calendar.DATE, Global.CurrentDay);
                 calendar.set(Calendar.HOUR_OF_DAY, time.getHour());
                 calendar.set(Calendar.MINUTE, time.getMinute());
                 calendar.set(Calendar.SECOND, 0);
