@@ -63,6 +63,9 @@ public class WebCommunicate {
     //Lưu lại danh sách các thông báo đã được tải về trước đó.
     HashMap <Integer,ArrayList<ThongBao>> thongBaoOfPageNo;
     
+    //Lưu lại danh sách các ngày có deadline theo tháng.
+    HashMap <LocalDate,ArrayList<LocalDate>> monthToDeadLines;
+    
     //Cờ để nhận biết đã update chưa.
     private boolean DeadlineByDateUpdated = false;
     private boolean AdvertiseByDateUpdated = false;
@@ -114,6 +117,9 @@ public class WebCommunicate {
         
         //Tạo 1 danh sách các thông báo chung rỗng.
         thongBaoOfPageNo = new HashMap<Integer, ArrayList<ThongBao>>();
+        
+        //Tạo 1 danh sách các deadline rỗng.
+        monthToDeadLines = new HashMap<LocalDate, ArrayList<LocalDate>>();
         
         //Tạo danh sách các khoa.
         InitializeFalcultyList();
@@ -423,18 +429,64 @@ public class WebCommunicate {
     //Hàm dùng để tìm những ngày có deadline.
     public ArrayList<LocalDate> getDateHaveDeadlines(Integer month, Integer year, boolean wantUpdate)
     {
-        ArrayList<LocalDate> res = new ArrayList<LocalDate>();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d M uuuu", Locale.US);
-        LocalDate thisMonth = LocalDate.parse("1 " + month.toString() + " " + year.toString(), dtf);
+        LocalDate destinationDate = LocalDate.parse("1 " + month.toString() + " " + year.toString(), dtf);
         
-        String monthName = thisMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.US);
+        ArrayList<LocalDate> res;
+        
+        if (!wantUpdate && (res = monthToDeadLines.get(destinationDate) )!= null)
+            return res;
+        
+        res = new ArrayList<LocalDate>();
+            
+        String monthName = destinationDate.getMonth().getDisplayName(TextStyle.FULL, Locale.US);
         
         driver.navigate().to("https://courses.uit.edu.vn/calendar/view.php?view=month");
         
-        WebElement we = driver.findElement(By.xpath("//h2[@class='current']"));
+        WebElement WEcurrentMonthAndYear = driver.findElement(By.xpath("//h2[@class='current']"));
         
-        System.out.println("Test 1 : " + we.getText());
-        System.out.println("Test 2 : " + monthName + " " + year.toString());
+        String destinationMonthOfYear = monthName + " " + year.toString();
+        String currentMonthOfYear = WEcurrentMonthAndYear.getText();
+        
+        DateTimeFormatter monthAndYearCoursesFormat = DateTimeFormatter.ofPattern("d MMMM uuuu",Locale.US);
+        LocalDate LDcurrentMonth = LocalDate.parse("1 " + currentMonthOfYear,monthAndYearCoursesFormat);
+        
+        WebElement nextMonthButton;
+        WebElement prevMonthButton;
+        
+        //Nếu tháng hiện tại chưa đạt được như yêu cầu, ta tăng giảm tháng tuỳ theo độ chênh lệch.
+        while (!currentMonthOfYear.equals(destinationMonthOfYear))
+        {
+            //Ta chọn XPath đến nút prev và nút forward.
+            nextMonthButton = driver.findElement(By.xpath("//a[@class=\"arrow_link next\"]"));
+            prevMonthButton = driver.findElement(By.xpath("//a[@class=\"arrow_link previous\"]"));
+            //Nếu ngày hiện tại nhỏ hơn ngày cần đến, ta bấm nút đi tiếp.
+            if (LDcurrentMonth.isBefore(destinationDate))
+                nextMonthButton.click();
+            else if (LDcurrentMonth.isAfter(destinationDate))
+                prevMonthButton.click();
+            
+            //Cập nhập lại ngày hiện tại.
+            WEcurrentMonthAndYear = driver.findElement(By.xpath("//h2[@class='current']"));
+            currentMonthOfYear = WEcurrentMonthAndYear.getText();
+        }
+        
+        //Khi đã thực thi đến được đây, nghĩa là tháng đang chọn đã chính xác.
+        
+        String XPathToEventDates = "//td[./div/a[contains(@title,\"event\")]]/div/a";
+        List<WebElement> datesHaveDeadlines = driver.findElements(By.xpath(XPathToEventDates));
+        
+        DateTimeFormatter formatWithOnlyDate = DateTimeFormatter.ofPattern("d M uuuu", Locale.US);
+        
+        for(WebElement e : datesHaveDeadlines)
+        {
+            //Khi getText WebElement được tìm bởi XPathToEventDates, sẽ trả về 1 con số là ngày có deadline.
+            LocalDate tmp = LocalDate.parse(e.getText() + " " + month + " " + year,formatWithOnlyDate);
+            res.add(tmp);
+        }
+        
+        //Buffer to HashMap for faster retrieval later.
+        monthToDeadLines.put(destinationDate, res);
         
         return res;
     }

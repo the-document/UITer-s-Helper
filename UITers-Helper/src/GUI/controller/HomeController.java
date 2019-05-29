@@ -34,6 +34,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -950,6 +951,8 @@ public class HomeController implements Initializable {
         if(lsCalenders==null)
             return;
         
+        
+        
         for (Calender calendar : lsCalenders) {
             
             //split to get day of current calender
@@ -961,6 +964,41 @@ public class HomeController implements Initializable {
                     //btn.setStyle("-fx-background-color:  #505abe");
                     btn.setStyle("-fx-background-color:  #f44156");
             }
+        }
+        
+        //Phần tô màu những ngày có deadline của Nghị.
+        
+        ArrayList<LocalDate> thisMonthDeadLine = Global.webCM.getDateHaveDeadlines(currentMonth, currentYear, false);
+        
+        boolean flag[] = new boolean[32];
+        
+        for (int i=0;i<32;++i)
+        {
+            flag[i] = false;
+        }
+        
+        for (LocalDate d : thisMonthDeadLine)
+        {
+            flag[d.getDayOfMonth()] = true;
+            System.out.println("Date : " + d.getDayOfMonth());
+        }
+        
+        for (JFXButton btn : lsBtnCalendar)
+        {
+            boolean condition;
+            try
+            {
+                condition = flag[Integer.parseInt(btn.getText())];
+            }
+            catch (NumberFormatException e)
+            {
+                condition =false;
+            }
+            
+            if (condition)
+                btn.setStyle("-fx-background-color:  #f44156");
+            else
+                System.out.println("Day " + btn.getText() + " failed !");
         }
     }
     
