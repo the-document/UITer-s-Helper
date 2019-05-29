@@ -634,7 +634,7 @@ public class HomeController implements Initializable {
                     
                     
                     //cancle seting notify with system
-                    
+                    //khong can thiet, se check lai trong DB truoc khi remind
                     
                 } catch (SQLException ex) {
                     Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);

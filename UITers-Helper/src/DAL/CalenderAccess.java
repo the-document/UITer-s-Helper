@@ -68,7 +68,8 @@ public class CalenderAccess extends DatabaseAccess{
         
         this.ConnectToDatabase();
         //need add constrain time after curren day
-        Timestamp currentTime =Timestamp.valueOf(LocalDateTime.now());
+        LocalDateTime currentDateTime=LocalDateTime.of(Global.CurrentYear, Global.CurrentMonth, 1, 0, 0);
+        Timestamp currentTime =Timestamp.valueOf(currentDateTime);
         System.out.println(currentTime.toString());
         String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.username+" and ThoiGian >= '"+currentTime+"'";
         
@@ -84,6 +85,7 @@ public class CalenderAccess extends DatabaseAccess{
         while (resultSet.next()) {            
             Calender c =new Calender();
             
+            c.setKey(String.valueOf(resultSet.getInt(1)));
             c.setTime(resultSet.getTimestamp(2).toString());
             c.setLocation(resultSet.getString(3));
             c.setDescribe(resultSet.getString(4));
