@@ -4,6 +4,7 @@ package GUI.controller;
 import BLL.Advertise;
 import BLL.CalenderBLL;
 import BLL.Course;
+import BLL.DeadLineDateBufferMode;
 import BLL.Deadline;
 import BLL.WebCommunicate;
 import BLL.Global;
@@ -82,8 +83,10 @@ public class HomeController implements Initializable {
     int isExpandChung = 1;
     int isExpandDeadline = 1;
     int isExpandDangKy = 1;
-    int currentMonth = java.time.LocalDate.now().getMonthValue();
-    int currentYear = java.time.LocalDate.now().getYear();
+    
+    Integer currentDay = java.time.LocalDate.now().getDayOfMonth();
+    Integer currentMonth = java.time.LocalDate.now().getMonthValue();
+    Integer currentYear = java.time.LocalDate.now().getYear();
 
     //Danh sách các courses hiện có của người dùng.
     ArrayList<Course> curCourses;
@@ -584,7 +587,7 @@ public class HomeController implements Initializable {
         
         lv_lichtrinh.setOnMouseClicked(e -> {
             String id = lv_lichtrinh.getSelectionModel().getSelectedItem().getText();
-           
+            System.out.println("CLicked : " + id);
             switch (id) {
 
             }
@@ -724,13 +727,17 @@ public class HomeController implements Initializable {
         //Đây là nơi hiển thị deadline.
         
         if (dateOfDeadline == null)
-            dateOfDeadline = LocalDate.now();
+        {
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d M uuuu", Locale.US);
+            String selectedDate = currentDay.toString() + " " + currentMonth.toString() + " " + currentYear.toString();
+            dateOfDeadline = LocalDate.parse(selectedDate,dtf);
+        }
         
         ArrayList <Deadline> thisDateDeadline = new ArrayList<>();
         
         try
         {
-            thisDateDeadline = Global.webCM.GetDeadlinesByDate(dateOfDeadline, false);
+            thisDateDeadline = Global.webCM.GetDeadlinesByLocalDate(dateOfDeadline,DeadLineDateBufferMode.MONTHLY ,false);
         }
         catch (Exception e)
         {
@@ -741,7 +748,7 @@ public class HomeController implements Initializable {
         
         if (thisDateDeadline == null)
         {
-            System.out.println("Không có deadline trong ngày hôm nay (Hooray).");
+            System.out.println("Không có deadline trong ngày " + dateOfDeadline.toString() + " (Hooray).");
             return;
         }
         
@@ -844,7 +851,9 @@ public class HomeController implements Initializable {
     {
         if (dateToShowRest == null)
         {
-            dateToShowRest = LocalDate.now();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("d M uuuu", Locale.US);
+            String selectedDate = currentDay.toString() + " " + currentMonth.toString() + " " + currentYear.toString();
+            dateToShowRest = LocalDate.parse(selectedDate,dtf);
         }
         
         ArrayList<Advertise> thisDateAdvertises = new ArrayList<>();
@@ -861,7 +870,7 @@ public class HomeController implements Initializable {
         
         if (thisDateAdvertises == null)
         {
-            System.out.println("Không có môn nào được nghỉ trong hôm nay !");
+            System.out.println("Không có môn nào được nghỉ trong ngày " + dateToShowRest.toString());
             return;
         }
         
@@ -917,6 +926,8 @@ public class HomeController implements Initializable {
              lbl_day.setText("Chủ nhật");
 
         }
+        currentDay = day;
+        System.out.println("Selected date : " + day);
     }
 
     //lich trinh - bang lich =============================================
@@ -990,9 +1001,10 @@ public class HomeController implements Initializable {
             {
                 condition = flag[Integer.parseInt(btn.getText())];
             }
+            
             catch (NumberFormatException e)
             {
-                condition =false;
+                condition = false;
             }
             
             if (condition)

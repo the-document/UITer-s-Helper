@@ -9,6 +9,7 @@ package BLL;
  *
  * @author mirushi
  */
+
 public class ThongBao {
     private String name;
     private String url;
