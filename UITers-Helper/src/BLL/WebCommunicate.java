@@ -10,8 +10,11 @@ import Exception.CannotLoginException;
 import Exception.NotLoggedInException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +23,7 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.Scanner;
 import javafx.util.converter.LocalDateTimeStringConverter;
+import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
@@ -55,8 +59,9 @@ public class WebCommunicate {
     //Lưu lại danh sách các thông báo của courses.
     HashMap <String, ArrayList<Advertise>> adverties;
     
-    //Lưu lại danh sách các deadline (theo ngày).
-    HashMap <LocalDate,ArrayList<Deadline>> deadlineOfDates;
+    //Lưu lại danh sách tất cả các deadline (truy xuất theo ngày).
+    HashMap <LocalDate,ArrayList<Deadline>> allDeadlineOfDates;
+    
     //Lưu lại danh sách các advertise (thông báo) theo ngày.
     HashMap <LocalDate,ArrayList<Advertise>> advertiesOfDates;
     
@@ -69,6 +74,8 @@ public class WebCommunicate {
     //Cờ để nhận biết đã update chưa.
     private boolean DeadlineByDateUpdated = false;
     private boolean AdvertiseByDateUpdated = false;
+    
+    //HashMap để kiểm tra xem ngày tháng đã được buffer deadline trước đó chưa.
     
     //Danh sách các khoa, để phục vụ cho việc lọc ra xem đâu là courses môn học, đâu là courses khác.
     ArrayList<String> facultiesList;
@@ -108,7 +115,7 @@ public class WebCommunicate {
         deadlineOfCourses = new HashMap<String, ArrayList<Deadline>>();
         
         //Tạo 1 danh sách các deadline rỗng cho các ngày.
-        deadlineOfDates = new HashMap<LocalDate,ArrayList<Deadline>>();
+        allDeadlineOfDates = new HashMap<LocalDate,ArrayList<Deadline>>();
         //Tạo 1 danh sách các advertises rỗng cho các ngày.
         advertiesOfDates = new HashMap<LocalDate,ArrayList<Advertise>>();
         
@@ -177,17 +184,26 @@ public class WebCommunicate {
         
     }
     
-    public ArrayList<Deadline> GetDeadlinesByDate(LocalDate date, boolean wantUpdate) throws CannotBrowseCourseException, CannotLoginException
+    //Nếu bật cờ allDeadlinesBuffer, toàn bộ deadline của tất cả các môn học
+    public ArrayList<Deadline> GetDeadlinesByLocalDate(LocalDate date, DeadLineDateBufferMode bufferMode, boolean wantUpdate) throws CannotBrowseCourseException, CannotLoginException
     {
-        try {
-            BufferDeadlineListByDate(wantUpdate);
-        } catch (NotLoggedInException notLoggedIn) {
-            ExecuteLogin();
+        switch (bufferMode) {
+            case ALL:
+                try {
+                    BufferAllDeadlineListByDate(wantUpdate);
+                } catch (NotLoggedInException notLoggedIn) {
+                    System.out.println("Chưa đăng nhập.");
+                }
+                return (allDeadlineOfDates.get(date));
+            case MONTHLY:
+                BufferDeadlinesListAtMonthByDate(date, wantUpdate);
+                return (allDeadlineOfDates.get(date));
+            default:
+                throw new NotImplementedException("Buffer Mode not available.");
         }
-        
-        return (deadlineOfDates.get(date));
-        
     }
+    
+    
     
     public ArrayList<Advertise> GetAdvertisesByDate(LocalDate date, boolean wantUpdate) throws CannotBrowseCourseException, CannotLoginException
     {
@@ -286,6 +302,35 @@ public class WebCommunicate {
         return currentCourses;
     }
     
+    private Deadline getDeadLineFromURL (Course course, String url)
+    {
+        Deadline res;
+        
+        String deadlineID;
+        String deadlineName;
+        //Get text deadlineElement sẽ trả ra tên deadline. Get Attribute href sẽ trả ra URL của deadline.
+        driver.get(url);
+        res = new Deadline();
+        
+        WebElement e = driver.findElement(By.xpath("//div[@role=\"main\"]/h2")); //Tìm đến tên của deadline.
+        deadlineID = GetIDByURL(url);
+        deadlineName = e.getText();
+
+        String deadlineDate;
+        try {
+            deadlineDate = driver.findElement(By.xpath("//div[@class='submissionstatustable']/div/table/tbody/tr[3]/td[@class='cell c1 lastcol']")).getText();
+        } catch (NoSuchElementException nse) {
+            deadlineDate = "TODAY";
+        }
+
+        res.setDeadlineID(deadlineID);
+        res.setDeadLineName(deadlineName);
+        res.setDeadLineDate(GetDateTimeFromString(deadlineDate));
+        res.setCourseOfDeadlines(course);
+
+        return res;
+    }
+    
     /*Nếu bật cờ wantUpdate, hàm GetDeadlines sẽ luôn luôn lấy deadline trực tiếp từ server.
     Nếu không bật cờ wantUpdate, hàm GetDeadlines sẽ trả về giá trị trước đó lấy được đã lưu trong đối tượng WebCommunicate.
     Và nếu trước đó không lưu, hàm GetDeadlines sẽ tự động lấy dữ liệu từ server.
@@ -324,34 +369,19 @@ public class WebCommunicate {
         {
             System.out.println("Không tìm thấy deadlines nào !");
         }
-        Deadline tmp;
         
-        //Get text deadlineElement sẽ trả ra tên deadline. Get Attribute href sẽ trả ra URL của deadline.
-        for (int i=0;i<deadlineElements.size();++i)
+        ArrayList<String> deadlinesURL = new ArrayList<>();
+
+        for (WebElement dlElement : deadlineElements)
         {
-            tmp = new Deadline();
-            deadlineElements = driver.findElements(By.xpath("//*[@class='box generalbox']//a[contains(@href,'assign')]"));
-            
-            WebElement e = deadlineElements.get(i);
-            deadlineID = GetIDByURL(e.getAttribute("href"));
-            deadlineName = e.getText();
-            driver.get("https://courses.uit.edu.vn/mod/assign/view.php?id=" + deadlineID);
-            
-            try {
-                deadlineDate = driver.findElement(By.xpath("//div[@class='submissionstatustable']/div/table/tbody/tr[3]/td[@class='cell c1 lastcol']")).getText();
-            } catch (NoSuchElementException nse) {
-                deadlineDate = "TODAY";
-            }
-            
-            tmp.setDeadlineID(deadlineID);
-            tmp.setDeadLineName(deadlineName);
-            tmp.setDeadLineDate(GetDateTimeFromString(deadlineDate));
-            tmp.setCourseOfDeadlines(course);
-            
-            deadlines.add(tmp);
-            driver.navigate().back();
+            deadlinesURL.add(dlElement.getAttribute("href"));
         }
         
+        for (String url : deadlinesURL)
+        {
+            deadlines.add(getDeadLineFromURL(course,url));
+        }
+            
         //Thêm deadlines vào danh sách.
         deadlineOfCourses.put(course.getCourseID(), deadlines);
         
@@ -426,6 +456,109 @@ public class WebCommunicate {
         return res[res.length - 1];
     }
     
+    private void BufferDeadlinesListAtMonthByDate(LocalDate monthOfYear, boolean wantUpdate)
+    {
+        //Đầu tiên là ta phải lấy tất cả những ngày có deadline.
+        //Sau đó kiểm tra nếu đã tồn tại và không cần update thì return luôn.
+        
+        //Ta lấy danh sách những ngày có deadline dựa trên tháng và năm của ngày đưa vào.
+        ArrayList<LocalDate> dateHaveDeadlines = getDateHaveDeadlines(monthOfYear.getMonthValue(), monthOfYear.getYear(), false);
+        
+        if (!wantUpdate && allDeadlineOfDates.get(dateHaveDeadlines.get(0)) != null)
+            return;
+        
+        //Đi đến những ngày có deadline để xem deadline.
+        for (LocalDate d : dateHaveDeadlines)
+        {
+            ArrayList<Deadline> deadlinesOfThisDay = getDeadLinesListFromDate(d);
+            allDeadlineOfDates.put(d, deadlinesOfThisDay);
+        }
+        
+    }
+    
+    //Hàm này sẽ trả về các deadline trong ngày được chọn từ epoch.
+    //Get text để lấy tên deadline. Get href để lấy liên kết đến deadline.
+    private List<WebElement> getDeadLineElementFromEpochDate(String epoch)
+    {
+        driver.get("https://courses.uit.edu.vn/calendar/view.php?view=day&time=" + epoch);
+        List<WebElement> deadlines = driver.findElements(By.xpath("//div[@class=\"referer\"]/a"));
+        
+        return deadlines;
+    }
+    
+    private ArrayList<Deadline> getDeadLinesListFromDate (LocalDate date)
+    {
+        ArrayList<Deadline> res = new ArrayList<>();
+        
+        String epoch = convertLocalDateToEpoch(date);
+        List<WebElement> deadlinesElement = getDeadLineElementFromEpochDate(epoch);
+        
+        ArrayList<String> dsURLDeadline = new ArrayList<>();
+        
+        //Duyệt qua tất cả các deadline element tìm được và thêm URL của chúng vào ds.
+        for (WebElement e : deadlinesElement)
+        {
+            dsURLDeadline.add(e.getAttribute("href"));
+        }
+        
+        //Từ các URL, ta tạo ra danh sách các deadline.
+        Deadline tmp;
+        for (String url : dsURLDeadline)
+        {
+            tmp = getDeadLineFromURL(null, url);
+            res.add(tmp);
+        }
+        
+        return res; 
+    }
+    
+    private String convertLocalDateToEpoch(LocalDate date)
+    {
+        ZoneId zoneId = ZoneId.systemDefault(); // or: ZoneId.of("Europe/Oslo");
+        Long epoch = date.atStartOfDay(zoneId).toEpochSecond();
+        return epoch.toString();
+    }
+    
+    private void navigateTillRightMonth(LocalDate destinationMonth)
+    {
+        String url = "https://courses.uit.edu.vn/calendar/view.php?view=month&time=" + convertLocalDateToEpoch(destinationMonth);
+        
+        driver.navigate().to(url);
+        //Old code (manually navigation - not recommended).
+        /*
+        WebElement WEcurrentMonthAndYear = driver.findElement(By.xpath("//h2[@class='current']"));
+
+        String destinationMonthOfYear = destinationMonth.getMonth().getDisplayName(TextStyle.FULL, Locale.US) + " " + destinationMonth.getYear();
+        String currentMonthOfYear = WEcurrentMonthAndYear.getText();
+
+        //Nếu tháng hiện tại chưa đạt được như yêu cầu, ta tăng giảm tháng tuỳ theo độ chênh lệch.
+        DateTimeFormatter monthAndYearCoursesFormat = DateTimeFormatter.ofPattern("d MMMM uuuu",Locale.US);
+        LocalDate LDcurrentMonth = LocalDate.parse("1 " + currentMonthOfYear,monthAndYearCoursesFormat);
+        
+        WebElement nextMonthButton;
+        WebElement prevMonthButton;
+        
+        WEcurrentMonthAndYear  = driver.findElement(By.xpath("//h2[@class='current']"));
+        
+        while (!currentMonthOfYear.equals(destinationMonthOfYear))
+        {
+            //Ta chọn XPath đến nút prev và nút forward.
+            nextMonthButton = driver.findElement(By.xpath("//a[@class=\"arrow_link next\"]"));
+            prevMonthButton = driver.findElement(By.xpath("//a[@class=\"arrow_link previous\"]"));
+            //Nếu ngày hiện tại nhỏ hơn ngày cần đến, ta bấm nút đi tiếp.
+            if (LDcurrentMonth.isBefore(destinationMonth))
+                nextMonthButton.click();
+            else if (LDcurrentMonth.isAfter(destinationMonth))
+                prevMonthButton.click();
+            
+            //Cập nhập lại ngày hiện tại.
+            WEcurrentMonthAndYear = driver.findElement(By.xpath("//h2[@class='current']"));
+            currentMonthOfYear = WEcurrentMonthAndYear.getText();
+            LDcurrentMonth = LocalDate.parse("1 " + currentMonthOfYear,monthAndYearCoursesFormat);
+        }
+        */
+    }
+    
     //Hàm dùng để tìm những ngày có deadline.
     public ArrayList<LocalDate> getDateHaveDeadlines(Integer month, Integer year, boolean wantUpdate)
     {
@@ -440,36 +573,8 @@ public class WebCommunicate {
         res = new ArrayList<LocalDate>();
             
         String monthName = destinationDate.getMonth().getDisplayName(TextStyle.FULL, Locale.US);
-        
-        driver.navigate().to("https://courses.uit.edu.vn/calendar/view.php?view=month");
-        
-        WebElement WEcurrentMonthAndYear = driver.findElement(By.xpath("//h2[@class='current']"));
-        
-        String destinationMonthOfYear = monthName + " " + year.toString();
-        String currentMonthOfYear = WEcurrentMonthAndYear.getText();
-        
-        DateTimeFormatter monthAndYearCoursesFormat = DateTimeFormatter.ofPattern("d MMMM uuuu",Locale.US);
-        LocalDate LDcurrentMonth = LocalDate.parse("1 " + currentMonthOfYear,monthAndYearCoursesFormat);
-        
-        WebElement nextMonthButton;
-        WebElement prevMonthButton;
-        
-        //Nếu tháng hiện tại chưa đạt được như yêu cầu, ta tăng giảm tháng tuỳ theo độ chênh lệch.
-        while (!currentMonthOfYear.equals(destinationMonthOfYear))
-        {
-            //Ta chọn XPath đến nút prev và nút forward.
-            nextMonthButton = driver.findElement(By.xpath("//a[@class=\"arrow_link next\"]"));
-            prevMonthButton = driver.findElement(By.xpath("//a[@class=\"arrow_link previous\"]"));
-            //Nếu ngày hiện tại nhỏ hơn ngày cần đến, ta bấm nút đi tiếp.
-            if (LDcurrentMonth.isBefore(destinationDate))
-                nextMonthButton.click();
-            else if (LDcurrentMonth.isAfter(destinationDate))
-                prevMonthButton.click();
-            
-            //Cập nhập lại ngày hiện tại.
-            WEcurrentMonthAndYear = driver.findElement(By.xpath("//h2[@class='current']"));
-            currentMonthOfYear = WEcurrentMonthAndYear.getText();
-        }
+
+        navigateTillRightMonth(destinationDate);
         
         //Khi đã thực thi đến được đây, nghĩa là tháng đang chọn đã chính xác.
         
@@ -530,8 +635,14 @@ public class WebCommunicate {
         
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM uuuu h:m a", Locale.US);
-        
-        res = LocalDateTime.parse(split[1] + " " + split[2], formatter);
+        try
+        {
+           res = LocalDateTime.parse(split[1] + " " + split[2], formatter); 
+        }
+        catch (DateTimeParseException parseException)
+        {
+            res = LocalDateTime.now();
+        }
         return res;
     }
     
@@ -605,7 +716,7 @@ public class WebCommunicate {
         return false;
     }
     
-    private void BufferDeadlineListByDate(boolean wantUpdate) throws NotLoggedInException
+    private void BufferAllDeadlineListByDate(boolean wantUpdate) throws NotLoggedInException
     {
         if (!wantUpdate && DeadlineByDateUpdated)
             return;
@@ -624,12 +735,12 @@ public class WebCommunicate {
             {
                 try
                 {
-                    ArrayList<Deadline> currentDeadline = deadlineOfDates.get(d.getDeadLineDate().toLocalDate());
+                    ArrayList<Deadline> currentDeadline = allDeadlineOfDates.get(d.getDeadLineDate().toLocalDate());
                     if (currentDeadline == null)
                         currentDeadline = new ArrayList<Deadline>();
                     currentDeadline.add(d);
                     
-                    deadlineOfDates.put(d.getDeadLineDate().toLocalDate(), currentDeadline);
+                    allDeadlineOfDates.put(d.getDeadLineDate().toLocalDate(), currentDeadline);
                     
                 }
                 catch (Exception e)
