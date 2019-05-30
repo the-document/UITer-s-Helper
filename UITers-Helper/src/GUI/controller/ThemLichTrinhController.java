@@ -5,17 +5,23 @@ import BLL.CalenderBLL;
 import BLL.Global;
 import DTO.Calender;
 import GUI.LichTrinh;
+import GUI.PopUp_Notification;
 import GUI.StaticFunctions;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -24,6 +30,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 // </editor-fold>
 
 public class ThemLichTrinhController implements Initializable {
@@ -108,12 +119,34 @@ public class ThemLichTrinhController implements Initializable {
     }
 
    
+    private void MakeRingTone() {
+        try {
+            String startDir = System.getProperty("user.dir") + "\\LibFile\\ringer.wav";
+            System.out.println(startDir);
+            File ringToneFile = new File(startDir);
+            AudioInputStream stream;
+            AudioFormat format;
+            DataLine.Info info;
+            Clip clip;
+
+            stream = AudioSystem.getAudioInputStream(ringToneFile);
+            format = stream.getFormat();
+            info = new DataLine.Info(Clip.class, format);
+            clip = (Clip) AudioSystem.getLine(info);
+            clip.open(stream);
+            clip.start();
+        } catch (Exception e) {
+            //whatevers
+        }
+    }
 
     @FXML
     void btn_addClick(ActionEvent event) {
         
+        System.out.println("ADding...");
         //add new
         if (Global.ModeThemLichTrinh == 1) {
+            System.out.println("insertinh...");
             LocalTime time = pk_time.getValue();
             String location = txt_location.getText();
             String desc = txt_desc.getText();
@@ -126,18 +159,68 @@ public class ThemLichTrinhController implements Initializable {
             }
 
             String timeToSave = Global.dateCalendarSelected + " " + time + ":00";
-            System.out.println(timeToSave);
+            //System.out.println(timeToSave);
 
             Calender calender = new Calender(timeToSave, location, desc);
             CalenderBLL bll = new CalenderBLL();
 
             try {
                 bll.InsertCalender(calender);
+                System.out.println(calender.getDescribe());
+                //if insert sucess then setnotify
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        Platform.runLater(new Runnable() {
+                            // ...//System.out.println("timer-running---------------");              
+                            @Override
+                            public void run() {
+                                    //System.out.println("notifing"+calender.getDescribe());
+                                try {
+                                    List<Calender> ls = bll.GetPersonalCalenderInfuture();
+                                    for (Calender l : ls) {
+                                        //System.out.println(l.getDescribe());
+                                        //neu khong tim thay co nghia la da xoa, khong cna thong bao
+                                        if (l.getDescribe().equals(calender.getDescribe())) {
+                                            // System.out.println("timer-running---------------");
+                                            PopUp_Notification.run("Thông báo", calender.getDescribe(), "INFO");
+
+                                            MakeRingTone();
+                                            break;
+                                        }
+                                    }
+
+                                } catch (SQLException ex) {
+                                    Logger.getLogger(ThemLichTrinhController.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
+
+                    }
+                };
+                
+                //Calendar of system---------------------
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.MONTH, Global.CurrentMonth-1);
+                calendar.set(Calendar.DATE, Global.CurrentDay);
+                calendar.set(Calendar.HOUR_OF_DAY, time.getHour());
+                calendar.set(Calendar.MINUTE, time.getMinute());
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+                
+                //System.out.println(calendar.toString());
+ 
+                Date dateSchedule = calendar.getTime();
+                
+                Timer timer =new  Timer(calender.getDescribe());
+                timer.schedule(timerTask, dateSchedule);
+                
             } catch (SQLException ex) {
                 Logger.getLogger(ThemLichTrinhController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
+        //else just show detail.
         btn_exit.fire();
     }
 

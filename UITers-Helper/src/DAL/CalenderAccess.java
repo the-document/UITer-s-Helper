@@ -47,7 +47,8 @@ public class CalenderAccess extends DatabaseAccess{
             preparedStmt.setTimestamp(1, d);
             preparedStmt.setString(2, calender.getLocation());
             preparedStmt.setString(3, calender.getDescribe());
-            preparedStmt.setString(4, Global.MSSV);
+            preparedStmt.setString(4, Global.username);//MSSV
+            System.out.println(Global.username);
 
         // execute the preparedstatement
         preparedStmt.execute();
@@ -67,9 +68,10 @@ public class CalenderAccess extends DatabaseAccess{
         
         this.ConnectToDatabase();
         //need add constrain time after curren day
-        Timestamp currentTime =Timestamp.valueOf(LocalDateTime.now());
+        LocalDateTime currentDateTime=LocalDateTime.of(Global.CurrentYear, Global.CurrentMonth, 1, 0, 0);
+        Timestamp currentTime =Timestamp.valueOf(currentDateTime);
         System.out.println(currentTime.toString());
-        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.MSSV+" and ThoiGian >= '"+currentTime+"'";
+        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.username+" and ThoiGian >= '"+currentTime+"'";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
@@ -83,6 +85,7 @@ public class CalenderAccess extends DatabaseAccess{
         while (resultSet.next()) {            
             Calender c =new Calender();
             
+            c.setKey(String.valueOf(resultSet.getInt(1)));
             c.setTime(resultSet.getTimestamp(2).toString());
             c.setLocation(resultSet.getString(3));
             c.setDescribe(resultSet.getString(4));
@@ -108,7 +111,7 @@ public class CalenderAccess extends DatabaseAccess{
         Timestamp nextMonth=Timestamp.valueOf(nexTime);
         System.out.println(nextMonth.toString());
         
-        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.MSSV+" and ThoiGian >= '"+currentTime+"' and ThoiGian < '"+nextMonth+"' ORDER BY ThoiGian ASC";
+        String query="SELECT * FROM CALENDAR where MaSinhVien = "+Global.username+" and ThoiGian >= '"+currentTime+"' and ThoiGian < '"+nextMonth+"' ORDER BY ThoiGian ASC";
         
         statement=connection.createStatement();
         resultSet =statement.executeQuery(query);
