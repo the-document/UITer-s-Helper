@@ -337,6 +337,31 @@ public class WebCommunicate {
     
     private Deadline getDeadLineFromURL (Course course, String url)
     {
+        
+        //Course==null khi không truyền tham số course vào. Khi đó, ta phải làm thủ công để lấy thông tin course.
+        if (course == null)
+        {
+            try {
+                //Tìm trong các course đã được lấy trước đó xem course nào phù hợp với hàm.
+                ArrayList<Course> courseList = GetCoursesList(false);
+                String query = "//a[contains(@href,\"course/view.php\")]";
+                driver.get(url);
+                WebElement courseName = driver.findElement(By.xpath(query));
+                for (Course c : courseList)
+                {
+                    //Nếu mã môn học trùng với mã môn học trên deadline thì ta xác định chính là course cần tìm.
+                    if (c.getCourseCode().equals(courseName.getText()))
+                    {
+                        course = new Course(c);
+                        break;
+                    }
+                }
+                System.out.println("Course is null.");
+            } catch (NotLoggedInException ex) {
+                Logger.getLogger(WebCommunicate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
         Deadline res;
         
         String deadlineID;

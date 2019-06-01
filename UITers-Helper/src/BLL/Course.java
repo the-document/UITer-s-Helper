@@ -26,6 +26,15 @@ public class Course
         courseID = "";
         courseName = "";
     }
+    
+    public Course(Course c)
+    {
+        courseID = c.courseID;
+        courseCode = c.courseCode;
+        courseName = c.courseName;
+        isRealCourse = c.isRealCourse;
+    }
+    
     public Course(String _courseID, String _courseName)
     {
         courseID = _courseID;

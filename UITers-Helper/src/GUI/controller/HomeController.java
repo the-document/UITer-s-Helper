@@ -752,7 +752,14 @@ public class HomeController implements Initializable {
         
         for (Deadline d : thisDateDeadline)
         {
-            Label lb = new Label(d.getDeadLineName());
+            Label lb;
+            Course deadlineCourse = d.getCourseOfDeadlines();
+            
+            if (deadlineCourse == null)
+                lb = new Label(d.getDeadLineName());
+            else
+                lb = new Label("[" + d.getCourseOfDeadlines().getCourseName() + "] " + d.getDeadLineName());
+            
             lv_new.getItems().addAll(lb);
         }
         
@@ -926,7 +933,7 @@ public class HomeController implements Initializable {
         }
         currentDay = day;
         System.out.println("Selected date : " + day);
-        btn_deadline.fire();
+        //btn_deadline.fire();
         
     }
 
@@ -983,16 +990,16 @@ public class HomeController implements Initializable {
         //Tô màu xanh lá cây cho thông báo nghỉ/bù.
         ArrayList<LocalDate> thisMonthAdvertise = Global.webCM.getDatesHaveAdvertise(currentMonth,currentYear, false);
         
-        boolean flag[] = new boolean[32];
+        boolean flagGreen[] = new boolean[32];
         
         for (int i=0;i<32;++i)
         {
-            flag[i] = false;
+            flagGreen[i] = false;
         }
         
         for (LocalDate d : thisMonthAdvertise)
         {
-            flag[d.getDayOfMonth()] = true;
+            flagGreen[d.getDayOfMonth()] = true;
             System.out.println("Date have advertise : " + d.getDayOfMonth());
         }
         
@@ -1001,7 +1008,7 @@ public class HomeController implements Initializable {
             boolean condition;
             try
             {
-                condition = flag[Integer.parseInt(btn.getText())];
+                condition = flagGreen[Integer.parseInt(btn.getText())];
             }
             
             catch (NumberFormatException e)
@@ -1018,16 +1025,16 @@ public class HomeController implements Initializable {
         //Tô màu đỏ cho deadline.
         ArrayList<LocalDate> thisMonthDeadLine = Global.webCM.getDateHaveDeadlines(currentMonth, currentYear, false);
         
-        flag = new boolean[32];
+        boolean []flagRed = new boolean[32];
         
         for (int i=0;i<32;++i)
         {
-            flag[i] = false;
+            flagRed[i] = false;
         }
         
         for (LocalDate d : thisMonthDeadLine)
         {
-            flag[d.getDayOfMonth()] = true;
+            flagRed[d.getDayOfMonth()] = true;
             System.out.println("Date have deadlines : " + d.getDayOfMonth());
         }
         
@@ -1036,7 +1043,7 @@ public class HomeController implements Initializable {
             boolean condition;
             try
             {
-                condition = flag[Integer.parseInt(btn.getText())];
+                condition = flagRed[Integer.parseInt(btn.getText())];
             }
             
             catch (NumberFormatException e)
@@ -1049,6 +1056,33 @@ public class HomeController implements Initializable {
             else
                 System.out.println("Day " + btn.getText() + " failed !");
         }
+        
+        //Tô màu tím cho những ngày có cả deadline và thông báo nghỉ/bù.
+        
+        boolean []flagPurple = new boolean[32];
+        
+        for (int i=0;i<32;++i)
+            flagPurple[i] = (flagGreen[i] && flagRed[i]);
+        
+        for (JFXButton btn : lsBtnCalendar)
+        {
+            boolean condition;
+            try
+            {
+                condition = flagPurple[Integer.parseInt(btn.getText())];
+            }
+            
+            catch (NumberFormatException e)
+            {
+                condition = false;
+            }
+            
+            if (condition)
+                btn.setStyle("-fx-background-color:  #ba55d3");
+            else
+                System.out.println("Day " + btn.getText() + " failed !");
+        }
+        
     }
     
     public void ReLoadLichTrinhThangHienTai(){
