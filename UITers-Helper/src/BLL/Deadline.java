@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class Deadline {
     private String DeadlineID;
     private String DeadLineName;
+    private LocalDateTime DeadLineDate;
     private Course courseOfDeadlines;
 
     public Course getCourseOfDeadlines() {
@@ -23,7 +24,7 @@ public class Deadline {
     public void setCourseOfDeadlines(Course courseOfDeadlines) {
         this.courseOfDeadlines = courseOfDeadlines;
     }
-    private LocalDateTime DeadLineDate;
+    
     public Deadline()
     {
         DeadLineName = DeadlineID = "";

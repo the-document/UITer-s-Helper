@@ -18,10 +18,15 @@ import java.time.format.DateTimeParseException;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.util.converter.LocalDateTimeStringConverter;
 import org.apache.commons.lang3.NotImplementedException;
 import org.openqa.selenium.By;
@@ -85,6 +90,34 @@ public class WebCommunicate {
         //Lấy path trực tiếp từ class Global.
        System.setProperty("webdriver.ie.driver", Global.IEDriverPath);
        System.setProperty("webdriver.gecko.driver",Global.FirefoxDriverPath);
+    }
+    
+    public ArrayList<LocalDate> getDatesHaveAdvertise(Integer month, Integer year, boolean wantUpdate)
+    {
+        try
+        {
+           BufferAdvertiesListByDate(wantUpdate); 
+        }
+        catch (NotLoggedInException notLoggedIn)
+        {
+            try {
+                ExecuteLogin();
+            } catch (CannotBrowseCourseException ex) {
+                Logger.getLogger(WebCommunicate.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (CannotLoginException ex) {
+                Logger.getLogger(WebCommunicate.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        ArrayList<LocalDate> res = new ArrayList<>();
+        
+        for (LocalDate date : advertiesOfDates.keySet())
+        {
+            if (date.getMonthValue() == month && date.getYear() == year)
+                res.add(date);
+        }
+        
+        return res;
     }
     
     public WebCommunicate(WebDriverMode driverMode, String _mssv, String _password)

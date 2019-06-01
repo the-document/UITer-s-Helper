@@ -647,8 +647,6 @@ public class HomeController implements Initializable {
             });
 
             contextMenu.getItems().addAll(infoItem, deleteItem);
-
-            //cell.textProperty().bind(cell.itemProperty());
             cell.emptyProperty().addListener((obs, wasEmpty, isNowEmpty) -> {
                 if (isNowEmpty) {
                     cell.setContextMenu(null);
@@ -935,6 +933,8 @@ public class HomeController implements Initializable {
         }
         currentDay = day;
         System.out.println("Selected date : " + day);
+        btn_deadline.fire();
+        
     }
 
     //lich trinh - bang lich =============================================
@@ -961,6 +961,7 @@ public class HomeController implements Initializable {
     public void ResetColorListButtonTableCalendar(){
         for (JFXButton btn : lsBtnCalendar) {
             btn.setStyle("-fx-background-color: transparent");
+            
         }
     }
     
@@ -986,9 +987,45 @@ public class HomeController implements Initializable {
         
         //Phần tô màu những ngày có deadline của Nghị.
         
-        ArrayList<LocalDate> thisMonthDeadLine = Global.webCM.getDateHaveDeadlines(currentMonth, currentYear, false);
+        //Tô màu xanh lá cây cho thông báo nghỉ/bù.
+        ArrayList<LocalDate> thisMonthAdvertise = Global.webCM.getDatesHaveAdvertise(currentMonth,currentYear, false);
         
         boolean flag[] = new boolean[32];
+        
+        for (int i=0;i<32;++i)
+        {
+            flag[i] = false;
+        }
+        
+        for (LocalDate d : thisMonthAdvertise)
+        {
+            flag[d.getDayOfMonth()] = true;
+            System.out.println("Date have advertise : " + d.getDayOfMonth());
+        }
+        
+        for (JFXButton btn : lsBtnCalendar)
+        {
+            boolean condition;
+            try
+            {
+                condition = flag[Integer.parseInt(btn.getText())];
+            }
+            
+            catch (NumberFormatException e)
+            {
+                condition = false;
+            }
+            
+            if (condition)
+                btn.setStyle("-fx-background-color:  #00FA9A");
+            else
+                System.out.println("Day " + btn.getText() + " failed !");
+        }
+        
+        //Tô màu đỏ cho deadline.
+        ArrayList<LocalDate> thisMonthDeadLine = Global.webCM.getDateHaveDeadlines(currentMonth, currentYear, false);
+        
+        flag = new boolean[32];
         
         for (int i=0;i<32;++i)
         {
@@ -998,7 +1035,7 @@ public class HomeController implements Initializable {
         for (LocalDate d : thisMonthDeadLine)
         {
             flag[d.getDayOfMonth()] = true;
-            System.out.println("Date : " + d.getDayOfMonth());
+            System.out.println("Date have deadlines : " + d.getDayOfMonth());
         }
         
         for (JFXButton btn : lsBtnCalendar)
