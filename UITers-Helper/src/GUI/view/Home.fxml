@@ -99,8 +99,8 @@
                   </Label>
                   <HBox prefHeight="40.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="lbl_day" onMouseClicked="#lbl_dayClick" prefHeight="40.0" prefWidth="173.0" stylesheets="@../css/label.css" text="Thứ 3" />
-                        <Region prefHeight="200.0" prefWidth="200.0" />
+                        <Label fx:id="lbl_day" onMouseClicked="#lbl_dayClick" prefHeight="40.0" prefWidth="192.0" stylesheets="@../css/label.css" text="Thứ 3" />
+                        <Region prefHeight="40.0" prefWidth="122.0" />
                         <JFXButton fx:id="btn_back" alignment="CENTER_RIGHT" layoutX="82.0" layoutY="10.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_backClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_back_new.css" text="." />
                         <JFXButton fx:id="btn_forward" alignment="CENTER_RIGHT" layoutX="122.0" layoutY="10.0" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_forwardClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_forward_new.css" text="." />
                      </children>
