@@ -865,5 +865,6 @@ public class WebCommunicate {
         facultiesList.add("Khoa Công Nghệ Phần Mềm");
         facultiesList.add("Bộ Môn KH&KTTT");
         facultiesList.add("Bộ Môn Toán Lý");
+        facultiesList.add("CTĐB - OEP");
     }
 }
