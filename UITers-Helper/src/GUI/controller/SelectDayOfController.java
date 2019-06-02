@@ -168,7 +168,7 @@ public class SelectDayOfController implements Initializable {
     // <editor-fold desc="FXML functions zone">
     @FXML
     void btn_homeClick(ActionEvent event) {
-        StaticFunctions.stack_link.push("SelectDayOf");
+        StaticFunctions.stack_link.push("SelectDayOff");
         form = "Home";
         madeFadeOut(event);
     }
@@ -186,7 +186,7 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     void btn_settingClick(ActionEvent event) {
-        StaticFunctions.stack_link.push("SelectDayOf");
+        StaticFunctions.stack_link.push("SelectDayOff");
         form = "Setting";
         madeFadeOut(event);
     }
@@ -203,7 +203,7 @@ public class SelectDayOfController implements Initializable {
         } else {
             StaticFunctions.IsDarkMode = false;
         }
-        form = "SelectDayOf";
+        form = "SelectDayOff";
         madeFadeOut(event);
     }
 
@@ -219,7 +219,7 @@ public class SelectDayOfController implements Initializable {
 
     @FXML
     void btn_nextClick(ActionEvent event) {
-        StaticFunctions.stack_link.push("SelectDayOf");
+        StaticFunctions.stack_link.push("SelectDayOff");
         form = "Loader";
         madeFadeOut(event);
     }
@@ -237,7 +237,7 @@ public class SelectDayOfController implements Initializable {
         init_cbb_user(name);
         init_label();
         form = "SelectDayOff";
-         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
+        lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         Global.lsDayOff.clear();
     }
 

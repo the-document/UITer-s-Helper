@@ -145,7 +145,7 @@ public class SelectMethodCreateController implements Initializable {
         Global.MeThodCreateSchedule = Global.MeThodCreate.DAYOF;
         state = "select_day_off";
         StaticFunctions.stack_link.push("SelectMethodCreate");
-        form = "SelectDayOf";
+        form = "SelectDayOff";
         madeFadeOut(event);
     }
 
