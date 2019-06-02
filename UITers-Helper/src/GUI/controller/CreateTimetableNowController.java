@@ -237,8 +237,8 @@ public class CreateTimetableNowController implements Initializable {
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
-        String text = "Xin chào, 17520433";
-        init_cbb_user(text);
+        String name = "Xin chào, " + Global.webCM.getUserName();
+        init_cbb_user(name);
         form = "CreateTimeTableNow";
         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
         //process data to show---------------------------------------

@@ -247,7 +247,7 @@ public class SettingController implements Initializable {
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
-        String name = "Xin chào, 17520433";
+         String name = "Xin chào, " + BLL.Global.webCM.getUserName();
         init_cbb_user(name);
         form = "Setting";
          lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));

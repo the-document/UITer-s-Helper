@@ -207,8 +207,8 @@ public class SelectSubjectController implements Initializable {
         Global.NGANHHOC = "";
         Global.lsMonHocSelected.clear();
 
-        String text = "Xin chào, 17520433";
-        init_cbb_user(text);
+        String name = "Xin chào, " + Global.webCM.getUserName();
+        init_cbb_user(name);
 
         try {
             init_cbb_subjecT();

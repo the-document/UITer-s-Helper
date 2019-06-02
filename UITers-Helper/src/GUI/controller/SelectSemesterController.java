@@ -160,10 +160,10 @@ public class SelectSemesterController implements Initializable {
             Logger.getLogger(SelectSemesterController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        String text = "Xin chào, 17520433";
+        String name = "Xin chào, " + Global.webCM.getUserName();
+        init_cbb_user(name);
         btn_next.setVisible(false);
-        init_cbb_user(text);
-
+       
     }
 
     public void setKeyEvent() {

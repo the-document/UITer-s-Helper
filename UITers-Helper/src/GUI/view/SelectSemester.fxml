@@ -86,11 +86,7 @@
                               <Insets right="10.0" top="5.0" />
                            </HBox.margin>
                         </JFXComboBox>
-                        <Circle fill="#d0d3d7" radius="12.5" stroke="BLACK" strokeType="INSIDE">
-                           <HBox.margin>
-                              <Insets right="10.0" top="12.5" />
-                           </HBox.margin>
-                        </Circle>
+               
                         <JFXButton fx:id="btn_setting" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_setting_new.css" text=".">
                            <HBox.margin>
                               <Insets top="5.0" />

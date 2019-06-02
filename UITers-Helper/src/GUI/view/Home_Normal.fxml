@@ -16,7 +16,6 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" maxHeight="660.0" maxWidth="1174.0" minHeight="660.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #ECECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.HomeController">
@@ -56,11 +55,6 @@
                            <HBox.margin>
                               <Insets right="10.0" top="5.0" />
                            </HBox.margin></JFXComboBox>
-                        <Circle fill="#d0d3d7" radius="12.5" stroke="BLACK" strokeType="INSIDE">
-                           <HBox.margin>
-                              <Insets right="10.0" top="12.5" />
-                           </HBox.margin>
-                        </Circle>
                         <JFXButton fx:id="btn_setting" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_settingClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_setting_new.css" text=".">
                            <HBox.margin>
                               <Insets top="5.0" />
@@ -112,7 +106,7 @@
                         <Insets />
                      </VBox.margin>
                   </HBox>
-                  <HBox fx:id="panel_calender" prefHeight="127.0" prefWidth="364.0">
+                  <HBox fx:id="panel_calender" prefHeight="200.0" prefWidth="364.0">
                      <children>
                         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="60.0" stylesheets="@../css/button_datetime.css">
                            <children>
@@ -186,7 +180,6 @@
                         </VBox>
                      </children>
                   </HBox>
-                  <JFXListView fx:id="lv_holiday" maxHeight="80.0" minHeight="80.0" prefHeight="80.0" prefWidth="364.0" stylesheets="@../css/listview_normal.css" />
                   <HBox prefHeight="42.0" prefWidth="364.0">
                      <children>
                         <Label fx:id="lbl_allday" onMouseClicked="#lbl_alldayClick" prefHeight="40.0" prefWidth="95.0" stylesheets="@../css/label_normal.css" text="Lịch trình" />

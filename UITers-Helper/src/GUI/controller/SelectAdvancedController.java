@@ -275,8 +275,8 @@ public class SelectAdvancedController implements Initializable {
 
         init_pane_subject();
         setKeyEvent();
-        String text = "Xin chào, 17520433";
-        init_cbb_user(text);
+         String name = "Xin chào, " + Global.webCM.getUserName();
+        init_cbb_user(name);
         init_arrButton();
         form = "SelectAdvanced";
          lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
