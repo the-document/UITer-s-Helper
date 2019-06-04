@@ -12,7 +12,6 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane id="AnchorPane" fx:id="AnchorPaneMain" prefHeight="660.0" prefWidth="1174.0" style="-fx-background-color: #252322;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.SettingController">
@@ -99,53 +98,20 @@
             <VBox prefHeight="605.0" prefWidth="338.0" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="20.0" right="40.0" top="20.0" />
-               </BorderPane.margin>
-               <children>
-                  <Label fx:id="lb_term" onMousePressed="#lb_termClick" prefHeight="43.0" prefWidth="352.0" stylesheets="@../css/big_label.css" text="Term of use">
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="txt_term" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="298.0" stylesheets="@../css/label.css" text="https://github.com/the-document/UITer-s-Helper">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="lb_cachsudung" layoutX="10.0" layoutY="10.0" onMousePressed="#lb_cachsudungClick" prefHeight="43.0" prefWidth="361.0" stylesheets="@../css/big_label.css" text="Cách sử dụng">
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="txt_cachsudung" alignment="TOP_LEFT" layoutX="30.0" layoutY="70.0" prefHeight="150.0" prefWidth="337.0" stylesheets="@../css/label.css" text="https://github.com/the-document/UITer-s-Helper">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="lb_source" layoutX="10.0" layoutY="131.0" prefHeight="43.0" prefWidth="343.0" stylesheets="@../css/big_label.css" text="Source code">
-                     <VBox.margin>
-                        <Insets bottom="20.0" />
-                     </VBox.margin>
-                  </Label>
-               </children></VBox>
+               </BorderPane.margin></VBox>
          </right>
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="lb_about" prefHeight="43.0" prefWidth="341.0" stylesheets="@../css/big_label.css" text="Về chúng tôi">
+                  <Label fx:id="lb_about" onMousePressed="#lb_aboutClick" prefHeight="43.0" prefWidth="341.0" stylesheets="@../css/big_label.css" text="Về chúng tôi">
                      <VBox.margin>
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </Label>
-                  <Label fx:id="txt_about" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="409.0" stylesheets="@../css/label.css" text="Ban học tập Công nghệ phân mềm\n + - Ngôi nhà sẻ chia Đây là group chính thức của Ban học tập Đoàn khoa Công nghệ Phần mềm, nơi giúp các bạn trao đổi những thắc mắc liên quan tới học thuật, các hoạt động training, seminar... của Ban.">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
+                  <Label fx:id="lb_cachsudung" onMousePressed="#lb_cachsudungClick" prefHeight="43.0" prefWidth="361.0" stylesheets="@../css/big_label.css" text="Source code">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
                   </Label>
                </children>
                <BorderPane.margin>

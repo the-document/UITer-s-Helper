@@ -35,7 +35,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -49,8 +48,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Bounds;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -1814,7 +1811,7 @@ public class HomeController implements Initializable {
         fxmlLoader.setLocation(getClass().getResource(StaticFunctions.switcher.Switch("ThemLichTrinh")));
         Scene scene = null;
         try {
-            scene = new Scene(fxmlLoader.load(), 352, 238);
+            scene = new Scene(fxmlLoader.load(), 352, 286);
         } catch (IOException ex) {
             Logger.getLogger(HomeController.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -6,6 +6,9 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXSlider;
 import com.jfoenix.controls.JFXToggleButton;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -61,19 +64,10 @@ public class SettingController implements Initializable {
     private JFXSlider sl_volume;
 
     @FXML
-    private Label lb_term;
-
-    @FXML
-    private Label txt_term;
-
-    @FXML
     private Label lb_cachsudung;
 
     @FXML
-    private Label txt_cachsudung;
-
-    @FXML
-    private Label lb_source;
+    private Label lb_about;
 
     @FXML
     private JFXButton btn_home;
@@ -99,22 +93,15 @@ public class SettingController implements Initializable {
     @FXML
     private JFXToggleButton toggle_mode;
 
-    @FXML
-    private Label lb_about;
-
-    @FXML
-    private Label txt_about;
-
     //</editor-fold>
     //<editor-fold desc="FXML functions zone">
-
     @FXML
     void btn_homeClick(ActionEvent event) {
         StaticFunctions.stack_link.push("Setting");
         form = "Home";
         madeFadeOut(event);
     }
-    
+
     @FXML
     void lbl_pathClick(ActionEvent event) {
         form = StaticFunctions.stack_link.pop();
@@ -139,6 +126,28 @@ public class SettingController implements Initializable {
     @FXML
     void cbb_userClick(ActionEvent event) {
 
+    }
+
+    @FXML
+    void lb_cachsudungClick(MouseEvent event) {
+        try {
+            Desktop.getDesktop().browse(new URL("https://github.com/the-document/UITer-s-Helper").toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void lb_aboutClick(MouseEvent event) {
+        try {
+            Desktop.getDesktop().browse(new URL("https://www.facebook.com/groups/bht.cnpm.uit/").toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -167,53 +176,6 @@ public class SettingController implements Initializable {
     @FXML
     void btn_select_imagesClick(ActionEvent event) {
 
-    }
-
-    @FXML
-    void lb_cachsudungClick(MouseEvent event) {
-        if (isExpandCachSuDung == 1) {
-            txt_cachsudung.setMaxHeight(0f);
-            txt_cachsudung.setMinHeight(0f);
-            isExpandCachSuDung = 0;
-        } else {
-            if (isExpandTerm == 1) {
-                txt_cachsudung.setMaxHeight(150);
-                txt_cachsudung.setMinHeight(150);
-                txt_term.setMaxHeight(150);
-                txt_term.setMinHeight(150);
-            } else {
-
-                txt_cachsudung.setMaxHeight(300);
-                txt_cachsudung.setMinHeight(300);
-            }
-            isExpandCachSuDung = 1;
-        }
-        txt_cachsudung.setVisible(true);
-        txt_cachsudung.setText("abc");
-
-    }
-
-    @FXML
-    void lb_termClick(MouseEvent event) {
-        if (isExpandTerm == 1) {
-            txt_term.setVisible(false);
-            txt_term.setMaxHeight(0f);
-            txt_term.setMinHeight(0f);
-            isExpandTerm = 0;
-        } else {
-            if (isExpandCachSuDung == 1) {
-                txt_term.setMaxHeight(150);
-                txt_term.setMinHeight(150);
-                txt_cachsudung.setMaxHeight(150);
-                txt_cachsudung.setMinHeight(150);
-            } else {
-                txt_term.setMaxHeight(300);
-                txt_term.setMinHeight(300);
-            }
-            txt_term.setVisible(true);
-            isExpandTerm = 1;
-        }
-        txt_term.setText("abc");
     }
 
     @FXML
@@ -247,10 +209,11 @@ public class SettingController implements Initializable {
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);
         setKeyEvent();
-         String name = "Xin chào, " + BLL.Global.webCM.getUserName();
+        String name = "Xin chào, " + BLL.Global.webCM.getUserName();
         init_cbb_user(name);
         form = "Setting";
-         lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
+        lbl_path.setText(StaticFunctions.stack_link.UpdatePath(form));
+
     }
 
     public void setKeyEvent() {
@@ -297,7 +260,7 @@ public class SettingController implements Initializable {
     }
 
     public void init_cbb_user(String text) {
-         ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
+        ObservableList<String> list = FXCollections.observableArrayList("Trang chủ", "Thời khóa biểu", "Cài đặt", "Đăng xuất");
         cbb_user.setPromptText(text);
         cbb_user.getSelectionModel().select(1);
         cbb_user.getItems().clear();

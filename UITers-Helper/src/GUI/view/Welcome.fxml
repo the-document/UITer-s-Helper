@@ -1,45 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="AnchorPaneMain" maxHeight="660.0" maxWidth="1174.0" minHeight="660.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" style="-fx-border-radius: 10; -fx-border-width: 1 1 1 1;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.WelcomeController">
+<AnchorPane fx:id="AnchorPaneMain" maxHeight="660.0" maxWidth="1174.0" minHeight="660.0" minWidth="1174.0" prefHeight="660.0" prefWidth="1174.0" style="-fx-border-radius: 10; -fx-border-width: 1 1 1 1; -fx-background-color: #ECECEC;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.controller.WelcomeController">
    <children>
-      <ImageView disable="true" fitHeight="660.0" fitWidth="1174.0" layoutX="1.0" layoutY="-2.0" pickOnBounds="true" preserveRatio="true" style="-fx-border-width: 1 1 1 1; -fx-border-radius: 10;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <image>
-            <Image url="@../images/background.jpg" />
-         </image>
-      </ImageView>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="426.0" layoutY="286.0" prefHeight="53.0" prefWidth="321.0" stylesheets="@../css/header.css" text="UIT DESKTOP" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="321.0" AnchorPane.leftAnchor="426.0" AnchorPane.rightAnchor="427.0">
-         <font>
-            <Font name="Segoe UI" size="36.0" />
-         </font>
-      </Label>
-      <JFXButton fx:id="btn_launch" layoutX="527.0" layoutY="370.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_launchClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_darkmode.css" text="Khởi động" textFill="WHITE" AnchorPane.leftAnchor="527.0" AnchorPane.rightAnchor="527.0">
+      <JFXButton fx:id="btn_launch" layoutX="527.0" layoutY="381.0" maxHeight="40.0" maxWidth="120.0" minHeight="40.0" minWidth="120.0" onAction="#btn_launchClick" prefHeight="40.0" prefWidth="120.0" stylesheets="@../css/button_darkmode.css" text="Khởi động" textFill="WHITE" AnchorPane.leftAnchor="527.0" AnchorPane.rightAnchor="527.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXButton>
       <HBox fx:id="toolbox" alignment="TOP_RIGHT" layoutX="10.0" layoutY="10.0" maxWidth="960.0" minWidth="960.0" prefHeight="40.0" prefWidth="960.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize.css" text="-" textFill="WHITE">
+            <JFXButton fx:id="btn_minimize" onAction="#btn_minimizeClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_minimize_normal.css" text="-" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit.css" text="X" textFill="WHITE">
+            <JFXButton fx:id="btn_exit" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" stylesheets="@../css/button_exit_normal.css" text="X" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </JFXButton>
          </children>
       </HBox>
-      <Circle fill="WHITE" layoutX="587.0" layoutY="250.0" opacity="0.3" radius="30.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.leftAnchor="557.0" AnchorPane.rightAnchor="557.0" />
+      <ImageView fitHeight="247.0" fitWidth="321.0" layoutX="462.0" layoutY="122.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="462.0" AnchorPane.rightAnchor="465.0">
+         <image>
+            <Image url="@../images/LogoBHT.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

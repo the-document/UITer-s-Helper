@@ -14,6 +14,9 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleButton;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -59,19 +62,16 @@ public class LoginController implements Initializable {
     private JFXButton btn_minimize;
 
     @FXML
-    private JFXButton btn_setting2;
-
-    @FXML
     private JFXToggleButton toggle_mode;
 
     @FXML
-    private Button btn_setting1;
+    private Button btn_user;
 
     @FXML
     private JFXTextField txt_user;
 
     @FXML
-    private Button btn_setting11;
+    private Button btn_pass;
 
     @FXML
     private JFXPasswordField txt_password;
@@ -102,7 +102,13 @@ public class LoginController implements Initializable {
 
     @FXML
     void btn_moreClick(ActionEvent event) {
-
+        try {
+            Desktop.getDesktop().browse(new URL("https://github.com/the-document/UITer-s-Helper").toURI());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -121,13 +127,13 @@ public class LoginController implements Initializable {
     void btn_loginClick(ActionEvent event) {
         BLL.Global.username = txt_user.getText();
         BLL.Global.password = txt_password.getText();
-        
+
         stack_pane.setDisable(false);
 
-        Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver,BLL.Global.username, BLL.Global.password);
-        
+        Global.webCM = new WebCommunicate(WebDriverMode.HtmlUnitDriver, BLL.Global.username, BLL.Global.password);
+
         boolean loginSuccess = false;
-        
+
         try {
             Global.webCM.ExecuteLogin();
             loginSuccess = true;
@@ -136,11 +142,11 @@ public class LoginController implements Initializable {
         } catch (CannotLoginException ex) {
             System.out.println("Cannot login. Check username and password.");
         }
-        
+
         if (loginSuccess) {
 
             JFXButton btn = new JFXButton("OK");
-            btn.setOnAction(e -> {                
+            btn.setOnAction(e -> {
                 System.out.println(StaticFunctions.IsDarkMode);
                 form = "Home";
                 madeFadeOut(event);
@@ -174,13 +180,6 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void btn_settingClick(ActionEvent event) {
-        StaticFunctions.stack_link.push("Login");
-        form = "Setting";
-        madeFadeOut(event);
-    }
-
-    @FXML
     void cb_rememberCheck(ActionEvent event) {
         // cần code sự kiện quên mật khẩu
 
@@ -194,7 +193,7 @@ public class LoginController implements Initializable {
     // </editor-fold>
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         StaticFunctions.AnimationShow(AnchorPaneMain);
         stack_pane.setDisable(true);
         Platform.runLater(AnchorPaneMain::requestFocus);

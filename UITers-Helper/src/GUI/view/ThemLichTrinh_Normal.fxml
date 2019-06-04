@@ -12,7 +12,7 @@
    <children>
       <HBox alignment="CENTER_RIGHT" prefHeight="40.0" prefWidth="470.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <JFXButton fx:id="btn_exit" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" styleClass="button-exit" stylesheets="@../css/button_exit.css" text="X" />
+            <JFXButton fx:id="btn_exit" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" onAction="#btn_exitClick" prefHeight="40.0" prefWidth="40.0" styleClass="button-exit" stylesheets="@../css/button_exit_normal.css" text="X" />
          </children>
       </HBox>
       <VBox layoutX="22.0" layoutY="42.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="172.0" prefWidth="310.0" AnchorPane.bottomAnchor="73.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="41.0">
