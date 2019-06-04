@@ -27,7 +27,7 @@ Sau đây là một số chức năng chính của UIT's Helper:
 - Library: jfoenix 8.0.8 - controlsfx 8.40.15 (GUI).
 - Công nghệ JavaFX - make up by css
 - IDE: NetBeans 8.0.2
-- Mô hình 3 lớp: GUI - BLL - DTO - DAL
+- Mô hình 3 lớp
 
 <h1>4. Báo cáo chi tiết</h1>
 
