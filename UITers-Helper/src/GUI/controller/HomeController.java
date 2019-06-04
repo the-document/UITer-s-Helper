@@ -912,11 +912,8 @@ public class HomeController implements Initializable {
 
     public void fillCalendarWithDayHaveDeadline() {
 
-        if (lsCalenders == null) {
-            return;
-        }
-
-        for (Calender calendar : lsCalenders) {
+        if (lsCalenders != null) {
+            for (Calender calendar : lsCalenders) {
 
             //split to get day of current calender
             System.out.println(calendar.getTime());
@@ -929,6 +926,9 @@ public class HomeController implements Initializable {
                 }
             }
         }
+        }
+
+        
 
         //Phần tô màu những ngày có deadline của Nghị.
         //Tô màu xanh lá cây cho thông báo nghỉ/bù.
@@ -1793,9 +1793,18 @@ public class HomeController implements Initializable {
 
     @FXML
     void btn_addLichTrinhClick(ActionEvent event) {
+        
+         int curentDay = java.time.LocalDate.now().getDayOfMonth();
+        System.out.println("day now -" + curentDay);
+
+        if (Global.CurrentDay < curentDay) {
+            PopUp_Notification.run("Cảnh báo", "Bạn không thể tạo ngày nghỉ nhỏ hơn ngày hiện tại", "INFO");
+            return;
+        }
 
         //don't create LichTrinh khi chua chon ngay
         if (Global.dateCalendarSelected == null) {
+            PopUp_Notification.run("Cảnh báo", "Bạn chưa chọn ngày", "INFO");
             return;
         }
 

@@ -29,8 +29,8 @@ public class CalenderAccess extends DatabaseAccess{
     public boolean InsertCalender(Calender calender) throws SQLException{
         
         super.ConnectToDatabase();
-        String query ="insert into CALENDAR (ThoiGian,DiaDiem,MoTa,MaSinhVien)"
-                + " values (?, ?, ?, ?)";
+        String query ="insert into CALENDAR (ThoiGian,DiaDiem,MoTa,MaSinhVien,NgayNhacNho)"
+                + " values (?, ?, ?, ?,?)";
         PreparedStatement preparedStmt = connection.prepareStatement(query);
         
 
@@ -48,6 +48,7 @@ public class CalenderAccess extends DatabaseAccess{
             preparedStmt.setString(2, calender.getLocation());
             preparedStmt.setString(3, calender.getDescribe());
             preparedStmt.setString(4, Global.username);//MSSV
+            preparedStmt.setInt(5, calender.getRemindDay());
             System.out.println(Global.username);
 
         // execute the preparedstatement
@@ -129,6 +130,7 @@ public class CalenderAccess extends DatabaseAccess{
             c.setTime(resultSet.getTimestamp(2).toString());
             c.setLocation(resultSet.getString(3));
             c.setDescribe(resultSet.getString(4));
+            c.setRemindDay(resultSet.getInt(5));
            
             result.add(c);
         }

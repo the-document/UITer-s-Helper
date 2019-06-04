@@ -15,10 +15,19 @@ public class Calender {
     String time;
     String location;
     String Describe;
+    int RemindDay;
 
     //---------------------------------------------------
     public Calender() {
     }
+    
+    public Calender(String time, String location, String Describe,int remindDay) {
+        this.time = time;
+        this.location = location;
+        this.Describe = Describe;
+        this.RemindDay=remindDay;
+    }
+    
 
     public Calender(String time, String location, String Describe) {
         this.time = time;
@@ -65,4 +74,14 @@ public class Calender {
     public void setDescribe(String Describe) {
         this.Describe = Describe;
     }
+
+    public int getRemindDay() {
+        return RemindDay;
+    }
+
+    public void setRemindDay(int RemindDay) {
+        this.RemindDay = RemindDay;
+    }
+    
+    
 }
