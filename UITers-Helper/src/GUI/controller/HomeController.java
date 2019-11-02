@@ -967,24 +967,6 @@ public class HomeController implements Initializable {
     
     public void fillCalendarWithDayHaveDeadline(){
         
-        if(lsCalenders==null)
-            return;
-        
-        
-        
-        for (Calender calendar : lsCalenders) {
-            
-            //split to get day of current calender
-            System.out.println(calendar.getTime());
-            String day=calendar.getTime().split("-")[2];
-            day=day.split(" ")[0];
-            for (JFXButton btn : lsBtnCalendar) {
-                if(btn.getText().equals(day))
-                    //btn.setStyle("-fx-background-color:  #505abe");
-                    btn.setStyle("-fx-background-color:  #f44156");
-            }
-        }
-        
         //Phần tô màu những ngày có deadline của Nghị.
         
         //Tô màu xanh lá cây cho thông báo nghỉ/bù.
@@ -1083,6 +1065,20 @@ public class HomeController implements Initializable {
                 System.out.println("Day " + btn.getText() + " failed !");
         }
         
+        if(lsCalenders==null)
+            return;
+        for (Calender calendar : lsCalenders) {
+            
+            //split to get day of current calender
+            System.out.println(calendar.getTime());
+            String day=calendar.getTime().split("-")[2];
+            day=day.split(" ")[0];
+            for (JFXButton btn : lsBtnCalendar) {
+                if(btn.getText().equals(day))
+                    //btn.setStyle("-fx-background-color:  #505abe");
+                    btn.setStyle("-fx-background-color:  #f44156");
+            }
+        }
     }
     
     public void ReLoadLichTrinhThangHienTai(){
